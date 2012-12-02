@@ -1,0 +1,270 @@
+<html>
+
+  <head>
+    <title>
+      MACHINE - Table of Machine Constants
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      MACHINE <br> Table of Machine Constants
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>MACHINE</b> 
+      is a FORTRAN77 library which 
+      returns machine constants for integer and single and double precision quantities.
+    </p>
+
+    <p>
+      We assume that integer are represented using S digits in base A:
+      <blockquote><b>
+        Sign * ( X(S-1)*A^(S-1) + ... + X(1)*A + X(0))
+      </b></blockquote>
+      and that real numbers are represented using a mantissa T, base
+      B and exponent E as:
+      <blockquote><b>
+        Sign * T * B<sup>E</sup>
+      </b></blockquote>
+    </p>
+
+    <p>
+      <b>D1MACH</b> returns quantities associated with double precision
+      arithmetic, including:
+      <ol>
+        <li>
+          B^(EMIN-1), the smallest positive magnitude.
+        </li>
+        <li>
+          B^EMAX*(1-B^(-T)), the largest magnitude.
+        </li>
+        <li>
+          B^(-T), the smallest relative spacing.
+        </li>
+        <li>
+          B^(1-T), the largest relative spacing.
+        </li>
+        <li>
+          log10(B)
+        </li>
+      </ol>
+    </p>
+
+    <p>
+      <b>I1MACH</b> returns quantities associated with integer arithmetic,
+      as well as some integer quantities associated with real and
+      double precision arithmetic, and other machine-specific information.
+      <ol>
+        <li>
+          the standard input unit.
+        </li>
+        <li>
+          the standard output unit.
+        </li>
+        <li>
+          the standard punch unit.
+        </li>
+        <li>
+          the standard error message unit.
+        </li>
+        <li>
+          the number of bits per integer storage unit.
+        </li>
+        <li>
+          the number of characters per integer storage unit.
+        </li>
+        <li>
+          A, the base for integers.
+        </li>
+        <li>
+          S, the number of base A digits in an integer.
+        </li>
+        <li>
+          A^S-1, the largest integer.
+        </li>
+        <li>
+          B, the base for single and double precision numbers.
+        </li>
+        <li>
+          T, the number of base B digits for single precision.
+        </li>
+        <li>
+          EMIN, the smallest exponent E for single precision.
+        </li>
+        <li>
+          EMAX, the largest exponent E for single precision.
+        </li>
+        <li>
+          T, the number of base B digits for double precision.
+        </li>
+        <li>
+          EMIN, the smallest exponent E for double precision.
+        </li>
+        <li>
+          EMAX, the largest exponent E for double precision.
+        </li>
+      </ol>
+    <p>
+
+    <p>
+      <b>R1MACH</b> returns quantities associated with single precision
+      arithmetic, including:
+      <ol>
+        <li>
+          B^(EMIN-1), the smallest positive magnitude.
+        </li>
+        <li>
+          B^EMAX*(1-B^(-T)), the largest magnitude.
+        </li>
+        <li>
+          B^(-T), the smallest relative spacing.
+        </li>
+        <li>
+          B^(1-T), the largest relative spacing.
+        </li>
+        <li>
+          log10(B)
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Licensing:
+    </h3>
+
+    <p>
+      The computer code and data files described and made available on this web page 
+      are distributed under
+      <a href = "../../txt/gnu_lgpl.txt">the GNU LGPL license.</a>
+    </p>
+
+    <h3 align = "center">
+      Languages:
+    </h3>
+
+    <p>
+      <b>MACHINE</b> is available in
+      <a href = "../../c_src/machine/machine.html">a C version</a> and
+      <a href = "../../cpp_src/machine/machine.html">a C++ version</a> and
+      <a href = "../../f77_src/machine/machine.html">a FORTRAN77 version</a> and
+      <a href = "../../f_src/machine/machine.html">a FORTRAN90 version</a> and
+      <a href = "../../m_src/machine/machine.html">a MATLAB version</a>.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f77_src/machar/machar.html">
+      MACHAR</a>,
+      a FORTRAN77 library which 
+      can compute machine
+      arithmetic quantities dynamically.
+    </p>
+
+    <p>
+      <a href = "../../f_src/slatec/slatec.html">
+      SLATEC</a>, 
+      a FORTRAN90 library which 
+      includes <b>MACHINE</b>.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Phyllis Fox, Andrew Hall, Norman Schryer,<br>
+          Algorithm 528:
+          Framework for a Portable Library,<br>
+          ACM Transactions on Mathematical Software,<br>
+          Volume 4, Number 2, June 1978, page 176-188.
+        </li>
+        <li>
+          <a href = "http://www.netlib.org/toms/528">
+                   http://www.netlib.org/toms/528 </a> <br>
+          the NETLIB web site for ACM TOMS algorithms.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "machine.f">machine.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "machine.sh">machine.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "machine_prb.f">machine_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "machine_prb.sh">machine_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "machine_prb_output.txt">machine_prb_output.txt</a>,
+          the output ffile.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>D1MACH</b> returns double precision machine constants.
+        </li>
+        <li>
+          <b>I1MACH</b> returns integer machine constants.
+        </li>
+        <li>
+          <b>R1MACH</b> returns single precision machine constants.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 08 December 2007.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

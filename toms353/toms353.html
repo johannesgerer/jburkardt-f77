@@ -1,0 +1,211 @@
+<html>
+
+  <head>
+    <title>
+      TOMS353 - Filon Quadrature
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS353 <br> Filon Quadrature
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS353</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 353, which estimates
+      integrals of F(X)*COS(M*PI*X) or F(X)*SIN(M*PI*X) from 0 to 1,
+      using Filon quadrature.
+    </p>
+
+    <p>
+      The text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <dl>
+        <dt>
+          <b>call fser1 (f, eps, max, m, c, s, lc, ls )</b>
+        </dt>
+        <dd>
+          where
+          <b>F</b> is the name of the FORTRAN function that evaluates
+          the main integrand factor F(X),
+          <b>EPS</b> is the desired accuracy,
+          <b>MAX</b> is the maximum number of interval halvings allowed,
+          <b>M</b> is the integer multiplier in the argument M*PI*X of
+          the SIN or COS factors,
+          <b>C</b> and/or <b>S</b> are returned as estimates of the
+          integral from 0 to 1 of F(X)*COS(M*PI*X) and F(X)*SIN(M*PI*X),
+          <b>LC</b> and <b>LS</b> are input by the user as 1 or 0, depending
+          on whether the cosine and sine integrals are or are not to be
+          computed.
+        </dd>
+      </dl>
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/intlib/intlib.html">
+      INTLIB</a>,
+      a FORTRAN90 library which
+      contains routines which estimate the integral of a function.
+    </p>
+
+    <p>
+      <a href = "../../f_src/quadpack/quadpack.html">
+      QUADPACK</a>,
+      a FORTRAN90 library which
+      includes many routines for estimating the integral of a function,
+      including weight functions, singularities, and infinite intervals.
+    </p>
+
+    <p>
+      <a href = "../../f_src/quadrule/quadrule.html">
+      QUADRULE</a>,
+      a FORTRAN90 library which
+      defines many simple quadrature schemes.
+    </p>
+
+    <p>
+      <a href = "../../f_src/stroud/stroud.html">
+      STROUD</a>,
+      a FORTRAN90 library which
+      defines quadrature schemes for a number of geometrically
+      interesting regions.
+    </p>
+
+    <p>
+      <a href = "../../f_src/test_int/test_int.html">
+      TEST_INT</a>,
+      a FORTRAN90 library which
+      contains routines which define integrands suitable for testing
+      integration software.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/toms418/toms418.html">
+      TOMS418</a>,
+      a FORTRAN77 library which
+      uses Filon quadrature for integrands with a SIN or COS factor.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/toms468/toms468.html">
+      TOMS468</a>,
+      a FORTRAN77 library which
+      carries out the automatic integration of a function.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Stephen Chase, Lloyd Fosdick,<br>
+          An Algorithm for Filon Quadrature,<br>
+          Communications of the ACM,<br>
+          Volume 12, Number 8, pages 453-457, August 1969.
+        </li>
+        <li>
+          Stephen Chase, Lloyd Fosdick,<br>
+          Algorithm 353:
+          Filon Quadrature,<br>
+          Communications of the ACM,<br>
+          Volume 12, Number 8, pages 457-458, August 1969.
+        </li>
+        <li>
+          Bo Einarsson,<br>
+          Remark on Algorithm 353: Filon Quadrature,<br>
+          Communications of the ACM,<br>
+          April 1970, Volume 13, Issue 4, page 263.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms353.f">toms353.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms353.sh">toms353.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms353_prb.f">toms353_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms353_prb.sh">toms353_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms353_prb_output.txt">toms353_prb_output.txt</a>,
+          the output from a run of the sample program.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>FSER1</b> estimates an integral using Filon quadrature.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 06 January 2006.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

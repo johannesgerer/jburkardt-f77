@@ -1,0 +1,244 @@
+<html>
+
+  <head>
+    <title>
+      TOMS596 - Continuation Code for Parameterized Nonlinear Equations
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS596 <br> Continuation Code for Parameterized Nonlinear Equations
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS596</b>
+      is a FORTRAN77 library which
+      carries out the continuation method for producing a series of
+      solutions of a set of nonlinear equations with one degree of freedom.
+    </p>
+
+    <p>
+      The program is designed for problems in which <b>N</b> variables <b>X</b>
+      are constrained by <b>N</b>-1 nonlinear equations <b>F(X)=0</b>.
+      Generally, there is an entire family of solutions to such a problem,
+      which can be thought of as a curve in <b>N</b>-dimensional space.
+      We can imagine this curve parameterized by a variable <b>LAMBDA</b>.
+      Given one solution <b>(X,LAMBDA0)</b>, the program attempts to determine
+      more points on the curve of solutions.
+    </p>
+
+    <p>
+      The copy of the program distributed through NETLIB is the original version.
+      However, the original version was written with the assumption that local
+      memory in subroutines was saved in between calls.  This assumption is not
+      generally true.  The version of the code presented here has been modified
+      by the insertion of the appropriate SAVE statements to guarantee that
+      local variable values are preserved.
+    </p>
+
+    <p>
+      <b>TOMS596</b> is ACM TOMS Algorithm 596.  The text of the
+      original FORTRAN77 version is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f77_src/pitcon66/pitcon66.html">
+      PITCON66</a>,
+      a FORTRAN77 library which
+      seeks to produce a sequence of points that satisfy a set of nonlinear
+      equations with one degree of freedom;
+      this is version 6.6 of ACM TOMS algorithm 596.
+    </p>
+
+    <p>
+      <a href = "../../f_src/pitcon7/pitcon7.html">
+      PITCON7</a>,
+      a FORTRAN90 library which
+      seeks to produce a sequence of points that satisfy a set of nonlinear
+      equations with one degree of freedom;
+      this is version 7.0 of ACM TOMS algorithm 596.
+    </p>
+
+    <p>
+      <a href = "../../f_src/test_con/test_con.html">
+      TEST_CON</a>,
+      a FORTRAN90 library which
+      implements test problems for numerical continuation.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/toms502/toms502.html">
+      TOMS502</a>,
+      a FORTRAN77 library which
+      seeks to produce a sequence of points that satisfy a set of nonlinear
+      equations with one degree of freedom;
+      this library is commonly called <b>DERPAR</b>;<br>
+      this is ACM TOMS algorithm 502.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Cor den Heijer, Werner Rheinboldt,<br>
+          On Steplength Algorithms for a Class of Continuation Methods,<br>
+          SIAM Journal on Numerical Analysis,<br>
+          Volume 18, Number 5, October 1981, pages 925-947.
+        </li>
+        <li>
+          Werner Rheinboldt,<br>
+          Solution Field of Nonlinear Equations and Continuation Methods,<br>
+          SIAM Journal on Numerical Analysis,<br>
+          Volume 17, Number 2, April 1980, pages 221-237.
+        </li>
+        <li>
+          Werner Rheinboldt,<br>
+          Numerical Analysis of Continuation Methods for Nonlinear
+          Structural Problems,<br>
+          Computers and Structures,<br>
+          Volume 13, 1981, pages 103-114.
+        </li>
+        <li>
+          Werner Rheinboldt, John Burkardt,<br>
+          A Locally Parameterized Continuation Process,<br>
+          ACM Transactions on Mathematical Software,<br>
+          Volume 9, Number 2, June 1983, pages 215-235.
+        </li>
+        <li>
+          Werner Rheinboldt, John Burkardt,<br>
+          Algorithm 596:
+          A Program for a Locally Parameterized
+          Continuation Process,<br>
+          ACM Transactions on Mathematical Software,<br>
+          Volume 9, Number 2, June 1983, pages 236-241.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms596.f">toms596.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms596.sh">toms596.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms596_prb.f">toms596_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms596_prb.sh">toms596_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms596_prb_output.txt">toms596_prb_output.txt</a>,
+          the output file.
+        </li>
+        <li>
+          <a href = "toms596_prb_output_saved.txt">toms596_prb_output_saved.txt</a>,
+          the output file, as recorded on the NETLIB site.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>PITCON</b> is the driver routine for the continuation package.
+        </li>
+        <li>
+          <b>CORECT</b> corrects an approximate solution.
+        </li>
+        <li>
+          <b>TANGNT</b> computes a unit tangent vector at a point on the solution curve.
+        </li>
+        <li>
+          <b>ROOT</b> seeks a root of a scalar nonlinear equation in a change-of-sign interval.
+        </li>
+        <li>
+          <b>FSOLVE</b> solves a linear system related to the continuation process.
+        </li>
+        <li>
+          <b>ISAMAX</b> returns the index of the vector element of maximum absolute value.
+        </li>
+        <li>
+          <b>SASUM</b> returns the sum of the absolute values of the entries of a vector.
+        </li>
+        <li>
+          <b>SAXPY</b> adds a multiple of one vector to another.
+        </li>
+        <li>
+          <b>SCOPY</b> copies a vector.
+        </li>
+        <li>
+          <b>SDOT</b> computes the dot product of two vectors.
+        </li>
+        <li>
+          <b>SNRM2</b> computes the Euclidean norm of a vector.
+        </li>
+        <li>
+          <b>SSCAL</b> multiplies a vector by a scale factor.
+        </li>
+        <li>
+          <b>SGEFA</b> factors a real matrix by Gaussian elimination.
+        </li>
+        <li>
+          <b>SGESL</b> solves a linear system that was factored by SGEFA.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 14 May 2008.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

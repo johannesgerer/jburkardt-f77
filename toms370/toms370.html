@@ -1,0 +1,170 @@
+<html>
+
+  <head>
+    <title>
+      TOMS370 - General Random Number Generator
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS370 <br> General Random Number Generator
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS370</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 370, for producing random samples
+      from an arbitrary Probability Density Function (PDF).
+    </p>
+
+    <p>
+      The text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <dl>
+        <dt>
+          <b>call randg ( l, x, r, y )</b>
+        </dt>
+        <dd>
+          where
+          <b>L</b> is a nonzero odd seed value, which is updated on output,
+          <b>X</b> is a vector of length 257, prepared by RANDGI,
+          <b>R</b> is a vector of length 256, prepared by RANDGI,
+          <b>Y</b> is output as a random value sampled from the PDF.
+        </dd>
+      </dl>
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f77_src/normal/normal.html">
+      NORMAL</a>,
+      a FORTRAN77 library which
+      includes routines for sampling normal PDF's.
+    </p>
+
+    <p>
+      <a href = "../../f_src/prob/prob.html">
+      PROB</a>,
+      a FORTRAN90 library which
+      contains routines for sampling from a wide range of PDF's.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/uniform/uniform.html">
+      UNIFORM</a>,
+      a FORTRAN77 library which
+      includes routines for sampling uniform PDF's.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Edgar Butler,<br>
+          Algorithm 370:
+          General Random Number Generator,<br>
+          Communications of the ACM,<br>
+          Volume 13, Number 1, January 1970, pages 49-52.
+        </li>
+        <li>
+          LG Proll,<br>
+          Remark on Algorithm 370,<br>
+          General Random Number Generator,<br>
+          Communications of the ACM,<br>
+          ?.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms370.f">toms370.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms370.sh">toms370.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms370_prb.f">toms370_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms370_prb.sh">toms370_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms370_prb_output.txt">toms370_prb_output.txt</a>,
+          the output from a run of the sample program.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>RANDG</b> returns random samples from an arbitrary PDF.
+        </li>
+        <li>
+          <b>RANDGI</b> initializes data for RANDG.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 05 February 2011.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

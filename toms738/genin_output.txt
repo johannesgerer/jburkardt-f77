@@ -1,0 +1,12 @@
+  This is program GENIN
+  If you wish to use the base 2, the 
+  alternative set of programs tailored for 
+  base 2 will run much faster. 
+  If the files gftabs.dat and irrtab.dat 
+  have not already been set up, then 
+  consult the guide to the programs for 
+  how to do so, set up those files per 
+  the guide, and [temporarily] quit this 
+  set of programs by entering the integer 0 
+  below; otherwise, enter any other integer. 
+  ENTER an appropriate integer. 

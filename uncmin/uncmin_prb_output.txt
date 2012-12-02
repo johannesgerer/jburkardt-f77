@@ -1,0 +1,240 @@
+ 
+ 9 January   2009  10:32:37.667 AM      
+ 
+UNCMIN_PRB
+  FORTRAN77 version.
+ 
+  Test the routines in the UNCMIN library.
+  
+ TEST01
+   Test OPTIF0, the simple interface to UNCMIN.
+  
+ RESULT - Iterate            0
+  
+ Step
+  
+   0.00000       0.00000    
+  
+ X
+  
+   1.00000       1.00000    
+ Function value =    783.98151627258801     
+  
+ Gradient vector
+  
+   759.398       2395.63    
+  
+ Hessian matrix
+  
+   1.00000       0.00000    
+   0.00000       1.00000    
+  
+ RESULT - Iterate            2
+  
+ X
+  
+   20.0000      -20.1959    
+ Function value =    90.999999390008171     
+  
+ Gradient vector
+  
+  0.629141E-06 -0.600787E-06
+  
+   Output from UNCMIN:
+   Error code=           1
+  
+ EXPLAIN:
+   UNCMIN returned a termination code of            1
+  
+ This code has the following meaning:
+  
+ The gradient is relatively close to zero.
+ The current iterate is probably a good solution.
+  
+   F(X*) =   90.999999390008171     
+   X* =   20.000000015249810       -20.195924304682116     
+  
+   (Partial reference results for comparison:)
+       19.9145       -20.6011       -5.26250
+       19.9900       -20.6230        19.9145
+       20.0100       -20.6230        19.9145
+       19.9900       -20.6023        19.9145
+   Error code =           1
+   F(X*) =    91.0001
+   X* =    19.9900       -20.6230
+  
+  
+  
+ uncprb  function of 3 variables.
+  
+ solve problem using line search.
+  
+ RESULT - Iterate            0
+  
+ Step
+  
+   0.00000       0.00000       0.00000    
+  
+ X
+  
+  -1.00000       0.00000       0.00000    
+ Function value =    95579.451357303798     
+  
+ Gradient vector
+  
+  -0.00000      -61831.9      -6183.19    
+  
+ Hessian matrix
+  
+   200.000      -61831.9       0.00000    
+  -61831.9       20000.0       2000.00    
+   0.00000       2000.00       202.000    
+  
+ RESULT - Iterate           15
+  
+ X
+  
+   1.00000     -0.855237E-13 -0.830514E-12
+ Function value =   8.43416707034249980E-025
+  
+ Gradient vector
+  
+ -0.608402E-11 -0.494470E-10  0.328367E-11
+  
+ termination code itrmcd=           1
+  
+ EXPLAIN:
+   UNCMIN returned a termination code of            1
+  
+ This code has the following meaning:
+  
+ The gradient is relatively close to zero.
+ The current iterate is probably a good solution.
+  
+ return code msg=           0
+  
+ x* =       0.99999999999996958      -8.55237365853914452E-014 -8.30513876247639262E-013
+  
+ f(x*) =    8.43416707034249980E-025
+  
+ gradient= -6.08402217495008664E-012 -4.94469792126034624E-011  3.28367016876496981E-012
+  
+  
+  
+  
+ uncprb  function of 3 variables.
+  
+ solve problem using double dogleg method.
+  
+ RESULT - Iterate            0
+  
+ Step
+  
+   0.00000       0.00000       0.00000    
+  
+ X
+  
+  -1.00000       0.00000       0.00000    
+ Function value =    95579.451357303798     
+  
+ Gradient vector
+  
+  -0.00000      -61831.9      -6183.19    
+  
+ Hessian matrix
+  
+   200.000      -61831.9       0.00000    
+  -61831.9       20000.0       2000.00    
+   0.00000       2000.00       202.000    
+  
+ RESULT - Iterate            9
+  
+ X
+  
+   1.00000      0.839931E-08  0.659615E-07
+ Function value =   2.11600923399851049E-012
+  
+ Gradient vector
+  
+ -0.288385E-04  0.360631E-04 -0.347439E-05
+  
+ termination code itrmcd=           1
+  
+ EXPLAIN:
+   UNCMIN returned a termination code of            1
+  
+ This code has the following meaning:
+  
+ The gradient is relatively close to zero.
+ The current iterate is probably a good solution.
+  
+ return code msg=           0
+  
+ x* =       0.99999985580760886       8.39930627987198718E-009  6.59615060655694557E-008
+  
+ f(x*) =    2.11600923399851049E-012
+  
+ gradient= -2.88384785305605994E-005  3.60631426464329993E-005 -3.47439075673140539E-006
+  
+  
+  
+  
+ uncprb  function of 3 variables.
+  
+ solve problem using more-hebdon method.
+  
+ RESULT - Iterate            0
+  
+ Step
+  
+   0.00000       0.00000       0.00000    
+  
+ X
+  
+  -1.00000       0.00000       0.00000    
+ Function value =    95579.451357303798     
+  
+ Gradient vector
+  
+  -0.00000      -61831.9      -6183.19    
+  
+ Hessian matrix
+  
+   200.000      -61831.9       0.00000    
+  -61831.9       20000.0       2000.00    
+   0.00000       2000.00       202.000    
+  
+ RESULT - Iterate            7
+  
+ X
+  
+   1.00000     -0.196753E-08 -0.209761E-07
+ Function value =   7.62454397183571159E-015
+  
+ Gradient vector
+  
+  0.167515E-05  0.260153E-05 -0.302106E-06
+  
+ termination code itrmcd=           1
+  
+ EXPLAIN:
+   UNCMIN returned a termination code of            1
+  
+ This code has the following meaning:
+  
+ The gradient is relatively close to zero.
+ The current iterate is probably a good solution.
+  
+ return code msg=           0
+  
+ x* =        1.0000000083757674      -1.96753236485319965E-009 -2.09760909650430309E-008
+  
+ f(x*) =    7.62454397183571159E-015
+  
+ gradient=  1.67515348771288687E-006  2.60153493752816696E-006 -3.02105678191479833E-007
+  
+ 
+UNCMIN_PRB
+  Normal end of execution.
+ 
+ 9 January   2009  10:32:37.671 AM      

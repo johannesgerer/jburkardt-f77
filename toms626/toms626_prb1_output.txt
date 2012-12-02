@@ -1,0 +1,14 @@
+ 
+20110204  142030.376
+ 
+TOMS626_PRB1:
+  FORTRAN77 version
+  An example calling program for TOMS626.
+ 
+   0.00000     <= X <=    25.0000    
+   0.00000     <= Y <=    20.0000    
+ 
+TOMS626_PRB1:
+  Normal end of execution.
+ 
+20110204  142030.433

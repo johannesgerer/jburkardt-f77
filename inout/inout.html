@@ -1,0 +1,352 @@
+<html>
+
+  <head>
+    <title>
+      INOUT - Navier Stokes solutions in the INOUT region.
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      INOUT <br> Navier Stokes solutions in the INOUT region.
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>INOUT</b>
+      is a FORTRAN77 program which
+      solves the time-dependent Navier Stokes equations
+      in the "INOUT" region,
+      by Hyung-Chun Lee.
+    </p>
+
+    <p>
+      As time increases, other flow parameters may be varied as well.
+      For this code, the flow parameter that can vary is the magnitude
+      of the inflow specified at the left boundary.
+      The program stores the results of each timestep in a file.
+      Each solution may be thought of as a "snapshot" of the gradual
+      evolution of the flow field over time.
+      In a typical run, 500 such files might be created.
+    </p>
+
+    <p>
+      A collection of snapshot files may be analyzed to seek a small
+      underlying basis of fundamental flows.  This basis may be used
+      to approximate the entire set, or indeed to generate a reduced basis
+      program that can quickly and cheaply compute new flow solutions
+      whose flow parameters vary in small ways from those of the original
+      set.
+    </p>
+
+    <p>
+      The "INOUT" region is contained in the unit square, [0,1] x [0,1].
+      There is an inlet on the left side, from [0,0] to [0,0.2], and an
+      outlet on the right side, from [1,0.8] to [1.0,1.0].
+      <pre>
+       +-----------------------+
+       |+----------------------+
+       ||                    --->
+       ||                    ----->
+       ||                    --->
+       ||                     ++
+       ||                     ||
+       ||                     ||
+       ||                     ||
+       ||                     ||
+       ++                     ||
+      --->                    ||
+      ----->                  ||
+      --->                    ||
+       +----------------------+|
+       +-----------------------+
+      </pre>
+      There are 1,681 nodes in a 41 by 41 evenly spaced grid.  The nodes
+      are organized into 800 6-node triangular elements
+      which are quadratic in velocity and linear in pressure.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <dl>
+        <dt>
+          <b>inout</b>
+        </dt>
+        <dd>
+          runs the program.
+        </dd>
+      </dl>
+    </p>
+
+    <h3 align = "center">
+      Author:
+    </h3>
+
+    <p>
+      Hyun-Chun Lee, <br>
+      Ajou University, Korea,<br>
+      in collaboration
+      with Max Gunzburger and John Burkardt.
+    </p>
+
+    <h3 align = "center">
+      Licensing:
+    </h3>
+
+    <p>
+      The computer code and data files described and made available on this web page
+      are distributed under
+      <a href = "../../txt/gnu_lgpl.txt">the GNU LGPL license.</a>
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/bump/bump.html">
+      BUMP</a>,
+      a FORTRAN90 program which
+      solves a fluid flow problem
+      in a channel including a bump which obstructs and redirects the flow.
+    </p>
+
+    <p>
+      <a href = "../../f_src/cvt_basis_flow/cvt_basis_flow.html">
+      CVT_BASIS_FLOW</a>,
+      a FORTRAN90 program which
+      extracts dominant solution modes from a set of flow solutions
+      using CVT methods.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/hcell/hcell.html">
+      HCELL</a>,
+      a FORTRAN77 program which
+      solves the Navier Stokes equations
+      in the H-Cell region.
+    </p>
+
+    <p>
+      <a href = "../../datasets/inout_flow2/inout_flow2.html">
+      INOUT_FLOW2</a>,
+      a dataset directory which
+      contains solutions to flow in
+      the "inout" region.
+    </p>
+
+    <p>
+      <a href = "../../f_src/mhd_control/mhd_control.html">
+      MHD_CONTROL</a>,
+      a FORTRAN90 program which
+      tries to control the evolution of an MHD system so that a particular
+      state is achieved.
+    </p>
+
+    <p>
+      <a href = "../../f_src/mhd_flow/mhd_flow.html">
+      MHD_FLOW</a>,
+      a FORTRAN90 program for the
+      evolution of an MHD system.
+    </p>
+
+    <p>
+      <a href = "../../cpp_src/nast2d/nast2d.html">
+      NAST2D</a>,
+      a C++ program which
+      computes the pressure
+      and velocity for a Navier Stokes flow.
+    </p>
+
+    <p>
+      <a href = "../../f_src/pod_basis_flow/pod_basis_flow.html">
+      POD_BASIS_FLOW</a>,
+      a FORTRAN90 program which
+      extracts dominant solution modes from a set of flow solutions
+      using POD methods.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/tcell/tcell.html">
+      TCELL</a>,
+      a FORTRAN77 program which
+      solves the Navier Stokes equations
+      in the T-Cell region.
+    </p>
+
+    <p>
+      <a href = "../../m_src/toms866/toms866.html">
+      TOMS866</a>,
+      a MATLAB library which
+      is the Incompressible Flow Iterative Solution Software;<br>
+      this library is commonly called <b>IFISS</b>;<br>
+      this is ACM TOMS algorithm 866.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Max Gunzburger,<br>
+          Finite Element Methods for Viscous Incompressible Flows,<br>
+          A Guide to Theory, Practice, and Algorithms,<br>
+          Academic Press, 1989,<br>
+          ISBN: 0-12-307350-2,<br>
+          LC: TA357.G86.
+        </li>
+        <li>
+          John Burkardt, Max Gunzburger, Hyung-Chun Lee,<br>
+          Centroidal Voronoi Tessellation-Based Reduced-Order
+          Modelling of Complex Systems,<br>
+          SIAM Journal on Scientific Computing,<br>
+          Volume 28, Number 2, 2006, pages 459-484.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "inout.f">inout.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "inout.sh">inout.sh</a>,
+          commands to compile, link and load the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <b>RUN1</b> is a run of the program used to generated "snapshots", which
+      are flow solutions at equally spaced time intervals.  The program
+      expects an input file, containing coefficients that define the
+      solution at the initial time.  During this run, the boundary conditions
+      are varied in a way that is intended to make the system exhibit
+      many varied behaviors.  (Right now, to change the boundary conditions
+      requires altering the source code of the program.)
+      <ul>
+        <li>
+          <a href = "fuini_run1.txt">fuini_run1.txt</a>, an input file of
+          initial solution coefficient values, for the run that generates
+          snapshots.
+        </li>
+        <li>
+          <a href = "inout_run1.out">inout_run1.out</a>, an output file
+          containing printed messages from the program.
+        </li>
+        <li>
+          <a href = "elenode.dat">elenode.dat</a>, an output file
+          containing the number of nodes and elements, the node coordinates,
+          and the node indices that form each element.
+        </li>
+        <li>
+          The 500 snapshot files created by this run are available in
+          <a href = "../../datasets/inout_flow/inout_flow.html">
+          the INOUT snapshot dataset</a>.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>MAIN</b> is the main program for INOUT.
+        </li>
+        <li>
+          <b>CH_IS_DIGIT</b> returns TRUE if a character is a decimal digit.
+        </li>
+        <li>
+          <b>CH_TO_DIGIT</b> returns the integer value of a base 10 digit.
+        </li>
+        <li>
+          <b>DAXPY</b> adds a multiple of one vector to another.
+        </li>
+        <li>
+          <b>DDOT</b> forms the dot product of two vectors.
+        </li>
+        <li>
+          <b>DGBFA</b> factors a double precision band matrix by elimination.
+        </li>
+        <li>
+          <b>DGBSL</b> solves a double precision band linear system.
+        </li>
+        <li>
+          <b>DIGIT_INC</b> increments a decimal digit.
+        </li>
+        <li>
+          <b>DIGIT_TO_CH</b> returns the character representation of a decimal digit.
+        </li>
+        <li>
+          <b>DSCAL</b> scales a vector by a constant.
+        </li>
+        <li>
+          <b>FILE_NAME_INC</b> generates the next filename in a series.
+        </li>
+        <li>
+          <b>GRID_WRITE</b> writes the node and element information to a file.
+        </li>
+        <li>
+          <b>IDAMAX</b> finds the vector element of largest magnitude.
+        </li>
+        <li>
+          <b>NSTOKE</b> solves the Navier-Stokes equations using Taylor-Hood elements.
+        </li>
+        <li>
+          <b>REFBSP</b> evaluates a linear basis functions on the reference triangle.
+        </li>
+        <li>
+          <b>REFQBF</b> evaluates quadratic basis functions on the reference triangle.
+        </li>
+        <li>
+          <b>SETGRD</b> sets up the grid for the problem.
+        </li>
+        <li>
+          <b>SOLUTION_INIT</b> returns an initial value for the solution coefficient vector.
+        </li>
+        <li>
+          <b>TRANS</b> transforms data between the reference and physical elements.
+        </li>
+        <li>
+          <b>UBDRY</b> evaluates the boundary conditions.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 02 December 2006.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

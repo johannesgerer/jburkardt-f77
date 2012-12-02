@@ -1,0 +1,15 @@
+27 October   2008  11:50:35.163 AM      
+ 
+SPARSEKIT_PRB07
+  FORTRAN77 version
+ 
+  Generate a Markov chain matrix to test the
+  eigenvalue routine.
+ 
+  The matrix has been stored in Harwell/Boeing format
+  in the file "markov.mat".
+ 
+SPARSEKIT_PRB07
+  Normal end of execution.
+ 
+27 October   2008  11:50:35.166 AM      

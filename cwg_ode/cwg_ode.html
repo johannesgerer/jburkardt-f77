@@ -1,0 +1,213 @@
+<html>
+
+  <head>
+    <title>
+      CWG_ODE - Three ODE Solvers by William Gear.
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      CWG_ODE <br> Three ODE Solvers by William Gear.
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>CWG_ODE</b>
+      is a FORTRAN77 library which
+      includes three solvers for systems of ordinary differential equations,
+      written by C William Gear.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../m_src/dfield8/dfield8.html">
+      DFIELD8</a>,
+      a MATLAB program which
+      interactively displays the direction field of a differential equation,
+      by John Polking.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/driv/driv.html">
+      DRIV</a>,
+      a FORTRAN77 library which
+      solves real or complex systems of ordinary differential equations;
+    </p>
+
+    <p>
+      <a href = "../../f_src/nms/nms.html">
+      NMS</a>
+      a FORTRAN90 library which
+      includes the <b>DDRIV</b> package of ODE solvers.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/ode/ode.html">
+      ODE</a>,
+      a FORTRAN77 library which
+      solves a system of ordinary differential equations,
+      by Shampine and Gordon.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/odepack/odepack.html">
+      ODEPACK</a>,
+      a FORTRAN77 library which
+      contains nine ODE solvers, including LSODE, LSODES, LSODA,
+      LSODAR, LSODPK, LSODKR, LSODI, LSOIBT, and LSODIS,
+      by Alan Hindmarsh.
+    </p>
+
+    <p>
+      <a href = "../../m_src/pplane8/pplane8.html">
+      PPLANE8</a>,
+      a MATLAB program which
+      interactively displays the phase plane of a differential equation,
+      by John Polking.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/rk4/rk4.html">
+      RK4</a>,
+      a FORTRAN77 library which
+      applies the fourth order Runge-Kutta algorithm to estimate the
+      solution of an ordinary differential equation at the next time step.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/rkf45/rkf45.html">
+      RKF45</a>,
+      a FORTRAN77 library which
+      implements the Runge-Kutta-Fehlberg ODE solver.
+    </p>
+
+    <p>
+      <a href = "../../f_src/test_ode/test_ode.html">
+      TEST_ODE</a>,
+      a FORTRAN90 library which
+      contains routines which define some test problems for ODE solvers.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Charles Gear,<br>
+          Numerical Initial Value Problems in Ordinary Differential
+          Equations,<br>
+          Prentice-Hall, 1971,<br>
+          ISBN: 0136266061,<br>
+          LC: QA372.G4.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "cwg_ode.f">cwg_ode.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "cwg_ode.sh">cwg_ode.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "cwg_ode_prb.f">cwg_ode_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "cwg_ode_prb.sh">cwg_ode_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "cwg_ode_prb_output.txt">cwg_ode_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>SRKODE</b> applies a Runge-Kutta method to differential equations.
+        </li>
+        <li>
+          <b>SRK1</b> performs one Runge Kutta step.
+        </li>
+        <li>
+          <b>SPRODE</b> uses polynomial or rational approximation to solve ODE's.
+        </li>
+        <li>
+          <b>SMVODE</b> solves an ODE with a multi-value method.
+        </li>
+        <li>
+          <b>PDUMMY</b> is a dummy derivative routine for calls to SMVODE with mf.ne.1.
+        </li>
+        <li>
+          <b>SGEFA</b> factors a matrix by gaussian elimination.
+        </li>
+        <li>
+          <b>SGESL</b> solves a linear system that was factored by SGEFA.
+        </li>
+        <li>
+          <b>ISAMAX</b> finds the index of element having maximum absolute value.
+        </li>
+        <li>
+          <b>SAXPY</b> computes constant times a vector plus a vector.
+        </li>
+        <li>
+          <b>SDOT</b> forms the dot product of two vectors.
+        </li>
+        <li>
+          <b>SSCAL</b> scales a vector by a constant.
+        </li>
+        <li>
+          <b>TIMESTAMP</b> prints out the current YMDHMS date as a timestamp.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 7 December 2007.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

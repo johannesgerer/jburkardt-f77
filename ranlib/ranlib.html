@@ -1,0 +1,459 @@
+<html>
+
+  <head>
+    <title>
+      RANLIB - Random Number Generators
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      RANLIB <br> Random Number Generators
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>RANLIB</b>
+      a FORTRAN77 library which
+      can generate samples from a variety of probability density functions.
+    </p>
+
+    <p>
+      The routines, and the probability density functions they sample, include:
+      <ul>
+        <li>
+          <b>GENBET</b>, Beta distribution;
+        </li>
+        <li>
+          <b>GENCHI</b>, Chi-Square distribution;
+        </li>
+        <li>
+          <b>GENEXP</b>, Exponential distribution;
+        </li>
+        <li>
+          <b>GENF</b>, F distribution;
+        </li>
+        <li>
+          <b>GENGAM</b>, Gamma distribution;
+        </li>
+        <li>
+          <b>GENMN</b>, multivariate normal distribution;
+        </li>
+        <li>
+          <b>GENMUL</b>, multinomial distribution;
+        </li>
+        <li>
+          <b>GENNCH</b>, noncentral Chi-Square distribution;
+        </li>
+        <li>
+          <b>GENNF</b>, noncentral F distribution;
+        </li>
+        <li>
+          <b>GENNOR</b>, normal distribution;
+        </li>
+        <li>
+          <b>GENUNF</b>, uniform distribution on [0,1];
+        </li>
+        <li>
+          <b>IGNBIN</b>, binomial distribution;
+        </li>
+        <li>
+          <b>IGNLGI</b>, uniform distribution on integers between 1 and 2147483562;
+        </li>
+        <li>
+          <b>IGNNBN</b>, negative binomial distribution.
+        </li>
+        <li>
+          <b>IGNPOI</b>, Poisson distribution.
+        </li>
+        <li>
+          <b>IGNUIN</b>, uniform distribution on integers in a given range.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/cvt/cvt.html">
+      CVT</a>,
+      a FORTRAN90 library which
+      computes elements of a Centroidal Voronoi Tessellation.
+    </p>
+
+    <p>
+      <a href = "../../f_src/faure/faure.html">
+      FAURE</a>,
+      a FORTRAN90 library which
+      computes elements of a Faure quasirandom sequence.
+    </p>
+
+    <p>
+      <a href = "../../f_src/grid/grid.html">
+      GRID</a>,
+      a FORTRAN90 library which
+      computes elements of a grid dataset.
+    </p>
+
+    <p>
+      <a href = "../../f_src/halton/halton.html">
+      HALTON</a>,
+      a FORTRAN90 library which
+      computes elements of a Halton quasirandom sequence.
+    </p>
+
+    <p>
+      <a href = "../../f_src/hammersley/hammersley.html">
+      HAMMERSLEY</a>,
+      a FORTRAN90 library which
+      computes elements of a Hammersley quasirandom sequence.
+    </p>
+
+    <p>
+      <a href = "../../f_src/hex_grid/hex_grid.html">
+      HEX_GRID</a>,
+      a FORTRAN90 library which
+      computes elements of a hexagonal grid dataset.
+    </p>
+
+    <p>
+      <a href = "../../f_src/hex_grid_angle/hex_grid_angle.html">
+      HEX_GRID_ANGLE</a>,
+      a FORTRAN90 library which
+      computes elements of an angled hexagonal grid dataset.
+    </p>
+
+    <p>
+      <a href = "../../f_src/ihs/ihs.html">
+      IHS</a>,
+      a FORTRAN90 library which
+      computes elements of an improved distributed Latin hypercube dataset.
+    </p>
+
+    <p>
+      <a href = "../../f_src/latin_center/latin_center.html">
+      LATIN_CENTER</a>,
+      a FORTRAN90 library which
+      computes elements of a Latin Hypercube dataset, choosing center points.
+    </p>
+
+    <p>
+      <a href = "../../f_src/latin_edge/latin_edge.html">
+      LATIN_EDGE</a>,
+      a FORTRAN90 library which
+      computes elements of a Latin Hypercube dataset, choosing edge points.
+    </p>
+
+    <p>
+      <a href = "../../f_src/latin_random/latin_random.html">
+      LATIN_RANDOM</a>,
+      a FORTRAN90 library which
+      computes elements of a Latin Hypercube dataset, choosing
+      points at random.
+    </p>
+
+    <p>
+      <a href = "../../f_src/lcvt/lcvt.html">
+      LCVT</a>,
+      a FORTRAN90 library which
+      computes a latinized Centroidal Voronoi Tessellation.
+    </p>
+
+    <p>
+      <a href = "../../f_src/niederreiter2/niederreiter2.html">
+      NIEDERREITER2</a>,
+      a FORTRAN90 library which
+      computes elements of a Niederreiter quasirandom sequence with base 2.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/normal/normal.html">
+      NORMAL</a>,
+      a FORTRAN77 library which
+      computes elements of a
+      sequence of pseudorandom normally distributed values.
+    </p>
+
+    <p>
+      <a href = "../../f_src/sobol/sobol.html">
+      SOBOL</a>,
+      a FORTRAN90 library which
+      computes elements of a Sobol quasirandom sequence.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/uniform/uniform.html">
+      UNIFORM</a>,
+      a FORTRAN77 library which
+      computes elements of a pseudorandom uniform sequence.
+    </p>
+
+    <p>
+      <a href = "../../f_src/van_der_corput/van_der_corput.html">
+      VAN_DER_CORPUT</a>,
+      a FORTRAN90 library which
+      computes elements of a van der Corput quasirandom sequence.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Joachim Ahrens, Ulrich Dieter,<br>
+          Computer Methods for Sampling From the
+          Exponential and Normal Distributions,<br>
+          Communications of the ACM,<br>
+          Volume 15, Number 10, October 1972, pages 873-882.
+        </li>
+        <li>
+          Joachim Ahrens, Ulrich Dieter,<br>
+          Generating Gamma Variates by a Modified Rejection Technique,<br>
+          Communications of the ACM,<br>
+          Volume 25, Number 1, January 1982, pages 47-54.
+        </li>
+        <li>
+          Joachim Ahrens, Ulrich Dieter,<br>
+          Computer Generation of Poisson Deviates
+          From Modified Normal Distributions,<br>
+          ACM Transactions on Mathematical Software,<br>
+          Volume 8, Number 2, June 1982, pages 163-179.
+        </li>
+        <li>
+          Joachim Ahrens, Ulrich Dieter,<br>
+          Computer Methods for Sampling from Gamma, Beta, Poisson and
+          Binomial Distributions,<br>
+          Computing,<br>
+          Volume 12, Number 3, September 1974, pages 223-246.
+        </li>
+        <li>
+          Joachim Ahrens, Ulrich Dieter,<br>
+          Extensions of Forsythe's Method for Random
+          Sampling from the Normal Distribution,<br>
+          Mathematics of Computation,<br>
+          Volume 27, Number 124, October 1973, page 927-937.
+        </li>
+        <li>
+          Russell Cheng,<br>
+          Generating Beta Variates with Nonintegral Shape Parameters,<br>
+          Communications of the ACM,<br>
+          Volume 21, 1978, pages 317-322.
+        </li>
+        <li>
+          Luc Devroye,<br>
+          Non-Uniform Random Variate Generation,<br>
+          Springer, 1986,<br>
+          ISBN: 0387963057,<br>
+          LC: QA274.D48.
+        </li>
+        <li>
+          Voratas Kachitvichyanukul, Bruce Schmeiser,<br>
+          Binomial Random Variate Generation,<br>
+          Communications of the ACM,<br>
+          Volume 31, Number 2, February 1988, page 216-222.
+        </li>
+        <li>
+          Pierre LEcuyer, Serge Cote,<br>
+          Implementing a Random Number Package with Splitting Facilities,<br>
+          ACM Transactions on Mathematical Software,<br>
+          Volume 17, 1991, pages 98-111.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "ranlib.f">ranlib.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "ranlib.sh">ranlib.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "ranlib_prb.f">ranlib_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "ranlib_prb.sh">ranlib_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "ranlib_prb_output.txt">ranlib_prb_output.txt</a>,
+          the output from a run of the sample program.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>ADVNST</b> advances the state of the current generator.
+        </li>
+        <li>
+          <b>GENBET</b> generates a BETA random deviate.
+        </li>
+        <li>
+          <b>GENCHI</b> generates a Chi-Square random deviate.
+        </li>
+        <li>
+          <b>GENEXP</b> generates an exponential random deviate.
+        </li>
+        <li>
+          <b>GENF</b> generates an F random deviate.
+        </li>
+        <li>
+          <b>GENGAM</b> generates a Gamma random deviate.
+        </li>
+        <li>
+          <b>GENMN</b> generates a multivariate normal deviate.
+        </li>
+        <li>
+          <b>GENMUL</b> generates a multinomial random deviate.
+        </li>
+        <li>
+          <b>GENNCH</b> generates a noncentral Chi-Square random deviate.
+        </li>
+        <li>
+          <b>GENNF</b> generates a noncentral F random deviate.
+        </li>
+        <li>
+          <b>GENNOR</b> generates a normal random deviate.
+        </li>
+        <li>
+          <b>GENPRM</b> generates and applies a random permutation to an array.
+        </li>
+        <li>
+          <b>GENUNF</b> generates a uniform random deviate.
+        </li>
+        <li>
+          <b>GETCGN</b> gets the index of the current random number generator.
+        </li>
+        <li>
+          <b>SETCGN</b> sets the current random number generator.
+        </li>
+        <li>
+          <b>GETSD</b> returns the value of the random number generator seeds.
+        </li>
+        <li>
+          <b>IGNBIN</b> generates a binomial random deviate.
+        </li>
+        <li>
+          <b>IGNLGI</b> generates a random positive integer.
+        </li>
+        <li>
+          <b>IGNNBN</b> generates a negative binomial random deviate.
+        </li>
+        <li>
+          <b>IGNPOI</b> generates a Poisson random deviate.
+        </li>
+        <li>
+          <b>IGNUIN</b> generates a random integer in a given range.
+        </li>
+        <li>
+          <b>INITGN</b> initializes the current random number generator.
+        </li>
+        <li>
+          <b>INRGCM</b> initializes the random number generator common memory.
+        </li>
+        <li>
+          <b>LENNOB</b> counts the length of a string, ignoring trailing blanks.
+        </li>
+        <li>
+          <b>MLTMOD</b> carries out modular multiplication.
+        </li>
+        <li>
+          <b>PHRTST</b> converts a phrase to a pair of random number generator seeds.
+        </li>
+        <li>
+          <b>QRGNIN</b> determines whether the random number generator was initialized.
+        </li>
+        <li>
+          <b>QRGNSN</b> records whether the random number generator was initialized.
+        </li>
+        <li>
+          <b>RANF</b> returns a uniform random number.
+        </li>
+        <li>
+          <b>SETALL</b> sets the initial seeds of all the generators.
+        </li>
+        <li>
+          <b>RGNQSD</b> queries whether the random number seed was set.
+        </li>
+        <li>
+          <b>SETANT</b> sets the antithetic switch.
+        </li>
+        <li>
+          <b>SETGMN</b> sets the routine that generates multivariate normal deviates.
+        </li>
+        <li>
+          <b>SETSD</b> sets the seed of the current random number generator.
+        </li>
+        <li>
+          <b>SEXPO</b> evaluates the standard exponential distribution.
+        </li>
+        <li>
+          <b>SGAMMA</b> evaluates the standard Gamma distribution.
+        </li>
+        <li>
+          <b>SNORM</b> evaluates the standard normal distribution.
+        </li>
+        <li>
+          <b>COVAR</b> computes the covariance of two vectors.
+        </li>
+        <li>
+          <b>PRCOMP</b> prints covariance information.
+        </li>
+        <li>
+          <b>SETCOV</b> sets a covariance matrix from variance and common correlation.
+        </li>
+        <li>
+          <b>STATS</b> computes statistics.
+        </li>
+        <li>
+          <b>TRSTAT</b> returns the mean and variance for distributions.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 10 December 2007.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

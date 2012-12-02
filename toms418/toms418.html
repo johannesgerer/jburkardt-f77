@@ -1,0 +1,155 @@
+<html>
+
+  <head>
+    <title>
+      TOMS418 - Filon Quadrature
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS418 <br> Filon Quadrature
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS418</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 418, for the approximate integration
+      of functions of the form F(X)*COS(W*X) or F(X)*SIN(W*X).
+    </p>
+
+    <p>
+      While the text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>, most of the early
+      algorithms are not available.  This is one of them.  I typed it
+      in.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <dl>
+        <dt>
+          <b>call fspl2 ( f, a, b, fpa, fpb, fba, fbb, w, eps, max,
+            lc, ls, c, s )</b>
+        </dt>
+        <dd>
+          estimates the integral of F(X)*COS(W*X) and F(X)*SIN(W*X).
+        </dd>
+      </dl>
+    </p>
+
+    <h3 align = "center">
+      Related Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/intlib/intlib.html">
+      INTLIB</a>,
+      a FORTRAN90 library which
+      includes routines to do Filon quadrature.
+    </p>
+
+    <h3 align = "center">
+      Author:
+    </h3>
+
+    <p>
+      Bo Einarsson
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Bo Einarsson,<br>
+          Algorithm 418: Calculation of Fourier Integrals,<br>
+          Communications of the ACM,<br>
+          Volume 15, Number 1, January 1972, pages 47-48.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms418.f">toms418.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms418.sh">toms418.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms418_prb.f">toms418_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms418_prb.sh">toms418_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms418_prb_output.txt">toms418_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>FSPL2</b> carries out the Filon quadrature.
+        </li>
+        <li>
+          <b>ENDT2</b> performs Richardson extrapolation.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 30 November 2005.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

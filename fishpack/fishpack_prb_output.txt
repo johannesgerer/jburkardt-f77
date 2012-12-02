@@ -1,0 +1,237 @@
+21 December  2011   9:12:01.876 PM      
+ 
+FISHPACK_PRB
+  FORTRAN77 version
+  Test the FISHPACK library.
+  
+ TEST01: HWSCRT example
+ the output from the NCAR Control Data 7600 was
+ ierror = 0
+ discretization error = 5.36508e-04
+ required length of w array = 880
+ the output from your computer is
+ ierror = 0
+ discretization error = 5.11169E-04
+ required length of w array = 880
+ Test passed.
+  
+ TEST02: HWSPLR example
+ the output from the NCAR Control Data 7600 was
+ ierror = 0
+ discretization error = 6.19134e-04
+ required length of w array = 882
+ the output from your computer is
+ ierror = 0
+ discretization error = 6.22600E-04
+ required length of W array = 882
+ Test passed.
+  
+ TEST03: HWSCYL example
+ the output from the NCAR Control Data 7600 was
+ ierror = 0
+ pertrb = 2.26734e-04
+ discretization error = 3.73672e-04
+ required length of w array = 1118
+ the output from your computer is
+ ierror = 0
+ pertrb = 0.22698E-03
+ discretization error = 3.62515E-04
+ required length of w array =1118
+ Test passed.
+  
+ TEST04: HWSSP example
+ the output from the NCAR Control Data 7600 was
+ ierror = 0
+ discretization error = 3.38107e-03
+ required length of w array = 600
+ the output from your computer is
+ ierror = 0
+ discretization error = 3.37398E-03
+ required length of W array = 600
+ Test passed.
+  
+ TEST05: HWSCSP example 1
+ the output from the NCAR Control Data 7600 was
+ ierror = 0
+ discretization error = 7.99842e-04
+ required length of w array = 775
+ the output from your computer is
+ ierror = 0
+ discretization error = 7.99537E-04
+ required length of w array = 775
+ Test passed.
+  
+ TEST06: HWSCSP example 2
+ the output from the NCAR Control Data 7600 was
+ ierror = 0
+ discretization error = 5.86824e-05
+ required length of w array = 775
+ the output from your computer is
+ ierror = 0
+ discretization error = 5.83231E-05
+ required length of w array = 775
+ Test passed.
+  
+ TEST07: GENBUN example
+ the output from the NCAR Control Data 7600 was
+ ierror = 0
+ discretization error = 7.94113e-03
+ required length of w array = 740
+ the output from your computer is
+ ierror = 0
+ discretization error = 7.94208E-03
+ required length of W array = 740
+ Test passed.
+  
+ TEST08: BLKTRI example
+ the output from the NCAR Control Data 7600 was
+ ierror = 0
+ discretization error = 1.6478e-05
+ required length of w array = 823
+ the output from your computer is
+ ierror = 0
+ discretization error = 7.98312E-04
+ required length of w array = 823
+ Test passed
+  
+ TEST09
+ test hwscrt, helmholtz equation,
+ 2-d cartesian coordinates.
+  
+  
+ hwscrt computed approximate solution.
+  
+    0.000      0.4000E-01  0.1600      0.3600      0.6400       1.000    
+    3929.       2364.       1577.       1126.       844.6      0.5236E-01
+    1.000      0.1962E-43  0.5740E-41  0.2471E-39
+   0.4000E-01  0.8000E-01  0.2000      0.4000      0.6800       1.040    
+    0.000       2196.       1485.       1070.       808.1      0.8371    
+    0.000      0.2803E-44  0.8408E-44  0.1401E-44
+   0.1600      0.2000      0.3200      0.5200      0.8000       1.160    
+    1.000       2046.       1401.       1019.       773.9      0.3125E-01
+    1.000      0.2766E+20  0.2246E-39   0.000    
+   0.3600      0.4000      0.5200      0.7200       1.000       1.360    
+    0.000       1911.       1323.       970.3       741.8      0.7813E-02
+    1.000      0.4592E-40  0.1401E-44   0.000    
+   0.6400      0.6800      0.8000       1.000       1.280       1.640    
+    2761.       1789.       1252.       925.5       711.7       32.25    
+   0.2000      0.4838E-40  0.4344E-43  0.2471E-39
+    1.000       1.040       1.160       1.360       1.640       2.000    
+    2551.       1678.       1187.       883.6       683.4       32.77    
+   0.2000      0.1401E-44   0.000      0.1401E-44
+  
+ TEST10
+ test hwsplr, helmholtz equation,
+ 2-d polar coordinates.
+  
+  
+ HWSPLR computed approximate solution.
+  
+    1.000       1.000       1.000       1.000       1.000       1.000    
+    1.440       1.440       1.440       1.440       1.440       1.440    
+    1.960       1.960       1.960       1.960       1.960       1.960    
+    2.560       2.560       2.560       2.560       2.560       2.560    
+    3.240       3.240       3.240       3.240       3.240       3.240    
+    4.000       4.000       4.000       4.000       4.000       4.000    
+ 
+TEST11
+  An example of the direct use of BLKTRI.
+ 
+I, X(I)
+ 
+           0   0.0000000    
+           1  0.16666667    
+           2  0.33333334    
+           3  0.50000000    
+           4  0.66666669    
+           5  0.83333331    
+           6   1.0000000    
+ 
+J, Y(J)
+ 
+           0   0.0000000    
+           1  0.16666667    
+           2  0.33333334    
+           3  0.50000000    
+           4  0.66666669    
+           5  0.83333331    
+           6   1.0000000    
+ 
+I,J,YY(I,J)
+ 
+     1     1    0.555556E-01
+     1     2     0.00000    
+     1     3   -0.138889    
+     1     4   -0.333333    
+     1     5    -1.61111    
+ 
+     2     1     0.00000    
+     2     2    0.111111    
+     2     3    0.111111    
+     2     4    0.111111    
+     2     5    -1.00000    
+ 
+     3     1   -0.138889    
+     3     2    0.111111    
+     3     3    0.111111    
+     3     4    0.111111    
+     3     5    -1.13889    
+ 
+     4     1   -0.333333    
+     4     2    0.111111    
+     4     3    0.111111    
+     4     4    0.111111    
+     4     5    -1.33333    
+ 
+     5     1    -1.61111    
+     5     2    -1.00000    
+     5     3    -1.13889    
+     5     4    -1.33333    
+     5     5    -3.27778    
+ 
+ 
+  Call with FLAG = 0 to initialize.
+ 
+  BLKTRI requires W dimension at least       54
+ 
+  Call with FLAG = 1 to solve the system.
+ 
+I,J,TRUE,YY(I,J),ERR
+ 
+     1     1  0.555556E-01    0.555559E-01    0.312924E-06
+     2     1  0.138889        0.138889        0.581145E-06
+     3     1  0.277778        0.277779        0.774860E-06
+     4     1  0.472222        0.472223        0.834465E-06
+     5     1  0.722222        0.722223        0.655651E-06
+ 
+     1     2  0.138889        0.138890        0.685453E-06
+     2     2  0.222222        0.222223        0.122190E-05
+     3     2  0.361111        0.361113        0.166893E-05
+     4     2  0.555556        0.555557        0.190735E-05
+     5     2  0.805556        0.805557        0.166893E-05
+ 
+     1     3  0.277778        0.277779        0.864267E-06
+     2     3  0.361111        0.361113        0.151992E-05
+     3     3  0.500000        0.500002        0.190735E-05
+     4     3  0.694444        0.694446        0.190735E-05
+     5     3  0.944444        0.944446        0.137091E-05
+ 
+     1     4  0.472222        0.472223        0.116229E-05
+     2     4  0.555556        0.555558        0.196695E-05
+     3     4  0.694444        0.694447        0.238419E-05
+     4     4  0.888889        0.888891        0.238419E-05
+     5     4   1.13889         1.13889        0.190735E-05
+ 
+     1     5  0.722222        0.722223        0.596046E-06
+     2     5  0.805556        0.805556        0.834465E-06
+     3     5  0.944444        0.944445        0.101328E-05
+     4     5   1.13889         1.13889        0.107288E-05
+     5     5   1.38889         1.38889        0.715256E-06
+ 
+  Maximum error is   0.238419E-05
+  I, J =    3     4
+ 
+FISHPACK_PRB:
+  Normal end of execution.
+ 
+21 December  2011   9:12:01.903 PM      

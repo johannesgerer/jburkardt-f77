@@ -1,0 +1,378 @@
+<html>
+
+  <head>
+    <title>
+      MATMUL - A Matrix Multiplication Benchmark
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      MATMUL <br> A Matrix Multiplication Benchmark
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>MATMUL</b>
+      is a FORTRAN77 program which
+      compares various methods for computing the matrix product
+      <pre><b>
+        A * B = C.
+      </b></pre>
+    </p>
+
+    <p>
+      <b>MATMUL</b> can do this for a variety of matrix sizes, and for different
+      arithmetics (real, complex, double precision, integer, even logical!)
+      There are many algorithms built in, including the
+      simple triple DO loop (actually not so simple; there are 6 ways to
+      set it up), some unrolling techniques, and the level 1 and 2 BLAS
+      routines.
+    </p>
+
+    <p>
+      <b>MATMUL</b> is interactive, so the user can easily pursue any
+      line of inquiry that seems promising.  New algorithms or locally
+      available methods are not to hard to add.
+    </p>
+
+    <h3 align = "center">
+      Licensing:
+    </h3>
+
+    <p>
+      The computer code and data files described and made available on this web page
+      are distributed under
+      <a href = "../../txt/gnu_lgpl.txt">the GNU LGPL license.</a>
+    </p>
+
+    <h3 align = "center">
+      Languages:
+    </h3>
+
+    <p>
+      <b>MATMUL</b> is available in
+      <a href = "../../c_src/matmul/matmul.html">a C version</a> and
+      <a href = "../../f77_src/matmul/matmul.html">a FORTRAN77 version</a> and
+      <a href = "../../f_src/matmul/matmul.html">a FORTRAN90 version.</a>
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f77_src/linpack_bench/linpack_bench.html">
+      LINPACK_BENCH</a>,
+      a FORTRAN77 program which
+      measures the time needed to
+      factor and solve a linear system.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/mdbnch/mdbnch.html">
+      MDBNCH</a>,
+      a FORTRAN77 program which
+      is a benchmark
+      code for a molecular dynamics calculation.
+    </p>
+
+    <p>
+      <a href = "../../f_src/memory_test/memory_test.html">
+      MEMORY_TEST</a>,
+      a FORTRAN90 program which
+      declares and uses a sequence of larger
+      and larger vectors, to see how big a vector can be used on a given
+      machine and compiler.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/mxm/mxm.html">
+      MXM</a>,
+      a FORTRAN77 program which
+      sets up a matrix multiplication problem A=B*C of arbitrary size,
+      and compares the time required for IJK, IKJ, JIK, JKI, KIJ and KJI orderings
+      of the loops.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/nas/nas.html">
+      NAS</a>,
+      a FORTRAN77 program which
+      runs the NASA kernel benchmark.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/sum_million/sum_million.html">
+      SUM_MILLION</a>,
+      a FORTRAN77 program which
+      sums the integers from 1 to 1,000,000, as a demonstration of how
+      to rate a computer's speed;
+    </p>
+
+    <p>
+      <a href = "../../f77_src/timer/timer.html">
+      TIMER</a>,
+      a FORTRAN77 program which
+      demonstrates how to
+      compute CPU time or elapsed time.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          John Burkardt, Paul Puglielli,<br>
+          Pittsburgh Supercomputing Center,<br>
+          <a href = "../../pdf/matmul.pdf">
+            MATMUL: An Interactive Matrix Multiplication Benchmark
+          </a>
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "matmul.f">matmul.f</a>, the source code;
+        </li>
+        <li>
+          <a href = "matmul.sh">matmul.sh</a>,
+          commands to compile and load the source code;
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "matmul_input.txt">matmul_input.txt</a>, sample input commands;
+        </li>
+        <li>
+          <a href = "matmul_osx.txt">matmul_osx.txt</a>,
+          the output file on an Apple Macintosh PowerG5;
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>MAIN</b> is the main program for MATMUL.
+        </li>
+        <li>
+          <b>C_CAP</b> capitalizes a single character.
+        </li>
+        <li>
+          <b>CHRCHP</b> "chops out" a portion of a string, and closes up the hole.
+        </li>
+        <li>
+          <b>CHRCTI</b> reads an integer from a string.
+        </li>
+        <li>
+          <b>CHRDB1</b> removes blanks from a string, left justifying the remainder.
+        </li>
+        <li>
+          <b>CIJK</b> computes A = B*C using index order IJK and complex arithmetic.
+        </li>
+        <li>
+          <b>CSET</b> initializes the complex A, B and C matrices.
+        </li>
+        <li>
+          <b>DIGTEN</b> returns the integer value of a base 10 digit.
+        </li>
+        <li>
+          <b>DIJK</b> multiplies A = B*C using index order IJK and double precision.
+        </li>
+        <li>
+          <b>DOMETHOD</b> calls a specific multiplication routine.
+        </li>
+        <li>
+          <b>DSET</b> initializes the double precision A, B and C matrices.
+        </li>
+        <li>
+          <b>GETN</b> determines the problem sizes desired by the user.
+        </li>
+        <li>
+          <b>GET_ORDER</b> reads a new value of order from the user.
+        </li>
+        <li>
+          <b>GETSHO</b> determines what items the user wishes to print out.
+        </li>
+        <li>
+          <b>HEADER</b> prints out a header for the results.
+        </li>
+        <li>
+          <b>HELLO</b> says hello to the user, printing the version, machine, and so on.
+        </li>
+        <li>
+          <b>HELP</b> prints a list of the available commands.
+        </li>
+        <li>
+          <b>IJK</b> multiplies A = B*C using index order IJK.
+        </li>
+        <li>
+          <b>IJUK</b> multiplies A = B*C using index order IJK and unrolling.
+        </li>
+        <li>
+          <b>IKJ</b> multiplies A = B*C using index order IKJ.
+        </li>
+        <li>
+          <b>INIT</b> initializes data.
+        </li>
+        <li>
+          <b>ISET</b> initializes the integer A, B and C matrices.
+        </li>
+        <li>
+          <b>IUJK</b> multiplies A = B*C using index order IJK, and unrolling on J.
+        </li>
+        <li>
+          <b>JIK</b> multiplies A = B*C using index order JIK.
+        </li>
+        <li>
+          <b>JKI</b> multiplies A = B*C using index order JKI.
+        </li>
+        <li>
+          <b>KIJ</b> multiplies A = B*C using index order KIJ.
+        </li>
+        <li>
+          <b>KJI</b> multiplies A = B*C using index order KJI.
+        </li>
+        <li>
+          <b>LIJK</b> "multiplies" A = B*C using index order IJK, using logical data.
+        </li>
+        <li>
+          <b>LSET</b> initializes the logical A, B and C matrices.
+        </li>
+        <li>
+          <b>MIJK</b> multiplies A = B*C using index order IJK.
+        </li>
+        <li>
+          <b>MKJI</b> multiplies A = B*C using index order KJI and multitasking.
+        </li>
+        <li>
+          <b>MULT</b> carries out the matrix multiplication, using the requested method.
+        </li>
+        <li>
+          <b>NIJK</b> multiplies A = B*C using index order IJK, using integer arithmetic.
+        </li>
+        <li>
+          <b>NIJK46</b> multiplies A = B*C using index order IJK, and integer arithmetic.
+        </li>
+        <li>
+          <b>NSTEP</b> is used when a set of values of N is being generated.
+        </li>
+        <li>
+          <b>PRINTR</b> prints out those parameters the user wants to see.
+        </li>
+        <li>
+          <b>REPORT</b> reports the results for each multiplication experiment.
+        </li>
+        <li>
+          <b>RSET</b> initializes the real A, B and C matrices.
+        </li>
+        <li>
+          <b>S_CAP</b> replaces any lowercase letters by uppercase ones in a string.
+        </li>
+        <li>
+          <b>S_EQI</b> is a case insensitive comparison of two strings for equality.
+        </li>
+        <li>
+          <b>S_LENGTH</b> returns the length of a string up to the last nonblank.
+        </li>
+        <li>
+          <b>MATMUL_CPU_TIMER</b> computes total CPU seconds.
+        </li>
+        <li>
+          <b>MATMUL_REAL_TIMER</b> returns a reading of the real time clock.
+        </li>
+        <li>
+          <b>SIJK</b> multiplies A = B*C using index order IJK, and no Cray vectorization.
+        </li>
+        <li>
+          <b>TAXPY</b> is unoptimized standard BLAS routine SAXPY.
+        </li>
+        <li>
+          <b>TDOT</b> computes the inner product of two vectors.
+        </li>
+        <li>
+          <b>TERBLA</b> is the source code for the BLAS error handler.
+        </li>
+        <li>
+          <b>TGEMM</b> is a source code copy of SGEMM, a BLAS matrix * matrix routine.
+        </li>
+        <li>
+          <b>TGEMVF</b> is a source code copy of BLAS SGEMVF, a matrix * vector routine.
+        </li>
+        <li>
+          <b>TLSAME</b> is a source code copy of BLAS LSAME, testing character equality.
+        </li>
+        <li>
+          <b>UIJK</b> multiplies A = B*C using index order IJK and I unrolling to depth 4.
+        </li>
+        <li>
+          <b>UMXMA</b> multiplies A = B*C using optimized MXMA.
+        </li>
+        <li>
+          <b>USAXPYC</b> multiplies A = B*C columnwise, using optimized SAXPY.
+        </li>
+        <li>
+          <b>USAXPYR</b> multiplies A = B*C "rowwise", using optimized SAXPY.
+        </li>
+        <li>
+          <b>USDOT</b> multiplies A = B*C using optimized SDOT.
+        </li>
+        <li>
+          <b>USGEMM</b> multiplies A = B*C using optimized SGEMM.
+        </li>
+        <li>
+          <b>USGEMMS</b> multiplies A = B*C using optimized SGEMMS.
+        </li>
+        <li>
+          <b>UTAXPYC</b> multiplies A = B*C columnwise, using unoptimized SAXPY.
+        </li>
+        <li>
+          <b>UTAXPYR</b> multiplies A = B*C rowwise using source code SAXPY.
+        </li>
+        <li>
+          <b>UTDOT</b> multiplies A = B * C using source code SDOT.
+        </li>
+        <li>
+          <b>UTGEMM</b> multiplies A = B*C using SGEMM.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 23 March 2008.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+</html>

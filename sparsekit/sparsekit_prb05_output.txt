@@ -1,0 +1,13 @@
+27 October   2008  10:28:08.514 AM      
+  
+ SPARSEKIT_PRB05
+  FORTRAN77 version
+ 
+ A set of tests for SPARSKIT
+  
+ ierr =            0  nrhs            1
+ 
+SPARSEKIT_PRB05
+  Normal end of execution.
+ 
+27 October   2008  10:28:08.561 AM      

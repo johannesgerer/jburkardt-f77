@@ -1,0 +1,45 @@
+ 
+TOMS436_PRB
+  Test TOMS algorithm 436, product-type
+  trapezoidal integration.
+ 
+TEST01
+  Integral of F(X) * G(X) from -1 to 1,
+  with F(X) = 1, G(X) = 1/(1+x**2 )
+ 
+       N    VINT
+ 
+       1    0.470588    
+       2     4.23529    
+       3     2.07686    
+       4     2.91765    
+       5     2.51871    
+       6     2.70053    
+       7     2.62006    
+       8     2.65882    
+       9     2.64267    
+      10     2.65114    
+ 
+  Exact:     2.65164    
+ 
+TEST02
+  Integral of F(X) * G(X) from 0 to PI,
+  with F(X) = EXP(-X), G(X) = COS(X)
+ 
+       N    VINT
+ 
+       1    0.500972    
+       2    0.500972    
+       3    0.516862    
+       4    0.520037    
+       5    0.520951    
+       6    0.521287    
+       7    0.521433    
+       8    0.521505    
+       9    0.521543    
+      10    0.521565    
+ 
+  Exact:    0.521607    
+ 
+TOMS436_PRB
+  Normal end of execution.

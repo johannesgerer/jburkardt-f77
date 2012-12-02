@@ -1,0 +1,33 @@
+24 October   2011   2:37:11.337 PM      
+ 
+PRIME_MPI
+  FORTRAN77/MPI version
+ 
+  An MPI example program to count the number of primes.
+  The number of processes is        8
+ 
+         N        Pi          Time
+ 
+         1         0  0.197940E-01
+         2         1  0.296550E-01
+         4         2  0.810814E-02
+         8         4  0.177479E-02
+        16         6  0.140667E-04
+        32        11  0.200272E-04
+        64        18  0.181198E-04
+       128        31  0.998974E-04
+       256        54  0.851154E-04
+       512        97  0.308990E-03
+      1024       172  0.980139E-03
+      2048       309  0.366783E-02
+      4096       564  0.133419E-01
+      8192      1028  0.276399E-01
+     16384      1900  0.598061E-01
+     32768      3512  0.227086    
+     65536      6542  0.865634    
+    131072     12251   3.34440    
+ 
+PRIME_MPI - Master process:
+  Normal end of execution.
+ 
+24 October   2011   2:37:15.947 PM      

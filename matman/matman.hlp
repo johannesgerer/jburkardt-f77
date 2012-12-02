@@ -1,0 +1,3149 @@
+1 MATMAN  version 1.58  11 November 1996
+ 
+  MATMAN makes it easy to carry out operations on a matrix.
+ 
+  MATMAN can help a user:
+    Transform a matrix to reduced row echelon form;
+    Diagonalize a symmetric matrix;
+    Carry out the simplex method.
+ 
+  The MATMAN user can choose:
+    DECIMAL arithmetic to a fixed number of places, like 1.33.
+    RATIONAL arithmetic, like 4/3;
+    REAL arithmetic, like 1.33333...;
+
+
+2 Table of Contents
+ 
+  MATMAN
+
+    Background
+ 
+    Purpose
+
+    Typical session
+
+    Matrix algebra commands
+      A    Add S times row I to row J.
+      B    Set up sample problem.
+      C    Change entry I,J to S.
+      D    Divide row I by S.
+      DEC  Use decimal arithmetic.
+      DET  Determinant of the matrix
+      E    Enter a matrix with I rows and J columns.
+      EDET Print the ERO determinant.
+      F    Change to decimal, rational, or real arithmetic.
+      G    Add/delete a row or column of the matrix.
+      H    Display brief help.
+      HELP Display full help
+      I    Interchange rows I and J.
+      J    Jacobi rotation in (I,J) plane.
+      K    Open/close transcript file.
+      L    Enter linear programming mode.
+      M    Multiply row I by S.
+      N    Set number of decimal digits.
+      O    Check matrix for reduced row echelon form.
+      Q    Quit.
+      R    Restore the matrix or tableau.
+      RAT  Use rational arithmetic.
+      REAL Use real arithmetic.
+      S    Store the matrix or tableau.
+      T    Type out the matrix or tableau.
+      TR   Transpose the matrix.
+      U    Undo last operation.
+      W    Write the matrix to a file.
+      X    Read the matrix from a file.
+      Y    Turn autoprint OFF or ON.
+      Z    Automatic reduction to reduced row echelon form
+      $    Turn paging OFF.
+      %    Turn paging ON.
+      #    Begin a comment line.
+      ?    Extensive help from the help file.
+      <    Get input from a file.
+
+    Linear programming commands
+      A     Add S times row I to row J.
+      B     Set up sample problem.
+      BASIC Assign row I to basic variable J.
+      C     Change entry I,J to S.
+      D     Divide row I by S.
+      DEC   Use decimal arithmetic.
+      E     Enter a problem with I constraints and J variables.
+      F     Change to decimal, rational, or real arithmetic.
+      H     Display brief help.
+      HELP  Display full help
+      I     Interchange rows I and J.
+      K     Open/close transcript file.
+      L     Leave linear programming mode.
+      M     Multiply row I by S.
+      N     Set number of decimal digits.
+      O     Check tableau for optimality.
+      P     Carry out one pivoting step.
+      Q     Quit.
+      R     Restore the matrix or tableau.
+      RAT   Use rational arithmetic.
+      REAL  Use real arithmetic.
+      S     Store the matrix or tableau.
+      T     Type out the matrix or tableau.
+      U     Undo last operation.
+      V     Eliminate artificial variables.
+      W     Write the tableau to a file.
+      X     Read the tableau from a file.
+      Y     Turn autoprint OFF or ON.
+      Z     Automatic simplex method solution.
+      $     Turn paging OFF.
+      %     Turn paging ON.
+      #     Begin a comment line.
+      ?     Extensive help from the help file.
+      <     Get input from a file.
+
+    Arithmetic forms
+ 
+    Elementary row operations
+      Solving a linear system
+      Inverting a matrix
+      Computing the determinant
+ 
+    Row echelon form
+ 
+    Jacobi iteration
+ 
+    Simplex method
+      Pivoting step
+      Two phase method
+ 
+    Sample problems
+      Determinant example
+      Solve example
+      Inverse example
+      Eigenvalue example
+      Standard linear programming example
+      Advanced linear programming example
+ 
+    DOS PC version
+      Compilation details on the PC
+      Redirecting Input and Output on the PC
+ 
+    Windows PC version
+ 
+    Macintosh version
+      Compilation details on the Macintosh
+      Bugs and Problems on the Macintosh
+ 
+    UNIX version
+      Compilation details on UNIX
+      Redirecting Input and Output on UNIX
+ 
+    VMS version
+      Compilation details on VMS
+      Redirecting Input and Output on VMS
+ 
+    DOUBLE PRECISION version
+ 
+    64 bit integer version
+
+
+2 Background
+ 
+  MATMAN was developed by
+ 
+    John Burkardt,
+    Mathematics Department,
+    Iowa State University,
+    Ames, Iowa, 50011
+    
+  and
+  
+    Charles G. Cullen,
+    Department of Mathematics and Statistics,
+    University of Pittsburgh,
+    Pittsburgh, Pennsylvania, 15260
+ 
+  The developer's EMAIL addresses are:
+ 
+    burkardt@psc.edu
+    cullen@vms.cis.pitt.edu
+ 
+  This program accompanies the textbook
+ 
+    Charles G. Cullen,
+    An Introduction to Linear Algebra, Second Edition
+    Harper Collins College Publishers,
+    Glenview, Illinois, 1996
+ 
+  All rights to this program are reserved by the authors, the
+  University of Pittsburgh, and the publishers.
+ 
+  MATMAN may not be reproduced in any manner without permission.
+ 
+  Schools using this textbook are automatically granted permission
+  to distribute copies of MATMAN to their faculty and students.
+ 
+  The creation of MATMAN was partially supported by a courseware 
+  development grant from the College of General Studies of the 
+  University of Pittsburgh.
+ 
+ 
+2 Purpose
+ 
+  MATMAN is a learning aid, NOT a computational device!
+
+  Therefore, MATMAN only accompanies the user through the solution
+  of simple problems in linear algebra or linear programming.
+
+  MATMAN does the arithmetic involved in matrix elimination, but the 
+  user must decide which row to use as a pivot, how to normalize 
+  the row, and how to eliminate nonzero entries in other rows.
+
+ 
+  MATMAN can be used in two ways:
+ 
+  * In "linear algebra mode" MATMAN carries out elementary
+    row operations on a matrix, with the goal of bringing that 
+    matrix to row echelon form.
+ 
+  * In "linear programming mode", MATMAN operates on a a linear
+    programming tableau to find a legal set of values that 
+    maximize a linear function.
+ 
+ 
+  MATMAN offers three forms of arithmetic to work in.  The
+  desired choice can be selected using the "DECIMAL", RATIONAL", 
+  or "REAL" commands:
+ 
+  * DECIMAL arithmetic can exactly represent any decimal 
+    quantity of a limited number of digits.  Calculations 
+    with decimals will be inexact.  This option can
+    simulate the arithmetic of an N digit decimal computer
+    with rounding.
+
+  * RATIONAL arithmetic will most nearly duplicate normal 
+    hand calculations, and round-off inaccuracies will be 
+    avoided.  However, MATMAN can fail if the numerator or
+    denominator of a rational becomes too large.
+ 
+  * REAL arithmetic has a greater range than rational arithmetic, 
+    but has trouble representing simple values like 1/3 exactly.
+    Calculations with real numbers are always subject to 
+    inaccuracies.  
+ 
+  MATMAN has a fixed amount of workspace, which restricts the size 
+  of the problems that can be solved.
+ 
+  In linear algebra mode, matrices can have 16 rows and 30 columns.
+ 
+  In linear programming, the tableau can have 15 rows (plus one
+  "hidden" row for two phase problems) and 30 columns.
+
+  To increase these limits, recompile the program after changing the 
+  following lines of the source code file MATMAN.F:
+ 
+      integer maxcol
+      parameter (maxcol=30)
+
+      integer maxrow
+      parameter (maxrow=16)
+
+ 
+2 Typical Session
+
+  Here is a simple MATMAN session.
+
+  The user enters a matrix and reduces it to reduced row echelon form,
+  using elementary row operations.
+
+  COMMAND          MEANING
+  -------          -------
+  e                Enter a matrix.
+  3, 3             The matrix has 3 rows and 3 columns.
+        
+  -1,  2, -1       Here are the entries of the matrix.
+   2,  1,  0
+   0, -1,  2
+
+  c 2,2 -1         Changing the value of matrix entry (2,2) 
+                   to -1.  The matrix is now:
+
+                    -1,  2, -1 
+                     2, -1,  0
+                     0, -1,  2
+
+  r1 <=> r2        Interchange matrix rows 1 and 2.   
+                   The matrix is now:
+
+                     2, -1,  0
+                    -1,  2, -1 
+                     0, -1,  2
+
+  r1 <= r1 / 2     Divide row 1 by 2.
+                   The matrix is now:
+
+                     1  -1   0
+                         2
+  
+                    -1   2  -1
+  
+                     0  -1   2
+
+  r2 <= r2 + r1    Add 1 times row 1 to row 2, resulting in
+
+                     1  -1   0
+                         2
+  
+                     0   3  -1
+                         2
+  
+                     0  -1   2
+
+  r2 <= 2/3 r2     Multiply row 2 by 2/3, resulting in
+
+                     1  -1   0
+                         2
+  
+                     0   1  -2
+                             3
+  
+                     0  -1   2
+
+  o                 Ask MATMAN if the matrix is in row echelon form.
+                    MATMAN's response is:
+
+  "The matrix is NOT in row echelon form.
+   The first nonzero entry in row 3
+   is -1 rather than 1."
+
+
+  Continuing in this way, this matrix can be transformed into
+  the identity matrix.
+
+
+2 Matrix Algebra Commands
+ 
+  The list of the commands available in linear algebra mode
+  follows.  Only the commands specific to this mode will be
+  explained here.
+ 
+  This list can be displayed at any time by issuing the "H" command.
+  Many commands are only legal if a matrix has been set up, and
+  the "H" command will only display them when they are available.
+ 
+  In this list, "S", "I" and "J" stand for numbers that should
+  be included in the command.
+ 
+  "S" is typically a multiplier, in real or rational format,
+  "I" and "J" are usually row or column identifiers.
+ 
+ 
+    A    Add S times row I to row J.
+    B    Set up sample problem.
+    C    Change entry I,J to S.
+    D    Divide row I by S.
+    DEC  Use decimal arithmetic.
+    DET  Determinant of the matrix
+    E    Enter a matrix with I rows and J columns.
+    EDET Print the ERO determinant.
+    F    Change to decimal, rational, or real arithmetic.
+    G    Add/delete a row or column of the matrix.
+    H    Display brief help.
+    HELP Display full help.
+    I    Interchange rows I and J.
+    J    Jacobi rotation in (I,J) plane.
+    K    Open/close transcript file.
+    L    Enter linear programming mode.
+    M    Multiply row I by S.
+    N    Set number of decimal digits.
+    O    Check matrix for reduced row echelon form.
+    Q    Quit.
+    R    Restore matrix.
+    RAT  Use rational arithmetic.
+    REAL Use real arithmetic.
+    S    Store the matrix.
+    T    Type out the matrix.
+    TR   Transpose the matrix.
+    U    Undo last operation.
+    W    Write matrix to file.
+    X    Read matrix from file.
+    Z    Automatic reduction to reduced row echelon form
+    $    Turn paging OFF.
+    %    Turn paging ON.
+    #    Begin a comment line.
+    ?    Extensive help from the help file.
+    <    Get input from a file.
+ 
+  If a command has several arguments, they may be listed on the same
+  line as the command letter, or not.
+ 
+  If the arguments are not included, the program will prompt for them.
+ 
+ 
+3 A Add S times row I to row J.
+ 
+  The "A" command will add S times row I to row J.
+ 
+  Legal commands to add 2.5 times row 2 to row 6 include
+ 
+    A 2.5, 2, 6
+
+  or
+
+    A 5/2, 2, 6
+
+  or the ERO form:
+
+    r6 <= r6 + 5/2 r2
+ 
+ 
+3 B Set up sample problem.
+ 
+  The "B" command will set up a sample problem.
+ 
+  The sample problem will overwrite any previous problem that MATMAN 
+  had been working on.
+ 
+  There is a choice of problems:
+ 
+    D, a square matrix whose determinant is to be found;
+    E, a matrix whose eigenvalues can be found with the "J" command;
+    I, an inverse to find;
+    S, a linear system to be solved.
+
+  Typing "C" will cancel the choice of a problem.
+
+3 C Change entry I, J to S.
+ 
+  The "C" command changes the entry in row I, column J, to S.
+ 
+  The command to change entry 1,3 to 3.5 could be written as
+ 
+    C 1,3, 3.5
+  or
+    C 1,3, 7/2
+
+ 
+3 D Divide row I by S.
+ 
+  The "D" command divides row I by the number S.
+ 
+  Commands to divide row 1 by -4 include
+ 
+    D 1, -4
+ 
+  or the ERO form:
+
+    r1 <= r1 / -4
+ 
+  It might be surprising to see that MATMAN includes both a "D" 
+  and an "M" command.  Why have both, when dividing by 3 is the 
+  same as multiplying by 1/3? 
+  
+  Mathematically, it is true that dividing by 3 is the same as 
+  multiplying by 1/3, but this is not necessarily true on a 
+  computer.  A computer can represent 3 exactly, but 1/3 cannot be
+  represented exactly in "floating point" arithmetic, what MATMAN 
+  calls "real" arithmetic.
+
+  Therefore, if we're using real arithmetic, and we want to modify
+  a row so an entry that is now 3 becomes 1 instead, we have two
+  choices:
+
+  The "D" command can be used to divide by 3, which is guaranteed
+  to produce a result which is exactly 1.
+
+  The "M" command can be used to multiply by 1/3, which may give
+  a result of 1, or perhaps a result something like 0.9999...
+ 
+  That's why the "D" command is useful.
+ 
+
+3 DEC Use decimal arithmetic
+
+  This command tells the program to begin working in decimal 
+  arithmetic.  You will be asked how many decimal places you
+  want to use, and the current matrix, if any, will be converted
+  to decimal format.
+
+ 
+3 DET Determinant of the matrix
+
+  The "DET" command computes the determinant of the current matrix.
+
+  The matrix must be square, that is, it must have the same number
+  of rows as columns.
+
+  If the matrix is singular (does not have an inverse) then the
+  determinant will be zero.
+
+ 
+3 E Enter matrix with I rows and J columns.
+ 
+  The "E" command enters a matrix of I rows and J columns.
+ 
+  The program will then request that the elements of the matrix
+  be entered, one row at a time, separated by commas or spaces.
+ 
+  A 3 by 4 matrix could be entered by typing:
+ 
+    E 3,4
+
+    1, 2, 3, 4.0
+    5, 6, 7, 8
+    9, 8, 7, 6.5
+ 
+  Each time a matrix is entered, a copy is automatically stored.
+ 
+  This means that, unless you store another matrix in the mean time,
+  you can always recover your original input matrix with the "R"
+  command if you regret the changes you have made to it.
+ 
+  The program stores only one matrix.
+ 
+  If additional storage is required, use the "W" command.
+ 
+ 
+3 EDET Print the ERO determinant
+
+  When elementary row operations are applied to a matrix A, the
+  operation may be regarded as the multiplication of A by a matrix
+  E1, with result A1:
+
+    E1 * A = A1.
+
+  If another ERO is applied, we may call it "E2", and the result "A2",
+  and we have the relationship:
+
+    E2 * E1 * A = E2 * A1 = A2.
+
+  Now let us suppose that after several ERO's have been applied,
+  we replace the sequence of matrices by their product, "E":
+
+    EN * E(N-1) * ... * E2 * E1 = E
+
+  Then we have
+
+    E * A = AN.
+
+  In other words, the result of all the ERO's applied to A can be
+  computed by multiplying A by a single matrix E.
+
+  Now suppose we were trying to compute the determinant of A.  We
+  know how to use ERO's to reduce A to the identity, so that we would
+  have the relationship
+
+    E * A = I.
+
+  But then we know that
+
+    det(E) * det(A) = det(I) = 1
+
+  or 
+
+    det(A) = 1/det(E).
+
+  In other words, the determinant of A is the inverse of the determinant
+  of E, the matrix which reduces it to the identity (if such a matrix
+  exists).  
+
+  The "EDET" command allows you to print out, at any time, the determinant
+  of the current matrix E, which is the product of all the elementary
+  row operations applied to the current matrix A.
+
+
+3 F Change to decimal, rational, or real arithmetic.
+ 
+  The "F" command chooses the arithmetic form.
+
+  For example,
+
+    F R
+
+  changes to real arithmetic.
+
+  The choices are:
+
+    D for decimal arithmetic.
+    F for rational arithmetic;
+    R for real arithmetic;
+
+  If a matrix has already been entered, it will be converted to 
+  the new arithmetic form.
+
+  If decimal arithmetic is chosen, you may also want to issue
+  the "N" command, to specify the number of decimal places to use.
+
+  You may find it easier to use the "DECIMAL", "RATIONAL" or "REAL"
+  commands.
+
+ 
+3 G Add/delete a row or column of the matrix
+ 
+  The "G" command adds or deletes a row or column of the matrix.
+ 
+  Type "+" to add something, and "-" to delete something.
+ 
+  Type "R" if you're interested in a row, or "C" for a column.
+ 
+  If you're adding a row or column, type the position the new object
+  should occupy.  For instance, you would type "1" if the new
+  row or column was to be the first row or column in the matrix.
+  All other rows or columns will automatically shift to make room
+  for the new one.
+ 
+  If you're adding a row or column, you will then be requested to
+  enter the values of its entries.
+ 
+  Here is the input that would insert a row at position 3 in
+  the current matrix, and assign values to its 5 entries:
+ 
+    G +R 3
+    1.0, 2.0, 3.5, 4.7, 5.3
+ 
+ 
+3 H Display quick help
+ 
+  The "H" command prints one line explanations of the most
+  useful linear algebra commands.
+
+
+3 HELP Display full help
+
+  The "HELP" command prints out every available command,
+  with a one line explanation.
+
+  If you need more help than that, use the "?" command.
+ 
+
+3 I Interchange rows I and J.
+ 
+  The "I" command interchanges rows I and J in the matrix.
+ 
+  Commands to switch rows 1 and 2 include
+ 
+    I 2, 1
+ 
+  and the ERO form:
+
+    r1 <=> r2
+
+  In linear programming mode, you are NOT allowed to switch the
+  last row to any other position, because of its special function
+  as the objective row.
+ 
+ 
+3 J Jacobi rotation in (I,J) plane.
+ 
+  The "J" command constructs an orthogonal matrix Q with the property
+  that TRANSPOSE(Q)*A*Q has zero entries in the (I,J) and (J,I)
+  positions.
+ 
+  The multiplication is carried out, and the new matrix A is
+  displayed.
+ 
+  Repeated application of this command to each off-diagonal entry
+  of a symmetric matrix A will gradually drive A towards a similar
+  matrix that is diagonal.
+ 
+  As the matrix approaches a diagonal matrix, the diagonal entries
+  will approach the eigenvalues of the original matrix.
+ 
+  This command may only be used with REAL arithmetic, and requires
+  that I and J be distinct, that the matrix be square, and that the
+  matrix be symmetric.
+ 
+
+3 K Open/close transcript file
+ 
+  The "K" command opens a file into which is put an exact copy of
+  everything you or the program types.
+ 
+  This is useful when doing homework, or for checking your work.
+ 
+  A second "K" command will close the file.
+ 
+  The program asks for a filename such as "MATMAN.LPT".
+
+  Warning: If a file with this name exists already, then that file 
+  and the information in it will be lost.  MATMAN "overwrites"
+  the old file, rather than "appending" new information to it. 
+ 
+  On most computers, the file will be created in the same directory
+  where you were working when you started running MATMAN.
+ 
+  Depending on the operating system, you may be able to specify
+  an alternate location for the file, by specifying directory
+  information in the name, such as
+ 
+    "B:\MY_PC\MATMAN.LPT"
+  or
+    "/usr/users/fred/homework.txt"
+  or
+    "Mac disk:problems:transcript.doc"
+ 
+  On a DOS PC, you can generate a hardcopy, as the
+  file is being constructed, by pressing the "CTL" and
+  "PRINT SCREEN" keys together.
+ 
+  Once constructed, the file can be edited using any available
+  editor or word processor.
+ 
+  On a Macintosh computer, you should be able to examine or print
+  the transcript file with any editor program.
+ 
+
+3 L Enter linear programming mode.
+ 
+  The program begins in linear algebra mode.
+ 
+  If you want to solve a linear programming problem, you
+  should go into linear programming mode immediately.
+ 
+  In linear programming mode, the method of entering the problem
+  is entirely different.
+ 
+  You may try to enter a problem in linear algebra mode, and then
+  switch to linear programming mode.  The program tries to make
+  this transition possible for you.  It needs to know the number of
+  slack variables and artificial variables. Then, using the "C"
+  command, you must identify the basic variables.
+ 
+  This method is only recommended for the experienced user.
+ 
+
+3 M Multiply row I by S.
+ 
+  The "M" command multiplies row I by the number S.
+ 
+  Commands to multiply row 1 by -4 include
+ 
+    M 1, -4
+ 
+  and the ERO form:
+
+    r1 <= -4 r1
+
+
+3 N Set number of decimal digits.
+
+  The "N" command sets the number of decimal digits used.  
+
+  This command is only useful if you have chosen decimal arithmetic
+  with the "DECIMAL" command.
+
+  The default number of digits, called "NDIG", is 6.  This means that
+  decimal quantities will have at most 6 digits.   If NDIG is 6,
+  the value of 8/3, for instance, will be stored as exactly
+  2.33333.
+
+  Using the "N" command, you can change the number of digits
+  to any value between 1 and 7.  Using a small value of NDIG
+  can make the effects of roundoff show up very quickly.
+  
+
+3 O Optimality check.
+ 
+  The "O" command checks the current matrix to see if it is in
+  either row echelon form or reduced row echelon form, and
+  if not, explains why not. 
+
+  An explanation of row echelon form and reduced row echelon
+  form is given elsewhere in these notes.
+
+
+3 Q Quit.
+ 
+  The "Q" command quits the program.
+ 
+  The program will ask you to confirm this choice by typing "Y".
+ 
+  If a transcript file is open, it will automatically be closed
+  at this point.
+ 
+ 
+3 R Restore a matrix or tableau from a file.
+ 
+  The "R" command replaces the current matrix by the last matrix
+  that was saved with the "S" command, or entered with the "E"
+  command.
+
+  The current matrix or tableau is replaced by one stored earlier
+  with the "S" command, or the last matrix or tableau you entered
+  using the "E" or "X" command, whichever was most recent.
+ 
+ 
+3 RAT Use rational arithmetic
+
+  This command tells the program to begin working in rational 
+  arithmetic.  The current matrix, if any, will be converted to
+  rational format.
+
+ 
+3 REAL Use real arithmetic
+
+  This command tells the program to begin working in real 
+  arithmetic.  The current matrix, if any, will be converted to
+  real form.
+
+ 
+3 S Store the matrix or tableau in a file.
+ 
+  The "S" command saves a copy of the current matrix.
+
+  Whenever you define a matrix or tableau using the "E" command, or
+  read one in with the "X" command, a copy of the matrix is
+  automatically saved in memory.
+ 
+  After you've done some work on a problem, you may want to store
+  a copy before proceeding.
+ 
+  Only one matrix or tableau may be stored at any time, and storing
+  a new one destroys any old information.
+ 
+  The matrix or tableau is only stored in memory, so when you quit
+  the program, this information is lost.
+ 
+  See the "W" command for a more permanent storage method.
+ 
+ 
+3 T Type out the matrix or tableau.
+ 
+  The "T" command allows you to examine the matrix or tableau.
+ 
+  In linear algebra mode, this command will also print out the 
+  determinant of the product of the ERO matrices.
+
+ 
+3 TR Transpose the matrix
+ 
+  The "TR" command will "flip" the matrix, essentially replacing A(I,J)
+  by A(J,I).
+ 
+  If the matrix is currently the following 2 by 3:
+
+    1  2  3
+    4  5  6
+
+  then the "TR" command will replace it by the 3 by 2 matrix:
+
+    1 4
+    2 5
+    3 6
+
+  If you, for example, desperately want to use elementary column
+  operations rather than row operations, you can flip your matrix,
+  apply row operations to it and then flip it back.
+ 
+  This is equivalent to the column operations you would have used.
+ 
+  Because MATMAN allows matrices to have significantly more columns
+  than rows, it is possible for a matrix to have too many columns
+  for you to be allowed to transpose it.
+ 
+  In such a case, MATMAN will simply refuse to do so.
+ 
+
+3 U Undo the last operation.
+ 
+  The "U" command will allow you to recover from a
+  command you regret giving, or gave by mistake.
+ 
+  The matrix will be restored to its form as it was just before 
+  your previous command.
+ 
+  This only works one time;  you cannot backtrack using several
+  consecutive "U" commands.
+ 
+ 
+3 W Write example to file
+ 
+  The "W" command allows you to specify the name of a file, such as
+  "Matman.Dat" or "B:DATA" and a label, such as "EXAMPLE 1".
+ 
+  The current matrix or tableau will then be stored in the file.
+ 
+  You can store several problems in the same file, and retrieve
+  any of them later with the "X" command.
+ 
+ 
+3 X Read example from file
+ 
+  The "X" command allows you to specify the name of a file, such as
+  "MATMAN.DAT", which presumably was created during a previous run
+  of MATMAN with the "W" command.
+ 
+  The file should contain the definitions of one or more problems.
+ 
+  MATMAN then searches through that file, and lists the labels of
+  all the problems stored there.
+ 
+  You will be asked to pick one problem to read into the program
+  from the file.
+ 
+  Possibly, the example will require that the linear programming
+  mode or the arithmetic mode be changed.
+ 
+  If so, this will be done automatically, and MATMAN will warn you
+  that this is being done.
+ 
+  The file "MATMAN.DAT" comes with some examples in it already.
+ 
+ 
+3 Y Turn Autoprint Off or On
+
+  When MATMAN commands change the matrix or tableau,
+  the program automatically prints out the current matrix, 
+  so that these changes can be inspected.
+
+  This is called "autoprinting".
+
+  If you find the autoprinting featuring unnecessary, you can
+  turn it off by using the "Y" command.  A second "Y" command
+  restores it.
+
+
+3 Z Automatic operation
+ 
+  The "Z" command will automatically row reduce the active matrix
+  using partial pivoting.
+ 
+  Because MATMAN is a teaching program, use of the "Z" command
+  should be discouraged until the students have had adequate
+  opportunity to carry out reductions by hand.
+ 
+  Use of the "Z" command requires a password which is available
+  from the instructor.
+ 
+  Other users who want the convenience of the "Z" command are
+  welcome to contact the authors.
+ 
+  This command will not work if the password file "MATKEY.DAT" is
+  missing, or is not in the proper place, or is not set up to allow
+  MATMAN to read it.
+ 
+  Teachers who adopt this text will be given instructions for
+  changing the password.
+ 
+
+3 # Comments
+ 
+  MATMAN assumes that what you type is a command.  But you may
+  also wish to simply write a comment or two, to annotate your
+  work, especially if you are making a file transcript.
+ 
+  You can do this easily by simply beginning a comment line
+  with a pound sign.  For instance, I could give MATMAN the
+  following input:
+ 
+    #
+    #  I'm going to enter my matrix.
+    #
+    e 2,2
+    1,7
+    5,12
+    #
+    #  And now, I want to eliminate entry (2,1).
+    #
+    r2 <= r2 -5 r1
+ 
+ 
+3 $ Turn paging OFF
+ 
+  MATMAN will normally pause if it has printed 24 lines of text
+  without any input from you.  This is so that you won't miss
+  anything printed on a computer screen, which often can only
+  display 24 lines.
+ 
+  You may not want MATMAN to do this.  One very good reason
+  would be if you are going to try to run MATMAN
+  non-interactively, with an input file you prepare beforehand.
+ 
+  In that case, it's hard enough to type all of the commands
+  you should give, in the proper order, without having to
+  worry about when MATMAN will be wanting you to simply
+  hit RETURN to go on to the next 24 lines.
+ 
+  Simply typing "$" will turn this feature off.
+ 
+ 
+3 % Turn paging ON
+ 
+  If paging was turned OFF with the "$" command, then MATMAN prints
+  the entire output from each command without pausing every 24 lines.  
+
+  To turn paging back on, simply type "%".
+ 
+ 
+3 ? Extensive help from the help file.
+ 
+  Sometimes the short one line help offered by the "H" command may
+  not be clear enough.
+ 
+  In those cases, using the "?" command will allow you, while
+  running the program, to browse through this help file in search
+  of information.
+ 
+  This command will not work if MATMAN cannot find and open the
+  help file, named "matman.hlp".
+ 
+  The rules for where the file "matman.hlp" should be, and how
+  its access rights should be set, vary depending on the operating
+  system and machine used.
+ 
+ 
+3 < Get input from a file.
+ 
+  Although MATMAN is designed for interactive use, you can
+  prepare your commands beforehand in a file, named, for instance,
+  "matman.inp" and have MATMAN process them.
+ 
+  On a computer running UNIX or DOS, this would be easily done
+  via the command:
+ 
+    matman < matman.inp
+ 
+  However, it's not easy to do on VMS or on a Macintosh.  Your
+  alternative is to begin the program interactively, and then
+  tell the program to get the rest of its input from the file.
+ 
+  If the file does not end with commands that cause MATMAN to
+  quit, then MATMAN will return control to you and you are free to
+  type more commands or stop the program.
+ 
+  If "paging" is on when you specify an input file, MATMAN will
+  automatically turn it off.
+ 
+  If any error occurs while the input file is read, MATMAN will
+  close the input file, and expect further input from you.
+ 
+ 
+  NOTE: Because of a programming bug, if you use the "X" command
+  inside of an input file, once the example is read, MATMAN
+  will expect further input from you, and not from the file.
+ 
+
+2 Linear Programming Commands
+ 
+  The list of commands available in linear programming mode follows.
+  Only commands unique to linear programming mode will be explained
+  here.
+ 
+  This list can be displayed at any time by issuing the "HELP" command.
+ 
+  Many commands are only legal if a tableau has been set up.
+ 
+  The "H" command will only display those commands that are
+  currently available, and hence that list will change during the
+  course of the computation.
+ 
+  The list printed here includes ALL possible commands.
+ 
+  In the following list, S, I and J stand for numbers you must
+  include in the command.
+ 
+  S is typically a multiplier, in real or rational format,
+  I and J are usually row or column identifiers.
+ 
+ 
+    A    Add S times row I to row J.
+    B    Set up sample problem.
+    C    Change entry I,J to S (J=0 for basic variables).
+    D    Divide row I by S.
+    DEC  Use decimal arithmetic.
+    E    Enter a problem with I constraints and J variables.
+    F    Change to decimal, rational, or real arithmetic.
+    HELP Display full help.
+    I    Interchange rows I and J.
+    K    Open/close transcript file.
+    L    Leave linear programming mode.
+    M    Multiply row I by S.
+    N    Set number of decimal digits.
+    O    Check tableau for optimality.
+    P    Carry out one pivoting step.
+    Q    Quit.
+    R    Restore the tableau.
+    RAT  Use rational arithmetic.
+    REAL Use real arithmetic.
+    S    Store the tableau.
+    T    Type out the matrix or tableau.
+    TS   Type out the current linear programming solution
+    U    Undo last operation.
+    V    Eliminate artificial variables.
+    W    Write the tableau to file.
+    X    Read a tableau from file.
+    Z    Automatic simplex method solution.
+    $    turn paging OFF.
+    %    turn paging ON.
+    #    begins a comment.
+    ?    Extensive help from the help file.
+    >    Get input from a file.
+ 
+  If a command has several arguments, you may list them on the same
+  line as the command letter, or not.
+ 
+  If you do not list all needed arguments, the program will prompt
+  you for them.
+ 
+ 
+3 A Add S times row I to row J.
+ 
+  The "A" command will add S times row I to row J.
+ 
+  Legal commands to add 2.5 times row 2 to row 6 include
+ 
+    A 2.5, 2, 6
+
+  or
+
+    A 5/2, 2, 6
+
+  or the ERO form:
+
+    r6 <= r6 + 5/2 r2
+ 
+ 
+3 B Set up sample problem.
+ 
+  The "B" command sets up a sample problem.
+ 
+  The sample problem will overwrite any previous problem you may
+  have been working on.
+ 
+  You have the choice of:
+ 
+    a simple problem, with no artificial variables,
+ 
+  or
+ 
+    a more complex problem that requires artificial variables.
+ 
+ 
+3 C Change entry I, J to S.
+ 
+  The "C" command changes the entry in row I, column J, to S.
+ 
+  In either arithmetic, the command to change entry 1,3 to 3.5
+  could be shortened to
+ 
+    C 1,3, 3.5
+  or
+    C 1,3, 7/2
+  or
+    C 1,3, 7.0/2.0
+ 
+  This command is useful in correcting errors made in data entry as
+  well as handling perturbations of the original problem.
+ 
+ 
+3 BASIC Assign row I to basic variable J
+ 
+  The "BASIC" command allows you to set or change the list of basic 
+  variables.
+ 
+  The ONLY reason to do this is if you enter your matrix in linear
+  algebra mode, and then switch to linear programming mode and want
+  to keep your matrix.
+ 
+  In linear programming mode, each row of the tableau is associated
+  (or labeled) with a variable, and for our purposes, these labels
+  may be thought of as making up column 0.
+ 
+  That's where they appear when the tableau is printed out.
+ 
+  If you issue the command
+ 
+    BASIC 2, 3
+ 
+  for example, the program will change the label of (or basic
+  variable associated with) row 2 to 3.
+ 
+
+3 D Divide row I by S.
+ 
+  The "D" command divides row I by the number S.
+ 
+  Commands to divide row 1 by -4 include
+ 
+    D 1, -4
+ 
+  or the ERO form:
+
+    r1 <= r1 / -4
+ 
+  It might be surprising to see that MATMAN includes both a "D" 
+  and an "M" command.  Why have both, when dividing by 3 is the 
+  same as multiplying by 1/3? 
+  
+  Mathematically, it is true that dividing by 3 is the same as 
+  multiplying by 1/3, but this is not necessarily true on a 
+  computer.  A computer can represent 3 exactly, but 1/3 cannot be
+  represented exactly in "floating point" arithmetic, what MATMAN 
+  calls "real" arithmetic.
+
+  Therefore, if we're using real arithmetic, and we want to modify
+  a row so an entry that is now 3 becomes 1 instead, we have two
+  choices:
+
+  The "D" command can be used to divide by 3, which is guaranteed
+  to produce a result which is exactly 1.
+
+  The "M" command can be used to multiply by 1/3, which may give
+  a result of 1, or perhaps a result something like 0.9999...
+ 
+  That's why the "D" command is useful.
+ 
+ 
+3 DEC Use decimal arithmetic
+
+  This command tells the program to begin working in decimal 
+  arithmetic.  You will be asked how many decimal places you
+  want to use, and the current matrix, if any, will be converted
+  to decimal format.
+
+ 
+3 E Enter problem with I constraints and J variables
+ 
+  The "E" command means you want to set up a problem with I
+  constraints and J variables.
+ 
+  I is simply the number of inequalities/equalities which the
+  variables must satisfy.
+ 
+  The program then asks you to enter each constraint.
+ 
+  You must do this in a somewhat unusual form;  you must first
+  enter the 'sign' of the constraint, followed by the coefficients
+  and right hand side.
+ 
+  For example, if the constraint
+ 
+    9*X1 + 2*X2 < 7
+ 
+  would be entered as
+ 
+    '< 9, 2, 7'
+ 
+  while the constraint
+ 
+    3*X1 + 5*X2 - 7*X3 = 8
+ 
+  would be entered as
+ 
+    '= 3, 5, -7, 8'.
+ 
+  If there are variables whose coefficients are zero, then those
+  zeroes MUST be entered as well.  For instance, the constraint
+ 
+    X1 + X3 < 2
+ 
+  would be entered as
+ 
+    < 1, 0, 1, 2
+ 
+  This assumes we are using three variables.  If instead we were
+  using four variables, then the coefficient of X4 is also zero,
+  and we would enter the constraint as:
+ 
+    < 1, 0, 1, 0, 2
+ 
+  Finally, the objective function coefficients and constant term
+  should be entered.
+ 
+  Each time you enter a tableau, a copy is automatically stored.
+ 
+  This means that, unless you store another tableau in the mean
+  time, you can recover your original tableau with the "R"
+  command if you regret the changes you have made to it.
+ 
+  The program stores only one tableau.
+ 
+  If additional storage is required, use the "W" command.
+ 
+ 
+3 F Change to decimal, rational, or real arithmetic.
+ 
+  The "F" command chooses the arithmetic form.
+
+  For example,
+
+    F R
+
+  changes to real arithmetic.
+
+  The choices are:
+
+    F for rational arithmetic;
+    R for real arithmetic;
+    D for decimal arithmetic.
+ 
+  If a matrix has already been entered, it will be converted to 
+  the new arithmetic form.
+
+  If decimal arithmetic is chosen, you may also want to issue
+  the "N" command, to specify the number of decimal places to use.
+
+  You may find it easier to use the "DECIMAL", "RATIONAL", or "REAL"
+  commands.
+
+ 
+3 G Add a constraint and slack variable to tableau
+ 
+  (THIS COMMAND IS NOT WORKING YET!)
+ 
+  The "G" command allows you to add a new constraint to the tableau.
+  The constraint will inserted into the tableau as the last
+  constraint.
+ 
+  A corresponding slack variable will automatically be added as
+  well.
+ 
+ 
+3 H Display quick help
+ 
+  The "H" command prints one line explanations of the most
+  useful linear algebra commands.
+
+
+3 HELP Display full help
+
+  The "HELP" command prints out every available command,
+  with a one line explanation.
+
+  If you need more help than that, use the "?" command.
+ 
+
+3 I Interchange rows I and J.
+ 
+  The "I" command interchanges rows I and J in the matrix.
+ 
+  Commands to switch rows 1 and 2 include
+ 
+    I 2, 1
+ 
+  and the ERO form:
+
+    r1 <=> r2
+
+  In linear programming mode, you are NOT allowed to switch the
+  last row to any other position, because of its special function
+  as the objective row.
+ 
+ 
+3 K Open/close transcript file
+ 
+  The "K" command opens a file into which is put an exact copy of
+  everything you or the program types.
+ 
+  This is useful when doing homework, or for checking your work.
+ 
+  A second "K" command will close the file.
+ 
+  The program will ask you to give the file a name such as
+  "MATMAN.LPT".
+ 
+  On most computers, this will cause the file to be created in
+  the same directory where you were working when you started
+  running MATMAN.
+ 
+  Depending on the operating system, you may be able to specify
+  an alternate location for the file, by specifying directory
+  information in the name, such as
+ 
+    "B:\MY_PC\MATMAN.LPT"
+  or
+    "/usr/users/fred/homework.txt"
+  or
+    "Mac disk:problems:transcript.doc"
+ 
+  On a DOS PC, you can generate a hardcopy, as the
+  file is being constructed, by pressing the "CTL" and
+  "PRINT SCREEN" keys together.
+ 
+  Once constructed, the file can be edited using any available
+  editor or word processor.
+ 
+  On a Macintosh computer, you should be able to examine or print
+  the transcript file with any editor program.
+ 
+ 
+3 L Leave linear programming mode.
+ 
+  The "L" command moves the program to linear algebra mode.
+  Any linear programming work done will be discarded.
+ 
+ 
+3 M Multiply row I by S.
+ 
+  The "M" command multiplies row I by the number S.
+ 
+  Commands to multiply row 1 by -4 include
+ 
+    M 1, -4
+ 
+  and the ERO form:
+
+    r1 <= -4 r1
+
+
+3 N Set number of decimal digits.
+
+  The "N" command sets the number of decimal digits used.  
+
+  This command is only useful if you have chosen decimal arithmetic
+  with the "DECIMAL" command.
+
+  The default number of digits, called "NDIG", is 6.  This means that
+  decimal quantities will have at most 6 digits.   If NDIG is 6,
+  the value of 8/3, for instance, will be stored as exactly
+  2.33333.
+
+  Using the "N" command, you can change the number of digits
+  to any value between 1 and 7.  Using a small value of NDIG
+  can make the effects of roundoff show up very quickly.
+  
+ 
+3 O Optimality check.
+ 
+  The "O" command checks the current solution for optimality.
+ 
+  If the solution is optimal, then the objective function has
+  reached its maximum possible value.
+ 
+ 
+3 P Pivot, entering variable I, departing variable J.
+ 
+  The "P" command carries out one step of the pivoting operation.
+
+  You will be shown the objective row, and asked to pick a proper
+  entering variable, I.
+ 
+  Then you will be shown the feasibility ratios, and asked to pick
+  a proper departing variable, J.
+ 
+  If the program accepts your choices, the pivoting operation will
+  be carried out.
+ 
+  If you have made improper choices, the program will ask you to
+  try again.
+ 
+
+3 Q Quit.
+ 
+  The "Q" command quits the program.
+ 
+  The program will ask you to confirm this choice by typing "Y".
+ 
+  If a transcript file is open, it will automatically be closed
+  at this point.
+ 
+  Control is returned to the computer operating system.
+ 
+ 
+3 R Restore a matrix or tableau from a file.
+ 
+  The "R" command replaces the current matrix by the last matrix
+  that was saved with the "S" command, or entered with the "E"
+  command.
+
+  The current matrix or tableau is replaced by one stored earlier
+  with the "S" command, or the last matrix or tableau you entered
+  using the "E" or "X" command, whichever was most recent.
+ 
+ 
+3 RAT Use rational arithmetic
+
+  This command tells the program to begin working in rational 
+  arithmetic.  The current matrix will be converted to rational
+  form.
+
+ 
+3 REAL Use real arithmetic
+
+  This command tells the program to begin working in real 
+  arithmetic.  The current matrix will be converted to real form.
+
+ 
+3 S Store the matrix or tableau in a file.
+ 
+  The "S" command saves a copy of the current matrix.
+
+  Whenever a matrix or tableau is defined using the "E" command, or
+  read in with the "X" command, a copy of the matrix is automatically 
+  saved in memory.
+ 
+  After you've done some work on a problem, you may want to store
+  a copy before proceeding.
+ 
+  Only one matrix or tableau may be stored at any time, and storing
+  a new one destroys any old information.
+ 
+  The matrix or tableau is only stored in memory, so when the
+  program is terminated, this information is lost.
+ 
+  See the "W" command for a more permanent storage method.
+ 
+ 
+3 T Type out the matrix or tableau.
+ 
+  The "T" command prints out the current matrix or tableau.
+ 
+  In linear algebra mode, this command will also print out the 
+  determinant of the product of the ERO matrices.
+
+ 
+3 TS Type out the linear programming solution
+
+  The "TS" command causes the program to compute the current
+  linear programming solution and print it out.
+
+
+3 U Undo the last operation.
+ 
+  The "U" command will allow you to recover from a
+  command you regret giving, or gave by mistake.
+ 
+  The matrix will be restored to its form as it was just before 
+  your previous command.
+ 
+  This only works one time;  you cannot backtrack using several
+  consecutive "U" commands.
+ 
+ 
+3 V Remove artificial variables.
+ 
+  The "V" command removes the columns of the tableau corresponding
+  to artificial variables.
+ 
+  This command is only appropriate after the simplex method has 
+  been applied to the auxiliary problem of the two phase method.
+ 
+ 
+3 W Write example to file
+ 
+  The "W" command allows you to specify the name of a file, such as
+  "Matman.Dat" or "B:DATA" and a label, such as "EXAMPLE 1".
+ 
+  The current matrix or tableau will then be stored in the file.
+ 
+  You can store several problems in the same file, and retrieve
+  any of them later with the "X" command.
+ 
+ 
+3 X Read example from file
+ 
+  The "X" command allows you to specify the name of a file, such as
+  "MATMAN.DAT", which presumably was created during a previous run
+  of MATMAN with the "W" command.
+ 
+  The file should contain the definitions of one or more problems.
+ 
+  MATMAN then searches through that file, and lists the labels of
+  all the problems stored there.
+ 
+  You will be asked to pick one problem to read into the program
+  from the file.
+ 
+  Possibly, the example will require that the linear programming
+  mode or the arithmetic mode be changed.
+ 
+  If so, this will be done automatically, and MATMAN will warn you
+  that this is being done.
+ 
+  The file "MATMAN.DAT" comes with some examples in it already.
+ 
+ 
+3 Y Turn Autoprint Off or On
+
+  After many MATMAN commands, the matrix or tableau has been
+  changed.  In such cases, the program will automatically print
+  out the matrix, so that you can see how your change was 
+  carried out.  This is called "autoprinting".
+
+  Of course, you can always request a printout anytime by using
+  the "T" command.
+
+  If you find the autoprinting featuring unnecessary, you can
+  turn it off by using the "Y" command.  A second "Y" command
+  restores it.
+
+
+3 Z Automatic operation
+ 
+  The "Z" command will automatically carry out the simplex method,
+  even with artificial variables, though in that case it will pause
+  and request that you type the "V" command to flush out the
+  artificial variables at the proper time.
+ 
+  Because MATMAN is a teaching program, use of the "Z" command
+  should be discouraged until the students have had adequate
+  opportunity to carry out reductions by hand.
+ 
+  Use of the "Z" command requires a password which is available
+  from the instructor.
+ 
+  Other users who want the convenience of the "Z" command are
+  welcome to contact the authors.
+ 
+  This command will not work if the password file "MATKEY.DAT" is
+  missing, or is not in the proper place, or is not set up to allow
+  MATMAN to read it.
+ 
+  Teachers who adopt this text will be given instructions for
+  changing the password.
+ 
+
+3 # Comments
+ 
+  MATMAN assumes that what you type is a command.  But you may
+  also wish to simply write a comment or two, to annotate your
+  work, especially if you are making a file transcript.
+ 
+  You can do this easily by simply beginning a comment line
+  with a pound sign.  For instance, I could give MATMAN the
+  following input:
+ 
+    #
+    #  I'm going to enter my matrix.
+    #
+    e 2,2
+    1,7
+    5,12
+    #
+    #  And now, I want to eliminate entry (2,1).
+    #
+    r2 <= r2 -5 r1
+ 
+ 
+3 $ Turn paging OFF
+ 
+  MATMAN will normally pause if it has printed 24 lines of text
+  without any input from you.  This is so that you won't miss
+  anything printed on a computer screen, which often can only
+  display 24 lines.
+ 
+  You may not want MATMAN to do this.  One very good reason
+  would be if you are going to try to run MATMAN
+  non-interactively, with an input file you prepare beforehand.
+ 
+  In that case, it's hard enough to type all of the commands
+  you should give, in the proper order, without having to
+  worry about when MATMAN will be wanting you to simply
+  hit RETURN to go on to the next 24 lines.
+ 
+  Simply typing "$" will turn this feature off.
+ 
+ 
+3 % Turn paging ON
+ 
+  If paging was turned OFF with the "$" command, then MATMAN prints
+  the entire output from each command without pausing every 24 lines.  
+
+  To turn paging back on, simply type "%".
+ 
+ 
+3 ? Extensive help from the help file.
+ 
+  Sometimes the short one line help offered by the "H" command may
+  not be clear enough.
+ 
+  In those cases, using the "?" command will allow you, while
+  running the program, to browse through this help file in search
+  of information.
+ 
+  This command will not work if MATMAN cannot find and open the
+  help file, named "matman.hlp".
+ 
+  The rules for where the file "matman.hlp" should be, and how
+  its access rights should be set, vary depending on the operating
+  system and machine used.
+ 
+ 
+3 < Get input from a file.
+ 
+  Although MATMAN is designed for interactive use, you can
+  prepare your commands beforehand in a file, named, for instance,
+  "matman.inp" and have MATMAN process them.
+ 
+  On a computer running UNIX or DOS, this would be easily done
+  via the command:
+ 
+    matman < matman.inp
+ 
+  However, it's not easy to do on VMS or on a Macintosh.  Your
+  alternative is to begin the program interactively, and then
+  tell the program to get the rest of its input from the file.
+ 
+  If the file does not end with commands that cause MATMAN to
+  quit, then MATMAN will return control to you and you are free to
+  type more commands or stop the program.
+ 
+  If "paging" is on when you specify an input file, MATMAN will
+  automatically turn it off.
+ 
+  If any error occurs while the input file is read, MATMAN will
+  close the input file, and expect further input from you.
+ 
+ 
+  NOTE: Because of a programming bug, if you use the "X" command
+  inside of an input file, once the example is read, MATMAN
+  will expect further input from you, and not from the file.
+ 
+
+2 Arithmetic forms
+ 
+  MATMAN can carry out its calculations using decimals, ratinals,
+  or reals.
+ 
+
+  The advantage of the rational form of arithmetic is that all
+  calculations are exact.  However, this representation has a
+  more limited range than real arithmetic, and simple computations
+  can produce results that cannot be represented, causing overflow 
+  or underflow.
+ 
+
+  The advantage of real arithmetic is that a very wide
+  range of numbers can be represented.  However, the accuracy of
+  the representation is limited.  Also, almost every calculation
+  with real number will involve some round off, which means that
+  every result you compute is inaccurate. 
+ 
+
+  The advantage of the decimal form of arithmetic is that it
+  "looks" like real arithmetic, that is, results are printed
+  out in a decimal format, but it has some of the exactness
+  properties of rational arithmetic.  In particular, if you
+  see the value 0.33 printed out, then that is the exact 
+  value being represented, and 3 times 0.33 will be exactly 0.99.
+  This is often not true with real values.  On the other hand,
+  computations with decimal numbers will have the same sort
+  of inaccuracies that real numbers suffer. 
+ 
+
+  No matter what arithmetic form you have currently chosen,
+  you can enter input in any reasonable format you like.
+
+  In other words, you can enter the value 1/2 as any of the 
+  following representations:
+ 
+    0.5, 1/2, 1.0/2.0, 5/10, 8/16, 5E-1.
+ 
+  MATMAN will automatically convert your input into the proper form.
+ 
+  Particularly if you are using real arithmetic, the value MATMAN 
+  stores will often not be exactly the value you typed, because the 
+  arithmetic you are using will not be able to store that exact 
+  value.  Thus, in real arithmetic, 2/3 becomes something like 
+  0.666667, and (3/2) * 0.666667 is NOT equal to 1!
+ 
+ 
+  To multiply row 2 by 1/3, you may type:
+ 
+    M 2, .33333
+  or
+    M 2, 1/3
+  or
+    M 2, 1.0/3.0
+ 
+  In rational arithmetic, the first command would multiply by 
+  33333/100000, not by 1/3.
+ 
+ 
+2 Elementary Row Operations
+
+  The main purpose of MATMAN is to teach the use of elementary
+  row operations or ERO's.  
+
+  There are three elementary row operations:
+    I: Interchange two rows of the matrix.
+    M: Multiply a row by a nonzero value.
+    A: Add a multiple of one row to another row.
+
+  Each of the elementary row operations corresponds to 
+  the premultiplication of the matrix by what is called
+  an "elementary matrix".
+
+
+  The "I" operation may be written symbolically as
+
+    R1 <=> R2
+
+  The "M" operation as:
+
+    R1 <= S R1
+
+  and the "A" operation as"
+
+    R1 <= R1 + S R2
+
+  Here "R1" and "R2" are two distinct rows, and "S" is any nonzero
+  number.
+
+  One way to describing an ERO to MATMAN is to use a format
+  similar to the above.  For instance, the following are valid:
+
+    r3 <=> r5
+
+    r2 <= 3/2 r2
+
+    r4 <= r4 - 2 r1
+
+  MATMAN also has a set of commands that begin with an identifying
+  letter.  The three commands above could also be entered as:
+
+    i 3,5
+
+    m 2, 3/2
+
+    a -2,1 4
+
+  Using elementary row operations, any matrix can be transformed
+  into row echelon form.  
+
+  Moreover, elementary row operations can be used to find a matrix's
+  rank, inverse, and determinant, and to solve linear systems.
+
+
+3 Solving a linear system
+ 
+  To solve a linear system A*X=Y using elementary row operations,
+  we build a new matrix, called the augmented matrix, which we will
+  denote by [A|Y].
+ 
+  This is the original matrix A, with one extra column consisting
+  of the right hand side Y.
+ 
+  If we reduce this augmented matrix to reduced row echelon form,
+  then, assuming we do not end up with a row of zeroes in the A
+  part of the matrix, a solution X will be in the Y position.
+ 
+  In any case the reduced matrix [B|K] is the augmented matrix of
+  a system B*X = K which is easy to solve and which has the same
+  solutions as A*X = Y.
+ 
+ 
+3 Inverting a Matrix
+ 
+  The inverse of a square matrix A is a matrix B such that
+ 
+    A*B = B*A = I
+ 
+  where I is the identity matrix.
+ 
+  Systems of linear equations can be symbolically written as A*X=Y,
+  where A is the matrix of coefficients, X is the set of unknowns,
+  and Y is the right hand side.
+ 
+  If the inverse matrix of A is known, then the system may be
+  solved by multiplying both sides by the inverse:
+ 
+    B*A*X=B*Y
+ 
+  but
+ 
+    B*A=I
+ 
+  so
+ 
+    X=B*Y.
+ 
+  This is not a very efficient way to solve linear systems, but
+  there are other reasons for wanting to find the inverse of a
+  matrix.
+ 
+  To compute the inverse of a matrix using elementary row
+  operations, we use the method described above to solve the
+  equation A*X = I.
+ 
+  Note that in this case, we have not just one right hand side, but
+  N of them.
+ 
+  Each column of the identity matrix is to be thought of as a
+  separate right hand side, which we have joined together.
+ 
+  In this case the augmented matrix is [A|I].
+ 
+  We then carry out elementary row operations to reduce A to row
+  reduced echelon form.
+ 
+  Assuming that A is nonsingular, which in this case will mean that
+  the reduced matrix A has no zero rows, then A will be reduced to
+  the identity.
+ 
+  In this case the final matrix is [I|B] where B is the inverse of
+  A.
+ 
+  For example, we might set up an augmented problem like this:
+ 
+    ( 5  7  6  5   1  0  0  0)
+    ( 7 10  8  7   0  1  0  0) = [A|I]
+    ( 6  8 10  9   0  0  1  0)
+    ( 5  7  9 10   0  0  0  1)
+ 
+  and after carrying out the row reduction, we would end up with:
+ 
+    ( 1  0  0  0   68 -41 -17  10)
+    ( 0  1  0  0  -41  25  10  -6) = [I|B]
+    ( 0  0  1  0  -17  10   5  -3)
+    ( 0  0  0  1   10  -6  -3   2)
+ 
+ 
+3 Computing the Determinant
+
+  To compute the determinant of a matrix, we will use several facts:
+
+    A) If P, A and R are square matrices, and P*A=R, then
+       det(P)*det(A)=det(R).
+
+    B) The determinant of a matrix in row echelon form is either 1
+       (because ALL the diagonal entries are 1) or 0 (because at least
+       one diagonal entry is 0).
+
+    C) Every elementary row operation is equivalent to premultiplying
+       by an elementary matrix.  
+
+    D) An elementary matrix never has a zero determinant.
+
+  Now suppose our matrix is A, and we apply ONE elementary row 
+  operation E to it, and suppose the resulting matrix R is in 
+  row echelon form.
+
+  If the determinant of R is 0, then we know that 
+
+    det(E)*det(A) = det(R) = 0
+
+  but det(E) can't be zero because E is an elementary matrix, so
+  det(A) is zero.  
+
+  If the determinant of R is 1, then we know that
+
+    det(E)*det(A) = det(R) = 1
+
+  so det(A) = 1/det(E).
+
+
+  If we have to apply several operations to our matrix, say, E1, E2,
+  E3, then we know:
+
+    det(E3)*det(E2)*det(E1)*det(A) = det(R)
+
+  so either det(R)=0 and det(A)=0 or
+
+    det(A) = 1 / (det(E3)*det(E2)*det(E1)).
+
+
+  Thus, all we need to know now is the determinants of each kind 
+  of elementary matrix:
+
+    ERO                Matrix           Determinant
+    ---                ------           -----------
+
+    R1 <=> R2          I(R1,R2)         -1
+    R1 <= S R1         M(R1,S)           S
+    R1 <= R1 + S R2    A(S,R2,R1)        1
+
+  Thus, for instance, let us reduce the following matrix A:
+
+    A = (4 5)
+        (3 2)
+
+  Step 1: divide row 1 by 4, using M(1,1/4), determinant 1/4.
+  
+    Result = (1 5/4)
+             (3  2 )
+
+  Step 2: add -3 times row 1 to row 2, determinant 1.
+
+    Result = (1  5/4)
+             (0 -7/4)
+
+  Step 3: multiply row 3 by -4/7, using M(2,-4/7), determinant -4/7.
+
+    Result = (1 5/4)
+             (0  1 )
+
+  The matrix A has now been transformed to row echelon form, 
+  with determinant 1.
+
+  The determinant of the original matrix A is therefore:
+
+    det(A) = 1 /( (1/4) * 1 * (-4/7) ) = 1 /(-1/7) = -7.
+
+  The EDET command prints out the determinant of the matrix "E"
+  which is the product of all the elementary row matrices that
+  were applied to A.  Thus, in this case, EDET would return -1/7,
+  and we would know that the determinant of A is -7.
+
+
+2 Elementary Matrices
+
+  Each elementary row operation applied to a matrix A can be
+  considered to be the result of premultiplying A by an "elementary
+  matrix".  
+
+  There are three elementary row operations, which we can
+  symbolize by "I", "M" and "A", and there are three corresponding
+  types of elementary matrices.
+
+  Consider the matrix I(1,2) which switches rows 1 and 2 of a 
+  3 by 3 matrix:
+
+             (0 1 0)
+    I(1,2) = (1 0 0)
+             (0 0 1)
+
+  If we work with the matrix 
+
+        (1 2 3)
+    A = (4 5 6)
+        (7 8 9)
+
+  Then
+
+                 (4 5 6)
+    I(1,2) * A = (1 2 3)
+                 (7 8 9)
+
+  Similarly, the matrix M(2,4) multiplies row 2 by 4:
+
+             (1 0 0)
+    M(2,4) = (0 4 0)
+             (0 0 1)
+
+  So that
+
+                 ( 1  2  3)
+    M(2,4) * A = (16 20 24)
+                 ( 7  8  9)
+
+  Finally, the matrix A(-7,1,3) adds -7 times row 1 to row 3:
+
+                ( 1  0  0)
+    A(-7,1,3) = ( 0  1  0)
+                (-7  0  1)
+
+  so that
+
+                    (1  2   3)
+    A(-7,1,3) * A = (4  5   6)
+                    (0 -6 -12)
+
+
+2 Row Echelon Form
+ 
+  A matrix (square or rectangular) is in "row echelon form" if:
+ 
+    1) The first nonzero entry in every row (if any) is a 1.
+ 
+    2) The first 1 in a given row occurs in a column to the right
+       of the first 1 in the previous row.
+ 
+    3) Rows that are completely zero occur last.
+ 
+  Any matrix can be transformed into row echelon form using a
+  series of elementary row operations.
+ 
+  For example, the matrix
+
+    (1 2 3)
+    (0 1 6)
+    (0 0 0)
+
+  is in row echelon form.
+
+  A matrix is in "reduced row echelon form" if it is also true that:
+ 
+    4) The first 1 in a row has no other nonzero entries in its column.
+ 
+  For example, the matrix
+
+    (1 0 3)
+    (0 1 6)
+    (0 0 0)
+
+  is in reduced row echelon form.
+ 
+
+2 Jacobi Iteration
+ 
+  The Jacobi iteration for an eigenproblem is an iterative method
+  for finding the eigenvalues and eigenvectors of a symmetric
+  matrix A.
+ 
+  The process involves the computation of a sequence of orthogonal
+  similarity transformations Q1, Q2, ... which transform the
+  original matrix A to matrices A1, A2, ... each of which has the
+  same eigenvalues of A, but each of which is "more" diagonal than
+  A was.
+ 
+  That is, given A, we find a matrix Q1, and compute A1 as:
+ 
+    A1 = TRANSPOSE(Q1)*A*Q1
+ 
+  and then find a matrix Q2, and compute A2 as:
+ 
+    A2 = TRANSPOSE(Q2)*A1*Q2
+ 
+  and so on.
+ 
+  The matrices Q1, Q2 and so on are determined by a very simple
+  process.
+ 
+  Q1 is chosen in such a way as to zero out the (1,2) and (2,1)
+  elements of A.
+ 
+  That is, the (1,2) and (2,1) elements of A1 will be zero.
+ 
+  Q2 will eliminate the (1,3) and (3,1) elements of A1.
+ 
+  Thus A2 will have zeroes in the (1,3) and (3,1) positions.
+ 
+  Unfortunately, the (1,2) and (2,1) positions of A2 will not be
+  zero!
+ 
+  However, we can sweep through the entire matrix, zeroing out each
+  off-diagonal element in succession, and starting over when we
+  reach the last one.
+ 
+  It can be shown that the sum of the squares of the off diagonal
+  elements decreases to zero with the iteration.
+ 
+  Thus, for some iteration step M, one can expect to have a matrix
+  AM and a matrix Q = Q1*Q2*...*QM so that
+ 
+    AM = TRANSPOSE(Q) * A * Q
+ 
+  where AM is "essentially" diagonal.
+ 
+  At that point, we can rewrite this equation as
+ 
+    A * Q = LAMBDA * Q
+ 
+  where LAMBDA is the diagonal entries of AM, and LAMBDA is the
+  eigenvalues of A,  and the transformation matrix Q is the matrix
+  of eigenvectors of A.
+ 
+  Now the only detail not addressed is the construction of the
+  individual matrices Q1, Q2 and so on.
+ 
+  How do we make an orthogonal matrix so that the similarity
+  transform zeroes out a particular pair of entries?
+ 
+  The formula is fairly simple.
+ 
+  Let's assume we want to zero out the entries A(I,J) and A(J,I),
+  for example.
+ 
+  Then the matrix Q is equal to the identity matrix, except that:
+ 
+    Q(I,I) =  C   Q(I,J) = S
+    Q(J,I) = -S   Q(J,J) = C
+ 
+  where C=COSINE(THETA) and S=SINE(THETA) are the cosine and sine
+  of some angle THETA.
+ 
+  A matrix constructed in this way is called a "Givens rotation"
+  matrix.
+ 
+  We can compute C and S directly (skipping the computation of
+  THETA) by the following formula:
+ 
+    U = ( A(J,J)-A(I,I) ) / ( 2*A(I,J) )
+    T = SIGN(U) / (ABS(U) + SQRT(U*U+1))
+ 
+    C = 1/(SQRT(T*T+1)
+    S = T/(SQRT(T*T+1)
+ 
+  Using this formula, an orthogonal matrix Q can be found so
+  that
+ 
+    TRANPOSE(Q) * A * Q
+ 
+  has zero (I,J) and (J,I) entries for any given matrix A.
+ 
+  Variations of the Jacobi iteration might choose to try to
+  zero out the largest off-diagonal element at each step, rather
+  than simply going down each column in order.
+ 
+ 
+2 Simplex method
+ 
+  The simplest linear programming problem can be phrased as follows:
+ 
+  Find N nonnegative numbers X1, X2, ..., XN, for which the
+  objective function
+ 
+    Z = A(1)*X1 + A(2)*X2 + ... + A(N)*XN + A(N+1)
+ 
+  attains its maximum possible value, subject to the following
+  constraints:
+ 
+    B(1,1)*X1 + B(1,2)*X2 + ... + B(1,N)*XN < C(1)
+    B(2,1)*X1 + B(2,2)*X2 + ... + B(2,N)*XN < C(2)
+    .........   .........   ...   .........   ....
+    B(N,1)*X1 + B(2,N)*X2 + ... + B(N,N)*XN < C(N)
+ 
+  (Assume that by '<' we mean less than or equal to, and that '>'
+  means greater than or equal to.
+ 
+ 
+  The simplex method of solving a linear programming problem
+  involves producing a series of solutions, each of which
+  satisfies the constraints, but each of which is better than
+  the previous one.
+ 
+  The first step of the method requires picking an initial solution
+  which satisfies the constraints, which is called the initial
+  basic feasible solution.
+ 
+  This solution is mechanically constructed, by setting all the
+  variables to zero except a few, which also are chosen in a
+  mechanical way.
+ 
+  The variables which are allowed to take nonzero values are called
+  basic variables, and the solution method will consist of a series
+  of steps, each of which involves removing one variable from the
+  list of basic variables (setting it to zero) and adding a new
+  variable to the list (allowing it to have a nonzero value).
+ 
+  The simplex method guides us in our choice, so that we can expect
+  that each step of our search will increase the value of the
+  objective function.
+ 
+  An important part of the method involves recognizing when we can
+  go no further, that is, when the solution is the best we can do,
+  and we have found the maximum possible value of the objective
+  function, given the constraints.
+ 
+  On the other hand, it is also possible for there to be no
+  solution for a given problem, and the simplex method includes
+  some checks to guard against this possibility.
+ 
+ 
+  It is easier to solve equations than inequalities,  so for each
+  constraint I, we add a 'slack' variable, X(N+I), to make the
+  inequality an equality.
+ 
+  The original variables, X1 through XN, will be called the
+  "nonslack variables".
+ 
+  For our example problem, we would add two slack variables, and our
+  inequalities would now become:
+ 
+  2 X1 + 2 X2 + X3      = 8
+  5 X1 + 3 X2      + X4 = 15
+ 
+  For problems in standard form, it is easy to construct an initial
+  basic solution:  set all the nonslack variables to zero, and set
+  the slack variable in equation I to the value of the right hand
+  side.
+ 
+  Thus, initially, our basic variables are X3 and X4, and our
+  solution is X1=0, X2=0, X3=8, X4=15.
+ 
+  As we said above, our solution at any step will only have some
+  variables nonzero, called the basic variables.
+ 
+  The remaining variables, which are required to be zero for the
+  moment, are called the nonbasic variables.
+ 
+  Both slack and nonslack variables may be used to determine the
+  current solution, so any variable may be slack/nonslack and
+  basic/nonbasic.
+ 
+  At the beginning of the method, the slack variables are the
+  basic variables, each one having the value of the right hand side
+  of its inequality.
+ 
+  Each step of the simplex method will consist of a method of
+  choosing a variable to add to the set of basic variables, and
+  choosing another variable to drop from the set.
+ 
+  These are the 'entering' and 'departing' variables for that step.
+ 
+  If the departing variable is a slack variable, this means that
+  its corresponding inequality will be satisfied exactly.
+ 
+ 
+3 Pivoting step
+ 
+  To simplify the discussion, we now describe the format of the
+  matrix or 'tableau' which will keep track of our operations.
+ 
+  Let's first suppose that we began with M inequalities and N
+  variables.
+ 
+  Our tableau will have M+1 rows and N+M+2 columns.
+ 
+  Each column is labeled with its number: column 1 with label '1',
+  and so on, although the last two rows will be labeled 'P' and
+  'C'.
+ 
+  These labels will never vary.
+ 
+  The rows will also be labeled.
+ 
+  But initially, each row will be labeled with the number of its
+  slack variable.
+ 
+  And on each pivot step, one row label will change.
+ 
+  The row labels are keeping track of the current set of basic
+  variables, whose values may be found in column C.
+ 
+  The numbers in the tableau are determined initially as follows:
+ 
+    The first M rows and N columns are to contain the coefficients
+    of the constraints.
+ 
+    Column M+N+2 ('C') contains the right hand sides of the
+    constraints.
+ 
+    Columns N+1 through N+M will contain the identity matrix or
+    that portion that fits.
+ 
+    Column N+M+1 ('P') will contain 0 in rows 1 through M.
+ 
+  Finally, row M+1 will contain
+ 
+    minus the coefficients of the objective function in columns
+    1 through N,
+ 
+    0 in columns N+1 through N+M,
+ 
+    1 in column N+M+1, and
+ 
+    the constant term of the objective function in column N+M+2.
+ 
+  For our example problem, the tableau would look like this:
+ 
+           1     2    3    4    P    C
+      +-------------------------------
+    3 !    2     2    1    0    0    8   (  2 X1 +   2 X2 <  8)
+    4 !    5     3    0    1    0   15   (  5 X1 +   3 X2 < 15)
+    O ! -120  -100    0    0    1   70   (120 X1 + 100 X2 + 70)
+ 
+  Now that we have the tableau, we can begin the algorithm.
+ 
+  Each step involves picking an 'entering' and a 'departing'
+  variable.
+ 
+  The entering variable is to be chosen by picking the variable
+  corresponding to the label of the column for which the objective
+  entry in row M+1 is the most negative.
+ 
+  If there is a tie, just choose the first one.
+ 
+  Let's suppose this column number is J.
+ 
+  Now select the departing variable by computing, for each row I
+  for which T(I,J) > 0, the feasibility ratio T(I,N+M+2) / T(I,J).
+ 
+  Choose the variable which labels the row for which the minimum
+  feasibility ratio is found.
+ 
+  That is the departing variable, where in case of a tie we choose
+  the first one.
+ 
+  For our example, the most negative objective entry is -120, which
+  occurs in the column labeled '1' so X1 is going to be our
+  entering variable.
+ 
+  The feasibility ratios are:
+ 
+    T(1,6)/T(1,1) =   8/2 =  4
+    T(2,6)/T(2,1) =  15/5 =  3
+ 
+  and the minimum is 3 which occurs in the row which is labeled 4,
+  so variable 4 is our departing variable.
+ 
+  Now we must modify the tableau to account for these changes.
+ 
+  Let's assume that the departing variable corresponds to row K.
+ 
+  We now do the elementary row operations necessary to reduce
+  column J of the tableau to column K of the identity matrix.
+ 
+  Thus we divide the K-th row by T(K,J), making T(K,J) equal to 1.
+ 
+  Now we modify each row I by multiplying row K by -T(I,J) and
+  adding that to row I.
+ 
+  This makes column J all zero except for the entry in row K.
+ 
+  We also modify row M+1 in the same way.
+ 
+  Finally, we change the label for row K so that it is labeled by
+  the entering variable J.
+ 
+  This procedure can be carried out using the "P" (Pivot) command
+  or by using the "A" and "M"  commands.
+ 
+  For the example, the tableau is transformed as follows:
+ 
+    Entering variable is X1.
+    Departing variable X3 corresponds to row 2.
+ 
+    We have J=1, K=2.
+ 
+    We want to reduce column 1 of the tableau to column 2 of the
+    identity.
+ 
+    We must divide row 2 by T(2,1)=5.
+ 
+    We must then add -5 times row 1 to row 2, which zeroes out the
+    entry T(2,1).
+ 
+    Then we add -120 times row 1 to row 3.
+ 
+    Then we label row 1 '1'.
+ 
+             1     2     3     4    P     C
+       +-----------------------------------
+    3  !     0    4/5    1   -2/5   0     2
+    1  !     1    3/5    0    1/5   0     3
+    O  !     0   -28     0    24    1   430
+ 
+  What has now changed?
+ 
+  The basic variables are now X1 and X3, whose values can be read
+  in the last column.
+ 
+  The current solution can be written (3,0,8,0).
+ 
+  The objective function has changed from 70 to 430.
+ 
+  The objective function increase in this step, as desired.
+ 
+  The process is repeated as long as there are negative entries in
+  the objective row.
+ 
+  When there are no longer any negative entries, the optimal
+  solution has been found.
+ 
+  The row labels record the basic variables, and their values will
+  be found in the last column.
+ 
+  The nonbasic variables are all zero.
+ 
+  The optimal value of the objective function is the last entry in
+  the last row.
+ 
+  For this example, there is only one more step of the method:
+ 
+    Entering variable is 2.
+ 
+    Departing variable is 3.
+ 
+    Multiply row 1 by 5/4,
+ 
+    Add -3/5 times row 1 to row 2,
+ 
+    Add 28 times row 1 to row 3,
+ 
+    Relabel the first row '2':
+ 
+           1     2     3     4    P     C
+     +-----------------------------------
+  2  !     0     1    5/4  -1/2   0   5/2
+  1  !     1     0   -3/4   1/2   0   3/2
+  O  !     0     0    35    10    1   500
+ 
+  and so our final solution is (3/2, 5/2, 0, 0) with objective
+  value 500.
+ 
+ 
+3 Two phase method
+ 
+  For cases where some of the constraints are "=" or ">"
+  constraints, the two phase method must be used.
+ 
+  The first phase of such a problem involves adding artificial
+  variables and an artificial objective function.
+ 
+  Then the simplex method is applied to find the solution of the
+  auxiliary problem which will serve as a basic feasible solution
+  of the given problem.
+ 
+  After phase I is completed, the artificial variables are removed
+  and the original objective function is introduced.
+ 
+  Now we apply the simplex method to obtain the optimal solution of
+  the original  problem.
+ 
+  The first phase was necessary because the basic solution
+  associated with X1=X2=...=XN=0 was not feasible.
+ 
+  The first phase of the algorithm simply produces an acceptable
+  starting solution for the second phase.
+ 
+  The artificial variables to be added to the first phase problem
+  are determined entirely by the constraints which are > or =.
+ 
+  For each > inequality, the coefficient of the slack variable for
+  that row is  -1, and an artificial variable with a +1 coefficient
+  is added.
+ 
+  Thus,
+ 
+    X1 + 2*X2 > 6
+ 
+  might become
+ 
+    X1 + 2*X2 - X3 + X7 = 6
+ 
+  where X3 is a (negative) slack variable and X7 is artificial.
+ 
+  For an = constraint, no slack variable is generated for the
+  equation, but an artificial variable is generated.
+ 
+  Thus
+ 
+    X1 + 2*X2 = 6
+ 
+  would become
+ 
+    X1 + 2*X2 + X8 = 6
+ 
+  where X8 is artificial.
+ 
+  Finally, the artificial objective function is generated.
+ 
+  It is the sum of the artificial variables.
+ 
+  If this problem is solved with the simplex method, and none of
+  the final basic variables are artificial, then they have values
+  satisfying the original constraints.
+ 
+  Once the artificial variables are deleted, the second phase begins.
+ 
+ 
+2 Sample problems
+ 
+  Built-in examples can be accessed via the "B" command.
+ 
+  Linear algebra examples:
+ 
+    Determinant:  use ERO's on an N by N matrix.
+    Solve:        use ERO's on an N by N+1 matrix.
+    Inverse:      use ERO's on an N by 2*N matrix.
+    Eigenvalue:   use Jacobi rotation on an N by N symmetric matrix.
+ 
+   Linear programming examples are:
+ 
+    Standard: All constraints are less-or-equal inequalities.
+    Advanced: Two constraints are greater-or-equal inequalities.
+ 
+ 
+3 Determinant example
+
+  This example shows how the determinant of a matrix can be computed
+  via elementary row operations.
+
+  You may choose the number of rows NROW in the example matrix.
+
+  You should then apply a sequence of elementary row operations to
+  the matrix, so that it is transformed into row echelon form.
+
+  If the diagonal of the row echelon form matrix is all 1's,
+  then the determinant of the matrix is the inverse of the determinant
+  of the ERO matrices that were applied to it.
+
+  If the diagonal of the row echelon form matrix has any zero
+  entries, then the determinant of the matrix is zero.
+
+
+3 Solve example
+
+  This example shows how a system of linear equations can be
+  solved using elementary row operations.
+
+  You may choose the number of rows NROW in the example matrix.
+
+  The matrix will have one extra column, in which the right hand
+  side "b" of the linear system "A * x = b" has been placed.
+
+  Using elementary row operations, the first NROW columns of the 
+  matrix can be transformed into the identity matrix, unless
+  the matrix is singular.
+
+  At that point, the solution "b" to the linear system will be in
+  the final column of the transformed matrix.
+ 
+
+3 Inverse example
+ 
+  Elementary row operations can find the inverse of a matrix.
+ 
+  You may choose the number of rows NROW in the example matrix.  
+
+  The program sets up the NROW by NROW matrix, and automatically 
+  appends a copy of the identity matrix.
+
+  Using elementary row operations, the first NROW columns of the 
+  matrix can be transformed into the identity matrix.
+ 
+  By doing so, the trailing half of the matrix will have been
+  transformed into the inverse of the original matrix.
+ 
+ 
+3 Eigenvalue example
+ 
+  This example may only be used when real arithmetic has been
+  chosen, and the program is not in linear programming mode.
+ 
+  Once the example has been set up, the "J" command can be used to
+  apply Jacobi transformations to the matrix.
+ 
+  These transformations can gradually change a symmetric matrix
+  to one that is nearly diagonal.
+ 
+  When the matrix is nearly diagonal, the diagonal entries
+  should be close to the eigenvalues of the original matrix.
+ 
+  The example matrix is
+ 
+    5 4 1 1
+    4 5 1 1
+    1 1 4 2
+    1 1 2 4
+ 
+  The eigenvalues of this matrix are 10, 5, 2, and 1.
+ 
+  Repeated application of the "J" command should result in a
+  matrix that is "almost" diagonal, and which has diagonal
+  entries close the the eigenvalues of the matrix.
+ 
+ 
+3 Standard linear programming example
+ 
+  The following is a sample linear programming problem:
+ 
+  Find nonnegative X1 and X2 for which the function
+ 
+    Z = 120*X1 + 100*X2 + 70.0
+ 
+  attains its maximum value, subject to the conditions
+ 
+    2*X1 + 2*X2 < 8,
+    5*X1 + 3*X2 < 15.
+ 
+  The solution of this problem is
+ 
+    X1 = 1.5,
+    X2 = 2.5,
+    Z  = 430.
+ 
+ 
+3 Advanced linear programming example
+ 
+  Often a linear programming problem cannot be described in
+  standard form.
+ 
+  In particular, some of the constraints might be ">", or "="
+  constraints, rather than "<".
+ 
+  Such problems can be solved using the two phase method.
+ 
+  An example of a problem in nonstandard form is:
+ 
+   "Find nonnegative X1 and X2 for which Z = 40*X1 + 30*X2
+    attains its maximum value, subject to these constraints"
+ 
+      X1 + 2*X2 > 6
+    2*X1 +   X2 > 4
+      X1 +   X2 < 5
+    2*X1 +   X2 < 8
+ 
+  The first step of the two phase method for solving this
+  nonstandard problem is to add "artificial variables" to the
+  problem, as well as a new objective function.
+ 
+  The new problem looks like this:
+ 
+   "Find nonnegative X1 through X8 for which Z = - X7 - X8
+    attains its maximum value, subject to these constraints:"
+ 
+      X1 + 2*X2 - X3                    +   X7        = 6
+    2*X1 +   X2      - X4                      +   X8 = 4
+      X1 +   X2           +   X5                      = 5
+      X1 +   X2                  +   X6               = 8
+ 
+  The added variables X3, X4, X5, and X6 are called slack variables,
+  while X7 and X8 are called artificial variables.
+ 
+  The artificial variables X7 and X8 were added to take care of the 
+  fact that the first two inequalities have the wrong direction in
+  the original problem.
+ 
+  The solution to this first problem is
+ 
+    (2/3, 8/3, 0, 0, 5/3, 4, 0, 0),
+ 
+  and the (temporary) objective function has the value 0.
+ 
+  When the artificial variables are eliminated from this problem,
+  to carry out the second phase, the solution is
+ 
+    (3, 2, 1, 4, 0, 0)
+ 
+  with the objective function having a value of 180.
+ 
+ 
+2 DOS PC version
+ 
+  The PC version of MATMAN should run properly on a PC that
+  uses Microsoft DOS, Windows 3.1 or Windows 95, although in all 
+  cases, MATMAN will actually be running under DOS.
+
+
+  To run MATMAN on a DOS PC under DOS, insert the MATMAN disk
+  in the computer's floppy drive.  Then change your working
+  directory to that same drive, which you might do by typing
+
+    A:
+
+  Then, to begin execution of the program, type 
+
+    MATMAN
+ 
+  If MATMAN will be used regularly on the PC, it may be best to
+  make a directory on the hard disk, and copy at least the
+  following four files from the floppy:
+ 
+    MATMAN.EXE
+    MATMAN.HLP
+    MATMAN.DAT
+    MATKEY.DAT
+ 
+  These files are enough to run MATMAN directly on the hard drive.
+ 
+  If the program seems to be in an infinite loop, or needs to
+  be terminated immediately, typing CTRL-C should kill it.
+ 
+
+  If your computer is running Microsoft Windows 3.0 or 3.1, then
+  you have the choice of getting to a DOS prompt while still
+  running Windows, by clicking on one of the "MS-DOS prompt" icons,
+  or you can simply shut down Windows.
+
+  If your computer is running Microsoft Windows 95, then you should
+  click on the "START" icon on the Toolbar, go the the "PROGRAMS"
+  item on the menu, slide over to the right and choose "MS-DOS Prompt".
+
+  Once you have gotten from Windows to a DOS prompt, you simply
+  repeat the instructions given earlier for computers running DOS
+  directly.
+
+ 
+3 Redirecting input and output on the PC
+ 
+  Although the program is designed for interactive use, you may
+  prepare a set of input commands, store them in a file, and "feed"
+  them to the program using the standard DOS redirection symbol
+  "<".  If the input file were called "MYWORDS", then the execution
+  statement would be:
+ 
+    MATMAN < MYWORDS
+ 
+  Similarly, although MATMAN has a built in capability of saving
+  in a file a copy of everything that appeared on the screen, you
+  may instead choose to use the DOS redirection symbol ">" to
+  store the output in a file.  In this case, you will surely
+  also want to have prepared the input in advance, since you
+  will see no prompts on the screen, so the execution command
+  might look like:
+ 
+    MATMAN < MYWORDS > OUTPUT
+ 
+  If you are going to "feed" an input file to MATMAN, you should
+  turn off paging by issuing the "$" command as the first command
+  in the file.  Normally, MATMAN will pause after 24 lines of
+  output, and ask you to hit RETURN before it will proceed.  Typing
+  "$" tells MATMAN not to do that.  If you leave MATMAN in "paging"
+  mode, then it will be almost impossible to properly set up an
+  input file, since you will have to anticipate where to insert
+  extra blank lines that signify hitting RETURN.
+ 
+ 
+3 Compilation details on the PC
+ 
+  The program was compiled on a Gateway 2000 PC, using Microsoft
+  FORTRAN version 5.1, and running Windows 3.1.
+ 
+  The source code file was broken up into several separate files to
+  make it possible to compile.  The files were given names
+  like "MATMAN1.FOR", because the Microsoft FORTRAN compiler
+  requires the "FOR" extension.
+ 
+  The compilation statements had the form:
+ 
+    FL /FPi /c MATMAN1.FOR
+ 
+  The compilation switch "/FPi" was used, so that the program
+  would run correctly whether or not a machine had an 8087
+  math coprocessor chip.  If the machine has a math coprocessor
+  chip, the program will exploit it.
+ 
+  The LINK statement, which created the executable, was
+ 
+    LINK MATMAN1+MATMAN2+MATMAN3+MATMAN4+MATMAN5+MATMAN6+MATMAN7
+ 
+  The library used was LLIBFOR7.LIB.
+
+
+2 Windows PC version
+
+  If you have the Windows version of MATMAN, it cannot be run on
+  a PC that is only running DOS.
+
+  If the MATMAN executable program is on a floppy disk in the A:
+  drive, then to run it, you should select the START icon on the
+  Windows Toolbar, slide up to the "RUN" item and click.
+
+  When you get a blank command line to fill in, type
+
+    A:MATMAN_W.EXE
+
+  Because this is a Windows version of the program, it executes in
+  its own window, which can be moved or resized.  You can also easily
+  cut and paste, and do other operations that cannot be done with a
+  DOS application.
+
+
+2 Macintosh version
+ 
+  To use MATMAN on a Macintosh, you may copy the files 
+ 
+    MATMAN_68K or MATMAN_PPC
+    MATMAN.HLP
+    MATMAN.DAT
+    MATKEY.DAT
+ 
+  from the floppy disk into a folder on your hard disk, 
+  or use the files directly from the floppy disk.
+  
+  In either case, you should open the folder or disk containing
+  the files, and click twice on the MATMAN_68K or MATMAN_PPC file.  
+  This should open up a command window where you can type your 
+  input, and where MATMAN will print its responses.  
+
+  You can cut and paste from the command window.  Once you
+  have stopped the MATMAN program with the "Q" command, you
+  can save the entire command window to a file by going to the
+  "FILE" menu and choosing "SAVE AS".  Otherwise, you can
+  close the command window by clicking once in the small box in
+  the extreme upper left corner of the window.
+ 
+  If the program seems to be in an infinite loop, or needs to
+  be terminated immediately, hold down COMMAND-Period, that is,
+  hold down the COMMAND key (the one with the cloverleaf on it)
+  and press the period key.
+ 
+ 
+3 Compilation details on the Macintosh
+ 
+  The 68K version of MATMAN was compiled on an Apple Macintosh II 
+  computer, running System 7.5, using Absoft Mac FORTRAN II 
+  version 3.4.
+ 
+  The PowerPC version of MATMAN was compiled on an Apple PowerPC,
+  running System 7.5, using Absoft FORTRAN version 4.1.
+
+  The latest versions of the Absoft compiler have several useful features:
+
+  * The "-N9" compiler option, which causes the the program to check
+    every half-second to see whether the COMMAND-period keys have
+    been pushed, signaling that the user wishes to abort the program.
+
+  * The "-N13" compiler option, which corrects a problem in which
+    the program was running out of stack memory, resulting in
+    no output appearing on the screen.
+
+  * The "-mrwe" switch, which causes the program output to appear
+    in a more manageable window, with user control over the fonts
+    and font sizes.
+
+  * The ability to cut and paste inside the command window.
+
+
+2 UNIX version of MATMAN
+ 
+  Educators who want a UNIX version of MATMAN for noncommercial
+  use will be given a copy of the source code to install.  
+ 
+  On UNIX, if you're working in the same directory in which the
+  executable program is stored, the program can be run simply by
+  typing:
+ 
+    matman
+ 
+  However, if the executable program is in another directory, you 
+  may need to specify the full directory name to run the program,
+  as in:
+ 
+    /usr/users/burkardt/bin/matman
+ 
+  Sophisticated users will know how to place MATMAN in their
+  UNIX PATH, so that it can be run by invoking its name, no
+  matter where the user is currently working.
+
+  If MATMAN has been installed by an instructor for use by students
+  from other accounts, then the instruct must "unprotect" the
+  executable program, the help file, the data file and the MATMAN
+  password file, so that UNIX will allow the students to access them.
+ 
+  The commands, which should be issued in the directory where MATMAN
+  is installed, would be something like this:
+ 
+    chmod +x matman
+    chmod +r matman.hlp
+    chmod +r matman.dat
+    chmod +r matkey.dat
+ 
+  If you are installing MATMAN in this way, for access by users
+  from other accounts, you should also modify the source code so
+  that MATMAN knows where the data files are.
+ 
+  The lines to be replaced currently read:
+ 
+    filhlp='matman.hlp'
+    filkey='matkey.dat'
+    fildef='matman.dat'
+ 
+  and might be changed, for instance, to read
+ 
+    filhlp='/usr/burkardt/matman.hlp'
+    filkey='/usr/burkardt/matkey.dat'
+    fildef='/usr/burkardt/matman.dat'
+ 
+
+  If the program seems to be in an infinite loop, or needs to
+  be terminated immediately, typing CTRL-C should kill it.
+ 
+ 
+3 Compilation details on UNIX
+ 
+  MATMAN has been compiled and run on the following UNIX machines:
+ 
+    a DEC ALPHA AXP running OSF/1,
+    a Silicon Graphics IRIS workstation running IRIX,
+    a SUN SparcStation running SOLARIS.
+ 
+  For the IRIS, the command to compile and link was:
+ 
+    f77 matman.f
+    mv a.out matman
+ 
+  For the ALPHA and SUN, the command to compile and link was:
+ 
+    f77 -fast matman.f
+    mv a.out matman
+ 
+ 
+3 Redirecting input and output on UNIX
+ 
+  Although MATMAN is designed for interactive use, you
+  may prepare a set of input commands, store them in a
+  file, and "feed" them to the program using the standard UNIX
+  redirection symbol "<".  
+
+  If the input file were called "mywords", then the execution 
+  statement would be:
+ 
+    matman < mywords
+ 
+  Similarly, although MATMAN has a built-in capability of saving
+  in a file a copy of everything that appeared on the screen, you
+  may instead choose to use the UNIX redirection symbol ">" to
+  store the output in a file.  
+
+  In this case, you will surely also want to have prepared the 
+  input in advance, since you will see no prompts on the screen, 
+  so the execution command might look like:
+ 
+    matman < mywords > output
+ 
+  If you are going to "feed" an input file to MATMAN, you should
+  turn off paging by issuing the "$" command as the first command
+  in the file.  
+
+  Normally, MATMAN will pause after 24 lines of output, and ask you
+  to hit RETURN before it will proceed.  Typing "$" tells MATMAN not 
+  to do that.  
+
+  If you leave MATMAN in "paging" mode, then it will be almost 
+  impossible to properly set up an input file, since you will have 
+  to anticipate where to insert extra blank lines that signify 
+  hitting RETURN.
+ 
+ 
+2 VMS version
+ 
+  Anyone who wants a VMS version of MATMAN will be given a
+  copy of the source code to install.
+ 
+ 
+  On VMS, if you're working in the same directory in which the
+  executable program is stored, the program can be run simply
+  by typing:
+ 
+    RUN MATMAN
+ 
+  On VMS, it is also possible for a single copy of MATMAN to
+  be installed by an instructor, and then used by students from
+  other accounts.
+ 
+  In that case, the instructor must "unprotect" the executable
+  program, the help file and the data file, so that VMS will allow
+  the students to access them.
+ 
+  The commands required would be something like this:
+ 
+    SET PROTECT=(W:RE) MATMAN.EXE
+    SET PROTECT=(W:R)  MATMAN.HLP
+    SET PROTECT=(W:R)  MATMAN.DAT
+    SET PROTECT=(W:R)  MATKEY.DAT
+ 
+  Then the instructor must tell the students the location of the
+  directory where the files are kept, which might be
+ 
+    USR$ROOT:[INSTRUCTOR.PROGRAMS]
+ 
+  The students can then run the program by typing a command like
+ 
+    RUN USR$ROOT:[INSTRUCTOR.PROGRAMS]MATMAN
+ 
+  If you are installing MATMAN in this way, for access by users
+  from other accounts, you should also modify the source code so
+  that the program knows where the data files are.
+ 
+  The lines to be replaced currently read:
+ 
+    filhlp='matman.hlp'
+    filkey='matkey.dat'
+    fildef='matman.dat'
+ 
+  and might be changed, for instance, to read
+ 
+    filhlp='USR$ROOT:[INSTRUCTOR.PROGRAMS]MATMAN.HLP'
+    filkey='USR$ROOT:[INSTRUCTOR.PROGRAMS]MATKEY.DAT'
+    fildef='USR$ROOT:[INSTRUCTOR.PROGRAMS]MATMAN.DAT'
+ 
+  Also, there are three OPEN statements in the program, which
+  need to be modified if other users are going to access the files.
+ 
+  These places are marked in the program.  The original OPEN
+  statements need to be changed to include the two VMS specific
+  keywords:
+ 
+   SHARED, READONLY
+ 
+  This allows more than one user to open the file at any time,
+  but only to read them, not to modify them.
+ 
+  Also, the routine TRANSC should be modified.  Two of the OPEN
+  statements should have the words 
+
+    FORM='UNFORMATTED', CARRIAGECONTROL='LIST'
+
+  inserted, so that the transcript file will print out properly,
+  rather than seeming to have lost column 1.
+
+
+  If the program seems to be in an infinite loop, or needs to
+  be terminated immediately, typing CTRL-Y should kill it.
+ 
+ 
+3 Compilation details on VMS
+ 
+  This program was compiled on a VAX/VMS system using the DEC
+  FORTRAN compiler.  The commands used to compile and load the
+  program were:
+ 
+    FORTRAN/NOLIST MATMAN.FOR
+    LINK/NOMAP MATMAN.OBJ
+ 
+ 
+3 Redirecting input and output on VMS
+ 
+  Although the program is designed for interactive use, you
+  may prepare a set of input commands, store them in a
+  file, and "feed" them to the program using the VMS ASSIGN
+  command to tell the program where to look.  If the input file
+  were called  "MYWORDS.DAT", then the execution statements would
+  be:
+ 
+    ASSIGN/USER MYWORDS.DAT SYS$INPUT
+    RUN MATMAN
+ 
+  Similarly, although MATMAN has a built in capability of saving
+  in a file a copy of everything that appeared on the screen, you
+  may instead choose to use the ASSIGN command to store the output
+  in a file.  In this case, you will surely also want to have
+  prepared the input in advance, since you will see no prompts on
+  the screen, so the execution command might look like:
+ 
+    ASSIGN/USER MYWORDS.DAT SYS$INPUT
+    ASSIGN/USER OUTPUT.DAT SYS$OUTPUT
+    RUN MATMAN
+ 
+  If you are going to "feed" an input file to MATMAN, you should
+  turn off paging by issuing the "$" command as the first command
+  in the file.  Normally, MATMAN will pause after 24 lines of
+  output, and ask you to hit RETURN before it will proceed.  Typing
+  "$" tells MATMAN not to do that.  If you leave MATMAN in "paging"
+  mode, then it will be almost impossible to properly set up an
+  input file, since you will have to anticipate where to insert
+  extra blank lines that signify hitting RETURN.
+ 
+ 
+2 DOUBLE PRECISION version
+ 
+  In FORTRAN, it is possible to request that all real
+  calculations be carried out with greater than usual precision.
+ 
+  Normally, if a variable is declared to be "REAL", then the
+  value of the variable is stored using one word of
+  computer memory, equivalent to 32 bits, or 4 bytes.  Roughly
+  speaking, this allows computations with this variable to be
+  accurate to about 7 or 8 decimal places.
+ 
+  If, instead of being declared "REAL", the variable is declared
+  "DOUBLE PRECISION", then two words are used to store the value
+  of the variable, and computations involving the variable will
+  generally be accurate to about 14 to 16 decimal places.
+ 
+  The greater accuracy does have two costs: the program will take
+  up more memory, and real computations will take longer.
+ 
+  MATMAN is written to use the normal, "REAL" arithmetic form
+  for real calculations.  However, it is a very simple matter
+  to convert MATMAN to double precision.  Using any text editor
+  you like, simply replace MOST occurrences of the string "real"
+  by the string "double precision" and recompile the code.
+ 
+  Note that using double precision will NOT improve the performance
+  of the rational and decimal arithmetic options in MATMAN.
+ 
+ 
+2 64 bit integer version
+
+  The rational and decimal arithmetic modes used in MATMAN assume 
+  that an integer is stored in 32 bits, and that the maximum legal 
+  integer, called MAXINT by the program, is 2**(31)-1, or 
+  2,147,483,647.
+ 
+  If you convert to a double precision version of MATMAN, that only
+  improves the accuracy of "real" representations and computations. 
+  Fraction and decimal representations and computations will not 
+  change.
+
+  However, if your machine uses 64 bits for integers, then you can 
+  get MATMAN to take advantage of this fact, and improve the range 
+  and accuracy of rational and decimal representations.
+
+  To do this, you must change the value of MAXDIG in the program 
+  from 7 to 14, which allows decimal rationals to go as high as 14 
+  digits, and you need to replace all the assignments of MAXINT, 
+  replacing the current value by the value of the largest 64 bit 
+  integer, which should be 2**(63)-1, which is equal to
+  9,223,372,036,854,775,807.
+ 

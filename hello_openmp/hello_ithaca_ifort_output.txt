@@ -1,0 +1,55 @@
+ 
+HELLO
+  FORTRAN77/OpenMP version
+  The number of processors =        8
+  The number of threads    =        1
+  This is thread number        0
+ 
+HELLO
+  Normal end of execution.
+ 
+  Elapsed wall clock time =   0.269413E-04
+ 
+HELLO
+  FORTRAN77/OpenMP version
+  The number of processors =        8
+  The number of threads    =        2
+  This is thread number        0
+  This is thread number        1
+ 
+HELLO
+  Normal end of execution.
+ 
+  Elapsed wall clock time =   0.177145E-03
+ 
+HELLO
+  FORTRAN77/OpenMP version
+  The number of processors =        8
+  The number of threads    =        4
+  This is thread number        3
+  This is thread number        0
+  This is thread number        2
+  This is thread number        1
+ 
+HELLO
+  Normal end of execution.
+ 
+  Elapsed wall clock time =   0.392914E-03
+ 
+HELLO
+  FORTRAN77/OpenMP version
+  The number of processors =        8
+  The number of threads    =        8
+  This is thread number        3
+  This is thread number        0
+  This is thread number        2
+  This is thread number        6
+  This is thread number        4
+  This is thread number        7
+  This is thread number        1
+  This is thread number        5
+ 
+HELLO
+  Normal end of execution.
+ 
+  Elapsed wall clock time =   0.437200E-01

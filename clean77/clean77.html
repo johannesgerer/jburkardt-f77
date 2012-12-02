@@ -1,0 +1,189 @@
+<html>
+
+  <head>
+    <title>
+      CLEAN77 - Clean up a FORTRAN77 File
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      CLEAN77 <br> Clean up a FORTRAN77 File
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>CLEAN77</b>
+      is a FORTRAN77 program which
+      can apply simple conventions about indentation, statement numbering,
+      and so on, to improve the appearance of the text of a FORTRAN77 file,
+      by Gregory Flint.
+    </p>
+
+    <p>
+      CLEAN77 can
+      <ul>
+        <li>
+          force DO loops to end with a CONTINUE statement,
+        </li>
+        <li>
+          renumber labeled statements, with a user chosen increment,
+        </li>
+        <li>
+          move FORMAT statements to the end of a module,
+        </li>
+        <li>
+          resequence statement numbers,
+        </li>
+        <li>
+          convert Hollerith fields to quoted strings,
+        </li>
+        <li>
+          convert between "long" FORTRAN and 72 column FORTRAN lines,
+        </li>
+        <li>
+          replace INTEGER*2 by INTEGER, REAL*8 by REAL, and so on,
+        </li>
+        <li>
+          indent the contents of DO loops, IF-THEN-ELSE and WHILE blocks.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      Warning: CLEAN77 will not handle TAB's correctly.  It will think they
+      are COMMENT lines, and it will place a "C" in column 1!
+    </p>
+
+    <h3 align = "center">
+      Author:
+    </h3>
+
+    <p>
+      Gregory Flint, Purdue University Computer Center.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "../../txt/clean77.txt">The CLEAN77 Reference Manual</a>
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "clean77.f">clean77.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "clean77.sh">clean77.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <b>FILE1</b> is an example file to be input to the program.
+      <ul>
+        <li>
+          <a href = "file1.f">file1.f</a>,
+          the original file.
+        </li>
+        <li>
+          <a href = "file1_new.f">file1_new.f</a>,
+          the cleaned up file.
+        </li>
+        <li>
+          <a href = "file1_output.txt">file1_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>FILE2</b> is an example file to be input to the program.
+      <ul>
+        <li>
+          <a href = "file2.f">file2.f</a>,
+          the original file.
+        </li>
+        <li>
+          <a href = "file2_new.f">file2_new.f</a>,
+          the cleaned up file.
+        </li>
+        <li>
+          <a href = "file2_output.txt">file2_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>FILE3</b> is an example file to be input to the program.
+      <ul>
+        <li>
+          <a href = "file3.f">file3.f</a>,
+          the original file.
+        </li>
+        <li>
+          <a href = "file3_new.f">file3_new.f</a>,
+          the cleaned up file.
+        </li>
+        <li>
+          <a href = "file3_output.txt">file3_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>FILE4</b> is an example file to be input to the program.
+      <ul>
+        <li>
+          <a href = "file4.f">file4.f</a>,
+          the original file.
+        </li>
+        <li>
+          <a href = "file4_new.f">file4_new.f</a>,
+          the cleaned up file.
+        </li>
+        <li>
+          <a href = "file4_output.txt">file4_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 24 October 2008.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

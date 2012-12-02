@@ -1,0 +1,145 @@
+<html>
+
+  <head>
+    <title>
+      TOMS441 - Random Deviates from the Dipole Distribution
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS441 <br> Random Deviates from the Dipole Distribution
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS441</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 441, for returning random
+      deviates from the dipole distribution.
+    </p>
+
+    <p>
+      The text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <dl>
+        <dt>
+          x = <b>dipole ( a, b, seed )</b>
+        </dt>
+        <dd>
+          where <b>A</b> and <b>B</b> are parameters of the distribution,
+          <b>SEED</b> is a seed value for the random number generator,
+          and the value of the sample is returned in <b>DIPOLE</b>.
+        </dd>
+      </dl>
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/prob/prob.html">
+      PROB</a>,
+      a FORTRAN90 library which
+      contains routines to sample the dipole distribution,
+      or to evaluate the CDF or PDF.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Robert Knop,<br>
+          Algorithm 441: Random Deviates from the Dipole Distribution,<br>
+          Communications of the ACM,<br>
+          Volume 16, Number 1, January 1973, page 51.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms441.f">toms441.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms441.sh">toms441.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms441_prb.f">toms441_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms441_prb.sh">toms441_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms441_prb_output.txt">toms441_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>DIPOLE</b> returns a random deviate from the dipole distribution.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 06 December 2005.
+
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

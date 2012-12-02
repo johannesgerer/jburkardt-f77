@@ -1,0 +1,214 @@
+ Is this a program restart after failure (1)
+ or a start from scratch (0) ?
+ A  Paranoid  Program  to  Diagnose  Floating-point Arithmetic
+          ... Double-Precision Version  ...
+ Lest this program stop prematurely, i.e. before displaying
+   "End of Test"   
+ try to persuade the computer NOT to terminate execution
+ whenever an error such as Over/Underflow or Division by
+ Zero occurs, but rather to persevere with a surrogate value
+ after, perhaps, displaying some warning.  If persuasion
+ avails naught, don't despair but run this program anyway
+ to see how many milestones it passes, and then run it
+ again.  It should pick up just beyond the error and
+ continue.  If it does not, it needs further debugging.
+
+ Users are invited to help debug and augment this program
+ so that it will cope with unanticipated and newly found
+ compilers and arithmetic pathologies.
+
+ To continue diagnosis, press return.
+ Diagnosis resumes after milestone  #    0,    ... page     1
+
+
+ Please send suggestions and interesting results to
+         Richard Karpinski
+         Computer Center U-76
+         University of California
+         San Francisco, CA 94143-0704
+         USA
+
+ In doing so, please include the following information:
+         Precision:   Double;
+         Version: 31 July 1986;
+         Computer:
+
+         Compiler:
+
+         Optimization level:
+
+         Other relevant compiler options:
+
+
+ To continue diagnosis, press return.
+ Diagnosis resumes after milestone  #    1,    ... page     2
+
+
+ BASIC version (C) 1983 by Prof. W. M. Kahan.
+ Translated to FORTRAN by T. Quarles and G. Taylor.
+ Modified to ANSI 66/ANSI 77 compatible subset by
+ Daniel Feenberg and David Gay.
+ You may redistribute this program freely if you
+ acknowledge the source.
+
+
+ Running this program should reveal these characteristics:
+
+ b = radix ( 1, 2, 4, 8, 10, 16, 100, 256, or ... ) .
+ p = precision, the number of significant  b-digits carried.
+ u2 = b/b^p = one ulp (unit in the last place) of 1.000xxx..
+ u1 = 1/b^p = one ulp of numbers a little less than 1.0.
+
+ To continue diagnosis, press return.
+ Diagnosis resumes after milestone  #    2,    ... page     3
+
+ g1, g2, g3 tell whether adequate guard digits are carried;
+ 1 = yes, 0 = no;  g1 for mult.,  g2 for div., g3 for subt.
+ r1,r2,r3,r4  tell whether arithmetic is rounded or chopped;
+ 0=chopped, 1=correctly rounded, -1=some other rounding;
+ r1 for mult., r2 for div., r3 for add/subt., r4 for sqrt.
+ s=1 when a sticky bit is used correctly in rounding; else s=0 .
+ u0 = an underflow threshold.
+ e0 and z0 tell whether underflow is abrupt, gradual or fuzzy
+ v = an overflow threshold, roughly.
+ v0  tells, roughly, whether  infinity  is represented.
+ Comparisons are checked for consistency with subtraction
+        and for contamination by pseudo-zeros.
+ Sqrt is tested. so is  y^x  for (mostly) integers  x .
+ Extra-precise subexpressions are revealed but not yet tested.
+ Decimal-binary conversion is not yet tested for accuracy.
+
+ To continue diagnosis, press return.
+ Diagnosis resumes after milestone  #    3,    ... page     4
+
+ The program attempts to discriminate among:
+     >FLAWs, like lack of a sticky bit, 
+     >SERIOUS DEFECTs, like lack of a guard digit, and
+     >FAILUREs, like  2+2 = 5 .
+ Failures may confound subsequent diagnoses.
+
+ The diagnostic capabilities of this program go beyond an
+ earlier program called  "Machar", which can be found at the
+ end of the book "Software Manual for the Elementary Functions"
+ (1980) by W. J. Cody and W. Waite. Although both programs
+ try to discover the radix (b), precision (p) and         
+ range (over/underflow thresholds) of the arithmetic, this
+ program tries to cope with a wider variety of pathologies
+ and to say how well the arithmetic is implemented.
+ The program is based upon a conventional radix
+ representation for floating-point numbers,
+ but also allows for logarithmic encoding (b = 1)
+ as used by certain early wang machines.
+
+
+ To continue diagnosis, press return.
+ Diagnosis resumes after milestone  #    7,    ... page     5
+
+ Program is now RUNNING tests on small integers:
+ -1, 0, 1/2 , 1, 2, 3, 4, 5, 9, 27, 32 & 240 are O.K.
+
+ Searching for radix and precision...
+ Radix =   2.
+ Closest relative separation found is   1.11022302E-16
+ Recalculating radix and precision 
+ confirms closest relative separation .
+ Radix confirmed.
+ The number of significant digits of radix   2. is  53.00
+ Test for extra-precise subexpressions:
+ Subexpressions do not appear to be calculated
+  with extra precision.
+
+ To continue diagnosis, press return.
+ Diagnosis resumes after milestone  #   30,    ... page     6
+
+ Subtraction appears to be normalized as it should.
+ Checking for guard digits in multiply divide and subtract.
+ These operations appear to have guard digits as they should.
+
+ To continue diagnosis, press return.
+ Diagnosis resumes after milestone  #   40,    ... page     7
+
+ Checking for rounding in multiply, divide and add/subtract:
+ Multiplication appears to be correctly rounded.
+ Division appears to be correctly rounded.
+ Add/subtract appears to be correctly rounded.
+ checking for sticky bit:
+ Sticky bit appears to be used correctly.
+
+ Does multiplication commute? Testing if  x*y = y*x  for  20 random pairs:
+ No failure found in   20 randomly chosen pairs.
+
+ Running tests of square root...
+ Testing if  sqrt(x*x)  =  x  for    20 integers  x.
+ Found no discrepancies.
+ Sqrt has passed a test for monotonicity.
+ Testing whether  sqrt  is rounded or chopped:
+ Square root appears to be correctly rounded.
+
+ To continue diagnosis, press return.
+ Diagnosis resumes after milestone  #   90,    ... page     8
+
+ Testing powers  z^i  for small integers  z  and  i :
+ Start with 0.**0 .
+ No discrepancies found.
+
+ Seeking underflow threshold and min positive number:
+ Smallest strictly positive number found is  minpos  =  4.94065646-324
+ Since comparison denies   MINPOS  = 0,
+  evaluating  ( MINPOS  +  MINPOS ) /  MINPOS   should be safe;
+ what the machine gets for  ( MINPOS  +  MINPOS ) /  MINPOS   is
+            0.2000000E+01
+ This is O.K. provided over/underflow has not just been  signaled.
+ Underflow is gradual; it incurs  absolute error = 
+ (roundoff in underflow threshold) < minpos.
+ The  underflow threshold is   0.22250739-307 , below which
+ calculation may suffer larger relative error than merely roundoff.
+
+ To continue diagnosis, press return.
+ Diagnosis resumes after milestone  #  130,    ... page     9
+
+ since underflow occurs below the threshold  =
+          (  2.00000000E+00)^( -1.02200000E+03) ,
+ only underflow should afflict the expression
+          (  2.00000000E+00)^( -2.04400000E+03) ;
+ actually calculating it yields   
+   0.00000000E+00
+ This computed value is O.K.
+ Testing  x^((x+1)/(x-1)) vs. exp(2) =   0.73890561E+01  as  x -> 1.
+ Accuracy seems adequate.
+ Testing powers  z^q  at four nearly extreme values:
+ No discrepancies found.
+
+
+ To continue diagnosis, press return.
+ Diagnosis resumes after milestone  #  160,    ... page    10
+
+ Searching for overflow threshold:
+ Can " z = -y " overflow?  trying it on  y =        -Infinity
+ Seems O.K.
+ Overflow threshold is  v =   1.79769313+308
+ Overflow saturates at  sat =        +Infinity
+ No overflow should be signaled for  v*1 = 
+                                             1.79769313+308
+                            nor for  v/1 = 
+                                             1.79769313+308
+ Any overflow signal separating this  *  from one above is a DEFECT.
+
+ To continue diagnosis, press return.
+ Diagnosis resumes after milestone  #  190,    ... page    11
+
+
+ What messages and/or values does division by zero produce?
+ About to compute 1/0...
+ Trying to compute  1/0  produces       +Infinity
+ About to compute 0/0...
+ Trying to compute  0/0  produces             NaN
+
+
+ To continue diagnosis, press return.
+ Diagnosis resumes after milestone  #  220,    ... page    12
+
+ No failures, defects nor flaws have been discovered.
+ Rounding appears to conform to the proposed IEEE standard  P754
+ The arithmetic diagnosed appears to be Excellent!
+ End of Test.

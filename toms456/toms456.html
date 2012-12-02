@@ -1,0 +1,169 @@
+<html>
+
+  <head>
+    <title>
+      TOMS456 - Routing Problem
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS456 <br> Routing Problem
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS456</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 456, for the routing problem.
+    </p>
+
+    <p>
+      The text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Related Programs and Data:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/cities/cities.html">
+      CITIES</a>,
+      a FORTRAN90 library of
+      which defines various problems associated with a set of
+      "cities" on a map.
+    </p>
+
+    <p>
+      <a href = "../../datasets/cities/cities.html">
+      CITIES</a>,
+      a dataset directory which
+      contains some sets of intercity distances that can be used
+      with this code.
+    </p>
+
+    <p>
+      <a href = "../../f_src/lau_np/lau_np.html">
+      LAU_NP</a>,
+      a FORTRAN90 library which
+      includes a routine for the heuristic solution of the traveling
+      salesman problem.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <dl>
+        <dt>
+          <b>call routng ( n, p, sn, en, m, d, l, r )</b>
+        </dt>
+        <dd>
+          <b>N</b> is the number of nodes, <br>
+          <b>P</b> is the node number index, but on output is replaced
+          by the optimal connection,<br>
+          <b>SN</b> and <b>EN</b> are the start and end nodes, <br>
+          <b>M</b> is the order of the distance matrix, <br>
+          <b>D</b> is the distance matrix,<br>
+          <b>L</b> is output as the length of the shortest connection, <br>
+          <b>R</b> is the number of runs (that is, the number
+          of iterations of the algorithm.  This should be less than
+          or equal to 2*<b>N</b>).
+        </dd>
+      </dl>
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Zdenek Fencl,<br>
+          Algorithm 456:
+          Routing Problem,<br>
+          Communications of the ACM,<br>
+          Volume 16, Number 9, September 1973, pages 572-574.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms456.f">toms456.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms456.sh">toms456.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms456_prb.f">toms456_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms456_prb.sh">toms456_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms456_prb_output.txt">toms456_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>ROUTNG</b> finds the shortest serial branchless connection
+          between N nodes of a net beginning at a start node SN and
+          terminating at the end node EN.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 09 December 2005.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

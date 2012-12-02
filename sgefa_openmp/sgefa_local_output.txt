@@ -1,0 +1,112 @@
+ 1 December  2012   3:00:01.973 PM      
+ 
+SGEFA_OPENMP
+  FORTRAN77/OpenMP version
+  The number of processors =        2
+  The number of threads    =        1
+ 
+ Algorithm        Mode          N    Error       Time
+ 
+  SGEFA_C   Sequential         10  0.1960E-05      0.0000
+  SGEFA_C     Parallel         10  0.1960E-05      0.0000
+  SGEFA_R   Sequential         10  0.1960E-05      0.0000
+  SGEFA_R     Parallel         10  0.1960E-05      0.0000
+ 
+  SGEFA_C   Sequential        100  0.4194E-03      0.0043
+  SGEFA_C     Parallel        100  0.4194E-03      0.0058
+  SGEFA_R   Sequential        100  0.4194E-03      0.0029
+  SGEFA_R     Parallel        100  0.4194E-03      0.0040
+ 
+  SGEFA_C   Sequential       1000  0.1931          2.7615
+  SGEFA_C     Parallel       1000  0.1931          4.9363
+  SGEFA_R   Sequential       1000  0.1931          4.0666
+  SGEFA_R     Parallel       1000  0.1931          4.9875
+ 
+SGEFA_OPENMP
+  Normal end of execution.
+ 
+ 1 December  2012   3:00:18.847 PM      
+ 1 December  2012   3:00:18.852 PM      
+ 
+SGEFA_OPENMP
+  FORTRAN77/OpenMP version
+  The number of processors =        2
+  The number of threads    =        2
+ 
+ Algorithm        Mode          N    Error       Time
+ 
+  SGEFA_C   Sequential         10  0.1960E-05      0.0000
+  SGEFA_C     Parallel         10  0.1960E-05      0.0001
+  SGEFA_R   Sequential         10  0.1960E-05      0.0000
+  SGEFA_R     Parallel         10  0.1960E-05      0.0000
+ 
+  SGEFA_C   Sequential        100  0.4194E-03      0.0034
+  SGEFA_C     Parallel        100  0.4194E-03      0.0035
+  SGEFA_R   Sequential        100  0.4194E-03      0.0038
+  SGEFA_R     Parallel        100  0.4194E-03      0.0027
+ 
+  SGEFA_C   Sequential       1000  0.1931          2.7653
+  SGEFA_C     Parallel       1000  0.1931          3.2217
+  SGEFA_R   Sequential       1000  0.1931          4.5453
+  SGEFA_R     Parallel       1000  0.1931          3.6866
+ 
+SGEFA_OPENMP
+  Normal end of execution.
+ 
+ 1 December  2012   3:00:33.189 PM      
+ 1 December  2012   3:00:33.193 PM      
+ 
+SGEFA_OPENMP
+  FORTRAN77/OpenMP version
+  The number of processors =        2
+  The number of threads    =        4
+ 
+ Algorithm        Mode          N    Error       Time
+ 
+  SGEFA_C   Sequential         10  0.1960E-05      0.0000
+  SGEFA_C     Parallel         10  0.1960E-05      0.0002
+  SGEFA_R   Sequential         10  0.1960E-05      0.0000
+  SGEFA_R     Parallel         10  0.1960E-05      0.0001
+ 
+  SGEFA_C   Sequential        100  0.4194E-03      0.0029
+  SGEFA_C     Parallel        100  0.4194E-03      0.0048
+  SGEFA_R   Sequential        100  0.4194E-03      0.0029
+  SGEFA_R     Parallel        100  0.4194E-03      0.0053
+ 
+  SGEFA_C   Sequential       1000  0.1931          2.7631
+  SGEFA_C     Parallel       1000  0.1931          2.9095
+  SGEFA_R   Sequential       1000  0.1931          4.1723
+  SGEFA_R     Parallel       1000  0.1931          2.9232
+ 
+SGEFA_OPENMP
+  Normal end of execution.
+ 
+ 1 December  2012   3:00:46.090 PM      
+ 1 December  2012   3:00:46.095 PM      
+ 
+SGEFA_OPENMP
+  FORTRAN77/OpenMP version
+  The number of processors =        2
+  The number of threads    =        8
+ 
+ Algorithm        Mode          N    Error       Time
+ 
+  SGEFA_C   Sequential         10  0.1960E-05      0.0000
+  SGEFA_C     Parallel         10  0.1960E-05      0.0007
+  SGEFA_R   Sequential         10  0.1960E-05      0.0000
+  SGEFA_R     Parallel         10  0.1960E-05      0.0004
+ 
+  SGEFA_C   Sequential        100  0.4194E-03      0.0043
+  SGEFA_C     Parallel        100  0.4194E-03      0.0109
+  SGEFA_R   Sequential        100  0.4194E-03      0.0033
+  SGEFA_R     Parallel        100  0.4194E-03      0.0087
+ 
+  SGEFA_C   Sequential       1000  0.1931          2.7628
+  SGEFA_C     Parallel       1000  0.1931          3.1712
+  SGEFA_R   Sequential       1000  0.1931          4.0593
+  SGEFA_R     Parallel       1000  0.1931          2.7322
+ 
+SGEFA_OPENMP
+  Normal end of execution.
+ 
+ 1 December  2012   3:00:58.954 PM      

@@ -1,0 +1,227 @@
+<html>
+
+  <head>
+    <title>
+      NETODE - Two-Phase Fluid Network Problem
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      NETODE <br> Two-Phase Fluid Network Problem
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>NETODE</b>
+      is a FORTRAN77 program which
+      computes the time-dependent behavior of a two phase compressible heated fluid
+      in an abstract system of nodes and links.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f77_src/channel/channel.html">
+      CHANNEL</a>,
+      a FORTRAN77 program which
+      models the steady state behavior of an incompressible viscous fluid in
+      a 2D channel region using a finite element formulation of the Navier-Stokes equations.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/hcell/hcell.html">
+      HCELL</a>,
+      a FORTRAN77 program which
+      models the time-dependent behavior of an incompressible viscous fluid in
+      a 2D H-shaped region using a finite element formulation of the Navier-Stokes equations.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/hcell_steady/hcell_steady.html">
+      HCELL_STEADY</a>,
+      a FORTRAN77 program which
+      models the steady state behavior of an incompressible viscous fluid in
+      a 2D H-shaped region using a finite element formulation of the Navier-Stokes equations.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/inout/inout.html">
+      INOUT</a>,
+      a FORTRAN77 program which
+      models the time-dependent behavior of an incompressible viscous fluid in
+      a 2D region with inflow in the bottom right and outflow in the upper left,
+      using a finite element formulation of the Navier-Stokes equations.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/machine/machine.html">
+      MACHINE</a>,
+      a FORTRAN77 library which
+      evaluates various machine arithmetic constants, and is called by NETODE.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/tcell/tcell.html">
+      TCELL</a>,
+      a FORTRAN77 program which
+      models the time-dependent behavior of an incompressible viscous fluid in
+      a 2D T-shaped region using a finite element formulation of the Navier-Stokes equations.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Tom Porsching,<br>
+          Two Node Separation Problem,<br>
+          Technical Report EPRI NP-3657,<br>
+          Project 1741-2, 1984.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "netode.f">netode.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "netode.sh">netode.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <b>RUN00</b> has NETODE read some user input to set up an initial problem.
+      Normally, this is done interactively,
+      but it's possible to store the user input in a file first.
+      <ul>
+        <li>
+          <a href = "run00_input.txt">run00_input.txt</a>,
+          a text file of data that can be used to setup the two node problem.
+        </li>
+        <li>
+          <a href = "run00_output.txt">run00_output.txt</a>,
+          the printed output from the program, which would go to the screen
+          in an interactive session.
+        </li>
+        <li>
+          <a href = "two_node_00.txt">two_node_00.txt</a>,
+          the initial state of the two node problem, as created by NETODE
+          in response to the user input.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>RUN01</b> has NETODE read the initial data in <i>two_node_00.txt</i>
+      and run the simulation to time T = 5.
+      <ul>
+        <li>
+          <a href = "run01_input.txt">run01_input.txt</a>,
+          a text file of instructions to run NETODE.
+        </li>
+        <li>
+          <a href = "run01_output.txt">run01_output.txt</a>,
+          the printed output from the program, which would go to the screen
+          in an interactive session.
+        </li>
+        <li>
+          <a href = "two_node_01.txt">two_node_01.txt</a>,
+          the state of the two node problem at the end of the run,
+          as created by NETODE in response to the user input.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>RUN02</b> (not included here) could read the data in <i>two_node_01.txt</i>
+      and advance the simulation from T = 5 to T = 10, for instance.
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>NETODE</b> is a two fluid network ODE problem solved using LSODI.
+        </li>
+        <li>
+          <b>ADDNET</b> adds the matrix A(T,Y) to the input matrix PA.
+        </li>
+        <li>
+          <b>COOKER</b> computes the Newton iterates of pressure for fixed values
+        </li>
+        <li>
+          <b>DENSE</b> is given a press PRESS and an enthalpy H, and computes the
+        </li>
+        <li>
+          <b>DOLINK</b> defines link quantities which must be computed by considering
+        </li>
+        <li>
+          <b>DPOLY</b> computes the derivative of a polynomial of the form
+        </li>
+        <li>
+          <b>EDINET</b> prints out information about the current solution.
+        </li>
+        <li>
+          <b>GONET</b> gets the information that initializes the problem, either
+        </li>
+        <li>
+          <b>JACNET,</b> if supplied, is supposed to compute the jacobian of the
+        </li>
+        <li>
+          <b>NLMAP</b> constructs the arrays NABNOD and LNKNOD.
+        </li>
+        <li>
+          <b>POLY</b> computes the value of a polynomial of the form
+        </li>
+        <li>
+          <b>READER</b> reads the restart data defining a problem.
+        </li>
+        <li>
+          <b>RESNET</b> computes the residual
+        </li>
+        <li>
+          <b>WRITER</b> writes restart data.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on Sat Dec  8 16:24:03 2007
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

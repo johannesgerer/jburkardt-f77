@@ -1,0 +1,23 @@
+#  cvt_06_00007.txt
+#  created by routine CVT_WRITE in CVT_DATASET.CC
+#  at 04 June 2004 09:46:11 AM
+#
+#  Spatial dimension M = 6
+#  Number of points N = 7
+#  EPSILON (unit roundoff) = 1.19209e-07
+#
+#  Initial SEED = 123456789
+#
+#  Initialization by UNIFORM.
+#  Sampling by RANDOM (C++ STDLIB intrinsic).
+#  Number of sample points = 500000
+#  Number of sampling iterations = 70
+#  L2 norm of dataset change on last step = 0.0178077
+#
+  0.646482     0.76275    0.502674    0.677291     0.24911    0.429634  
+  0.737281    0.266233     0.33027    0.333949    0.355599    0.526976  
+  0.476736    0.549995    0.737669    0.255134    0.601677    0.258599  
+  0.288218    0.265473    0.663567    0.682567    0.320316    0.530513  
+  0.415788    0.476807    0.262467    0.658759    0.736813    0.288147  
+  0.663993    0.523366    0.652963    0.612619    0.756816    0.745359  
+  0.268441    0.648616    0.354065     0.29297     0.47161    0.719089  

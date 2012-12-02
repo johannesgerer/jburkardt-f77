@@ -1,0 +1,48 @@
+ 
+SINT_TEST
+  FORTRAN77 version
+  For real fast sine transforms, 1D,
+  SINT1I initializes the transforms,
+  SINT1F does a forward transforms;
+  SINT1B does a backward transforms.
+ 
+  The number of data items is N = 4096
+ 
+  The original data:
+ 
+       1    0.154414E-01
+       2    0.524056    
+       3    0.809301    
+       4    0.916710    
+       5    0.149759    
+       6    0.647463E-02
+       7    0.819028    
+       8    0.400086    
+  ......  ..............
+    4096    0.625828    
+ 
+  The FFT coefficients:
+ 
+       1    0.631740    
+       2   -0.506620E-03
+       3    0.204994    
+       4    0.374569E-02
+       5    0.133363    
+       6   -0.308917E-02
+       7    0.949926E-01
+       8   -0.887184E-02
+  ......  ..............
+    4096    0.837185E-04
+ 
+  The retrieved data:
+ 
+       1    0.180869E-01
+       2    0.524093    
+       3    0.810364    
+       4    0.916653    
+       5    0.150409    
+       6    0.645043E-02
+       7    0.819488    
+       8    0.400019    
+  ......  ..............
+    4096    0.628291    

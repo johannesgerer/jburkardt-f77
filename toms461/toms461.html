@@ -1,0 +1,128 @@
+<html>
+
+  <head>
+    <title>
+      TOMS461 - Cubic Spline Solutions
+      to a Class of Functional Differential Equations
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS461 <br> Cubic Spline Solutions
+      to a Class of Functional Differential Equations
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS461</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 461, which uses cubic splines
+      to solve a class of functional differential equations.
+    </p>
+
+    <p>
+      The text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Forbes Burkowski, WD Hoskins,<br>
+          Algorithm 461:
+          Cubic Spline Solutions
+          to a Class of Functional Differential Equations,<br>
+          Communications of the ACM,<br>
+          Volume 16, Number 10, October 1973, pages 635-637.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms461.f">toms461.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms461.sh">toms461.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms461_prb.f">toms461_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms461_prb.sh">toms461_prb.sh</a>,
+          commands to compile, link and run the sample calling program.
+        </li>
+        <li>
+          <a href = "toms461_prb_output.txt">toms461_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>SPNBVP</b> calculates a piecewise continuous approximation
+          to the solution of the boundary value problem.
+        </li>
+        <li>
+          <b>GAGB</b> is used when dealing with solution values at the
+          end points.
+        </li>
+        <li>
+          <b>SOLVE</b> is given solution values and quickly computes the
+          second derivative values needed for the spline approximation;
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 15 December 2005.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

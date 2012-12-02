@@ -1,0 +1,180 @@
+ 2 September 2009   8:44:28.086 AM      
+ 
+MD_OPEN_MP
+  FORTRAN77/OpenMP version
+ 
+  A molecular dynamics program.
+ 
+  NP, the number of particles in the simulation is     1000
+  STEP_NUM, the number of time steps, is      400
+  DT, the size of each time step, is   0.100000E-03
+ 
+  The number of processors =        8
+  The number of threads    =        1
+ 
+  Initializing positions, velocities, and accelerations.
+ 
+  Computing initial forces and energies.
+ 
+  At each step, we report the potential and kinetic energies.
+  The sum of these energies should be a constant.
+  As an accuracy check, we also print the relative error
+  in the total energy.
+ 
+      Step      Potential       Kinetic        (P+K-E0)/E0
+                Energy P        Energy K       Relative Energy Error
+ 
+         0     498130.         0.00000         0.00000    
+        40     498129.        0.518224E-01    0.173769E-10
+        80     498129.        0.215466        0.160946E-10
+       120     498129.        0.491077        0.125144E-10
+       160     498129.        0.878768        0.549125E-11
+       200     498128.         1.37870       -0.616198E-11
+       240     498128.         1.99108       -0.236153E-10
+       280     498127.         2.71617       -0.480384E-10
+       320     498126.         3.55426       -0.806487E-10
+       360     498125.         4.50571       -0.122561E-09
+       400     498124.         5.57090       -0.174962E-09
+ 
+  Elapsed time for main computation:
+     198.548     seconds
+ 
+MD_OPEN_MP
+  Normal end of execution.
+ 
+ 2 September 2009   8:47:47.157 AM      
+ 2 September 2009   8:47:47.162 AM      
+ 
+MD_OPEN_MP
+  FORTRAN77/OpenMP version
+ 
+  A molecular dynamics program.
+ 
+  NP, the number of particles in the simulation is     1000
+  STEP_NUM, the number of time steps, is      400
+  DT, the size of each time step, is   0.100000E-03
+ 
+  The number of processors =        8
+  The number of threads    =        2
+ 
+  Initializing positions, velocities, and accelerations.
+ 
+  Computing initial forces and energies.
+ 
+  At each step, we report the potential and kinetic energies.
+  The sum of these energies should be a constant.
+  As an accuracy check, we also print the relative error
+  in the total energy.
+ 
+      Step      Potential       Kinetic        (P+K-E0)/E0
+                Energy P        Energy K       Relative Energy Error
+ 
+         0     498130.         0.00000         0.00000    
+        40     498129.        0.518224E-01    0.173797E-10
+        80     498129.        0.215466        0.160935E-10
+       120     498129.        0.491077        0.125183E-10
+       160     498129.        0.878768        0.548763E-11
+       200     498128.         1.37870       -0.616105E-11
+       240     498128.         1.99108       -0.236095E-10
+       280     498127.         2.71617       -0.480361E-10
+       320     498126.         3.55426       -0.806413E-10
+       360     498125.         4.50571       -0.122555E-09
+       400     498124.         5.57090       -0.174957E-09
+ 
+  Elapsed time for main computation:
+     100.948     seconds
+ 
+MD_OPEN_MP
+  Normal end of execution.
+ 
+ 2 September 2009   8:49:28.375 AM      
+ 2 September 2009   8:49:28.379 AM      
+ 
+MD_OPEN_MP
+  FORTRAN77/OpenMP version
+ 
+  A molecular dynamics program.
+ 
+  NP, the number of particles in the simulation is     1000
+  STEP_NUM, the number of time steps, is      400
+  DT, the size of each time step, is   0.100000E-03
+ 
+  The number of processors =        8
+  The number of threads    =        4
+ 
+  Initializing positions, velocities, and accelerations.
+ 
+  Computing initial forces and energies.
+ 
+  At each step, we report the potential and kinetic energies.
+  The sum of these energies should be a constant.
+  As an accuracy check, we also print the relative error
+  in the total energy.
+ 
+      Step      Potential       Kinetic        (P+K-E0)/E0
+                Energy P        Energy K       Relative Energy Error
+ 
+         0     498130.         0.00000         0.00000    
+        40     498129.        0.518224E-01    0.173783E-10
+        80     498129.        0.215466        0.160933E-10
+       120     498129.        0.491077        0.125197E-10
+       160     498129.        0.878768        0.549055E-11
+       200     498128.         1.37870       -0.616128E-11
+       240     498128.         1.99108       -0.236083E-10
+       280     498127.         2.71617       -0.480342E-10
+       320     498126.         3.55426       -0.806421E-10
+       360     498125.         4.50571       -0.122555E-09
+       400     498124.         5.57090       -0.174955E-09
+ 
+  Elapsed time for main computation:
+     51.7158     seconds
+ 
+MD_OPEN_MP
+  Normal end of execution.
+ 
+ 2 September 2009   8:50:20.256 AM      
+ 2 September 2009   8:50:20.261 AM      
+ 
+MD_OPEN_MP
+  FORTRAN77/OpenMP version
+ 
+  A molecular dynamics program.
+ 
+  NP, the number of particles in the simulation is     1000
+  STEP_NUM, the number of time steps, is      400
+  DT, the size of each time step, is   0.100000E-03
+ 
+  The number of processors =        8
+  The number of threads    =        8
+ 
+  Initializing positions, velocities, and accelerations.
+ 
+  Computing initial forces and energies.
+ 
+  At each step, we report the potential and kinetic energies.
+  The sum of these energies should be a constant.
+  As an accuracy check, we also print the relative error
+  in the total energy.
+ 
+      Step      Potential       Kinetic        (P+K-E0)/E0
+                Energy P        Energy K       Relative Energy Error
+ 
+         0     498130.         0.00000         0.00000    
+        40     498129.        0.518224E-01    0.173778E-10
+        80     498129.        0.215466        0.160921E-10
+       120     498129.        0.491077        0.125192E-10
+       160     498129.        0.878768        0.549090E-11
+       200     498128.         1.37870       -0.616186E-11
+       240     498128.         1.99108       -0.236093E-10
+       280     498127.         2.71617       -0.480348E-10
+       320     498126.         3.55426       -0.806420E-10
+       360     498125.         4.50571       -0.122555E-09
+       400     498124.         5.57090       -0.174956E-09
+ 
+  Elapsed time for main computation:
+     26.6428     seconds
+ 
+MD_OPEN_MP
+  Normal end of execution.
+ 
+ 2 September 2009   8:50:47.003 AM      

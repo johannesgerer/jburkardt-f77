@@ -1,0 +1,189 @@
+<html>
+
+  <head>
+    <title>
+      CLEBSCH_GORDAN - Quantum Mechanics Coefficient Functions
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      CLEBSCH_GORDAN <br> Quantum Mechanics Coefficient Functions
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>CLEBSCH_GORDAN</b>
+      is a FORTRAN77 library which
+      evaluates certain coefficient functions used in
+      quantum mechanics.
+    </p>
+
+    <p>
+      Note that MATHEMATICA
+      includes the commands <b>ClebschGordan</b>, <b>ThreeJSymbol</b>,
+      and <b>SixJSymbol</b>, which can be used to evaluate the
+      Clebsch Gordon, Wigner 3J and Wigner 6J functions.
+    </p>
+
+    <h3 align = "center">
+      Related Programs:
+    </h3>
+
+    <p>
+      <a href = "../../cpp_src/gsl/gsl.html">
+      GSL</a>,
+      a C++ library which
+      evaluates many special functions.
+    </p>
+
+    <p>
+      <a href = "../../f_src/slatec/slatec.html">
+      SLATEC</a>,
+      a FORTRAN90 library which
+      includes routines to evaluate
+      the Clebsch Gordon, Wigner 3J and Wigner 6J functions.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/test_values/test_values.html">
+      TEST_VALUES</a>,
+      a FORTRAN77 library which
+      contains a few test values of many functions.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Milton Abramowitz, Irene Stegun,<br>
+          Handbook of Mathematical Functions,<br>
+          National Bureau of Standards, 1964,<br>
+          ISBN: 0-486-61272-4,<br>
+          LC: QA47.A34.
+        </li>
+        <li>
+          Albert Messiah,<br>
+          Quantum Mechanics,<br>
+          Volume II,<br>
+          North Holland, 1963,<br>
+          ISBN13: 978-0486409245,<br>
+          LC: QC174.1.M413
+        </li>
+        <li>
+          Stephen Wolfram,<br>
+          The Mathematica Book,<br>
+          Fourth Edition,<br>
+          Cambridge University Press, 1999,<br>
+          ISBN: 0-521-64314-7,<br>
+          LC: QA76.95.W65.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "clebsch_gordan.f">clebsch_gordan.f</a>, the source code;
+        </li>
+        <li>
+          <a href = "clebsch_gordan.sh">clebsch_gordan.sh</a>,
+          commands to compile the source code;
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "clebsch_gordan_prb.f">clebsch_gordan_prb.f</a>,
+          a sample calling program;
+        </li>
+        <li>
+          <a href = "clebsch_gordan_prb.sh">clebsch_gordan_prb.sh</a>,
+          commands to compile, link and run the sample calling program;
+        </li>
+        <li>
+          <a href = "clebsch_gordan_prb_output.txt">clebsch_gordan_prb_output.txt</a>,
+          the sample output.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>COF3J</b> evaluates the Wigner 3J coefficients.
+        </li>
+        <li>
+          <b>COF6J</b> evaluates the Wigner 6J coefficients.
+        </li>
+        <li>
+          <b>COF9J</b> evaluates the Wigner 9J coefficients.
+        </li>
+        <li>
+          <b>FACALC</b> calculates log factorials and saves them in common.
+        </li>
+        <li>
+          <b>I4_SWAP</b> switches two I4's.
+        </li>
+        <li>
+          <b>PHASEF</b> returns 1 for even arguments and -1 for odd ones.
+        </li>
+        <li>
+          <b>RACAH</b> ???
+        </li>
+        <li>
+          <b>S6J</b> ???
+        </li>
+        <li>
+          <b>SIX_J_VALUES</b> returns some values of the Wigner 6J function.
+        </li>
+        <li>
+          <b>THREE_J_VALUES</b> returns some values of the Wigner 3J function.
+        </li>
+        <li>
+          <b>TIMESTAMP</b> prints out the current YMDHMS date as a timestamp.
+        </li>
+        <li>
+          <b>VCC</b> evaluates the Racah V coefficient.
+        </li>
+        <li>
+          <b>WINEJ</b> ???
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 07 February 2007.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+</html>

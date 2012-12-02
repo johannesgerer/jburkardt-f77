@@ -1,0 +1,255 @@
+ 
+TOMS664_PRB:
+  Test the TOMS664 library.
+
+
+ -----------------------------------------------------------------------
+ F I R S T   T E S T   W I T H O U T   D I R E C T - A C C E S S   I / O
+ -----------------------------------------------------------------------
+
+
+
+
+ FIRST DIMENSION OF A:                             M     =        21
+ SECOND DIMENSION OF A:                            NA    =      1000
+
+ NUMBER OF EQUATIONS:                              N     =      1000
+ NUMBER OF ELEMENTS IN THE BAND OF THE MATRIX A:   M*N   =     21000
+
+
+
+ MEMORY REQUIREMENTS:
+
+ NUMBER OF FORTRAN STORAGE UNITS NEEDED     
+ TO STORE THE MATRIX A AND THE RHS B:         2*(M*NA+N) =     44000
+
+ NUMBER OF FORTRAN STORAGE UNITS NEEDED     
+ TO STORE THE MATRIX A:                         2*(M*NA) =     42000
+
+
+
+
+ ALOGDT =  0.1211436E+04
+ SIGNDT =  1.
+
+ PIVMAX =  0.3727772E+02
+ PIVMIN =  0.9667904E+01
+ IPIV   =        994
+
+ INFO   =          0
+
+ JERR   =          0
+
+
+ ERROR IN THE L2-NORM:     0.5239618E-15
+ AND IN THE MAXIMUM-NORM:  0.2886580E-14
+
+
+
+
+ --------------------------------------------------------------------
+ S E C O N D   T E S T   W I T H    D I R E C T - A C C E S S   I / O
+ --------------------------------------------------------------------
+
+
+
+
+ FIRST DIMENSION OF A:                             M     =        21
+ SECOND DIMENSION OF A:                            NA    =       511
+
+ NUMBER OF EQUATIONS:                              N     =      1000
+ NUMBER OF ELEMENTS IN THE BAND OF THE MATRIX A:   M*N   =     21000
+
+
+
+ MEMORY REQUIREMENTS:
+
+ NUMBER OF FORTRAN STORAGE UNITS NEEDED     
+ TO STORE THE MATRIX A AND THE RHS B:         2*(M*NA+N) =     23462
+
+ NUMBER OF FORTRAN STORAGE UNITS NEEDED     
+ TO STORE THE MATRIX A:                         2*(M*NA) =     21462
+
+
+
+
+ ALOGDT =  0.1211436E+04
+ SIGNDT =  1.
+
+ PIVMAX =  0.3727772E+02
+ PIVMIN =  0.9667904E+01
+ IPIV   =        994
+
+ INFO   =          0
+
+ JERR   =          0
+
+
+ ERROR IN THE L2-NORM:     0.5239618E-15
+ AND IN THE MAXIMUM-NORM:  0.2886580E-14
+
+
+
+
+ -----------------------------------------------------------------------
+ T H I R D   T E S T   W I T H   T O O   S M A L L   V A L U E   OF   NA
+ -----------------------------------------------------------------------
+
+
+
+
+ FIRST DIMENSION OF A:                             M     =        21
+ SECOND DIMENSION OF A:                            NA    =         7
+
+ NUMBER OF EQUATIONS:                              N     =      1000
+ NUMBER OF ELEMENTS IN THE BAND OF THE MATRIX A:   M*N   =     21000
+
+
+
+
+
+ JERR   =          1
+
+ RETURN TO CALLING PROGRAM WITH ERROR CODE "JERR = 1,"
+ BECAUSE  NA = 7  IS LESS THAN  (M+1)/2 + 2 = 13.
+
+
+ -------------------------------------------------------------------------------
+ F O U R T H   T E S T   W I T H   S M A L L E S T   P I V O T   R E P L A C E D
+ -------------------------------------------------------------------------------
+
+
+
+
+ FIRST DIMENSION OF A:                             M     =        21
+ SECOND DIMENSION OF A:                            NA    =       511
+
+ NUMBER OF EQUATIONS:                              N     =      1000
+ NUMBER OF ELEMENTS IN THE BAND OF THE MATRIX A:   M*N   =     21000
+
+
+
+ MEMORY REQUIREMENTS:
+
+ NUMBER OF FORTRAN STORAGE UNITS NEEDED     
+ TO STORE THE MATRIX A AND THE RHS B:         2*(M*NA+N) =     23462
+
+ NUMBER OF FORTRAN STORAGE UNITS NEEDED     
+ TO STORE THE MATRIX A:                         2*(M*NA) =     21462
+
+
+
+
+ ALOGDT =  0.1211436E+04
+ SIGNDT =  1.
+
+ PIVMAX =  0.3727772E+02
+ PIVMIN =  0.9667910E+01
+ IPIV   =        994
+
+ INFO   =        994
+
+ JERR   =          0
+
+
+ ERROR IN THE L2-NORM:     0.4620833E-07
+ AND IN THE MAXIMUM-NORM:  0.6845441E-06
+
+
+
+
+ ---------------------------------------------------------------------
+ F I F T H   T E S T   W I T H   S M A L L   P I V O T   E L E M E N T
+ ---------------------------------------------------------------------
+
+
+
+
+ FIRST DIMENSION OF A:                             M     =        21
+ SECOND DIMENSION OF A:                            NA    =       241
+
+ NUMBER OF EQUATIONS:                              N     =       750
+ NUMBER OF ELEMENTS IN THE BAND OF THE MATRIX A:   M*N   =     15750
+
+
+
+ MEMORY REQUIREMENTS:
+
+ NUMBER OF FORTRAN STORAGE UNITS NEEDED     
+ TO STORE THE MATRIX A AND THE RHS B:         2*(M*NA+N) =     11622
+
+ NUMBER OF FORTRAN STORAGE UNITS NEEDED     
+ TO STORE THE MATRIX A:                         2*(M*NA) =     10122
+
+
+ DEL    =  0.1000000E-11
+
+ EPS    =  0.1000000E-11
+
+
+ ALOGDT =  0.8937705E+03
+ SIGNDT = -1.
+
+ PIVMAX =  0.3542299E+02
+ PIVMIN =  0.2283666E-09
+ IPIV   =        750
+
+ INFO   =          0
+
+ JERR   =          0
+
+
+ ERROR IN THE L2-NORM:     0.1290942E-12
+ AND IN THE MAXIMUM-NORM:  0.1759259E-11
+
+
+
+
+ -----------------------------------------------------------------------------
+ S I X T H   T E S T   W I T H   S M A L L E S T   P I V O T   R E P L A C E D
+ -----------------------------------------------------------------------------
+
+
+
+
+ FIRST DIMENSION OF A:                             M     =        21
+ SECOND DIMENSION OF A:                            NA    =       241
+
+ NUMBER OF EQUATIONS:                              N     =       750
+ NUMBER OF ELEMENTS IN THE BAND OF THE MATRIX A:   M*N   =     15750
+
+
+
+ MEMORY REQUIREMENTS:
+
+ NUMBER OF FORTRAN STORAGE UNITS NEEDED     
+ TO STORE THE MATRIX A AND THE RHS B:         2*(M*NA+N) =     11622
+
+ NUMBER OF FORTRAN STORAGE UNITS NEEDED     
+ TO STORE THE MATRIX A:                         2*(M*NA) =     10122
+
+
+ DEL    =  0.1000000E-11
+
+ EPS    =  0.2283700E-09
+
+
+ ALOGDT =  0.8937705E+03
+ SIGNDT = -1.
+
+ PIVMAX =  0.3542299E+02
+ PIVMIN =  0.2283700E-09
+ IPIV   =        750
+
+ INFO   =        750
+
+ JERR   =          0
+
+
+ ERROR IN THE L2-NORM:     0.2057232E-02
+ AND IN THE MAXIMUM-NORM:  0.2803182E-01
+
+
+ 
+TOMS664:
+  Normal end of execution.

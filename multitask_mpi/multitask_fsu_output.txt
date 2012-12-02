@@ -1,0 +1,18 @@
+20 October   2011   9:41:07.817 PM      
+ 
+MPI_MULTITASK:
+  FORTRAN77 / MPI version
+ 
+P0_SET_PARAMETERS:
+  Set INPUT1 =     10000000
+      INPUT2 =       100000
+  Process 2 time =    9.42655    
+  Process 1 time =    11.2886    
+ 
+  Process 1 returned OUTPUT1 =      615
+  Process 2 returned OUTPUT2 =     9592
+  Process 0 time =    11.2802    
+ 
+MPI_MULTITASK:
+  Normal end of execution.
+20 October   2011   9:41:19.101 PM      

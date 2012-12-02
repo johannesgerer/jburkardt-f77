@@ -1,0 +1,25 @@
+ 
+QUADRATURE - Master process:
+  A FORTRAN77 program using MPI,
+  to compute PI.
+  The number of processes is      4
+ 
+Process      0 is active.
+ 
+QUADRATURE - Master process:
+Number of intervals being used is    100
+ 
+QUADRATURE - Master process:
+  Estimate for PI is    3.14160    
+  Error is             0.833333E-05
+ 
+  Elapsed wall clock seconds =       0.002881
+ 
+QUADRATURE - Master process:
+  Normal end of execution.
+ 
+Process      1 is active.
+ 
+Process      2 is active.
+ 
+Process      3 is active.

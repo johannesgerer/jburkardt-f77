@@ -1,0 +1,46 @@
+ 9 November  2011   2:04:53.521 PM      
+ 
+PRIME_SERIAL_PRB
+  FORTRAN77 version
+  Test the PRIME_SERIAL library.
+ 
+TEST01
+  Call PRIME_SERIAL_NUMBER to count the primes from 1 to N.
+ 
+         N        Pi          Time
+ 
+         1         0  0.200000E-05
+         2         1   0.00000    
+         4         2   0.00000    
+         8         4  0.100000E-05
+        16         6   0.00000    
+        32        11  0.100000E-05
+        64        18  0.200000E-05
+       128        31  0.700000E-05
+       256        54  0.260000E-04
+       512        97  0.910000E-04
+      1024       172  0.316000E-03
+      2048       309  0.107700E-02
+      4096       564  0.401900E-02
+      8192      1028  0.146710E-01
+     16384      1900  0.537450E-01
+     32768      3512  0.196402    
+     65536      6542  0.734735    
+    131072     12251   2.76628    
+ 
+TEST01
+  Call PRIME_SERIAL_NUMBER to count the primes from 1 to N.
+ 
+         N        Pi          Time
+ 
+         5         3   0.00000    
+        50        15  0.200000E-05
+       500        95  0.830000E-04
+      5000       669  0.567200E-02
+     50000      5133  0.440678    
+    500000     41538   35.9035    
+ 
+PRIME_SERIAL_PRB
+  Normal end of execution.
+ 
+ 9 November  2011   2:05:33.643 PM      

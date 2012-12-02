@@ -1,0 +1,20 @@
+ 3 November  2010   9:04:05.014 PM      
+ 
+                The NAS kernel benchmark program
+ 
+ Program        Error          FP Ops        Seconds     MFLOPS
+ 
+ MXM          3.4313E-15     4.1943E+08      0.9740      430.64
+ CFFT2D       1.2792E-13     4.9807E+08      1.3344      373.24
+ CHOLSKY      2.8784E-12     2.2103E+08      1.2855      171.95
+ BTRIX        2.5033E-13     3.2197E+08      1.1187      287.80
+ GMTRY        1.8918E-13     2.2650E+08      1.0694      211.79
+ EMIT         2.0694E-15     2.2605E+08      0.2610      866.15
+ VPENTA       8.4523E-15     2.5943E+08      0.9693      267.64
+ 
+ Total        3.4598E-12     2.1725E+09      7.0124      309.81
+ 
+NAS:
+  Normal end of execution.
+ 
+ 3 November  2010   9:04:12.224 PM      

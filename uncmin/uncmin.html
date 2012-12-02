@@ -1,0 +1,460 @@
+<html>
+
+  <head>
+    <title>
+      UNCMIN - Unconstrained Minimization
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      UNCMIN <br> Unconstrained Minimization
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>UNCMIN</b>
+      is a FORTRAN77 library which
+      seeks a solution of the unconstrained minimization problem.
+    </p>
+
+    <p>
+      <b>UNCMIN</b> is a package which seeks to minimize a scalar function of
+      N variables.  There cannot be any side conditions or constraints, such
+      as requiring that the variables be positive.  Only a local minimizer is
+      sought.  There may be other, better minimizers which are not found.  This
+      depends on the starting point and tolerances.
+    </p>
+
+    <p>
+      <b>UNCMIN</b> may also be used to seek the solution of N nonlinear equations, by
+      constructing the function to minimize as the sum of squares of the residuals.
+      Again, because only a local minimizer is sought, it is not guaranteed that the
+      answer returned will be a solution to the equations.
+    </p>
+
+    <p>
+      The program requires values of the gradient and the hessian.  These may be
+      computed in subroutines that the user supplies, or else the program may be
+      requested to approximate these quantities using finite differences.
+    </p>
+
+    <p>
+      Given a scalar function  F(X1 ,X2 ,...,XN ), the gradient is the N-vector
+      <blockquote><b>
+        (DF/DX1 ,DF/DX2 ,...,DF/DXN ).
+      </b></blockquote>
+      The hessian is the N by N matrix of second partial derivatives, whose I,J-th
+      entry is D2 F/DXI  DXJ.  Note that this means the hessian is symmetric.
+    </p>
+
+    <p>
+      Three global strategies have been implemented in this package:
+      <ul>
+        <li>
+          line search, which is the default method,
+        </li>
+        <li>
+          the dogleg trust region method,
+        </li>
+        <li>
+          the hookstep trust region method of More-Hebdon.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      The relative performance of these methods will vary from problem to  problem.
+      There are no a priori means of knowing which method will perform better in a
+      given case.  Consequently, if the user is solving a class of problems, it may
+      pay to sample each method in turn and choose the one which works best.
+    </p>
+
+    <p>
+      The program has three levels of output, and can direct that output to the
+      terminal or log file, or to a disk file.  The three levels are:
+      <ul>
+        <li>
+          No output from the program whatsoever.
+        </li>
+        <li>
+          Information about the starting and end points, and any errors.
+        </li>
+        <li>
+          Extensive information about the entire process.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      There are both a simple called OPTIF0 and a sophisticated interface
+      call OPTIF9.
+    </p>
+
+    <p>
+      The simple interface OPTIF0 requires that the user supply only:
+      <ul>
+        <li>
+          the number of variables N;
+        </li>
+        <li>
+          a starting point or rough solution X;
+        </li>
+        <li>
+          a subroutine to evaluate F;
+        </li>
+        <li>
+          workspace;
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      The sophisticated interface OPTIF9 requires all the above, plus:
+      <ul>
+        <li>
+          information about whether the gradient will be supplied by the user,
+          or approximated.
+        </li>
+        <li>
+          information about whether the hessian will be supplied by the user,
+          or approximated.
+        </li>
+        <li>
+          scale factors for the solutions X and the function F.
+        </li>
+        <li>
+          the choice of method to use.
+        </li>
+        <li>
+          whether the function F is expensive to evaluate or not.
+        </li>
+        <li>
+          an estimate of the accuracy of F.
+        </li>
+        <li>
+          the maximum number of steps to take.
+        </li>
+        <li>
+          the amount of internally generated output desired.
+        </li>
+        <li>
+          various error and stepsize tolerances.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      If the user is only interested in a few of the arguments to OPTIF9,
+      subroutine DFAULT may be called first, which sets all variables to default
+      values, and then reset only a few of those variables before calling OPTIF9.
+    </p>
+
+    <h3 align = "center">
+      Author:
+    </h3>
+
+    <p>
+      Robert Schnabel, John Koontz, Barry Weiss
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f77_src/asa047/asa047.html">
+      ASA047</a>,
+      a FORTRAN77 library which
+      minimizes a scalar function of several variables using the Nelder-Mead algorithm.
+    </p>
+
+    <p>
+      <a href = "../../f_src/compass_search/compass_search.html">
+      COMPASS_SEARCH</a>,
+      a FORTRAN90 library which 
+      seeks the minimizer of a scalar function of several variables
+      using compass search, a direct search algorithm that does not use derivatives.
+    </p>
+
+    <p>
+      <a href = "../../f_src/dqed/dqed.html">
+      DQED</a>,
+      a FORTRAN90 library which
+      solves constrained least squares problems.
+    </p>
+
+    <p>
+      <a href = "../../m_src/entrust/entrust.html">
+      ENTRUST</a>,
+      a MATLAB program which
+      solves problems in scalar optimization or nonlinear least squares.
+    </p>
+
+    <p>
+      <a href = "../../f_src/minpack/minpack.html">
+      MINPACK</a>,
+      a FORTRAN90 library which
+      solves systems of nonlinear equations, or the least squares minimization of the
+      residual of a set of linear or nonlinear equations.
+    </p>
+
+    <p>
+      <a href = "../../m_src/nelder_mead/nelder_mead.html">
+      NELDER_MEAD</a>,
+      a MATLAB program which
+      minimizes a scalar function of several variables using the Nelder-Mead algorithm.
+    </p>
+
+    <p>
+      <a href = "../../f_src/nl2sol/nl2sol.html">
+      NL2SOL</a>,
+      a FORTRAN90 library which
+      implements an adaptive nonlinear least-squares algorithm.
+    </p>
+
+    <p>
+      <a href = "../../f_src/praxis/praxis.html">
+      PRAXIS</a>,
+      a FORTRAN90 routine which
+      minimizes a scalar function of several variables.
+    </p>
+
+    <p>
+      <a href = "../../f_src/test_opt/test_opt.html">
+      TEST_OPT</a>,
+      a FORTRAN90 library which
+      defines test problems in scalar optimization.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/toms178/toms178.html">
+      TOMS178</a>,
+      a FORTRAN77 library which
+      optimizes a scalar functional of multiple variables using the Hooke-Jeeves method.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/toms611/toms611.html">
+      TOMS611</a>,
+      a FORTRAN77 library which
+      solves problems in unconstrained minimization.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          John Dennis, Robert Schnabel,<br>
+          Numerical Methods for Unconstrained Optimization
+          and Nonlinear Equations,<br>
+          SIAM, 1996,<br>
+          ISBN13: 978-0-898713-64-0,<br>
+          LC: QA402.5.D44.
+        </li>
+        <li>
+          Jorge More, Burton Garbow, Kenneth Hillstrom,<br>
+          Testing unconstrained optimization software,<br>
+          ACM Transactions on Mathematical Software,<br>
+          Volume 7, Number 1, March 1981, pages 17-41.
+        </li>
+        <li>
+          Jorge More, Burton Garbow, Kenneth Hillstrom,<br>
+          Algorithm 566:
+          FORTRAN Subroutines for Testing unconstrained optimization software,<br>
+          ACM Transactions on Mathematical Software,<br>
+          Volume 7, Number 1, March 1981, pages 136-140.
+        </li>
+        <li>
+          Robert Schnabel, John Koontz, Barry Weiss,<br>
+          A modular system of algorithms for unconstrained minimization,<br>
+          Technical Report CU-CS-240-82,<br>
+          Computer Science Department,<br>
+          University of Colorado at Boulder, 1982.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "uncmin.f">uncmin.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "uncmin.sh">uncmin.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "uncmin_prb.f">uncmin_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "uncmin_prb.sh">uncmin_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "uncmin_prb_output.txt">uncmin_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>BAKSLV</b> solves A'*X=B, A lower triangular.
+        </li>
+        <li>
+          <b>CHLHSN</b> Cholesky decomposes the perturbed model Hessian matrix.
+        </li>
+        <li>
+          <b>CHOLDC</b> finds the perturbed Cholesky decomposition of A+D.
+        </li>
+        <li>
+          <b>D1FCN</b> is a dummy routine for the analytic gradient.
+        </li>
+        <li>
+          <b>D2FCN</b> is a dummy routine for the analytic Hessian.
+        </li>
+        <li>
+          <b>DFAULT</b> sets default values for each input variable to the minimization package.
+        </li>
+        <li>
+          <b>DOGDRV</b> finds the next Newton iterate by the double dogleg method.
+        </li>
+        <li>
+          <b>DOGSTP</b> finds the next double dogleg stepsize.
+        </li>
+        <li>
+          <b>EXPLAIN</b> prints an explanation for the UNCMIN termination code.
+        </li>
+        <li>
+          <b>FORSLV</b> solves A*X=B, where A is lower triangular.
+        </li>
+        <li>
+          <b>FSTOCD</b> finds central difference approximation to the gradient.
+        </li>
+        <li>
+          <b>FSTOFD</b> finds forward difference approximation to the gradient.
+        </li>
+        <li>
+          <b>GRDCHK</b> compares the analytic gradient against a finite difference estimate.
+        </li>
+        <li>
+          <b>HESCHK</b> compares the analytic Hessian against a finite difference estimate.
+        </li>
+        <li>
+          <b>HOOKDR</b> finds the next Newton iterate by the More-Hebdon method.
+        </li>
+        <li>
+          <b>HOOKST</b> finds the More-Hebdon stepsize.
+        </li>
+        <li>
+          <b>HSNINT</b> approximates the initial Hessian by secant updates.
+        </li>
+        <li>
+          <b>LLTSLV</b> solves A*X=B when A has been Cholesky factored.
+        </li>
+        <li>
+          <b>LNSRCH</b> finds the next Newton iterate by line search.
+        </li>
+        <li>
+          <b>MVMLTL</b> computes Y = L * X, where L is lower triangular.
+        </li>
+        <li>
+          <b>MVMLTS</b> computes Y = A * X where A is in symmetric storage.
+        </li>
+        <li>
+          <b>MVMLTU</b> computes Y = L' * X, where L is lower triangular.
+        </li>
+        <li>
+          <b>OPTCHK</b> checks the input for reasonableness.
+        </li>
+        <li>
+          <b>OPTDRV</b> is a driver for the nonlinear optimization code.
+        </li>
+        <li>
+          <b>OPTIF0</b> provides the simplest interface to the optimization package.
+        </li>
+        <li>
+          <b>OPTIF9</b> provides a complete interface to the minimization package.
+        </li>
+        <li>
+          <b>OPTSTP</b> checks the optimization stopping criteria.
+        </li>
+        <li>
+          <b>QRAUX1</b> interchanges two rows of an upper Hessenberg matrix.
+        </li>
+        <li>
+          <b>QRAUX2</b> premultiplies a matrix by a Jacobi rotation.
+        </li>
+        <li>
+          <b>QRUPDT</b> updates a QR factorization.
+        </li>
+        <li>
+          <b>RESULT</b> prints information from the optimization procedure.
+        </li>
+        <li>
+          <b>SCLMUL</b> multiplies a vector by a scalar.
+        </li>
+        <li>
+          <b>SDOT</b> returns the dot product of two vectors.
+        </li>
+        <li>
+          <b>SECFAC</b> updates the Hessian matrix by the BFGS factored method.
+        </li>
+        <li>
+          <b>SECUNF</b> updates the Hessian by the BFGS unfactored method.
+        </li>
+        <li>
+          <b>SNDOFD</b> finds a second order approximation to the Hessian.
+        </li>
+        <li>
+          <b>SNRM2</b> returns the Euclidean norm of a vector.
+        </li>
+        <li>
+          <b>TREGUP</b> accepts the next iterate and updates the trust region.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 19 February 2008.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

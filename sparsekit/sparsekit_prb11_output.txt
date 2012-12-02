@@ -1,0 +1,17 @@
+28 October   2008   8:46:23.171 AM      
+ 
+SPARSEKIT_PRB11
+  FORTRAN77 version
+ 
+  Demonstrate the SPARSKIT routines that can generate
+  test matrices based on finite element grids.
+ 
+ 
+  The information about the matrix generated has been
+  stored in a file, using Harwell-Boeing format. 
+  The file is "test.mat".
+ 
+SPARSEKIT_PRB11
+  Normal end of execution.
+ 
+28 October   2008   8:46:23.174 AM      

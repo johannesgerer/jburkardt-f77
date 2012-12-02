@@ -1,0 +1,167 @@
+<html>
+
+  <head>
+    <title>
+      TOMS424 - Clenshaw-Curtis Integration
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS424 <br> Clenshaw-Curtis Integration
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS424</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 424, for Clenshaw-Curtis
+      quadrature to estimate the integral of a function F(X) from A to B.
+    </p>
+
+    <p>
+      While the text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>, most of the early
+      algorithms are not available.  This is one of them.  I typed it
+      in.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <dl>
+        <dt>
+          <b>quad = CCQUAD(F,A,B,TOLERR,LIMIT,ESTERR,USED,CSXFRM)</b>
+        </dt>
+        <dd>
+          returns an estimate of the integral of <b>F</b>(X) from <b>A</b>
+          to <b>B</b>, with the requested relative accuracy <b>TOLERR</b>,
+          using no more than <b>LIMIT</b> function evaluations, achieving
+          an estimated error of <b>ESTERR</b>, and actually using <b>USED</b>
+          function evaluations.  The cosine tranform is returned in
+          <b>CSXFRM(1:USED)</b>.
+        </dd>
+      </dl>
+    </p>
+
+    <h3 align = "center">
+      Related Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/intlib/intlib.html">
+      INTLIB</a>,
+      a FORTRAN90 library which
+      estimates integrals.
+    </p>
+
+    <p>
+      <a href = "../../f_src/test_int/test_int.html">
+      TEST_INT</a>,
+      a FORTRAN90 library which
+      defines many test integrands.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Charles Clenshaw, Alan Curtis,<br>
+          A Method for Numerical Integration on Automatic Computers,<br>
+          Numerische Mathematik,<br>
+          Volume 2, Number 1, December 1960, pages 197-205.
+        </li>
+        <li>
+          W Morven Gentleman,<br>
+          Algorithm 424: Clenshaw-Curtis Quadrature,<br>
+          Communications of the ACM,<br>
+          Volume 15, Number 5, May 1972, pages 353-355.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms424.f">toms424.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms424.sh">toms424.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms424_prb.f">toms424_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms424_prb.sh">toms424_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms424_prb_output.txt">toms424_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>CCQUAD</b> is the routine called by a user to estimate
+          the integral of a function F(X) from A to B, using Clenshaw-Curtis
+          quadrature.
+        </li>
+        <li>
+          <b>R3PASS</b> carries out a radix 3 pass of a Fast Fourier
+          Transform.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 18 November 2005.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

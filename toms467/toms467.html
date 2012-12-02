@@ -1,0 +1,158 @@
+<html>
+
+  <head>
+    <title>
+      TOMS467 - Matrix Tranposition in Place
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS467 <br> Matrix Tranposition in Place
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS467</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 467, to transpose the elements
+      of a matrix in place.
+    </p>
+
+    <p>
+      The text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <dl>
+        <dt>
+          <b>call xpose ( a, n1, n2, n12, moved, nwork )</b>
+        </dt>
+        <dd>
+          where <b>A</b> is the matrix to be transposed, stored as
+          a vector, <b>N1</b> and <b>N2</b> are the row and column
+          dimensions, <b>N12</b> is the product of <b>N1</b> and <b>N2</b>,
+          <b>MOVED</b> is a logical workspace vector, and <b>NWORK</b>
+          is the length of <b>MOVED</b>, which should be at least
+          <b>(N1+N2)/2</b>.
+        </dd>
+      </dl>
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/minpack/minpack.html">
+      MINPACK</a>,
+      a FORTRAN90 library which
+      contains routines which can minimize the absolute value of
+      a function of several variables.
+    </p>
+
+    <p>
+      <a href = "../../f_src/test_opt/test_opt.html">
+      TEST_OPT</a>,
+      a FORTRAN90 library which
+      contains routines defining a number of scalar functions of
+      multiple variables to test minimization routines.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Norman Brenner,<br>
+          Algorithm 467: Matrix Transposition in Place,<br>
+          Communications of the ACM,<br>
+          November 1973, Volume 16, Number 11, pages 692-694.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms467.f">toms467.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms467.sh">toms467.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms467_prb.f">toms467_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms467_prb.sh">toms467_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms467_prb_output.txt">toms467_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>XPOSE</b> transposes a matrix in place.
+        </li>
+        <li>
+          <b>FACTOR</b> factors an integer with up to 8 distinct factors.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 03 December 2005.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

@@ -1,0 +1,423 @@
+<html>
+
+  <head>
+    <title>
+      FEM2D_PACK - Finite Element Routines
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      FEM2D_PACK <br> Finite Element Routines
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>FEM2D_PACK</b>
+      is a FORTRAN77 library which
+      can help in implementing the finite element method.
+    </p>
+
+    <p>
+      The emphasis is on simplicity and clarity.
+      Primarily, the 2D planar case is handled, with a choice
+      of low order triangular ("T") and quadrilateral ("Q") elements.
+    </p>
+
+    <p>
+      A few routines are included for computing a "sphere grid",
+      that is, a finite element mesh on the surface of a sphere.
+    </p>
+
+    <h3 align = "center">
+      Licensing:
+    </h3>
+
+    <p>
+      The computer code and data files described and made available on this web page
+      are distributed under
+      <a href = "../../txt/gnu_lgpl.txt">the GNU LGPL license.</a>
+    </p>
+
+    <h3 align = "center">
+      Languages:
+    </h3>
+
+    <p>
+      <b>FEM2D_PACK</b> is available in
+      <a href = "../../cpp_src/fem2d_pack/fem2d_pack.html">a C++ version</a> and
+      <a href = "../../f77_src/fem2d_pack/fem2d_pack.html">a FORTRAN77 version</a> and
+      <a href = "../../f_src/fem2d_pack/fem2d_pack.html">a FORTRAN90 version</a> and
+      <a href = "../../m_src/fem2d_pack/fem2d_pack.html">a MATLAB version</a>.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../data/fem2d/fem2d.html">
+      FEM2D</a>,
+      a data directory which
+      contains examples of 2D FEM files,
+      three text files that describe a 2D finite element geometry;
+    </p>
+
+    <p>
+      <a href = "../../f_src/fem2d_heat/fem2d_heat.html">
+      FEM2D_HEAT</a>,
+      a FORTRAN90 program which
+      solves the 2D time dependent heat equation on the unit square.
+    </p>
+
+    <p>
+      <a href = "../../f_src/fem2d_poisson/fem2d_poisson.html">
+      FEM2D_POISSON</a>,
+      a FORTRAN90 program which
+      solves the 2D Poisson equation on a square, using the finite element method.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/fem2d_sample/fem2d_sample.html">
+      FEM2D_SAMPLE</a>,
+      a FORTRAN77 library which
+      evaluates a finite element function defined on an order 3 or order 6 triangulation.
+    </p>
+
+    <p>
+      <a href = "../../m_src/hot_pipe/hot_pipe.html">
+      HOT_PIPE</a>,
+      a MATLAB program which
+      uses <b>FEM_50_HEAT</b> to solve the heat equation for a pipe model.
+    </p>
+
+    <p>
+      <a href = "../../m_src/hot_point/hot_point.html">
+      HOT_POINT</a>,
+      a MATLAB program which
+      uses <b>FEM_50_HEAT</b> to solve the heat equation for a 2D region with a hot point.
+    </p>
+
+    <p>
+      <a href = "../../f_src/mesh_bandwidth/mesh_bandwidth.html">
+      MESH_BANDWIDTH</a>,
+      a FORTRAN90 program which
+      returns the geometric bandwidth associated with a mesh of
+      elements of any order and in a space of arbitrary dimension.
+    </p>
+
+    <p>
+      <a href = "../../data/polygonal_surface/polygonal_surface.html">
+      POLYGONAL_SURFACE</a>,
+      a data directory which
+      contains a description of the data files
+      that can be used to describe a polygonal surface.  <b>FEM2D_PACK</b> includes
+      routines for creating a polygonal surface grid of a sphere.
+    </p>
+
+    <p>
+      <a href = "../../data/triangulation_order3/triangulation_order3.html">
+      TRIANGULATION_ORDER3</a>,
+      a data directory which
+      contains a description and examples of order 3 (linear) triangulations.
+    </p>
+
+    <p>
+      <a href = "../../data/triangulation_order6/triangulation_order6.html">
+      TRIANGULATION_ORDER6</a>,
+      a data directory which
+      contains a description and examples of an order 6 triangulation.
+    </p>
+
+    <p>
+      <a href = "../../m_src/triangulation_order6_contour/triangulation_order6_contour.html">
+      TRIANGULATION_ORDER6_CONTOUR</a>,
+      a MATLAB program which
+      makes contour plots of data defined on an order 6 triangulation.
+    </p>
+
+    <p>
+      <a href = "../../f_src/wandzura/wandzura.html">
+      WANDZURA</a>,
+      a FORTRAN90 library which
+      defines Wandzura rules for quadrature on a triangle.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Milton Abramowitz, Irene Stegun,<br>
+          Handbook of Mathematical Functions,<br>
+          National Bureau of Standards, 1964,<br>
+          ISBN: 0-486-61272-4,<br>
+          LC: QA47.A34.
+        </li>
+        <li>
+          Jack Dongarra, Jim Bunch, Cleve Moler, Pete Stewart,<br>
+          LINPACK User's Guide,<br>
+          SIAM, 1979,<br>
+          ISBN13: 978-0-898711-72-1.
+        </li>
+        <li>
+          Vladimir Krylov,<br>
+          Approximate Calculation of Integrals,<br>
+          Dover, 2006,<br>
+          ISBN: 0486445798.
+        </li>
+        <li>
+          Hans Rudolf Schwarz,<br>
+          Finite Element Methods,<br>
+          Academic Press, 1988,<br>
+          ISBN: 0126330107,<br>
+          LC: TA347.F5.S3313.
+        </li>
+        <li>
+          Gilbert Strang, George Fix,<br>
+          An Analysis of the Finite Element Method,<br>
+          Cambridge, 1973,<br>
+          ISBN: 096140888X,<br>
+          LC: TA335.S77.
+        </li>
+        <li>
+          Arthur Stroud,<br>
+          Approximate Calculation of Multiple Integrals,<br>
+          Prentice Hall, 1971,<br>
+          ISBN: 0130438936,<br>
+          LC: QA311.S85.
+        </li>
+        <li>
+          Arthur Stroud, Don Secrest,<br>
+          Gaussian Quadrature Formulas,<br>
+          Prentice Hall, 1966,<br>
+          LC: QA299.4G3S7.
+        </li>
+        <li>
+          Olgierd Zienkiewicz,<br>
+          The Finite Element Method,<br>
+          Sixth Edition,<br>
+          Butterworth-Heinemann, 2005,<br>
+          ISBN: 0750663200,<br>
+          TA640.2.Z54
+        </li>
+        <li>
+          Daniel Zwillinger, editor,<br>
+          CRC Standard Mathematical Tables and Formulae,<br>
+          30th Edition,<br>
+          CRC Press, 1996,<br>
+          ISBN: 0-8493-2479-3.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "fem2d_pack.f">fem2d_pack.f</a>, the source code;
+        </li>
+        <li>
+          <a href = "fem2d_pack.sh">fem2d_pack.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "fem2d_pack_prb.f">fem2d_pack_prb.f</a>, the calling program;
+        </li>
+        <li>
+          <a href = "fem2d_pack_prb.sh">fem2d_pack_prb.sh</a>,
+          commands to compile, link and run the calling program;
+        </li>
+        <li>
+          <a href = "fem2d_pack_prb_output.txt">fem2d_pack_prb_output.txt</a>,
+          the output file.
+        </li>
+        <li>
+          <a href = "fem2d_pack_prb_q4.png">fem2d_pack_prb_q4.png</a>,
+          a <a href = "../../data/png/png.html">PNG</a> image of
+          a Q4 mesh.
+        </li>
+        <li>
+          <a href = "fem2d_pack_prb_t3.png">fem2d_pack_prb_t3.png</a>,
+          a <a href = "../../data/png/png.html">PNG</a> image of
+          a T3 mesh.
+        </li>
+        <li>
+          <a href = "fem2d_pack_prb_t4.png">fem2d_pack_prb_t4.png</a>,
+          a <a href = "../../data/png/png.html">PNG</a> image of
+          a T4 mesh.
+        </li>
+        <li>
+          <a href = "fem2d_pack_prb_t6.png">fem2d_pack_prb_t6.png</a>,
+          a <a href = "../../data/png/png.html">PNG</a> image of
+          a T6 mesh.
+        </li>
+        <li>
+          <a href = "sphere_q4_nodes.txt">sphere_q4_nodes.txt</a>,
+          a node file for a Q4 mesh, which is also a
+          <a href = "../../data/polygonal_surface/polygonal_surface.html">
+          polygonal surface,</a>
+          that approximates a sphere.
+        </li>
+        <li>
+          <a href = "sphere_q4_elements.txt">sphere_q4_elements.txt</a>,
+          an element file for a Q4 mesh, which is also a
+          <a href = "../../data/polygonal_surface/polygonal_surface.html">
+          polygonal surface,</a>
+          that approximates a sphere.
+        </li>
+        <li>
+          <a href = "sphere_q9_nodes.txt">sphere_q9_nodes.txt</a>,
+          a node file for a Q9 mesh
+          that approximates a sphere.
+        </li>
+        <li>
+          <a href = "sphere_q9_elements.txt">sphere_q9_elements.txt</a>,
+          an element file for a Q9 mesh
+          that approximates a sphere.
+        </li>
+        <li>
+          <a href = "sphere_q16_nodes.txt">sphere_q16_nodes.txt</a>,
+          a node file for a Q16 mesh
+          that approximates a sphere.
+        </li>
+        <li>
+          <a href = "sphere_q16_elements.txt">sphere_q16_elements.txt</a>,
+          an element file for a Q16 mesh
+          that approximates a sphere.
+        </li>
+        <li>
+          <a href = "sphere_t3_nodes.txt">sphere_t3_nodes.txt</a>,
+          a node file for a T3 mesh, which is also a
+          <a href = "../../data/polygonal_surface/polygonal_surface.html">
+          polygonal surface,</a>
+          that approximates a sphere.
+        </li>
+        <li>
+          <a href = "sphere_t3_elements.txt">sphere_t3_elements.txt</a>,
+          an element file for a T3 mesh, which is also a
+          <a href = "../../data/polygonal_surface/polygonal_surface.html">
+          polygonal surface,</a>
+          that approximates a sphere.
+        </li>
+        <li>
+          <a href = "sphere_t6_nodes.txt">sphere_t6_nodes.txt</a>,
+          a node file for a T6 mesh
+          that approximates a sphere.
+        </li>
+        <li>
+          <a href = "sphere_t6_elements.txt">sphere_t6_elements.txt</a>,
+          an element file for a T6 mesh
+          that approximates a sphere.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>BANDWIDTH_MESH:</b> bandwidth of finite element mesh.
+        </li>
+        <li>
+          <b>BANDWIDTH_VAR</b> determines the bandwidth for finite element variables.
+        </li>
+        <li>
+          <b>BASIS_MN_T3:</b> all bases at N points for a T3 element.
+        </li>
+        <li>
+          <b>BASIS_11_Q4:</b> one basis at one point for a Q4 element.
+        </li>
+        <li>
+          <b>BASIS_11_Q4_TEST</b> verifies BASIS_11_Q4.
+        </li>
+        <li>
+          <b>BASIS_MN_T6:</b> all bases at N points for a T6 element.
+        </li>
+        <li>
+          <b>CH_CAP</b> capitalizes a single character.
+        </li>
+        <li>
+          <b>DEGREES_TO_RADIANS</b> converts an angle measure from degrees to radians.
+        </li>
+        <li>
+          <b>DTABLE_WRITE0</b> writes a DTABLE file with no header.
+        </li>
+        <li>
+          <b>ELEMENT_CODE</b> returns the code for each element.
+        </li>
+        <li>
+          <b>GET_UNIT</b> returns a free FORTRAN unit number.
+        </li>
+        <li>
+          <b>I4_MODP</b> returns the nonnegative remainder of integer division.
+        </li>
+        <li>
+          <b>I4_WRAP</b> forces an I4 to lie between given limits by wrapping.
+        </li>
+        <li>
+          <b>ITABLE_WRITE0</b> writes an ITABLE file with no header.
+        </li>
+        <li>
+          <b>R8_HUGE</b> returns a "huge" R8.
+        </li>
+        <li>
+          <b>R8_POWER</b> computes the P-th power of an R8.
+        </li>
+        <li>
+          <b>R8_SWAP</b> switches two R8's.
+        </li>
+        <li>
+          <b>R8_UNIFORM_01</b> returns a unit pseudorandom R8.
+        </li>
+        <li>
+          <b>R8MAT_PRINT</b> prints an R8MAT.
+        </li>
+        <li>
+          <b>R8MAT_PRINT_SOME</b> prints some of an R8MAT.
+        </li>
+        <li>
+          <b>REFERENCE_TO_PHYSICAL_T3</b> maps T3 reference points to physical points.
+        </li>
+        <li>
+          <b>REFERENCE_TO_PHYSICAL_T6</b> maps T6 reference points to physical points.
+        </li>
+        <li>
+          <b>TIMESTAMP</b> prints out the current YMDHMS date as a timestamp.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 07 August 2009.
+    </i>
+
+  </body>
+
+</html>

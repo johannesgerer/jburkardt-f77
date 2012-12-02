@@ -1,0 +1,144 @@
+<html>
+
+  <head>
+    <title>
+      TOMS434 - Exact Probabilities for RxC Contingency Tables
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS434 <br> Exact Probabilities for RxC Contingency Tables
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS434</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 434, for determining
+      exact probabilities of RxC contingency tables.
+    </p>
+
+    <p>
+      While the text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>, most of the early
+      algorithms are not available.  This is one of them.  I typed it
+      in.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <dl>
+        <dt>
+          <b>call conp ( matrix, nr, nc, pt, ps, pc )</b>
+        </dt>
+        <dd>
+          where <b>MATRIX</b>, is an <b>NR</b> by <b>NC</b> array, containing
+          row sums in the last column and column sums in the last row,
+          and a grand total in the last row and column; <b>PT</b> is the
+          probability of obtaining the given table, <b>PS</b> the probability
+          of obtaining a table as probable as, or less probable than, the
+          given table, and <b>PC</b> is the probability of obtaining any
+          one of the tables with the constraints of the marginal totals,
+          which should be 1.0 exactly, but whose actual value reflects
+          the accuracy of the computation.
+        </dd>
+      </dl>
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          David March,<br>
+          Algorithm 434: Exact Probabilities for RxC Contingency Tables,<br>
+          Communications of the ACM,<br>
+          Volume 15, Number 11, November 1972, pages 991-992.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms434.f">toms434.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms434.sh">toms434.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms434_prb.f">toms434_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms434_prb.sh">toms434_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms434_prb_output.txt">toms434_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>CONP</b> determines the exact probability of an
+          RxC contingency table.
+        </li>
+        <li>
+          <b>FACLOG</b> computes the logarithm base 10 of N factorial.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 07 December 2005.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

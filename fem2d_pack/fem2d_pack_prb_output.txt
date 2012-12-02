@@ -1,0 +1,139 @@
+ 7 August    2009   8:18:26.988 AM      
+ 
+FEMPACK_PRB
+  FORTRAN77 version
+ 
+  Test routines in the FEMPACK library.
+ 
+TEST03
+  Test the computation of ONE basis function
+  at ONE point in a given element:
+ 
+  BASIS_11_Q4_TEST : Q4 element.
+  BASIS_11_T3_TEST : T3 element.
+  BASIS_11_T4_TEST : T4 element.
+  BASIS_11_T6_TEST : T6 element.
+ 
+BASIS_11_Q4_TEST:
+  Verify basis functions for element Q4.
+ 
+  Number of nodes =        4
+ 
+  Physical Nodes:
+ 
+         1    2.000    0.000
+         2    4.000    4.000
+         3    0.000    3.000
+         4    0.000    1.000
+ 
+  The basis function values at basis nodes
+  should form the identity matrix.
+ 
+    0.167 -0.667 -0.000 -0.000
+    0.167  0.333  0.000  0.667
+    0.167 -1.333  1.000  0.333
+    0.000  2.667 -0.000 -0.000
+ 
+  The X and Y derivatives should sum to 0.
+ 
+      dPhidX sum      dPhidY sum
+ 
+      0.00000000      0.00000000
+      0.66666667      1.66666667
+      2.50000000      2.00000000
+      1.66666667      0.00000000
+ 
+BASIS_11_T3_TEST:
+  Verify basis functions for element T3.
+ 
+  Number of nodes =        3
+ 
+  Physical Nodes:
+ 
+         1    2.000    0.000
+         2    4.000    3.000
+         3    0.000    4.000
+ 
+  The basis function values at basis nodes
+  should form the identity matrix.
+ 
+    1.000 -0.000  0.000
+    0.000  1.000  0.000
+    0.000  0.000  1.000
+ 
+  The X and Y derivatives should sum to 0.
+ 
+      dPhidX sum    dPhidY sum
+ 
+      0.00000000    0.00000000
+      0.00000000    0.00000000
+      0.00000000    0.00000000
+ 
+BASIS_11_T4_TEST:
+  Verify basis functions for element T4.
+ 
+  Number of nodes =        4
+ 
+  Physical Nodes:
+ 
+         1    2.000    0.000
+         2    4.000    3.000
+         3    0.000    4.000
+         4    2.000    2.333
+ 
+  The basis function values at basis nodes
+  should form the identity matrix.
+ 
+    1.000  0.000  0.000 -0.000
+    0.000  1.000  0.000 -0.000
+    0.000  0.000  1.000 -0.000
+    0.000 -0.000  0.000  1.000
+ 
+  The X and Y derivatives should sum to 0.
+ 
+      dPhidX sum    dPhidY sum
+ 
+      0.00000000    0.00000000
+      0.00000000    0.00000000
+      0.00000000    0.00000000
+      0.00000000    0.00000000
+ 
+BASIS_11_T6_TEST:
+  Verify basis functions for element T6.
+ 
+  Number of nodes =        6
+ 
+  Physical Nodes:
+ 
+         1    2.000    0.000
+         2    4.000    3.000
+         3    0.000    4.000
+         4    3.000    1.500
+         5    2.000    3.500
+         6    1.000    2.000
+ 
+  The basis function values at basis nodes
+  should form the identity matrix.
+ 
+    1.000  0.000  0.000 -0.000  0.000 -0.000
+    0.000  1.000 -0.000 -0.000  0.000  0.000
+    0.000  0.000  1.000  0.000 -0.000 -0.000
+    0.000 -0.000 -0.000  1.000 -0.000  0.000
+   -0.000  0.000  0.000  0.000  1.000 -0.000
+   -0.000 -0.000 -0.000 -0.000  0.000  1.000
+ 
+  The X and Y derivatives should sum to 0.
+ 
+      dPhidX sum      dPhidY sum
+ 
+      0.00000000      0.00000000
+      0.00000000      0.00000000
+      0.00000000      0.00000000
+      0.00000000      0.00000000
+     -0.00000000      0.00000000
+      0.00000000      0.00000000
+ 
+FEMPACK_PRB
+  Normal end of execution.
+ 
+ 7 August    2009   8:18:26.992 AM      

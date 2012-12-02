@@ -1,0 +1,141 @@
+<html>
+
+  <head>
+    <title>
+      TOMS427 - Fourier Cosine Integral
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS427 <br> Fourier Cosine Integral
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS427</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 427, for approximating
+      a Fourier cosine integral of the form
+      <pre><b>
+        Integral ( 0 <= T < Infinity ) f(t) cos ( w * t ) dt
+      </b></pre>
+    </p>
+
+    <p>
+      While the text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>, most of the early
+      algorithms are not available.  This is one of them.  I typed it
+      in.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <dl>
+        <dt>
+          value = <b>frcos ( fc, w, t, et, hl )</b>
+        </dt>
+        <dd>
+          where <b>FC</b> is a function that evaluates f(t),
+          <b>W</b> is the multiplier of the argument, <b>T</b>
+          is the finite upper limit for the integral, <b>ET</b>
+          is the requested absolute accuracy, and <b>HL</b> is a
+          limit on step size convergence, such that convergence
+          in any subinterval is not recognized unless the subinterval
+          is smaller than <b>HL</b>.
+        </dd>
+      </dl>
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Peter Linz,<br>
+          Algorithm 427: Fourier Cosine Integral,<br>
+          Communications of the ACM,<br>
+          Volume 15, Number 5, May 1972, pages 358-360.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms427.f">toms427.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms427.sh">toms427.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms427_prb.f">toms427_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms427_prb.sh">toms427_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms427_prb_output.txt">toms427_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>FRCOS</b> approximates a Fourier cosine integral.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 08 December 2005.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

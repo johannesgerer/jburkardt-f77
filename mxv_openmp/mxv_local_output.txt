@@ -1,0 +1,188 @@
+20 May       2010  10:46:23.186 AM      
+ 
+MXV_OPEN_MP:
+  FORTRAN77/OpenMP version
+ 
+  Compute matrix vector products y = A*x.
+  The number of processors =        2
+  The number of threads    =        1
+ 
+  Compare various algorithms:
+ 
+  MXV_PLAIN          - "plain vanilla" FORTRAN.
+  MXV_PLAIN_OPEN_MP  - PLAIN + OpenMP.
+ 
+  Algorithm                  M         N      Seconds
+ 
+  MXV_PLAIN                 10        10    0.109673E-04
+  MXV_PLAIN_OPEN_MP         10        10    0.319481E-04
+ 
+  MXV_PLAIN                100       100    0.211000E-03
+  MXV_PLAIN_OPEN_MP        100       100    0.188112E-03
+ 
+  MXV_PLAIN               1000      1000    0.423381E-01
+  MXV_PLAIN_OPEN_MP       1000      1000    0.419710E-01
+ 
+  MXV_PLAIN                  1        10    0.953674E-06
+  MXV_PLAIN_OPEN_MP          1        10    0.691414E-05
+ 
+  MXV_PLAIN                 10       100    0.181198E-04
+  MXV_PLAIN_OPEN_MP         10       100    0.190735E-04
+ 
+  MXV_PLAIN                100      1000    0.276899E-02
+  MXV_PLAIN_OPEN_MP        100      1000    0.310397E-02
+ 
+  MXV_PLAIN                 10         1    0.953674E-06
+  MXV_PLAIN_OPEN_MP         10         1    0.619888E-05
+ 
+  MXV_PLAIN                100        10    0.209808E-04
+  MXV_PLAIN_OPEN_MP        100        10    0.209808E-04
+ 
+  MXV_PLAIN               1000       100    0.259995E-02
+  MXV_PLAIN_OPEN_MP       1000       100    0.271511E-02
+ 
+MXV_OPEN_MP:
+  Normal end of execution.
+ 
+20 May       2010  10:46:23.356 AM      
+20 May       2010  10:46:23.367 AM      
+ 
+MXV_OPEN_MP:
+  FORTRAN77/OpenMP version
+ 
+  Compute matrix vector products y = A*x.
+  The number of processors =        2
+  The number of threads    =        2
+ 
+  Compare various algorithms:
+ 
+  MXV_PLAIN          - "plain vanilla" FORTRAN.
+  MXV_PLAIN_OPEN_MP  - PLAIN + OpenMP.
+ 
+  Algorithm                  M         N      Seconds
+ 
+  MXV_PLAIN                 10        10    0.100136E-04
+  MXV_PLAIN_OPEN_MP         10        10    0.293016E-03
+ 
+  MXV_PLAIN                100       100    0.195980E-03
+  MXV_PLAIN_OPEN_MP        100       100    0.251055E-03
+ 
+  MXV_PLAIN               1000      1000    0.406539E-01
+  MXV_PLAIN_OPEN_MP       1000      1000    0.206971E-01
+ 
+  MXV_PLAIN                  1        10    0.953674E-06
+  MXV_PLAIN_OPEN_MP          1        10    0.870228E-04
+ 
+  MXV_PLAIN                 10       100    0.178814E-04
+  MXV_PLAIN_OPEN_MP         10       100    0.829697E-04
+ 
+  MXV_PLAIN                100      1000    0.294495E-02
+  MXV_PLAIN_OPEN_MP        100      1000    0.171399E-02
+ 
+  MXV_PLAIN                 10         1    0.953674E-06
+  MXV_PLAIN_OPEN_MP         10         1    0.841618E-04
+ 
+  MXV_PLAIN                100        10    0.209808E-04
+  MXV_PLAIN_OPEN_MP        100        10    0.839233E-04
+ 
+  MXV_PLAIN               1000       100    0.251603E-02
+  MXV_PLAIN_OPEN_MP       1000       100    0.156188E-02
+ 
+MXV_OPEN_MP:
+  Normal end of execution.
+ 
+20 May       2010  10:46:23.513 AM      
+20 May       2010  10:46:23.524 AM      
+ 
+MXV_OPEN_MP:
+  FORTRAN77/OpenMP version
+ 
+  Compute matrix vector products y = A*x.
+  The number of processors =        2
+  The number of threads    =        4
+ 
+  Compare various algorithms:
+ 
+  MXV_PLAIN          - "plain vanilla" FORTRAN.
+  MXV_PLAIN_OPEN_MP  - PLAIN + OpenMP.
+ 
+  Algorithm                  M         N      Seconds
+ 
+  MXV_PLAIN                 10        10    0.109673E-04
+  MXV_PLAIN_OPEN_MP         10        10    0.547171E-03
+ 
+  MXV_PLAIN                100       100    0.198841E-03
+  MXV_PLAIN_OPEN_MP        100       100    0.263929E-03
+ 
+  MXV_PLAIN               1000      1000    0.428660E-01
+  MXV_PLAIN_OPEN_MP       1000      1000    0.230341E-01
+ 
+  MXV_PLAIN                  1        10    0.953674E-06
+  MXV_PLAIN_OPEN_MP          1        10    0.129938E-03
+ 
+  MXV_PLAIN                 10       100    0.178814E-04
+  MXV_PLAIN_OPEN_MP         10       100    0.124931E-03
+ 
+  MXV_PLAIN                100      1000    0.304508E-02
+  MXV_PLAIN_OPEN_MP        100      1000    0.178909E-02
+ 
+  MXV_PLAIN                 10         1     0.00000    
+  MXV_PLAIN_OPEN_MP         10         1    0.115871E-03
+ 
+  MXV_PLAIN                100        10    0.209808E-04
+  MXV_PLAIN_OPEN_MP        100        10    0.122070E-03
+ 
+  MXV_PLAIN               1000       100    0.247598E-02
+  MXV_PLAIN_OPEN_MP       1000       100    0.157285E-02
+ 
+MXV_OPEN_MP:
+  Normal end of execution.
+ 
+20 May       2010  10:46:23.675 AM      
+20 May       2010  10:46:23.686 AM      
+ 
+MXV_OPEN_MP:
+  FORTRAN77/OpenMP version
+ 
+  Compute matrix vector products y = A*x.
+  The number of processors =        2
+  The number of threads    =        8
+ 
+  Compare various algorithms:
+ 
+  MXV_PLAIN          - "plain vanilla" FORTRAN.
+  MXV_PLAIN_OPEN_MP  - PLAIN + OpenMP.
+ 
+  Algorithm                  M         N      Seconds
+ 
+  MXV_PLAIN                 10        10    0.100136E-04
+  MXV_PLAIN_OPEN_MP         10        10    0.655890E-03
+ 
+  MXV_PLAIN                100       100    0.194073E-03
+  MXV_PLAIN_OPEN_MP        100       100    0.382185E-03
+ 
+  MXV_PLAIN               1000      1000    0.442100E-01
+  MXV_PLAIN_OPEN_MP       1000      1000    0.249021E-01
+ 
+  MXV_PLAIN                  1        10     0.00000    
+  MXV_PLAIN_OPEN_MP          1        10    0.251055E-03
+ 
+  MXV_PLAIN                 10       100    0.178814E-04
+  MXV_PLAIN_OPEN_MP         10       100    0.268936E-03
+ 
+  MXV_PLAIN                100      1000    0.279808E-02
+  MXV_PLAIN_OPEN_MP        100      1000    0.205612E-02
+ 
+  MXV_PLAIN                 10         1    0.953674E-06
+  MXV_PLAIN_OPEN_MP         10         1    0.203848E-03
+ 
+  MXV_PLAIN                100        10    0.209808E-04
+  MXV_PLAIN_OPEN_MP        100        10    0.542879E-03
+ 
+  MXV_PLAIN               1000       100    0.249600E-02
+  MXV_PLAIN_OPEN_MP       1000       100    0.164199E-02
+ 
+MXV_OPEN_MP:
+  Normal end of execution.
+ 
+20 May       2010  10:46:23.839 AM      

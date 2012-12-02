@@ -1,0 +1,264 @@
+<html>
+
+  <head>
+    <title>
+      CG_PLUS - Scalar function minimization by conjugate gradient
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      CG_PLUS <br> Scalar function minimization by conjugate gradient
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>CG_PLUS</b>
+      is a FORTRAN77 program which
+      seeks the multidimensional minimizer <b>x</b> of a scalar function <b>f(x)</b>
+      using the conjugate gradient method, assuming that the gradient vector <b>g(x)</b>
+      can be computed.
+    </p>
+
+    <p>
+      To set up the code to minimize a particular function you need to specify the
+      following variables in the main program:
+      <ul>
+        <li>
+          <b>n</b> the number of variables
+        </li>
+        <li>
+          <b>x</b> the initial input vector
+        </li>
+        <li>
+          <b>method</b> the form of the conjugate gradient method used to solve the problem:
+          <ol>
+            <li>
+		      Fletcher-Reeves;
+            </li>
+            <li>
+		      Polak-Ribiere;
+            </li>
+            <li>
+		      positive Polak-Ribiere (beta = max{beta,0});
+            </li>
+          </ol>
+        </li>
+      </ul>
+      and you need to change the FCN routine in the main program to calculate the
+      function and gradient for the particular function you want to minimize.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f77_src/asa047/asa047.html">
+      ASA047</a>,
+      a FORTRAN77 library which
+      minimizes a scalar function of several variables using the Nelder-Mead algorithm.
+    </p>
+
+    <p>
+      <a href = "../../f_src/brent/brent.html">
+      BRENT</a>,
+      a FORTRAN90 library which
+      contains Richard Brent's routines for finding the zero, local minimizer,
+      or global minimizer of a scalar function of a scalar argument, without
+      the use of derivative information.
+    </p>
+
+    <p>
+      <a href = "../../m_src/coordinate_search/coordinate_search.html">
+      COORDINATE_SEARCH</a>,
+      a MATLAB program which
+      minimizes a scalar function of several variables using the coordinate search algorithm.
+    </p>
+
+    <p>
+      <a href = "../../f_src/dqed/dqed.html">
+      DQED</a>,
+      a FORTRAN90 library which
+      solves constrained least squares problems.
+    </p>
+
+    <p>
+      <a href = "../../m_src/entrust/entrust.html">
+      ENTRUST</a>,
+      a MATLAB program which
+      minimizes a scalar function of several variables using trust region methods.
+    </p>
+
+    <p>
+      <a href = "../../f_src/minpack/minpack.html">
+      MINPACK</a>,
+      a FORTRAN90 library which
+      carries out the least squares minimization of the residual
+      of a set of linear or nonlinear equations.
+    </p>
+
+    <p>
+      <a href = "../../m_src/nelder_mead/nelder_mead.html">
+      NELDER_MEAD</a>,
+      a MATLAB program which
+      minimizes a scalar function of several variables using the Nelder-Mead algorithm.
+    </p>
+
+    <p>
+      <a href = "../../f_src/nl2sol/nl2sol.html">
+      NL2SOL</a>,
+      a FORTRAN90 library which
+      implements an adaptive nonlinear least-squares algorithm.
+    </p>
+
+    <p>
+      <a href = "../../f_src/praxis/praxis.html">
+      PRAXIS</a>,
+      a FORTRAN90 library which
+      minimizes a scalar
+      function of several variables.
+    </p>
+
+    <p>
+      <a href = "../../f_src/test_opt/test_opt.html">
+      TEST_OPT</a>,
+      a FORTRAN90 library which
+      defines a number of problems for the minimization of scalar functions
+      of multiple variables.
+    </p>
+
+    <p>
+      <a href = "../../f_src/toms611/toms611.html">
+      TOMS611</a>,
+      a FORTRAN90 library which
+      minimizes a scalar functional of multiple variables.
+    </p>
+
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Jean Charles Gilbert, Jorge Nocedal,<br>
+          Global Convergence Properties of Conjugate Gradient Methods,<br>
+          SIAM Journal on Optimization,<br>
+          Volume 2, Number 1, 1992, pages 21-42.
+        </li>
+        <li>
+          Jorge More, David Thuente,<br>
+          Linesearch Algorithms with Guaranteed Sufficient Decrease,<br>
+          ACM Transactions on Mathematical Software,<br>
+          Volume 20, Number 3, September 1994, pages 286-307.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "cg_plus.f">cg_plus.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "cg_plus.sh">cg_plus.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "cg_plus_prb.f">cg_plus_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "cg_plus_prb.sh">cg_plus_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "cg_plus_prb_output.txt">cg_plus_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>CGBD</b> prints monitoring information.
+        </li>
+        <li>
+          <b>CGFAM</b> implements conjugate gradient methods for unconstrained nonlinear optimization.
+        </li>
+        <li>
+          <b>CSTEPM</b> computes a safeguarded step for a line search.
+        </li>
+        <li>
+          <b>CSVMOD</b> finds a step which satisfies a sufficient decrease condition.
+        </li>
+        <li>
+          <b>DASUM</b> takes the sum of the absolute values.
+        </li>
+        <li>
+          <b>DAXPY</b> computes constant times a vector plus a vector.
+        </li>
+        <li>
+          <b>DCOPY</b> copies a vector.
+        </li>
+        <li>
+          <b>DDOT</b> forms the dot product of two vectors.
+        </li>
+        <li>
+          <b>DNRM2</b> returns the euclidean norm of a vector.
+        </li>
+        <li>
+          <b>DSCAL</b> scales a vector by a constant.
+        </li>
+        <li>
+          <b>DSWAP</b> interchanges two vectors.
+        </li>
+        <li>
+          <b>IDAMAX</b> finds the index of element having maximum absolute value.
+        </li>
+        <li>
+          <b>TIMER</b> returns an estimate for the elapsed user time.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 18 December 2008.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

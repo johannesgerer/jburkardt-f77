@@ -1,0 +1,57 @@
+     Temperature in a square plate, mixed conditions.            
+     ************************************************************
+
+
+     General constants :
+
+     Number of elements...............    4
+     Number of internal points........    6
+     Number of Gauss points...........    4
+     Node where the potential is null.    0
+
+
+     Problem data:
+
+   node            x coor         y coor
+
+      1            0.0000         0.0000
+      2            6.0000         0.0000
+      3            6.0000         6.0000
+      4            0.0000         6.0000
+
+   node     code      potential    flux before     flux after
+
+      1       2       300.00000        0.00000        0.00000
+      2       3         0.00000        0.00000        0.00000
+      3       2         0.00000        0.00000        0.00000
+      4       3       300.00000        0.00000        0.00000
+
+
+
+     Temperature in a square plate, mixed conditions.            
+     ************************************************************
+
+     SOLUTION ON THE BOUNDARY:
+
+     boundary points
+
+      node      potential    flux before    flux after
+
+         1      300.00000       50.00045        0.00000
+         2        0.00000        0.00000      -50.00042
+         3        0.00000      -50.00044        0.00000
+         4      300.00000        0.00000       50.00043
+
+
+     SOLUTION IN THE DOMAIN:
+
+     internal points
+
+    x coor    y coor      potential
+
+     2.000     2.000        201.376
+     2.000     4.000        201.376
+     3.000     3.000        149.793
+     4.000     2.000        100.014
+     4.000     4.000        100.014
+     3.000     0.300        106.743

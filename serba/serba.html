@@ -1,0 +1,437 @@
+<html>
+
+  <head>
+    <title>
+      SERBA - Boundary Element Method for Elasticity
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      SERBA <br> Boundary Element Method for Elasticity
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>SERBA</b>
+      is a FORTRAN77 program which
+      applies the boundary element
+      method to solve the elasticify equation in a 2D region,
+      by Federico Paris and Jose Canas.
+    </p>
+
+    <p>
+      The program uses linear continuous elements, and any kind of
+      combination of boundary conditions in stresses and displacements
+      can be considered.
+    </p>
+
+    <h3 align = "center">
+      Input File Format:
+    </h3>
+
+    <p>
+      The input to the program involves a file containing seven sets of data:
+      <ol>
+        <li>
+          The title line (a character string)
+        </li>
+        <li>
+          The parameter line, listing <b>NP</b>, <b>NPI</b> and <b>NANU</b>:
+          <ul>
+            <li>
+              <b>NP</b> is the number of elements used to discretize the boundary;
+              This is also the number of boundary points.
+              This value must be positive.
+            </li>
+            <li>
+              <b>NPI</b> is the number of internal points where the displacement
+              and stress will be computed;  <b>NPI</b> can be zero if no information
+              about interior points is desired.
+            </li>
+            <li>
+              <b>IANUL</b> is the number of components of displacements that are
+              going to be fixed, regardless of the boundary conditions.  This number
+              should only be nonzero in cases where the specified boundary conditions
+              do not eliminate a rigid body motion;
+            </li>
+          </ul>
+        </li>
+        <li>
+          Elastic properties are specified on one line:
+          <ul>
+            <li>
+              <b>NTIP</b> is 0 for plane strain, or else 1 for plane stress;
+            </li>
+            <li>
+              <b>E</b> is the value of Young's modulus;
+            </li>
+            <li>
+              <b>POIS</b> is the value of Poisson's ratio;
+            </li>
+            <li>
+              <b>DM</b> is the maximum (spatial) dimension of the problem to be solved;
+              It is used for scaling.
+            </li>
+          </ul>
+        </li>
+        <li>
+          The coordinates of internal points;  For each of the <b>NPI</b> internal
+          points, there must be a record specifying <b>XINT(I)</b> and <b>YINT(I)</b>:
+          <ul>
+            <li>
+              <b>XINT(I)</b> is the X coordinate of the I-th internal point;
+            </li>
+            <li>
+              <b>YINT(I)</b> is the Y coordinate of the I-th internal point;
+            </li>
+          </ul>
+        </li>
+        <li>
+          The coordinates of boundary points;  The boundary points are indexed from 1 to
+          <b>NP+1</b>, and are assumed to be given in counterclockwise order;
+          Logically, the boundary point information is given consecutively;
+          however, if one or more points are omitted, their values will be determined
+          by linear interpolation from the preceding and succeeding values that are
+          given.  Thus, the very least input would specify points 1 and <b>NP+1</b>;
+          the fullest information would specify all <b>NP+1</b> points.  Most input
+          would omit points that are interior to an equally spaced line.
+          <ul>
+            <li>
+              <b>I</b>, the index of the boundary point.
+            </li>
+            <li>
+              <b>X(I)</b> is the X coordinate of the I-th boundary point;
+            </li>
+            <li>
+              <b>Y(I)</b> is the Y coordinate of the I-th boundary point;
+            </li>
+          </ul>
+        </li>
+        <li>
+          The boundary conditions, specifying the boundary node index, the boundary
+          code, and the values of the potential, and the "before" and "after" fluxes
+          at the node.  A typical boundary condition will only specify the potential
+          or the flux; the values not specified can be given as 0.  A boundary condition
+          must be given for every boundary node.  Logically, the boundary nodes are
+          input in order; however boundary nodes may be omitted, in which case
+          the data will be linearly interpolated; however, the preceding and succeeding
+          boundary conditions must have the same value of <b>NCOD</b> for this to be done.
+          <ul>
+            <li>
+              <b>I</b>, the index of the boundary point.
+            </li>
+            <li>
+              <b>I1</b>, the code for boundary condition 1.
+            </li>
+            <li>
+              <b>V1</b> the value for boundary condition 1 (displacement or stress
+              component)
+            </li>
+            <li>
+              <b>I2</b>, the code for boundary condition 2.
+            </li>
+            <li>
+              <b>V2</b> the value for boundary condition 2 (displacement or stress
+              component)
+            </li>
+            <li>
+              <b>I3</b>, the code for boundary condition 3.
+            </li>
+            <li>
+              <b>V3</b> the value for boundary condition 3 (displacement or stress
+              component)
+            </li>
+            <li>
+              <b>I4</b>, the code for boundary condition 4.
+            </li>
+            <li>
+              <b>V4</b> the value for boundary condition 4 (displacement or stress
+              component)
+            </li>
+          </ul>
+        </li>
+        <li>
+          Support conditions on one line, if IANUL is nonzero.  In this case,
+          the positions of the displacements to be fixed must be given.  Supposing
+          the number of nodes is <b>NP</b>, then the horizontal displacement of
+          node I is fixed by specifying I, while the vertical displacement is
+          fixed by specifying I+NP.
+          <ul>
+            <li>
+              <b>NANU(1)</b> is I to fix the horizontal displacement at node I,
+              or I+NP to fix the vertical displacement at node I.
+            </li>
+            <li>
+              <b>...</b> intermediate values;
+            </li>
+            <li>
+              <b>NANU(IANUL)</b> is I to fix the horizontal displacement at node I,
+              or I+NP to fix the vertical displacement at node I.
+            </li>
+          </ul>
+        </li>
+      </ol>
+    </p>
+
+    <p>
+      The boundary condition codes are required to indicate which of 8 possible
+      items are being specified.
+      Displacements and stress components are given in local coordinates, based
+      on the normal to the boundary, and the anticlockwise tangent vector.  There
+      are eight possible variables at a node, with only four of them being known.
+      The paramters I1, I2, I3 and I4, which must be given in ascending order,
+      take values between 1 and 8, identifying the boundary condition.  The
+      meanings of the eight possible codes for boundary conditions are:
+      <ol>
+        <li>
+          normal displacement of the node corresponding to the element before the node.
+        </li>
+        <li>
+          tangential displacement at the node corresponding to the element before the node.
+        </li>
+        <li>
+          normal displacement of the node corresponding to the element after the node.
+        </li>
+        <li>
+          tangential displacement at the node corresponding to the element after the node.
+        </li>
+        <li>
+          normal stress component of the node corresponding to the element before the node.
+        </li>
+        <li>
+          tangential stress component of the node corresponding to the element before the node.
+        </li>
+        <li>
+          normal stress component of the node corresponding to the element after the node.
+        </li>
+        <li>
+          tangential stress component of the node corresponding to the element after the node.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <blockquote><code>
+        <b>serba</b>
+      </code></blockquote>
+      The user will be prompted for
+      <ul>
+        <li>
+          <b>namedat</b>, the name of the input file;
+        </li>
+        <li>
+          <b>namesal</b>, the name of the output file; (note that the program
+          will terminate if there is already a file named <b>namesal</b>).
+          The program will not overwrite an output file, so it is the user's
+          responsibility to delete an old, unwanted file of the same name.
+        </li>
+        <li>
+          <b>igauss</b>, the number of points to use in the Gauss quadrature rule.
+          a value of 4 is often sufficient.  This value must be between 1 and 50.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f77_src/betis/betis.html">
+      BETIS</a>,
+      a FORTRAN77 program which
+      solves Laplace's problem in a 2D region using the boundary element method.
+    </p>
+
+    <p>
+      <a href = "../../m_src/fem_50/fem_50.html">
+      FEM_50</a>,
+      a MATLAB program which
+      solves Laplace's equation in an arbitrary region using the finite element method.
+    </p>
+
+    <p>
+      <a href = "../../f_src/fem2d_poisson/fem2d_poisson.html">
+      FEM2D_POISSON</a>,
+      a FORTRAN90 program which
+      solves Poisson's equation in an arbitrary triangulated region
+      using the finite element method.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/fem2d_poisson_rectangle/fem2d_poisson_rectangle.html">
+      FEM2D_POISSON_RECTANGLE</a>,
+      a FORTRAN77 program which
+      solves Poisson's equation in a 2D rectangle using the finite element method.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/fishpack/fishpack.html">
+      FISHPACK</a>,
+      a FORTRAN77 library which
+      solves Poisson, Laplace or Helmholtz equations
+      in a variety of 2D and 3D geometries, using the finite difference method.
+    </p>
+
+    <h3 align = "center">
+      Author:
+    </h3>
+
+    <p>
+      Federico Paris and Jose Canas,<br>
+      Department of Elasticity and Strength of Materials,<br>
+      Industrial Engineering School,<br>
+      University of Seville, Spain.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Federico Paris, Jose Canas,<br>
+          Boundary Element Method: Fundamentals and Applications,<br>
+          Oxford, 1997,<br>
+          ISBN: 0-19-856543-7,<br>
+          LC: TA347.B69.P34.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "serba.f">serba.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "serba.sh">serba.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      Example 1 models a square plate in traction, using stress conditions:
+      <ul>
+        <li>
+          <a href = "input01.txt">input01.txt</a>,
+          the input file.
+        </li>
+        <li>
+          <a href = "output01.txt">output01.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      Example 2 models a square plate in traction, using displacement conditions:
+      <ul>
+        <li>
+          <a href = "input02.txt">input02.txt</a>,
+          the input file.
+        </li>
+        <li>
+          <a href = "output02.txt">output02.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      Example 3 models a square plate in traction, using symmetry:
+      <ul>
+        <li>
+          <a href = "input03.txt">input03.txt</a>,
+          the input file.
+        </li>
+        <li>
+          <a href = "output03.txt">output03.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>MAIN</b> is the main program for the SERBA boundary element code.
+        </li>
+        <li>
+          <b>SERB1</b> reads input, generates geometry and boundary conditions.
+        </li>
+        <li>
+          <b>SERB2</b> builds and solves the system of equations.
+        </li>
+        <li>
+          <b>SERB3</b> calculates and prints the displacements and stresses.
+        </li>
+        <li>
+          <b>NUMER</b> numerical calculates integration constants of the fundamental equation.
+        </li>
+        <li>
+          <b>ANA</b> analytically calculates integration constants of the fundamental equation.
+        </li>
+        <li>
+          <b>CALA</b> relates principal stresses to stress vectors in local coordinates.
+        </li>
+        <li>
+          <b>PIYAY</b> calculates certain integration constants along boundary elements.
+        </li>
+        <li>
+          <b>PIVO</b> applies Gauss elimination to solve the linear system.
+        </li>
+        <li>
+          <b>GAUSS_QN</b> determines a Gauss quadrature rule.
+        </li>
+        <li>
+          <b>COEFIC</b> sets the coefficients of a polynomial needed for the Gauss rule.
+        </li>
+        <li>
+          <b>EVALUA</b> evaluates the polynomial defining the Gauss rule.
+        </li>
+        <li>
+          <b>ROOTS</b> seeks roots of the polynomial defining the Gauss rule.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 17 December 2007.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

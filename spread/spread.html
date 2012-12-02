@@ -1,0 +1,159 @@
+<html>
+
+  <head>
+    <title>
+      SPREAD - Locate Tyrosine Residues in a SWISS-PROT file
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      SPREAD <br> Locate Tyrosine Residues in a SWISS-PROT file
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>SPREAD</b>
+      is a FORTRAN77 program which
+      reads a sequence form a SWISS-PROT database file and locates
+      the tyrosine residues.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/ps_gg_align/ps_gg_align.html">
+      PS_GG_ALIGN</a>,
+      a FORTRAN90 library which
+      implements a profile/sequence global alignment using an affine gap penalty.
+    </p>
+
+    <p>
+      <a href = "../../f_src/ps_lg_align/ps_lg_align.html">
+      PS_LG_ALIGN</a>,
+      a FORTRAN90 library which
+      implements a profile/sequence local alignment using an affine gap penalty.
+    </p>
+
+    <p>
+      <a href = "../../f_src/ps_qg_align/ps_qg_align.html">
+      PS_QG_ALIGN</a>,
+      a FORTRAN90 library which
+      implements a profile/sequence quasiglobal alignment using an affine gap penalty.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/read_align/read_align.html">
+      READ_ALIGN</a>,
+      a FORTRAN77 program which
+      extracts data from a multiple alignment file for sequences and
+      writes the data to a file suitable for input to DISTANCES.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/spacer/spacer.html">
+      SPACER</a>,
+      a FORTRAN77 program which
+      reads a file containing a distance matrix and performs a
+      principal component analysis.
+    </p>
+
+    <p>
+      <a href = "../../f_src/ss_gd_align/ss_gd_align.html">
+      SS_GD_ALIGN</a>,
+      a FORTRAN90 library which
+      globally aligns two sequences using a distance matrix.
+    </p>
+
+    <p>
+      <a href = "../../f_src/ss_gg_align/ss_gg_align.html">
+      SS_GG_ALIGN</a>,
+      a FORTRAN90 library which
+      globally aligns two sequences using an affine gap penalty.
+    </p>
+
+    <p>
+      <a href = "../../f_src/ss_lg_align/ss_lg_align.html">
+      SS_LG_ALIGN</a>,
+      a FORTRAN90 library which
+      locally aligns two sequences using an affine gap penalty.
+    </p>
+
+    <p>
+      <a href = "../../f_src/ss_qg_align/ss_qg_align.html">
+      SS_QG_ALIGN</a>,
+      a FORTRAN90 library which
+      quasi-globally aligns two sequences using an affine gap penalty.
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "spread.f">spread.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "spread.sh">spread.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>MAIN</b> is the main program for SPREAD.
+        </li>
+        <li>
+          <b>DBSITE</b> finds tyrosine residues in a sequence read from a file.
+        </li>
+        <li>
+          <b>FILE_DELETE</b> deletes a file if it exists.
+        </li>
+        <li>
+          <b>GET_UNIT</b> returns a free FORTRAN unit number.
+        </li>
+        <li>
+          <b>POSN15</b> compares a data file site to a table of known tyrosine sulfation sites.
+        </li>
+        <li>
+          <b>S_LEN_TRIM</b> returns the length of a string to the last nonblank.
+        </li>
+        <li>
+          <b>SCORE</b> scores each potential site in the array.
+        </li>
+        <li>
+          <b>TIMESTAMP</b> prints out the current YMDHMS date as a timestamp.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on Thu May 15 13:07:49 2008
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

@@ -1,0 +1,374 @@
+<html>
+
+  <head>
+    <title>
+      LAMP - Linear Assignment and Matching Problems
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      LAMP <br> Linear Assignment and Matching Problems
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>LAMP</b>
+      is a FORTRAN77 program which
+      implements various algorithms for linear assignment and matching problems,
+      by Rainer Burkard, Ulrich Derigs.
+    </p>
+
+    <p>
+      The problems that are considered include:
+      <ul>
+        <li>
+          the linear sum assignment problem;
+        </li>
+        <li>
+          the linear bottleneck assignment problem;
+        </li>
+        <li>
+          the cardinality matching problem;
+        </li>
+        <li>
+          the sum matching problem;
+        </li>
+        <li>
+          the bottleneck matching problem;
+        </li>
+        <li>
+          the Chinese postman problem;
+        </li>
+        <li>
+          the quadratic assignment problem;
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      The program printed in the reference is written in FORTRAN IV.  People who
+      think FORTRAN77 or FORTRAN66 was primitive should take a look at this source
+      code, to understand the evolution of programming.
+      <ul>
+        <li>
+          The FORTRAN IV code does not use doubly dimensioned arrays; instead,
+          MxN information is packed into a vector, and retrieved by computing
+          the linear address I+J*M from the 2D (I,J) address.
+        </li>
+        <li>
+          The index of a vector was required to be a variable, not a variable
+          expression.  Even an expression like "X(I+1)" was illegal,
+          and a variable had to be set aside to store the value of I+1.
+        </li>
+        <li>
+          Because a DO loop would always be executed at least once, many
+          such loops had to be protected by conditional jumps around them,
+          in case the lower limit of the loop was greater than the upper limit.
+        </li>
+        <li>
+          Programmers thought nothing of running a DO loop with index I, say,
+          and jumping out of it when some condition occurred, and assuming
+          that the value of I was preserved and available.  Many compilers
+          now regard this as an unsafe assumption.
+        </li>
+        <li>
+          Another "cultural" issue was that programmers thought nothing of
+          jumping out of a loop via a GOTO statement, doing some calculation,
+          and then jumping back into the loop.  Modern compilers produce
+          warnings that this is an unsafe practice.
+        </li>
+        <li>
+          The only way to form a compound statement was with statement labels.
+          There was no DO/ENDDO or IF/ENDIF structure; there were only GOTO's.
+          The extraordinarily ugly appearance of the resulting code, and the
+          difficulty of comprehending the bizarre-looking text, is impossible
+          to suggest.  One must look at such code and struggle to understand it
+          and then realize the advantage of simple modern control structures.
+        </li>
+        <li>
+          Typing in the code, I was reminded yet again of the biggest horror
+          of old FORTRAN, namely the fixed format scheme in which columns 7 through
+          72 were for text, column 6 (remember not to use '0' for continuation!)
+          was for continuation, and columns 1 through 5 for statement labels,
+          and 73 to 80 sequence numbers (remember those?).  Accidentally violating
+          these rules could result in deadly but silent bugs.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      To some extent, the code has been "cleaned up", so that it is not a
+      straight copy of the printed text.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/apportionment/apportionment.html">
+      APPORTIONMENT</a>,
+      a FORTRAN90 library which
+      studies the apportionment problem for the US House of Representatives.
+    </p>
+
+    <p>
+      <a href = "../../f_src/codepack/codepack.html">
+      CODEPACK</a>,
+      a FORTRAN90 library which
+      computes "codes" that can determine
+      if two graphs are isomorphic.
+    <p>
+
+    <p>
+      <a href = "../../f_src/combo/combo.html">
+      COMBO</a>,
+      a FORTRAN90 library which
+      handles various combinatorial tasks and computations.
+    </p>
+
+    <p>
+      <a href = "../../datasets/generalized_assignment/generalized_assignment.html">
+      GENERALIZED_ASSIGNMENT</a>,
+      a dataset directory which
+      contains test data for the generalized assignment problem;
+    </p>
+
+    <p>
+      <a href = "../../f_src/grafpack/grafpack.html">
+      GRAFPACK</a>,
+      a FORTRAN90 library which
+      contains many routines for handling abstract graphs.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/knapsack/knapsack.html">
+      KNAPSACK</a>,
+      a FORTRAN77 library which
+      solves a variety of knapsack problems.
+    </p>
+
+    <p>
+      <a href = "../../f_src/lau_np/lau_np.html">
+      LAU_NP</a>,
+      a FORTRAN90 library which
+      handles various NP hard problems.
+    </p>
+
+    <p>
+      <a href = "../../f_src/laupack/laupack.html">
+      LAUPACK</a>,
+      a FORTRAN90 library which
+      computes various quantities associated with a graph.
+    </p>
+
+    <p>
+      <a href = "../../f_src/partial_digest/partial_digest.html">
+      PARTIAL_DIGEST</a>,
+      a FORTRAN90 library which
+      solves the partial digest problem.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/partition_problem/partition_problem.html">
+      PARTITION_PROBLEM</a>,
+      a FORTRAN77 library which
+      seeks solutions of the partition problem, splitting a set of integers into
+      two subsets with equal sum.
+    </p>
+
+    <p>
+      <a href = "../../f_src/select/select.html">
+      SELECT</a>,
+      a FORTRAN90 library which
+      generates various combinatorial objects.
+    </p>
+
+    <p>
+      <a href = "../../f_src/subset/subset.html">
+      SUBSET</a>,
+      a FORTRAN90 library which
+      handles various combinatorial problems.
+    </p>
+
+    <h3 align = "center">
+      Author:
+    </h3>
+
+    <p>
+      Rainer Burkard, Ulrich Derigs
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Rainer Burkard, Ulrich Derigs,<br>
+          Assignment and Matching Problems: Solution methods with
+          FORTRAN programs,<br>
+          Lecture Notes in Economics and Mathematical Systems,<br>
+          Volume 184,<br>
+          Springer, 1980,<br>
+          ISBN: 0387102671,<br>
+          LC: QA402.5.B86.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "lamp.f">lamp.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "lamp.sh">lamp.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "lamp_prb.f">lamp_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "lamp_prb.sh">lamp_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "lamp_prb_output.txt">lamp_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>ALTKOS</b> is used by QAP to determine alternative costs.
+        </li>
+        <li>
+          <b>BMP</b> solves the bottleneck matching problem.
+        </li>
+        <li>
+          <b>CMP</b> solves the cardinality matching problem.
+        </li>
+        <li>
+          <b>CONNECT</b> checks the connectivity of a graph.
+        </li>
+        <li>
+          <b>CPP</b> solves the Chinese Postman Problem.
+        </li>
+        <li>
+          <b>DREIER</b> carries out the triple exchange routine for QAPH2.
+        </li>
+        <li>
+          <b>ERW</b> expands a blossom for CPP.
+        </li>
+        <li>
+          <b>HEIDER</b> examines the pairwise interchanges for QAPH2.
+        </li>
+        <li>
+          <b>KASU</b> duplicates matching edges for CPP.
+        </li>
+        <li>
+          <b>LBAP</b> solves the linear bottleneck assignment problem.
+        </li>
+        <li>
+          <b>LSAPI</b> solves the linear sum assignment problem with integer data.
+        </li>
+        <li>
+          <b>LSAPR</b> solves the linear sum assignment problem with real data.
+        </li>
+        <li>
+          <b>PROGNO</b> is used by QAP to compute the linear subproblem cost matrix.
+        </li>
+        <li>
+          <b>PRUEF1</b> is used by CPP to scan node BB.
+        </li>
+        <li>
+          <b>PRUEF2</b> is used by CPP to scan nodes BB2 and BBB.
+        </li>
+        <li>
+          <b>QAP</b> solves the quadratic assignment problem.
+        </li>
+        <li>
+          <b>QAPH1</b> is a heuristic solver for quadratic assignment problems.
+        </li>
+        <li>
+          <b>QAPH2</b> is a heuristic solver for quadratic assignment problems.
+        </li>
+        <li>
+          <b>R4_UNIFORM_01</b> returns a unit pseudorandom R4.
+        </li>
+        <li>
+          <b>REIHEN</b> choose a start sequence for QAPH2'S pairwise exchange algorithm.
+        </li>
+        <li>
+          <b>SCAN1</b> scans a node for the SMP algorithm.
+        </li>
+        <li>
+          <b>SCAN2</b> scans a node for the SMP algorithm.
+        </li>
+        <li>
+          <b>SCHR</b> shrinks a blossom for CPP.
+        </li>
+        <li>
+          <b>SMP</b> solves the sum matching problem.
+        </li>
+        <li>
+          <b>SSORT</b> sorts an integer vector, and rearranges a second one.
+        </li>
+        <li>
+          <b>TIMESTAMP</b> prints out the current YMDHMS date as a timestamp.
+        </li>
+        <li>
+          <b>TOUR</b> determines an Eulerian tour for CPP.
+        </li>
+        <li>
+          <b>WEGSPE</b> is used by QAP to order elements from the matrices A and B.
+        </li>
+        <li>
+          <b>ZUFALL</b> determines a random permutation.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 10 December 2007.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

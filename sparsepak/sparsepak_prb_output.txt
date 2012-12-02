@@ -1,0 +1,122 @@
+25 July      2012   8:01:31.901 PM      
+ 
+SPARSEPAK_PRB
+  FORTRAN77 version.
+  Test the SPARSEPAK library.
+ 
+TEST05
+  Use the RQT method.
+ 
+  The matrix order is N =     10
+ 
+SETADJ:
+  Initialize XADJ adjacency pointer array.
+ 
+  Number of adjacency entries NADJ =           18
+ 
+ADJ_PRINT
+  show adjacency structure of sparse matrix.
+  the matrix order is     10
+  the number of entries is     18
+ 
+  row       nonzeros 
+ 
+     1          10
+     2          10     9
+     3           9     8
+     4           7     8
+     5           7     6
+     6           5
+     7           4     5
+     8           3     4
+     9           2     3
+    10           1     2
+ 
+ADJ_SHOW:
+  display nonzero structure of matrix.
+ 
+     1 x        x
+     2  x      xx
+     3   x    xx 
+     4    x  xx  
+     5     xxx   
+     6     xx    
+     7    xx x   
+     8   xx   x  
+     9  xx     x 
+    10 xx       x
+ 
+lower bandwidth =      9
+lower envelope contains      9 nonzeros.
+ 
+  After GENRQT, the  number of blocks is           10
+ 
+ADJ_SHOW:
+  display nonzero structure of matrix.
+ 
+     1 x   x     
+     2  x   xx   
+     3   xxx     
+     4    x  xx  
+     5   xxx     
+     6      x xx 
+     7  xx   x   
+     8        xxx
+     9 xx      x 
+    10          x
+ 
+lower bandwidth =      8
+lower envelope contains      6 nonzeros.
+ 
+  The envelope size is        32767
+ 
+    I    Perm(I)   InvPerm(I)
+ 
+     1     6    10
+     2     5     8
+     3     7     6
+     4     4     4
+     5     8     2
+     6     3     1
+     7     9     3
+     8     2     5
+     9    10     7
+    10     1     9
+ 
+ADJ_SHOW:
+  display nonzero structure of matrix.
+ 
+     1 xx        
+     2 xxx       
+     3  xxx      
+     4   xxx     
+     5    xxx    
+     6     xxx   
+     7      xxx  
+     8       xxx 
+     9        xxx
+    10         xx
+ 
+lower bandwidth =      1
+lower envelope contains      9 nonzeros.
+ 
+  The reordered envelope size is            0
+ NBLKS =           10
+ 
+  Solution:
+ 
+   1.00000    
+   3.00000    
+   5.00000    
+   7.00000    
+   9.00000    
+   10.0000    
+   8.00000    
+   6.00000    
+   4.00000    
+   2.00000    
+ 
+SPARSEPAK_PRB
+  Normal end of execution.
+ 
+25 July      2012   8:01:31.902 PM      

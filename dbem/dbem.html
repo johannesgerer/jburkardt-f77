@@ -1,0 +1,210 @@
+<html>
+
+  <head>
+    <title>
+      DBEM - Direct Boundary Element Method for 2D Elastic Stress
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      DBEM <br> Direct Boundary Element Method for 2D Elastic Stress
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>DBEM</b>
+      is a FORTRAN77 program which
+      uses the direct boundary element method (DBEM) to analyze
+      a problem in 2D elastic stress,
+      by Prasanta Banerjee, Roy Butterfield.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/fem2d_heat/fem2d_heat.html">
+      FEM2D_HEAT</a>,
+      a FORTRAN90 program which
+      solves the 2D time dependent heat equation on the unit square.
+    </p>
+
+    <p>
+      <a href = "../../f_src/fem2d_poisson/fem2d_poisson.html">
+      FEM2D_POISSON</a>,
+      a FORTRAN90 program which
+      solves the 2D Poisson equation on a rectangle, using the finite element method,
+      and piecewise quadratic triangular elements.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/fem2d_sample/fem2d_sample.html">
+      FEM2D_SAMPLE</a>,
+      a FORTRAN77 program library which
+      evaluates a finite element function defined on an order 3 or order 6 triangulation.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Prasanta Banerjee, Roy Butterfield,<br>
+          Boundary Element Methods in Engineering Science,<br>
+          McGraw-Hill, 1994,<br>
+          ISBN: 0070841209,<br>
+          LC: TA347.B69.B36.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "dbem.f">dbem.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "dbem.sh">dbem.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "input.txt">input.txt</a>,
+          an input file.
+        </li>
+        <li>
+          <a href = "output.txt">output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>MAIN</b> is the main program for DBEM.
+        </li>
+        <li>
+          <b>ASMBLR</b>
+        </li>
+        <li>
+          <b>ASSM</b>
+        </li>
+        <li>
+          <b>AUTINT</b> chooses the order of the integration rule.
+        </li>
+        <li>
+          <b>AXKRNL</b> sets up integration kernels for the axisymmetric case.
+        </li>
+        <li>
+          <b>BNDSTR</b> calculates stresses at a boundary node.
+        </li>
+        <li>
+          <b>BUNSNT</b> recovers the unknown sensitivity at the node.
+        </li>
+        <li>
+          <b>FORCE</b> sets the right hand side for the sensitivity equation.
+        </li>
+        <li>
+          <b>FORCE1</b> finds the right hand side of the sensitivity equation.
+        </li>
+        <li>
+          <b>GAUSSP</b> sets the Gauss points and weights for the interval [0,1].
+        </li>
+        <li>
+          <b>INPUT</b> reads input defining the problem to be solved.
+        </li>
+        <li>
+          <b>INPUTL</b> reads the sensitivity information.
+        </li>
+        <li>
+          <b>INPUTL1</b> reads the sensitivity information when ISENS = 2.
+        </li>
+        <li>
+          <b>INTEGRA1</b> carries out the integration needed for assembly.
+        </li>
+        <li>
+          <b>INTSTR</b> calculates interior stresses and displacements.
+        </li>
+        <li>
+          <b>MATCON</b> calculates material constants for displacement and stress kernels.
+        </li>
+        <li>
+          <b>MESHGN</b> generates the mesh.
+        </li>
+        <li>
+          <b>NORMAL</b> handles the calculation of direction cosines of the node normal.
+        </li>
+        <li>
+          <b>NORMPT</b> calculates the direction of the normal vector.
+        </li>
+        <li>
+          <b>NORSET</b> sets up integration kernels for the nonsingular case.
+        </li>
+        <li>
+          <b>PARTIN</b>
+        </li>
+        <li>
+          <b>PLKRNL</b> integrates BIE kernel shape function products for stress and strain.
+        </li>
+        <li>
+          <b>SETUP</b>
+        </li>
+        <li>
+          <b>SINSET</b> sets up integration for the singular case.
+        </li>
+        <li>
+          <b>SOLVER</b> solves the linear system.
+        </li>
+        <li>
+          <b>SOLVER_LU</b> solves the system using LU decomposition.
+        </li>
+        <li>
+          <b>STORE</b> stores the F and G matrices for subsequent usage.
+        </li>
+        <li>
+          <b>STRKER</b> computes interior stress kernels.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 12 December 2008.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

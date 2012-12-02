@@ -1,0 +1,11 @@
+ 
+MGS_PRB:
+  Test cases for MGS.
+ 
+           5          20  3.72469401E-07
+           3          15  2.08758124E-07
+          13           2  1.14569850E-07
+          16          11  3.76571023E-07
+ 
+MGS_PRB:
+  Normal end of execution.

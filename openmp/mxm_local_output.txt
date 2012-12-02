@@ -1,0 +1,57 @@
+ 
+MXM
+  FORTRAN77/OpenMP version.
+ 
+  Matrix multiplication tests.
+  The number of processors =        8
+  The number of threads    =        1
+ 
+R8_MXM matrix multiplication timing.
+  A(LxN) = B(LxM) * C(MxN).
+  L =      500
+  M =      500
+  N =      500
+  Floating point OPS roughly    250000000
+  Elapsed time dT =    1.16858    
+  Rate = MegaOPS/dT =    213.935    
+ 
+MXM:
+  Normal end of execution.
+ 
+MXM
+  FORTRAN77/OpenMP version.
+ 
+  Matrix multiplication tests.
+  The number of processors =        8
+  The number of threads    =        2
+ 
+R8_MXM matrix multiplication timing.
+  A(LxN) = B(LxM) * C(MxN).
+  L =      500
+  M =      500
+  N =      500
+  Floating point OPS roughly    250000000
+  Elapsed time dT =   0.599114    
+  Rate = MegaOPS/dT =    417.283    
+ 
+MXM:
+  Normal end of execution.
+ 
+MXM
+  FORTRAN77/OpenMP version.
+ 
+  Matrix multiplication tests.
+  The number of processors =        8
+  The number of threads    =        4
+ 
+R8_MXM matrix multiplication timing.
+  A(LxN) = B(LxM) * C(MxN).
+  L =      500
+  M =      500
+  N =      500
+  Floating point OPS roughly    250000000
+  Elapsed time dT =   0.355735    
+  Rate = MegaOPS/dT =    702.770    
+ 
+MXM:
+  Normal end of execution.

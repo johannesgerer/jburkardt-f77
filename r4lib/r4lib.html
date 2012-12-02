@@ -1,0 +1,452 @@
+<html>
+
+  <head>
+    <title>
+      R4LIB - A Single Precision Real Arithmetic Utility Library
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      R4LIB <br> A Single Precision Real Arithmetic Utility Library
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>R4LIB</b>
+      is a FORTRAN77 library which
+      contains a number of utility routines for "R4" or "single precision real"
+      arithmetic.
+    </p>
+
+    <h3 align = "center">
+      Licensing:
+    </h3>
+
+    <p>
+      The computer code and data files described and made available on this web page
+      are distributed under
+      <a href = "../../txt/gnu_lgpl.txt">the GNU LGPL license.</a>
+    </p>
+
+    <h3 align = "center">
+      Languages:
+    </h3>
+
+    <p>
+      <b>R4LIB</b> is available in
+      <a href = "../../c_src/r4lib/r4lib.html">a C version</a> and
+      <a href = "../../cpp_src/r4lib/r4lib.html">a C++ version</a> and
+      <a href = "../../f77_src/r4lib/r4lib.html">a FORTRAN77 version</a> and
+      <a href = "../../f_src/r4lib/r4lib.html">a FORTRAN90 version.</a>
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f77_src/c4lib/c4lib.html">
+      C4LIB</a>,
+      a FORTRAN77 library which
+      implements certain elementary functions for "C4" or
+      single precision complex variables;
+    </p>
+
+    <p>
+      <a href = "../../f77_src/c8lib/c8lib.html">
+      C8LIB</a>,
+      a FORTRAN77 library which
+      implements certain elementary functions for "C8" or
+      double precision complex variables;
+    </p>
+
+    <p>
+      <a href = "../../f77_src/i4lib/i4lib.html">
+      I4LIB</a>,
+      a FORTRAN77 library which
+      contains many utility routines, using "I4" or "single precision integer"
+      arithmetic.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/i8lib/i8lib.html">
+      I8LIB</a>,
+      a FORTRAN77 library which
+      contains many utility routines, using "I8" or "double precision integer"
+      arithmetic.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/r8lib/r8lib.html">
+      R8LIB</a>,
+      a FORTRAN77 library which
+      contains many utility routines, using "R8" or
+      "double precision real" arithmetic.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/subpak/subpak.html">
+      SUBPAK</a>,
+      a FORTRAN77 library which
+      contains many utility routines;
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "r4lib.f">r4lib.f</a>, the source code;
+        </li>
+        <li>
+          <a href = "r4lib.sh">r4lib.sh</a>,
+          commands to compile the source code;
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "r4lib_prb.f">r4lib_prb.f</a>, a sample calling
+          program;
+        </li>
+        <li>
+          <a href = "r4lib_prb.sh">r4lib_prb.sh</a>, commands to
+          compile, link and run the sample calling program;
+        </li>
+        <li>
+          <a href = "r4lib_prb_output.txt">r4lib_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>GET_UNIT</b> returns a free FORTRAN unit number.
+        </li>
+        <li>
+          <b>I4_LOG_10</b> returns the integer part of the logarithm base 10 of ABS(X).
+        </li>
+        <li>
+          <b>I4_MODP</b> returns the nonnegative remainder of integer division.
+        </li>
+        <li>
+          <b>I4_UNIFORM</b> returns a scaled pseudorandom I4.
+        </li>
+        <li>
+          <b>I4_WRAP</b> forces an I4 to lie between given limits by wrapping.
+        </li>
+        <li>
+          <b>I4INT_TO_R4INT</b> maps an I4INT to an R4INT.
+        </li>
+        <li>
+          <b>I4VEC_INDICATOR</b> sets an I4VEC to the indicator vector.
+        </li>
+        <li>
+          <b>I4VEC_PERMUTE</b> permutes an I4VEC in place.
+        </li>
+        <li>
+          <b>I4VEC_PRINT</b> prints an I4VEC.
+        </li>
+        <li>
+          <b>LEGENDRE_ZEROS</b> computes the zeros of the Legendre polynomial of degree N.
+        </li>
+        <li>
+          <b>PERM_CHECK</b> checks that a vector represents a permutation.
+        </li>
+        <li>
+          <b>PERM_UNIFORM</b> selects a random permutation of N objects.
+        </li>
+        <li>
+          <b>R4_ABS</b> returns the absolute value of an R4.
+        </li>
+        <li>
+          <b>R4_ADD</b> adds two R4's.
+        </li>
+        <li>
+          <b>R4_AINT</b> truncates an R4 argument to an integer.
+        </li>
+        <li>
+          <b>R4_ATAN</b> computes the inverse tangent of the ratio Y / X.
+        </li>
+        <li>
+          <b>R4_CAS</b> returns the "casine" of an R4 value.
+        </li>
+        <li>
+          <b>R4_CEILING</b> rounds an R4 "up" to the nearest integer.
+        </li>
+        <li>
+          <b>R4_CHOOSE</b> computes the binomial coefficient C(N,K) as an R4.
+        </li>
+        <li>
+          <b>R4_CHOP</b> chops an R4 to a given number of binary places.
+        </li>
+        <li>
+          <b>R4_CSQRT</b> returns the complex square root of an R4.
+        </li>
+        <li>
+          <b>R4_CUBE_ROOT</b> returns the cube root of an R4.
+        </li>
+        <li>
+          <b>R4_DIFF</b> computes the difference of two R4's to a specified accuracy.
+        </li>
+        <li>
+          <b>R4_DIGIT</b> returns a particular decimal digit of an R4.
+        </li>
+        <li>
+          <b>R4_EPSILON</b> returns the R4 roundoff unit.
+        </li>
+        <li>
+          <b>R4_EXP</b> computes the exponential function, avoiding overflow and underflow.
+        </li>
+        <li>
+          <b>R4_FACTORIAL</b> computes the factorial of N.
+        </li>
+        <li>
+          <b>R4_FACTORIAL2</b> computes the double factorial function.
+        </li>
+        <li>
+          <b>R4_FLOOR</b> rounds an R4 "down" (towards -infinity) to the next integer.
+        </li>
+        <li>
+          <b>R4_FRACTION</b> uses real arithmetic on an integer ratio.
+        </li>
+        <li>
+          <b>R4_FRACTIONAL</b> returns the fraction part of an R4.
+        </li>
+        <li>
+          <b>R4_HUGE</b> returns a "huge" R4.
+        </li>
+        <li>
+          <b>R4_IN_01</b> is TRUE if an R4 is in the range [0,1].
+        </li>
+        <li>
+          <b>R4_IS_INT</b> determines if an R4 represents an integer value.
+        </li>
+        <li>
+          <b>R4_LOG_2</b> returns the logarithm base 2 of an R4.
+        </li>
+        <li>
+          <b>R4_LOG_10</b> returns the logarithm base 10 of an R4.
+        </li>
+        <li>
+          <b>R4_LOG_B</b> returns the logarithm base B of an R4.
+        </li>
+        <li>
+          <b>R4_MANT</b> computes the "mantissa" or "fraction part" of an R4.
+        </li>
+        <li>
+          <b>R4_MOD</b> returns the remainder of R4 division.
+        </li>
+        <li>
+          <b>R4_MODP</b> returns the nonnegative remainder of R4 division.
+        </li>
+        <li>
+          <b>R4_MOP</b> returns the I-th power of -1 as an R4.
+        </li>
+        <li>
+          <b>R4_NINT</b> returns the nearest integer to an R4.
+        </li>
+        <li>
+          <b>R4_NORMAL</b> returns a scaled pseudonormal R4.
+        </li>
+        <li>
+          <b>R4_NORMAL_01</b> returns a unit pseudonormal real R4.
+        </li>
+        <li>
+          <b>R4_PI</b> returns the value of pi as an R4.
+        </li>
+        <li>
+          <b>R4_POWER</b> computes the P-th power of an R4.
+        </li>
+        <li>
+          <b>R4_POWER_FAST</b> computes an integer power of an R4.
+        </li>
+        <li>
+          <b>R4_PYTHAG</b> computes sqrt ( A * A + B * B ), avoiding overflow and underflow.
+        </li>
+        <li>
+          <b>R4_ROUND2</b> rounds an R4 to a specified number of binary digits.
+        </li>
+        <li>
+          <b>R4_ROUNDB</b> rounds an R4 to a given number of digits in a given base.
+        </li>
+        <li>
+          <b>R4_ROUNDX</b> rounds an R4.
+        </li>
+        <li>
+          <b>R4_SIGN</b> returns the sign of an R4.
+        </li>
+        <li>
+          <b>R4_SIGN_OPPOSITE</b> is TRUE if two R4's are not of the same sign.
+        </li>
+        <li>
+          <b>R4_SIGN_OPPOSITE_STRICT</b> is TRUE if two R4's are strictly of opposite sign.
+        </li>
+        <li>
+          <b>R4_SWAP</b> swaps two R4's.
+        </li>
+        <li>
+          <b>R4_SWAP3</b> swaps three R4's.
+        </li>
+        <li>
+          <b>R4_TINY</b> returns the smallest positive R4.
+        </li>
+        <li>
+          <b>R4_TO_R4_DISCRETE</b> maps R to RD in [RMIN, RMAX] with NR possible values.
+        </li>
+        <li>
+          <b>R4_TO_DHMS</b> converts decimal days into days, hours, minutes, seconds.
+        </li>
+        <li>
+          <b>R4_TO_I4</b> maps X in [XMIN, XMAX] to integer IX in [IXMIN, IXMAX].
+        </li>
+        <li>
+          <b>R4_UNIFORM</b> returns a scaled pseudorandom R4.
+        </li>
+        <li>
+          <b>R4_UNIFORM_01</b> returns a unit pseudorandom R4.
+        </li>
+        <li>
+          <b>R4_UNSWAP3</b> unswaps three R4's.
+        </li>
+        <li>
+          <b>R4_WALSH_1D</b> evaluates the Walsh function.
+        </li>
+        <li>
+          <b>R4_WRAP</b> forces an R4 to lie between given limits by wrapping.
+        </li>
+        <li>
+          <b>R42_CHEBY</b> sets up the Chebyshev abscissas in an R4 interval.
+        </li>
+        <li>
+          <b>R42_DIST_L2</b> returns the L2 distance between a pair of R42's.
+        </li>
+        <li>
+          <b>R4COL_COMPARE</b> compares columns in an R4COL.
+        </li>
+        <li>
+          <b>R4MAT_BORDER_ADD</b> adds a "border" to an R4MAT.
+        </li>
+        <li>
+          <b>R4MAT_COPY</b> copies an R4MAT.
+        </li>
+        <li>
+          <b>R4MAT_IDENTITY</b> stores the identity matrix in an R4MAT.
+        </li>
+        <li>
+          <b>R4MAT_INDICATOR</b> sets up an "indicator" R4MAT.
+        </li>
+        <li>
+          <b>R4MAT_MAX</b> returns the maximum entry of an R4MAT.
+        </li>
+        <li>
+          <b>R4MAT_MIN</b> returns the minimum entry of an R4MAT.
+        </li>
+        <li>
+          <b>R4MAT_MM</b> multiplies two R4MAT's.
+        </li>
+        <li>
+          <b>R4MAT_NORM_L1</b> returns the matrix L1 norm of an R4MAT.
+        </li>
+        <li>
+          <b>R4MAT_PRINT</b> prints an R4MAT.
+        </li>
+        <li>
+          <b>R4MAT_PRINT_SOME</b> prints some of an R4MAT.
+        </li>
+        <li>
+          <b>R4VEC_COPY</b> copies an R4VEC.
+        </li>
+        <li>
+          <b>R4VEC_DOT_PRODUCT</b> finds the dot product of a pair of R4VEC's.
+        </li>
+        <li>
+          <b>R4VEC_HEAP_A</b> reorders an R4VEC into an ascending heap.
+        </li>
+        <li>
+          <b>R4VEC_HEAP_D</b> reorders an R4VEC into an descending heap.
+        </li>
+        <li>
+          <b>R4VEC_MAX</b> returns the maximum value in an R4VEC.
+        </li>
+        <li>
+          <b>R4VEC_MEAN</b> returns the mean of an R4VEC.
+        </li>
+        <li>
+          <b>R4VEC_MIN</b> returns the minimum value in an R4VEC.
+        </li>
+        <li>
+          <b>R4VEC_NORM</b> returns the L2 norm of an R4VEC.
+        </li>
+        <li>
+          <b>R4VEC_NORM_L1</b> returns the L1 norm of an R4VEC.
+        </li>
+        <li>
+          <b>R4VEC_NORM_L2</b> returns the L2 norm of an R4VEC.
+        </li>
+        <li>
+          <b>R4VEC_NORMAL_01</b> returns a unit pseudonormal R4VEC.
+        </li>
+        <li>
+          <b>R4VEC_PERMUTE_CYCLIC</b> performs a cyclic permutation of an R4VEC.
+        </li>
+        <li>
+          <b>R4VEC_PRINT</b> prints an R4VEC.
+        </li>
+        <li>
+          <b>R4VEC_PRINT_PART</b> prints "part" of an R4VEC.
+        </li>
+        <li>
+          <b>R4VEC_PRINT_SOME</b> prints "some" of an R4VEC.
+        </li>
+        <li>
+          <b>R4VEC_SORT_BUBBLE_A</b> ascending sorts an R4VEC using bubble sort.
+        </li>
+        <li>
+          <b>R4VEC_UNIFORM</b> returns a scaled pseudorandom R4VEC.
+        </li>
+        <li>
+          <b>R4VEC_UNIFORM_01</b> returns a unit pseudorandom R4VEC.
+        </li>
+        <li>
+          <b>R4VEC_VARIANCE</b> returns the variance of an R4VEC.
+        </li>
+        <li>
+          <b>TIMESTAMP</b> prints out the current YMDHMS date as a timestamp.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 17 November 2011.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+</html>

@@ -1,0 +1,28 @@
+ 
+SEARCH - Master process:
+  A FORTRAN77 program using MPI, to search an array.
+ 
+  The number of processes is      4
+ 
+Process      0 is active.
+ 
+SEARCH - Master process:
+  The number of data items per process is     71
+  The total number of data items is          284
+  The target value is     13
+P 3   155    13
+P 3   168    13
+P 3   193    13
+P 3   194    13
+P 2    88    13
+P 2   134    13
+P 2   142    13
+ 
+SEARCH - Master process:
+  Normal end of execution.
+ 
+Process      1 is active.
+ 
+Process      2 is active.
+ 
+Process      3 is active.

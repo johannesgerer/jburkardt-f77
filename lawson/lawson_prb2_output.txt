@@ -1,0 +1,551 @@
+22 October   2008  12:07:25.071 PM      
+ 
+LAWSON_PRB2
+  Demonstrate the algorithms HFTI and COV.
+ 
+  Use a relative noise level of           0.00000    
+  The matrix norm is approximately        500.000    
+  The absolute pseudorank tolerance is   0.500000    
+ 
+  M =      1
+  N =      1
+
+         PSEUDORANK =    1
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1  0.21111111E+01
+
+         RESIDUAL LENGTH =   0.0000E+00
+
+         COVARIANCE MATRIX (UNSCALED) OF ESTIMATED PARAMETERS
+         COMPUTED BY 'COV'.
+
+           1  1  0.49382716E-03
+ 
+  M =      1
+  N =      2
+
+         PSEUDORANK =    1
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1 -0.39705547E+00     2 -0.34113216E+00
+
+         RESIDUAL LENGTH =   0.0000E+00
+ 
+  M =      1
+  N =      3
+
+         PSEUDORANK =    1
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1  0.10753635E+01     2 -0.56502150E+00     3 -0.38275650E+00
+
+         RESIDUAL LENGTH =   0.0000E+00
+ 
+  M =      2
+  N =      1
+
+         PSEUDORANK =    1
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1  0.12568306E+00
+
+         RESIDUAL LENGTH =   0.3621E+03
+
+         COVARIANCE MATRIX (UNSCALED) OF ESTIMATED PARAMETERS
+         COMPUTED BY 'COV'.
+
+           1  1  0.40477636E-05
+ 
+  M =      2
+  N =      2
+
+         PSEUDORANK =    2
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1  0.37100000E+01     2  0.41900000E+01
+
+         RESIDUAL LENGTH =   0.0000E+00
+
+         COVARIANCE MATRIX (UNSCALED) OF ESTIMATED PARAMETERS
+         COMPUTED BY 'COV'.
+
+           1  1  0.13448000E-03  1  2  0.19272000E-03
+           2  2  0.28808000E-03
+ 
+  M =      2
+  N =      3
+
+         PSEUDORANK =    2
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1  0.56305587E+00     2 -0.68415051E-02     3  0.17468643E+00
+
+         RESIDUAL LENGTH =   0.0000E+00
+ 
+  M =      3
+  N =      1
+
+         PSEUDORANK =    1
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1 -0.30429995E+00
+
+         RESIDUAL LENGTH =   0.3083E+03
+
+         COVARIANCE MATRIX (UNSCALED) OF ESTIMATED PARAMETERS
+         COMPUTED BY 'COV'.
+
+           1  1  0.22022794E-05
+ 
+  M =      3
+  N =      2
+
+         PSEUDORANK =    2
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1 -0.59653179E+00     2  0.20154143E+00
+
+         RESIDUAL LENGTH =   0.3694E+03
+
+         COVARIANCE MATRIX (UNSCALED) OF ESTIMATED PARAMETERS
+         COMPUTED BY 'COV'.
+
+           1  1  0.10869942E-04  1  2  0.64421965E-05
+           2  2  0.73631985E-05
+ 
+  M =      3
+  N =      3
+
+         PSEUDORANK =    3
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1 -0.11818182E+01     2  0.50909091E+00     3 -0.69090909E+00
+
+         RESIDUAL LENGTH =   0.0000E+00
+
+         COVARIANCE MATRIX (UNSCALED) OF ESTIMATED PARAMETERS
+         COMPUTED BY 'COV'.
+
+           1  1  0.83140496E-05  1  2 -0.56611570E-05  1  3  0.83388430E-05
+           2  2  0.67603306E-05  2  3 -0.42396694E-05
+           3  3  0.22760331E-04
+ 
+  M =      6
+  N =      6
+
+         PSEUDORANK =    4
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1  0.52976190E+00     2  0.77380952E-01     3  0.11904762E-01     4 -0.44047619E+00     5  0.19047619E+00
+              6 -0.26190476E+00
+
+         RESIDUAL LENGTH =   0.1890E+03
+ 
+  M =      6
+  N =      7
+
+         PSEUDORANK =    6
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1 -0.14071429E+01     2 -0.28571429E+00     3  0.28571429E+00     4 -0.28571429E+00     5 -0.30714286E+00
+              6  0.50000000E+00     7 -0.50000000E+00
+
+         RESIDUAL LENGTH =   0.0000E+00
+ 
+  M =      6
+  N =      8
+
+         PSEUDORANK =    5
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1 -0.61875000E+00     2  0.74375000E+00     3 -0.11187500E+01     4  0.24375000E+00     5 -0.11812500E+01
+              6  0.18125000E+00     7 -0.99375000E+00     8  0.36875000E+00
+
+         RESIDUAL LENGTH =   0.1768E+03
+ 
+  M =      7
+  N =      6
+
+         PSEUDORANK =    4
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1  0.14583333E+00     2 -0.20833333E-01     3  0.83333333E-01     4 -0.83333333E-01     5 -0.10416667E+00
+              6 -0.27083333E+00
+
+         RESIDUAL LENGTH =   0.5303E+03
+ 
+  M =      7
+  N =      7
+
+         PSEUDORANK =    7
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1 -0.50000000E+00     2  0.50000000E+00     3 -0.15000000E+01     4 -0.11000000E+01     5  0.11000000E+01
+              6 -0.21000000E+01     7  0.16000000E+01
+
+         RESIDUAL LENGTH =   0.0000E+00
+
+         COVARIANCE MATRIX (UNSCALED) OF ESTIMATED PARAMETERS
+         COMPUTED BY 'COV'.
+
+           1  1  0.55000000E-05  1  2 -0.25000000E-05  1  3  0.50000000E-05  1  4  0.12500000E-04  1  5 -0.10000000E-04
+           1  6  0.11000000E-04  1  7 -0.11500000E-04
+           2  2  0.35000000E-05  2  3 -0.30000000E-05  2  4 -0.50000000E-06  2  5  0.10000000E-05  2  6 -0.10000000E-05
+           2  7  0.25000000E-05
+           3  3  0.85000000E-05  3  4  0.14000000E-04  3  5 -0.10500000E-04  3  6  0.13500000E-04  3  7 -0.12500000E-04
+           4  4  0.71500000E-04  4  5 -0.55000000E-04  4  6  0.62000000E-04  4  7 -0.54500000E-04
+           5  5  0.44500000E-04  5  6 -0.48500000E-04  5  7  0.43500000E-04
+           6  6  0.56500000E-04  6  7 -0.48500000E-04
+           7  7  0.46000000E-04
+ 
+  M =      7
+  N =      8
+
+         PSEUDORANK =    5
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1 -0.24228111E+00     2 -0.26146313E+00     3 -0.23081797E+00     4 -0.19896313E+00     5 -0.16831797E+00
+              6  0.36353687E+00     7  0.39418203E+00     8  0.50771889E+00
+
+         RESIDUAL LENGTH =   0.2500E+03
+ 
+  M =      8
+  N =      6
+
+         PSEUDORANK =    4
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1 -0.14375000E+01     2  0.10625000E+01     3 -0.12500000E+01     4  0.12500000E+01     5 -0.11875000E+01
+              6  0.13125000E+01
+
+         RESIDUAL LENGTH =   0.5303E+03
+ 
+  M =      8
+  N =      7
+
+         PSEUDORANK =    7
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1  0.10000000E+01     2 -0.60000000E+00     3  0.60000000E+00     4  0.40000000E+00     5  0.60000000E+00
+              6 -0.21928764E-15     7  0.10000000E+01
+
+         RESIDUAL LENGTH =   0.2167E-12
+
+         COVARIANCE MATRIX (UNSCALED) OF ESTIMATED PARAMETERS
+         COMPUTED BY 'COV'.
+
+           1  1  0.37142857E-05  1  2  0.32857143E-05  1  3 -0.15714286E-05  1  4  0.47142857E-05  1  5 -0.14285714E-05
+           1  6 -0.42857143E-06  1  7  0.17142857E-05
+           2  2  0.28214286E-04  2  3 -0.21928571E-04  2  4  0.29285714E-04  2  5 -0.19571429E-04  2  6  0.14285714E-05
+           2  7  0.42857143E-05
+           3  3  0.19357143E-04  3  4 -0.23571429E-04  3  5  0.17142857E-04  3  6 -0.18571429E-05  3  7 -0.25714286E-05
+           4  4  0.33714286E-04  4  5 -0.21428571E-04  4  6  0.25714286E-05  4  7  0.47142857E-05
+           5  5  0.18857143E-04  5  6 -0.31428571E-05  5  7 -0.42857143E-06
+           6  6  0.28571429E-05  6  7 -0.14285714E-05
+           7  7  0.37142857E-05
+ 
+  M =      8
+  N =      8
+
+         PSEUDORANK =    5
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1  0.10062500E+01     2 -0.25625000E+00     3  0.10062500E+01     4 -0.25625000E+00     5  0.63125000E+00
+              6 -0.63125000E+00     7  0.56875000E+00     8 -0.69375000E+00
+
+         RESIDUAL LENGTH =   0.3062E+03
+ 
+  Use a relative noise level of          0.100000E-03
+  The matrix norm is approximately        500.000    
+  The absolute pseudorank tolerance is   0.500000    
+ 
+  M =      1
+  N =      1
+
+         PSEUDORANK =    1
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1  0.21101002E+01
+
+         RESIDUAL LENGTH =   0.0000E+00
+
+         COVARIANCE MATRIX (UNSCALED) OF ESTIMATED PARAMETERS
+         COMPUTED BY 'COV'.
+
+           1  1  0.49319129E-03
+ 
+  M =      1
+  N =      2
+
+         PSEUDORANK =    1
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1 -0.39700614E+00     2 -0.34114233E+00
+
+         RESIDUAL LENGTH =   0.0000E+00
+ 
+  M =      1
+  N =      3
+
+         PSEUDORANK =    1
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1  0.10753417E+01     2 -0.56513080E+00     3 -0.38288597E+00
+
+         RESIDUAL LENGTH =   0.0000E+00
+ 
+  M =      2
+  N =      1
+
+         PSEUDORANK =    1
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1  0.12565645E+00
+
+         RESIDUAL LENGTH =   0.3621E+03
+
+         COVARIANCE MATRIX (UNSCALED) OF ESTIMATED PARAMETERS
+         COMPUTED BY 'COV'.
+
+           1  1  0.40477419E-05
+ 
+  M =      2
+  N =      2
+
+         PSEUDORANK =    2
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1  0.37068637E+01     2  0.41857378E+01
+
+         RESIDUAL LENGTH =   0.0000E+00
+
+         COVARIANCE MATRIX (UNSCALED) OF ESTIMATED PARAMETERS
+         COMPUTED BY 'COV'.
+
+           1  1  0.13423435E-03  1  2  0.19237195E-03
+           2  2  0.28758786E-03
+ 
+  M =      2
+  N =      3
+
+         PSEUDORANK =    2
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1  0.56312757E+00     2 -0.68290741E-02     3  0.17462374E+00
+
+         RESIDUAL LENGTH =   0.0000E+00
+ 
+  M =      3
+  N =      1
+
+         PSEUDORANK =    1
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1 -0.30435306E+00
+
+         RESIDUAL LENGTH =   0.3083E+03
+
+         COVARIANCE MATRIX (UNSCALED) OF ESTIMATED PARAMETERS
+         COMPUTED BY 'COV'.
+
+           1  1  0.22024792E-05
+ 
+  M =      3
+  N =      2
+
+         PSEUDORANK =    2
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1 -0.59677148E+00     2  0.20134179E+00
+
+         RESIDUAL LENGTH =   0.3693E+03
+
+         COVARIANCE MATRIX (UNSCALED) OF ESTIMATED PARAMETERS
+         COMPUTED BY 'COV'.
+
+           1  1  0.10872442E-04  1  2  0.64433772E-05
+           2  2  0.73635751E-05
+ 
+  M =      3
+  N =      3
+
+         PSEUDORANK =    3
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1 -0.11817733E+01     2  0.50900719E+00     3 -0.69137232E+00
+
+         RESIDUAL LENGTH =   0.0000E+00
+
+         COVARIANCE MATRIX (UNSCALED) OF ESTIMATED PARAMETERS
+         COMPUTED BY 'COV'.
+
+           1  1  0.83145004E-05  1  2 -0.56614608E-05  1  3  0.83418947E-05
+           2  2  0.67603833E-05  2  3 -0.42411833E-05
+           3  3  0.22771642E-04
+ 
+  M =      6
+  N =      6
+
+         PSEUDORANK =    4
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1  0.52994829E+00     2  0.77285333E-01     3  0.11842510E-01     4 -0.44043281E+00     5  0.19024493E+00
+              6 -0.26172112E+00
+
+         RESIDUAL LENGTH =   0.1890E+03
+ 
+  M =      6
+  N =      7
+
+         PSEUDORANK =    6
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1 -0.14066947E+01     2 -0.28577108E+00     3  0.28595398E+00     4 -0.28568220E+00     5 -0.30731614E+00
+              6  0.50017258E+00     7 -0.50002167E+00
+
+         RESIDUAL LENGTH =   0.0000E+00
+ 
+  M =      6
+  N =      8
+
+         PSEUDORANK =    5
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1 -0.61841960E+00     2  0.74363210E+00     3 -0.11177794E+01     4  0.24319750E+00     5 -0.11801954E+01
+              6  0.18059069E+00     7 -0.99310465E+00     8  0.36853755E+00
+
+         RESIDUAL LENGTH =   0.1770E+03
+ 
+  M =      7
+  N =      6
+
+         PSEUDORANK =    4
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1  0.14702115E+00     2 -0.21682150E-01     3  0.84649286E-01     4 -0.84082876E-01     5 -0.10304529E+00
+              6 -0.27165949E+00
+
+         RESIDUAL LENGTH =   0.5303E+03
+ 
+  M =      7
+  N =      7
+
+         PSEUDORANK =    7
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1 -0.49979958E+00     2  0.50006455E+00     3 -0.15001129E+01     4 -0.10992090E+01     5  0.10994740E+01
+              6 -0.20994420E+01     7  0.15991878E+01
+
+         RESIDUAL LENGTH =   0.0000E+00
+
+         COVARIANCE MATRIX (UNSCALED) OF ESTIMATED PARAMETERS
+         COMPUTED BY 'COV'.
+
+           1  1  0.54968934E-05  1  2 -0.24991411E-05  1  3  0.49980365E-05  1  4  0.12488463E-04  1  5 -0.99911272E-05
+           1  6  0.10989641E-04  1  7 -0.11488261E-04
+           2  2  0.34993976E-05  2  3 -0.29995210E-05  2  4 -0.49954663E-06  2  5  0.99977536E-06  2  6 -0.10000508E-05
+           2  7  0.24990843E-05
+           3  3  0.85000540E-05  3  4  0.13994819E-04  3  5 -0.10496246E-04  3  6  0.13495787E-04  3  7 -0.12493116E-04
+           4  4  0.71448870E-04  4  5 -0.54960721E-04  4  6  0.61953019E-04  4  7 -0.54448037E-04
+           5  5  0.44469996E-04  5  6 -0.48464108E-04  5  7  0.43460110E-04
+           6  6  0.56457484E-04  6  7 -0.48453035E-04
+           7  7  0.45949651E-04
+ 
+  M =      7
+  N =      8
+
+         PSEUDORANK =    5
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1 -0.24241639E+00     2 -0.26154025E+00     3 -0.23089827E+00     4 -0.19897853E+00     5 -0.16838135E+00
+              6  0.36350567E+00     7  0.39415035E+00     8  0.50775462E+00
+
+         RESIDUAL LENGTH =   0.2499E+03
+ 
+  M =      8
+  N =      6
+
+         PSEUDORANK =    4
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1 -0.14361111E+01     2  0.10614563E+01     3 -0.12498868E+01     4  0.12504725E+01     5 -0.11867786E+01
+              6  0.13121715E+01
+
+         RESIDUAL LENGTH =   0.5304E+03
+ 
+  M =      8
+  N =      7
+
+         PSEUDORANK =    7
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1  0.99994647E+00     2 -0.60015858E+00     3  0.60012136E+00     4  0.39982819E+00     5  0.60015778E+00
+              6 -0.26208962E-05     7  0.99988323E+00
+
+         RESIDUAL LENGTH =   0.1081E+00
+
+         COVARIANCE MATRIX (UNSCALED) OF ESTIMATED PARAMETERS
+         COMPUTED BY 'COV'.
+
+           1  1  0.37159078E-05  1  2  0.32930821E-05  1  3 -0.15772315E-05  1  4  0.47228027E-05  1  5 -0.14336211E-05
+           1  6 -0.42822373E-06  1  7  0.17159930E-05
+           2  2  0.28241214E-04  2  3 -0.21949311E-04  2  4  0.29318122E-04  2  5 -0.19588066E-04  2  6  0.14291202E-05
+           2  7  0.42946771E-05
+           3  3  0.19373168E-04  3  4 -0.23596619E-04  3  5  0.17156026E-04  3  6 -0.18578873E-05  3  7 -0.25782927E-05
+           4  4  0.33753355E-04  4  5 -0.21449648E-04  4  6  0.25728577E-05  4  7  0.47241140E-05
+           5  5  0.18868189E-04  5  6 -0.31438487E-05  5  7 -0.43436704E-06
+           6  6  0.28577294E-05  6  7 -0.14285363E-05
+           7  7  0.37163341E-05
+ 
+  M =      8
+  N =      8
+
+         PSEUDORANK =    5
+
+         ESTIMATED PARAMETERS,  X=A**(+)*B, COMPUTED BY 'HFTI'
+
+              1  0.10061876E+01     2 -0.25624910E+00     3  0.10062343E+01     4 -0.25636637E+00     5  0.63126771E+00
+              6 -0.63116149E+00     7  0.56845504E+00     8 -0.69339815E+00
+
+         RESIDUAL LENGTH =   0.3062E+03
+ 
+LAWSON_PRB2:
+  Normal end of execution.
+ 
+22 October   2008  12:07:25.078 PM      

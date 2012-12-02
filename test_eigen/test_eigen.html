@@ -1,0 +1,224 @@
+<html>
+
+  <head>
+    <title>
+      TEST_EIGEN - Test Matrices for Eigenvalue Analysis
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TEST_EIGEN <br> Test Matrices for Eigenvalue Analysis
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TEST_EIGEN</b>
+      is a FORTRAN77 library which
+      generates eigenvalue test.
+    </p>
+
+    <p>
+      The current version of the code can only generate a symmetric
+      matrix with eigenvalues distributed according to a normal
+      distribution whose mean and standard deviation are specified
+      by the user (subroutine R8SYMM_TEST).
+    </p>
+
+    <h3 align = "center">
+      Licensing:
+    </h3>
+
+    <p>
+      The computer code and data files described and made available on this web page
+      are distributed under
+      <a href = "../../txt/gnu_lgpl.txt">the GNU LGPL license.</a>
+    </p>
+
+    <h3 align = "center">
+      Languages:
+    </h3>
+
+    <p>
+      <b>TEST_EIGEN</b> is available in
+      <a href = "../../c_src/test_eigen/test_eigen.html">a C version</a> and
+      <a href = "../../cpp_src/test_eigen/test_eigen.html">a C++ version</a> and
+      <a href = "../../f77_src/test_eigen/test_eigen.html">a FORTRAN77 version</a> and
+      <a href = "../../f_src/test_eigen/test_eigen.html">a FORTRAN90 version</a> and
+      <a href = "../../m_src/test_eigen/test_eigen.html">a MATLAB version</a>.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/arpack/arpack.html">
+      ARPACK</a>,
+      FORTRAN90 examples which
+      demonstrate the use of the ARPACK library to compute eigenvalues
+      and eigenvectors.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/eispack/eispack.html">
+      EISPACK</a>,
+      a FORTRAN77 library
+      which can compute eigenvalues
+      and eigenvectors.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/expokit/expokit.html">
+      EXPOKIT</a>,
+      a FORTRAN77 library which
+      solves various forms of the matrix exponential problem,
+      by Roger Sidje.
+    </p>
+
+    <p>
+      <a href = "../../f_src/lapack/lapack.html">
+      LAPACK</a>,
+      a FORTRAN90 library which
+      computes eigenvalues
+      and eigenvectors.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/test_mat/test_mat.html">
+      TEST_MAT</a>,
+      a FORTRAN77 library which
+      defines a number of matrices
+      with known properties.  Examples with known eigenvalues and
+      eigenvectors are included.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Robert Gregory, David Karney,<br>
+          A Collection of Matrices for Testing Computational Algorithms,<br>
+          Wiley, 1969,<br>
+          ISBN: 0882756494,<br>
+          LC: QA263 G862.
+        </li>
+        <li>
+          Pete Stewart,<br>
+          Efficient Generation of Random Orthogonal Matrices With an Application
+          to Condition Estimators,<br>
+          SIAM Journal on Numerical Analysis,<br>
+          Volume 17, Number 3, June 1980, pages 403-409.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "test_eigen.f">test_eigen.f</a>, the source code;
+        </li>
+        <li>
+          <a href = "test_eigen.sh">test_eigen.sh</a>,
+          commands to compile the source code;
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "test_eigen_prb.f">test_eigen_prb.f</a>,
+          the calling program;
+        </li>
+        <li>
+          <a href = "test_eigen_prb.sh">test_eigen_prb.sh</a>,
+          commands to compile, link and run the calling program;
+        </li>
+        <li>
+          <a href = "test_eigen_prb_output.txt">test_eigen_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>GET_UNIT</b> returns a free FORTRAN unit number.
+        </li>
+        <li>
+          <b>R4VEC_UNIFORM_01</b> returns a unit pseudorandom R4VEC.
+        </li>
+        <li>
+          <b>R8_NORMAL_01</b> returns a unit pseudonormal R8.
+        </li>
+        <li>
+          <b>R8_UNIFORM_01</b> returns a unit pseudorandom R8.
+        </li>
+        <li>
+          <b>R8MAT_HOUSE_AXH</b> computes A*H where H is a compact Householder matrix.
+        </li>
+        <li>
+          <b>R8MAT_ORTH_UNIFORM</b> returns a random orthogonal R8MAT.
+        </li>
+        <li>
+          <b>R8MAT_PRINT</b> prints an R8MAT.
+        </li>
+        <li>
+          <b>R8MAT_PRINT_SOME</b> prints some of an R8MAT.
+        </li>
+        <li>
+          <b>R8SYMM_TEST</b> determines a symmetric matrix with a certain eigenstructure.
+        </li>
+        <li>
+          <b>R8VEC_HOUSE_COLUMN</b> defines a Householder premultiplier that "packs" a column.
+        </li>
+        <li>
+          <b>R8VEC_NORMAL</b> returns a scaled pseudonormal R8VEC.
+        </li>
+        <li>
+          <b>R8VEC_PRINT</b> prints an R8VEC.
+        </li>
+        <li>
+          <b>R8VEC_UNIFORM_01</b> returns a unit pseudorandom R8VEC.
+        </li>
+        <li>
+          <b>TIMESTAMP</b> prints out the current YMDHMS date as a timestamp.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 05 February 2008.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+</html>

@@ -1,0 +1,28 @@
+ 
+P:5 - MPI has no work for me!
+ 
+P:6 - MPI has no work for me!
+24 October   2011   9:34:09.883 AM      
+ 
+BONES:
+  FORTRAN77 version
+  A simple MPI test.
+  The number of processes available is      8
+ 
+P:4 - MPI has no work for me!
+ 
+P:1 - setting up data to send to process 0.
+ 
+P:2 - MPI has no work for me!
+ 
+P:3 - MPI has no work for me!
+P:0 Got data from processor 1
+P:0 Got 100 elements.
+P:0 value(5) =    4.00000    
+ 
+P:7 - MPI has no work for me!
+ 
+BONES:
+  Normal end of execution.
+ 
+24 October   2011   9:34:09.892 AM      

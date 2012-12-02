@@ -1,0 +1,18 @@
+27 October   2008  12:24:17.389 PM      
+ 
+SPARSEKIT_PRB08
+  FORTRAN77 version
+ 
+TEST01
+  Write Zlatev example to file.
+ 
+TEST02
+  Write DCN example to file.
+ 
+TEST03
+  Write ECN example to file.
+ 
+SPARSEKIT_PRB08
+  Normal end of execution.
+ 
+27 October   2008  12:24:17.403 PM      

@@ -1,0 +1,240 @@
+<html>
+
+  <head>
+    <title>
+      SELECT - Nijenhuis and Wilf Combinatorial Selection Algorithm
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      SELECT <br> Nijenhuis and Wilf <br> Combinatorial Selection Algorithm
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>SELECT</b>
+      is a FORTRAN77 library which
+      implements the Nijenhuis and Wilf Combinatorial Selection Algorithm.
+    </p>
+
+    <p>
+      In the reference, Nijenhuis and Wilf presented particular
+      algorithms to rank, unrank, enumerate, sequentially generate,
+      or randomly generate objects from a variety of combinatorial
+      families, such as K-subsets of an N-set, permutations,
+      partitions, and so on.
+    </p>
+
+    <p>
+      In the course of this development, they come across a number
+      of cases where, to determine the number B(N,K) of objects of size
+      K in a family of maximum size N, a recurrence is used of the form
+      <blockquote>
+        B(N,K) = PHI(N,K) * B(N1,K1) + PSI(N,K) * B(N2,K2)
+      </blockquote>
+      Typically, but not always, it is the case that:
+      <pre>
+        N1 = N - 1
+        N2 = N - 1
+        K1 = K
+        K2 = K - 1
+      </pre>
+      and the values of the coefficient functions PHI and PSI
+      depended on the family.
+    </p>
+
+    <p>
+      This pattern suggested that a single abstract approach could
+      be used to carry out the usual tasks for a variety of combinatorial
+      families.  The result was a subroutine called <b>SELECT</b> which
+      while not optimized for a particular family, displays their
+      common underlying structure, and allows new families to be
+      added easily.
+    </p>
+
+    <p>
+      The combinatorial families are indicated by the value of the
+      variable <b>FAMILY</b>, and characterized by a "big" size <b>N</b>
+      and a smaller size <b>K</b>:
+      <ol>
+        <li>
+          K subsets of an N set;
+        </li>
+        <li>
+          Partitions of N objects into K classes;
+        </li>
+        <li>
+          Permutations of N objects with K cycles;
+        </li>
+        <li>
+          Vector subspaces of dimension K over N-dimensional space
+          over the field of order Q (where Q is currently set to 2 );
+        </li>
+        <li>
+          Permutations of N letters with K runs;
+        </li>
+        <li>
+          Partitions of N whose largest part is K;
+        </li>
+        <li>
+          Compositions of N into K parts.
+        </li>
+      </ol>
+    </p>
+
+    <p>
+      The combinatorial tasks, indicated by the value of the
+      variable <b>TASK</b>, include
+      <ol>
+        <li>
+          Present each object of the family, one at a time.
+        </li>
+        <li>
+          Rank a given object of the family.
+        </li>
+        <li>
+          Produce an object of given rank.
+        </li>
+        <li>
+          Select an object at random.
+        </li>
+        <li>
+          Enumerate the objects.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Licensing:
+    </h3>
+
+    <p>
+      The computer code and data files described and made available on this web page
+      are distributed under
+      <a href = "../../txt/gnu_lgpl.txt">the GNU LGPL license.</a>
+    </p>
+
+    <h3 align = "center">
+      Languages:
+    </h3>
+
+    <p>
+      <b>SELECT</b> is available in
+      <a href = "../../f77_src/select/select.html">a FORTRAN77 version</a> and
+      <a href = "../../f_src/select/select.html">a FORTRAN90 version</a>.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/combo/combo.html">
+      COMBO</a>,
+      a FORTRAN90 library which
+      carries out various combinatorial tasks.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/subset/subset.html">
+      SUBSET</a>,
+      a FORTRAN77 library which
+      contains the individual Nijenhuis and Wilf routines.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Albert Nijenhuis, Herbert Wilf,<br>
+          Combinatorial Algorithms,<br>
+          Academic Press, 1978, second edition.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "select.f">select.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "select.sh">select.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "select_prb.f">select_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "select_prb.sh">select_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "select_prb_output.txt">select_prb_output.txt</a>,
+          the output from a run of the sample program.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>BNEW</b> returns either of two values needed to compute B(N,K).
+        </li>
+        <li>
+          <b>PHI</b> returns the coefficient PHI(N,K) in the recurrence.
+        </li>
+        <li>
+          <b>PSI</b> returns the coefficient PSI(N,K) in the recurrence.
+        </li>
+        <li>
+          <b>SELECT</b> carries out a task for a combinatorial family of order N, K.
+        </li>
+        <li>
+          <b>XNEW</b> returns an index for the recursive enumeration of a family.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 10 June 2008.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

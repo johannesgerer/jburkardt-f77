@@ -1,0 +1,511 @@
+<html>
+
+  <head>
+    <title>
+      MATMAN - An Interactive Matrix Manipulator
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055" >
+
+    <h1 align = "center">
+      MATMAN <br> The Matrix Manipulator
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>MATMAN</b>
+      is a FORTRAN77 program which
+      allows an interactive user to define a matrix and carry out
+      the individual steps of certain algorithms.
+    </p>
+
+    <p>
+      The program is intended to do the arithmetic correctly, while forcing
+      a student to specify the correct sequence of operations to transform
+      an arbitrary matrix into row echelon form.
+    </p>
+
+    <p>
+      <b>MATMAN</b> was developed by Professor Charles Cullen of the University
+      of Pittsburgh, and John Burkardt, itinerant programmer.
+    </p>
+
+    <p>
+      <b>MATMAN</b> features include:
+      <ul>
+        <li>
+          <i>Interactivity</i>: students prescribe each row operation;
+        </li>
+        <li>
+          <i>Accuracy</i>: <b>MATMAN</b> does the arithmetic operations;
+        </li>
+        <li>
+          <i>Flexibility</i>: rational, real or decimal arithmetic may be used;
+        </li>
+        <li>
+          <i>Affordability</i>: the price is right (it's freeware);
+        </li>
+        <li>
+          <i>Portability</i>: complete FORTRAN source code available, executes
+          on IBM (DOS or Windows), Mac (68K or PPC), UNIX, VMS.
+        </li>
+        <li>
+          <i>Repeatability</i>: A transcript file records all work;
+        </li>
+        <li>
+          <i>Improvability</i>: The developers are responsive to user requests.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>MATMAN</b> allows the user to:
+      <ul>
+        <li>
+          Request a sample problem, or type in a new one;
+        </li>
+        <li>
+          Choose decimal, integer, rational or real arithmetic;
+        </li>
+        <li>
+          Specify row or column operations in a natural form: "R1 <= 3 R1 + R2";
+        </li>
+        <li>
+          Determine if the matrix is in row echelon form;
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Licensing:
+    </h3>
+
+    <p>
+      The computer code and data files described and made available on this web page
+      are distributed under
+      <a href = "../../txt/gnu_lgpl.txt">the GNU LGPL license.</a>
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <b>MATMAN</b> is available in
+      <a href = "../../f77_src/matman/matman.html">a FORTRAN77 version</a> and
+      <a href = "../../f_src/matman/matman.html">a FORTRAN90 version</a>.
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "matman.f">matman.f</a>, the source code;
+        </li>
+        <li>
+          <a href = "matman.hlp">matman.hlp</a>, an online help file.
+        </li>
+        <li>
+          <a href = "matman.sh">matman.sh</a>, commands to
+          compile and load the source code;
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "input.txt">input.txt</a>, a sample set of input;
+        </li>
+        <li>
+          <a href = "output.txt">output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>MATMAN</b> is a program for interactive linear algebra demonstrations.
+        </li>
+        <li>
+          <b>ADDLIN</b> is called whenever a new line is printed.
+        </li>
+        <li>
+          <b>AUTERO</b> automatically row reduces the current matrix.
+        </li>
+        <li>
+          <b>BASIC</b> assigns a row of the tableau to one of the basic variables.
+        </li>
+        <li>
+          <b>CAPCHR</b> replaces any lowercase letters by uppercase ones.
+        </li>
+        <li>
+          <b>CHANGE</b> allows the user to change an entry in the array.
+        </li>
+        <li>
+          <b>CHKADD</b> checks the command to add a multiple of one row to another.
+        </li>
+        <li>
+          <b>CHKDET</b> checks that a request for a determinant can be carried out.
+        </li>
+        <li>
+          <b>CHKERO</b> checks for commands given in the form of ERO's.
+        </li>
+        <li>
+          <b>CHKMUL</b> checks a command to multiply a row by a scalar.
+        </li>
+        <li>
+          <b>CHKTRN</b> checks that a request to transpose a matrix can be carried out.
+        </li>
+        <li>
+          <b>CHLDEC</b> returns a left-justified representation of IVAL * 10**JVAL.
+        </li>
+        <li>
+          <b>CHLINT</b> returns a 6-character representation of an integer.
+        </li>
+        <li>
+          <b>CHLRAT</b> returns a left-justified representation of IVAL/JVAL.
+        </li>
+        <li>
+          <b>CHRCHP</b> "chops out" a portion of a string, and closes up the hole.
+        </li>
+        <li>
+          <b>CHRCTF</b> reads an integer or rational fraction from a string.
+        </li>
+        <li>
+          <b>CHRCTG</b> reads an integer, decimal fraction or a ratio from a string.
+        </li>
+        <li>
+          <b>CHRCTI</b> reads an integer from a string.
+        </li>
+        <li>
+          <b>CHRCTR</b> reads a real number from a string.
+        </li>
+        <li>
+          <b>CHRDB1</b> removes blanks from a string, left justifying the remainder.
+        </li>
+        <li>
+          <b>CHRDB2</b> replaces consecutive blanks by one.
+        </li>
+        <li>
+          <b>CHRINP</b> requests new input if the LINE buffer is empty.
+        </li>
+        <li>
+          <b>CHRINT</b> returns a 6-character representation of an integer.
+        </li>
+        <li>
+          <b>CHRITC0</b> stores an integer into a string, with left zero padding.
+        </li>
+        <li>
+          <b>CHRREA</b> extracts a character string from the input buffer.
+        </li>
+        <li>
+          <b>CHRREL</b> represents a real using 14 right justified characters.
+        </li>
+        <li>
+          <b>CHRUP3</b> divides a string into three parts, given the middle.
+        </li>
+        <li>
+          <b>CHRWRT</b> writes a character STRING to one or more output units.
+        </li>
+        <li>
+          <b>COPMAT</b> makes a copy of the current problem information.
+        </li>
+        <li>
+          <b>DBLDEC</b> converts a double precision quantity to a decimal representation.
+        </li>
+        <li>
+          <b>DECADD</b> adds two decimal quantities.
+        </li>
+        <li>
+          <b>DECCUT</b> rounds a decimal fraction to a given number of digits.
+        </li>
+        <li>
+          <b>DECDET</b> finds the determinant of an N by N matrix of decimal entries.
+        </li>
+        <li>
+          <b>DECDIV</b> divides two NDIG digit decimals.
+        </li>
+        <li>
+          <b>DECMUL</b> multiplies two decimals.
+        </li>
+        <li>
+          <b>DECPRN</b> prints out decimal vectors and matrices.
+        </li>
+        <li>
+          <b>DECRAT</b> converts a decimal to a rational representation.
+        </li>
+        <li>
+          <b>DECREA</b> reads a decimal, rational or integer, and returns a decimal fraction.
+        </li>
+        <li>
+          <b>DECREL</b> converts a decimal ITOP * 10**IBOT to a real value.
+        </li>
+        <li>
+          <b>DECWRN</b> prints out a warning about using decimal arithmetic.
+        </li>
+        <li>
+          <b>DELADD</b> deletes or adds a row or column to the matrix.
+        </li>
+        <li>
+          <b>DELCOL</b> deletes a column by shifting other columns to the left.
+        </li>
+        <li>
+          <b>DELROW</b> deletes a row by shifting other rows up.
+        </li>
+        <li>
+          <b>DIGTEN</b> returns the integer value of a base 10 digit.
+        </li>
+        <li>
+          <b>DIVIDE</b> divides one row of the matrix by a nonzero value.
+        </li>
+        <li>
+          <b>EVJACO</b> carries out a Jacobi rotation on a square matrix.
+        </li>
+        <li>
+          <b>FILADD</b> allows us to append information to a pre-existing file.
+        </li>
+        <li>
+          <b>FILRED</b> reads an example from a file.
+        </li>
+        <li>
+          <b>FILWRT</b> writes an example to a file.
+        </li>
+        <li>
+          <b>FLUSHL</b> flushes a string left.
+        </li>
+        <li>
+          <b>FLUSHR</b> flushes a string right.
+        </li>
+        <li>
+          <b>FORM</b> converts from one arithmetic form to another.
+        </li>
+        <li>
+          <b>HELLO</b> greets the user on startup.
+        </li>
+        <li>
+          <b>HELP</b> prints out a brief list of the available commands.
+        </li>
+        <li>
+          <b>HLPVMS</b> provides extensive help from the MATMAN help file.
+        </li>
+        <li>
+          <b>IGCF</b> finds the greatest common factor of I and J.
+        </li>
+        <li>
+          <b>INDATA</b> stores and retrieves common data items.
+        </li>
+        <li>
+          <b>INDEXI</b> is a case-insensitive INDEX function.
+        </li>
+        <li>
+          <b>INFILE</b> handles a new input file.
+        </li>
+        <li>
+          <b>INIMAT</b> initializes the matrix by zeroing it out.
+        </li>
+        <li>
+          <b>INIT</b> initializes the data.
+        </li>
+        <li>
+          <b>INTRAN</b> returns a random integer in a given range.
+        </li>
+        <li>
+          <b>INTREA</b> reads an integer from the input buffer.
+        </li>
+        <li>
+          <b>LAHLP1</b> prints out a brief list of useful linear algebra commands.
+        </li>
+        <li>
+          <b>LAINP0</b> begins the process of receiving a matrix from the user.
+        </li>
+        <li>
+          <b>LAINP1</b> accepts the values of the entries of a matrix from the user.
+        </li>
+        <li>
+          <b>LAOPT</b> checks for row echelon or reduced row echelon form.
+        </li>
+        <li>
+          <b>LDIGIT</b> returns .TRUE. if STRING contains only digits or blanks.
+        </li>
+        <li>
+          <b>LENCHR</b> returns the length of STRING up to the last nonblank.
+        </li>
+        <li>
+          <b>LEQI</b> is a case insensitive comparison of two strings for equality.
+        </li>
+        <li>
+          <b>LPHLP1</b> prints out a brief list of useful linear programming commands.
+        </li>
+        <li>
+          <b>LPINP</b> allows the user to enter a linear programming problem.
+        </li>
+        <li>
+          <b>LPOPT</b> checks the current linear programming tableau for optimality.
+        </li>
+        <li>
+          <b>LPPIV</b> carries out pivoting for a linear programming problem.
+        </li>
+        <li>
+          <b>LPPIV1</b> zeroes out objective row entries for basic variables.
+        </li>
+        <li>
+          <b>LPPIV2</b> chooses the entering variable for pivoting.
+        </li>
+        <li>
+          <b>LPPIV3</b> chooses the departing variable for pivoting.
+        </li>
+        <li>
+          <b>LPREM</b> removes the artificial variables.
+        </li>
+        <li>
+          <b>LPSAMA</b> sets up an advanced linear programming problem.
+        </li>
+        <li>
+          <b>LPSAMS</b> sets up a simple linear programming problem.
+        </li>
+        <li>
+          <b>LPSET</b> switches the linear programming mode.
+        </li>
+        <li>
+          <b>LPSOL</b> determines the current linear programming solution.
+        </li>
+        <li>
+          <b>MULPLY</b> multiplies a row of the A matrix by a scale factor.
+        </li>
+        <li>
+          <b>NPAGE</b> determines whether it's time to pause before more printing.
+        </li>
+        <li>
+          <b>PASS</b> authenticates the password used for the automatic option.
+        </li>
+        <li>
+          <b>PERNEX</b> computes all of the permutations of N objects, one at a time.
+        </li>
+        <li>
+          <b>RANDOM</b> is a portable random number generator.
+        </li>
+        <li>
+          <b>RATADD</b> adds two rational values.
+        </li>
+        <li>
+          <b>RATDEC</b> converts a rational value to a decimal value.
+        </li>
+        <li>
+          <b>RATDET</b> finds the determinant of an N by N matrix of rational entries.
+        </li>
+        <li>
+          <b>RATDIV</b> divides one rational value by another.
+        </li>
+        <li>
+          <b>RATMUL</b> multiplies two fractions.
+        </li>
+        <li>
+          <b>RATPRN</b> prints out rational vectors or matrices.
+        </li>
+        <li>
+          <b>RATREA</b> reads a rational value, expressed as integer, decimal or fraction.
+        </li>
+        <li>
+          <b>RATREL</b> converts rational values to real values.
+        </li>
+        <li>
+          <b>RATTRN</b> transposes a rational matrix.
+        </li>
+        <li>
+          <b>RATWRN</b> prints out a warning about using rational arithmetic.
+        </li>
+        <li>
+          <b>RELDEC</b> converts a real value to a decimal fraction form.
+        </li>
+        <li>
+          <b>RELDET</b> finds the determinant of a real N by N matrix.
+        </li>
+        <li>
+          <b>RELPRN</b> prints out real vectors and matrices.
+        </li>
+        <li>
+          <b>RELRAT</b> converts a real value to a rational value.
+        </li>
+        <li>
+          <b>RELREA</b> "reads" a real value from a line of text.
+        </li>
+        <li>
+          <b>RELTRN</b> transposes the real matrix A.
+        </li>
+        <li>
+          <b>RELWRN</b> prints out, just once, a warning about using real arithmetic.
+        </li>
+        <li>
+          <b>RESTOR</b> restores a matrix that was saved earlier.
+        </li>
+        <li>
+          <b>ROWADD</b> adds a multiple of one matrix row to another.
+        </li>
+        <li>
+          <b>SAMPLE</b> allows the user to choose a particular sample problem.
+        </li>
+        <li>
+          <b>SCADIV</b> divides row IROW of the A matrix by a scale factor.
+        </li>
+        <li>
+          <b>SETDIG</b> allows the user to specify the maximum digits in a decimal.
+        </li>
+        <li>
+          <b>SETLIN</b> sets the current output page line number.
+        </li>
+        <li>
+          <b>SETPAG</b> sets the number of lines per output page.
+        </li>
+        <li>
+          <b>SHFCOL</b> allows a new column to be inserted by shifting others right.
+        </li>
+        <li>
+          <b>SHFROW</b> allows a new row to be inserted by shifting other rows down.
+        </li>
+        <li>
+          <b>SWPROW</b> swaps two rows of a matrix.
+        </li>
+        <li>
+          <b>TRANSC</b> opens or closes a transcript file.
+        </li>
+        <li>
+          <b>TYPE</b> prints out the matrix or tableau.
+        </li>
+        <li>
+          <b>TYPES</b> prints out the linear programming solution.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 21 January 2009.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+</html>

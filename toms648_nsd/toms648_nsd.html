@@ -1,0 +1,361 @@
+<html>
+
+  <head>
+    <title>
+      TOMS648_NSD - ODE Tests - Non-Stiff Double Precision
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS648_NSD <br> ODE Tests <br> Non-Stiff Double Precision
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS648_NSD</b>
+      is a FORTRAN77 library which
+      defines a set of non-stiff initial
+      value problems for ordinary differential equations.
+    </p>
+
+    <p>
+      These problems have the common form:
+      <blockquote>
+        determine (some values of) the function <b>Y(T)</b>
+      </blockquote>
+      given
+      <blockquote>
+        <b>Y'(T) = F(T,Y)</b>
+      </blockquote>
+      with initial value
+      <blockquote>
+        <b>Y(T<sub>0</sub>) = Y<sub>0</sub></b>
+      </blockquote>
+    </p>
+
+    <p>
+      A uniform interface makes it easy to solve all the problems
+      automatically, or to concentrate on a single one.
+    </p>
+
+    <p>
+      The problems include:
+      <ol>
+        <li>
+          Enright and Pryce #A1,<br>
+          neqn = 1,<br>
+          y' = -y;
+        </li>
+        <li>
+          Enright and Pryce #A2,<br>
+          neqn = 1,<br>
+          y' = -y^3/2;
+        </li>
+        <li>
+          Enright and Pryce #A3,<br>
+          neqn = 1,<br>
+          y' = cos(t)*y;
+        </li>
+        <li>
+          Enright and Pryce #A4,<br>
+          neqn = 1,<br>
+          y' = y*(20-y)/80;
+        </li>
+        <li>
+          Enright and Pryce #A5,<br>
+          neqn = 1,<br>
+          y' = (y-t)/(y+t);
+        </li>
+        <li>
+          Enright and Pryce #B1,<br>
+          neqn = 2,<br>
+          y1' = 2*y1*(1-y2)<br>
+          y2' = - y2*(1-y1);
+        </li>
+        <li>
+          Enright and Pryce #B2,<br>
+          neqn = 3,<br>
+          y1' = -y1+y2<br>
+          y2' = y1-2*y2+y3<br>
+          y3' = y2-y3;
+        </li>
+        <li>
+          Enright and Pryce #B3,<br>
+          neqn = 3,<br>
+          y1' = -y1<br>
+          y2' = y1-y2^2<br>
+          y3' = y2^2;
+        </li>
+        <li>
+          Enright and Pryce #B4,<br>
+          neqn = 3,<br>
+          y1' = (-y2-y1*y3) / sqrt(y1^2+y2^2)<br>
+          y2' = (y1-y2*y3) / sqrt(y1^2+y2^2)<br>
+          y3' = y1 / sqrt(y1^2+y2^2);
+        </li>
+        <li>
+          Enright and Pryce #B5,<br>
+          neqn = 3,<br>
+          y1' = y2*y3<br>
+          y2' = -y1*y3<br>
+          y3' = -0.51*y1*y2;
+        </li>
+        <li>
+          Enright and Pryce #C1,<br>
+          neqn = 10;
+        </li>
+        <li>
+          Enright and Pryce #C2,<br>
+          neqn = 10;
+        </li>
+        <li>
+          Enright and Pryce #C3,<br>
+          neqn = 10;
+        </li>
+        <li>
+          Enright and Pryce #C4,<br>
+          neqn = 51;
+        </li>
+        <li>
+          Enright and Pryce #C5,<br>
+          neqn = 30;
+        </li>
+        <li>
+          Enright and Pryce #D1,<br>
+          neqn = 4;
+        </li>
+        <li>
+          Enright and Pryce #D2,<br>
+          neqn = 4;
+        </li>
+        <li>
+          Enright and Pryce #D3,<br>
+          neqn = 4;
+        </li>
+        <li>
+          Enright and Pryce #D4,<br>
+          neqn = 4;
+        </li>
+        <li>
+          Enright and Pryce #D5,<br>
+          neqn = 4;
+        </li>
+        <li>
+          Enright and Pryce #E1,<br>
+          neqn = 2;
+        </li>
+        <li>
+          Enright and Pryce #E2,<br>
+          neqn = 2;
+        </li>
+        <li>
+          Enright and Pryce #E3,<br>
+          neqn = 2;
+        </li>
+        <li>
+          Enright and Pryce #E4,<br>
+          neqn = 2;
+        </li>
+        <li>
+          Enright and Pryce #E5,<br>
+          neqn = 2;
+        </li>
+        <li>
+          Enright and Pryce #F1,<br>
+          neqn = 2;
+        </li>
+        <li>
+          Enright and Pryce #F2,<br>
+          neqn = 1;
+        </li>
+        <li>
+          Enright and Pryce #F3,<br>
+          neqn = 2;
+        </li>
+        <li>
+          Enright and Pryce #F4,<br>
+          neqn = 1;
+        </li>
+        <li>
+          Enright and Pryce #F5,<br>
+          neqn = 1;
+        </li>
+      </ol>
+    </p>
+
+    <p>
+      <b>TOMS648_NSD</b> is one part (the non-stiff double precision part)
+      of the set of routines released as ACM TOMS Algorithm 648.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/nms/nms.html">
+      NMS</a>,
+      a FORTRAN90 library
+      which includes the <b>DDRIV</b> package of ODE solvers.
+    </p>
+
+    <p>
+      <a href = "../../f_src/ode/ode.html">
+      ODE</a>,
+      a FORTRAN90 library which
+      contains the Shampine and Allen ODE solver.
+    </p>
+
+    <p>
+      <a href = "../../f_src/rkf45/rkf45.html">
+      RKF45</a>,
+      a FORTRAN90 library which
+      implements a Runge-Kutta-Fehlberg ODE solver.
+    </p>
+
+    <p>
+      <a href = "../../f_src/test_ode/test_ode.html">
+      TEST_ODE</a>,
+      a FORTRAN90 library which 
+      defines a set of test functions
+      for ODE solvers.
+    </p>
+
+    <h3 align = "center">
+      References:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          W Enright and J Pryce,<br>
+          Algorithm 648,<br>
+          NSDTST and STDTST,<br>
+          ACM Transactions on Mathematical Software,<br>
+          Volume 13, Number 1, 1987, pages 28-34.
+        </li>
+        <li>
+          T Hull, W Enright, B Fellen and A Sedgwick,<br>
+          Comparing numerical methods for ordinary differential equations,<br>
+          SIAM Journal on Numerical Analysis,<br>
+          Volume 9, 1972, pages 603-637.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms648_nsd.f90">toms648_nsd.f90</a>, the source code;
+        </li>
+        <li>
+          <a href = "toms648_nsd.sh">toms648_nsd.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms648_nsd_prb.f90">toms648_nsd_prb.f90</a>, a sample
+          calling program;
+        </li>
+        <li>
+          <a href = "toms648_nsd_prb.sh">toms648_nsd_prb.sh</a>,
+          commands to compile, link and run the calling program;
+        </li>
+        <li>
+          <a href = "toms648_nsd_prb_output.txt">toms648_nsd_prb_output.txt</a>,
+          the output file;
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>NSDTST</b> is a test package for nonstiff differential equation solvers.
+        </li>
+        <li>
+          <b>CLOCK</b> is meant to return the elapsed CPU seconds.
+        </li>
+        <li>
+          <b>CNTROL</b> calls METHOD to get statistics for one problem and tolerance.
+        </li>
+        <li>
+          <b>CONST</b> returns machine dependent constants.
+        </li>
+        <li>
+          <b>DIFNRM</b> computes the norm of the difference of two vectors.
+        </li>
+        <li>
+          <b>EFSTAT</b> computes and printes normalized efficiency statistics.
+        </li>
+        <li>
+          <b>EVALU</b> provides "true" values of the ODE solution at the endpoint.
+        </li>
+        <li>
+          <b>FCN</b> evaluates the derivative F(X,Y) for the ODE test problem.
+        </li>
+        <li>
+          <b>FCN2</b> transfers function values from FCN to TRUE.
+        </li>
+        <li>
+          <b>IVALU</b> provides initial values to the ODE test problem.
+        </li>
+        <li>
+          <b>LSQFIT</b> fits a linear model to data.
+        </li>
+        <li>
+          <b>PARCHK</b> checks the parameters.
+        </li>
+        <li>
+          <b>PLOT</b> plots local error information.
+        </li>
+        <li>
+          <b>RATIO</b> computes the ratio of two integers.
+        </li>
+        <li>
+          <b>STATS</b> instruments the ODE-solver being tested.
+        </li>
+        <li>
+          <b>STR3</b> converts P to a 3 character integer percentage.
+        </li>
+        <li>
+          <b>TRUE</b> uses a Runge-Kutta scheme to estimate the true solution.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 23 March 2006.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+</html>

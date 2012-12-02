@@ -1,0 +1,230 @@
+<html>
+
+  <head>
+    <title>
+      TTYPLT - Typewriter Graphics Routines
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TTYPLT <br> Typewriter Graphics Routines
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TTYPLT</b> 
+      is a FORTRAN77 program which 
+      produces simple typewriter graphics plots.
+    </p>
+
+    <p>
+      <b>TTYPLT</b> includes the primary routines:
+      <ul>
+        <li>
+          <b>DOTPLT</b>, produces a 'dot plot' corresponding to (X,Y) pairs.
+        </li>
+        <li>
+          <b>GRDPLT</b>, produces a grid corresponding to a
+           given network of points connected by lines.
+        </li>
+        <li>
+          <b>GRAFUN</b>, produces a gray scale plot
+          of a quantity Z(X,Y), where Z is defined
+          by a user supplied subroutine.
+        </li>
+        <li>
+          <b>GRARAY</b>, similar to GRAFUN, but Z is defined by
+          an input array of values.
+        </li>
+        <li>
+          <b>GRAVEC</b>, similar to GRAFUN, but Z is defined by
+          an input vector, requiring less storage
+          than GRARAY.  Repeated calls to GRAVEC
+          can produce a two-dimensional plot like
+          that produced by GRAFUN or GRARAY.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Licensing:
+    </h3>
+
+    <p>
+      The computer code and data files described and made available on this web page 
+      are distributed under
+      <a href = "../../txt/gnu_lgpl.txt">the GNU LGPL license.</a>
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f77_src/anyplt/anyplt.html">
+      ANYPLT</a>,
+      a FORTRAN77 library which
+      served as a generic interface between FORTRAN90 programs and various
+      graphics output devices and files.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/dislin/dislin.html">
+      DISLIN</a>, 
+      FORTRAN77 programs which
+      illustrate the use of DISLIN, a scientific graphics package.
+    </p>
+
+    <p>
+      <a href = "../../f_src/gnufor/gnufor.html">
+      GNUFOR</a>,
+      a FORTRAN90 library which
+      provides an interface to the <b>GNUPLOT</b> graphics library.
+    </p>
+
+    <p>
+      <a href = "../../c_src/gnuplot_i/gnuplot_i.html">
+      GNUPLOT_I</a>, 
+      a C library which
+      allows an executing C or FORTRAN program to interact with the GNUPLOT graphics program.
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "ttyplt.f">ttyplt.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "ttyplt.sh">ttyplt.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "ttyplt_prb.f">ttyplt_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "ttyplt_prb.sh">ttyplt_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "ttyplt_prb_output.txt">ttyplt_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>DO_BACK</b> fills in the background.
+        </li>
+        <li>
+          <b>DO_GRID</b> places grid lines and axis ticks on the graphics line.
+        </li>
+        <li>
+          <b>DOTPLT</b> makes an (X,Y) "dot plot" based on lists of X and Y values.
+        </li>
+        <li>
+          <b>GETSCL</b> prints out the gray scaled used in contour plots.
+        </li>
+        <li>
+          <b>GRAFUN</b> makes a grayscale plot of Z(X,Y), data from subroutine.
+        </li>
+        <li>
+          <b>GRARAY</b> makes a grayscale plot of Z(X,Y), data from array.
+        </li>
+        <li>
+          <b>GRAVEC</b> makes a grayscale plot of Z(X,Y), data from vector.
+        </li>
+        <li>
+          <b>GRDPLT</b> plots a collection of line segments.
+        </li>
+        <li>
+          <b>ICROSS</b> determines the X coordinate where a line has a given Y coordinate.
+        </li>
+        <li>
+          <b>NTOR</b> maps an integer to a real.
+        </li>
+        <li>
+          <b>R4_HUGE</b> returns a "huge" R4.
+        </li>
+        <li>
+          <b>R4MAT_MAX</b> returns the maximum entry of an R4MAT.
+        </li>
+        <li>
+          <b>R4MAT_MIN</b> returns the minimum entry of an R4MAT.
+        </li>
+        <li>
+          <b>RTON</b> maps a real to an integer.
+        </li>
+        <li>
+          <b>SETBAK</b> sets the value of the background character.
+        </li>
+        <li>
+          <b>SETDEF</b> sets all internal configuration data to default values.
+        </li>
+        <li>
+          <b>SETGRA</b> sets the gray scale.
+        </li>
+        <li>
+          <b>SETIGR</b> sets the value of IGRID.
+        </li>
+        <li>
+          <b>SETLET</b> sets the letters used to mark horizontal, vertical and slanted lines.
+        </li>
+        <li>
+          <b>SETMAR</b> resets the left plot margin.
+        </li>
+        <li>
+          <b>SETNOD</b> sets the character used to mark data values in dot plots.
+        </li>
+        <li>
+          <b>SETREG</b>
+        </li>
+        <li>
+          <b>SETWIN</b>
+        </li>
+        <li>
+          <b>TIMESTAMP</b> prints out the current YMDHMS date as a timestamp.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 21 May 2008.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

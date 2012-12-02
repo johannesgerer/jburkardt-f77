@@ -1,0 +1,195 @@
+<html>
+
+  <head>
+    <title>
+      TOMS379 - SQUANK (Simpson Quadrature Used Adaptively - Noise Killed)
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS379 <br> SQUANK (Simpson Quadrature Used Adaptively - Noise Killed)
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS379</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 379, for estimating the
+      integral of a function over a finite interval.
+    </p>
+
+    <p>
+      The text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <dl>
+        <dt>
+          <b>value = squank ( a, big, error, fifth, rum, no, fun )</b>
+        </dt>
+        <dd>
+          where <b>SQUANK</b> is the estimate for the integral,
+          <b>A</b> and <b>BIG</b> are the limits of the interval,
+          <b>ERROR</b> is a requested absolute accuracy,
+          <b>FIFTH</b> is the size of the fifth order adjustment term,
+          <b>RUM</b> is the estimated error,
+          <b>NO</b> is the number of function evaluations,
+          and <b>FUN</b> is the name of a user-supplied function which
+          evaluates the integrand at an arbitrary point X.
+        </dd>
+      </dl>
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/intlib/intlib.html">
+      INTLIB</a>,
+      a FORTRAN90 library which
+      includes many routines for estimating the integral of a function.
+    </p>
+
+    <p>
+      <a href = "../../f_src/quadpack/quadpack.html">
+      QUADPACK</a>,
+      a FORTRAN90 library which
+      includes many routines for estimating the integral of a function,
+      including weight functions, singularities, and infinite intervals.
+    </p>
+
+    <p>
+      <a href = "../../f_src/quadrule/quadrule.html">
+      QUADRULE</a>,
+      a FORTRAN90 library which
+      defines many simple quadrature schemes.
+    </p>
+
+    <p>
+      <a href = "../../f_src/stroud/stroud.html">
+      STROUD</a>,
+      a FORTRAN90 library which
+      defines quadrature schemes for a number of geometrically
+      interesting regions.
+    </p>
+
+    <p>
+      <a href = "../../f_src/test_int/test_int.html">
+      TEST_INT</a>,
+      a FORTRAN90 library which
+      contains routines which define integrands suitable for testing
+      integration software.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/toms351/toms351.html">
+      TOMS351</a>,
+      a FORTRAN77 library which
+      carries out Romberg integration of a function.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/toms468/toms468.html">
+      TOMS468</a>,
+      a FORTRAN77 library which
+      carries out automatic integration of a function.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          James Lyness,<br>
+          Algorithm 379:
+          SQUANK (Simpson Quadrature Used Adaptively - Noise Killed),<br>
+          Communications of the ACM,<br>
+          Volume 13, Number 4, April 1970, pages 260-263.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms379.f">toms379.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms379.sh">toms379.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms379_prb.f">toms379_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms379_prb.sh">toms379_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms379_prb_output.txt">toms379_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>SQUANK</b> applies Simpson quadrature adaptively to estimate
+          an integral.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 12 January 2006.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

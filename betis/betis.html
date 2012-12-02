@@ -1,0 +1,404 @@
+<html>
+
+  <head>
+    <title>
+      BETIS - Boundary Element Method for Laplace's Equation
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      BETIS <br> Boundary Element Method for Laplace's Equation
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>BETIS</b>
+      is a FORTRAN77 program which
+      applies the boundary element
+      method to solve Laplace's equation in a 2D region,
+      by Federico Paris and Jose Canas.
+    </p>
+
+    <p>
+      The program uses linear continuous elements and Dirichlet, Neumann
+      as well as mixed boundary conditions can be taken into
+      consideration.
+    </p>
+
+    <h3 align = "center">
+      Input File Format:
+    </h3>
+
+    <p>
+      The input to the program involves a file containing five sets of data:
+      <ol>
+        <li>
+          The title line (a character string)
+        </li>
+        <li>
+          The parameter line, listing <b>NP</b>, <b>NPI</b> and <b>NANU</b>:
+          <ul>
+            <li>
+              <b>NP</b> is the number of elements used to discretize the boundary;
+              This value must be positive.
+            </li>
+            <li>
+              <b>NPI</b> is the number of internal points where the potential
+              will be computed;  <b>NPI</b> can be zero if no information about
+              interior points is desired.
+            </li>
+            <li>
+              <b>NANU</b> is the index of the point whose potential will be
+              forced to be 0.  This value is only required in the case where
+              the boundary conditions are given entirely as Neumann conditions;
+            </li>
+          </ul>
+        </li>
+        <li>
+          The coordinates of internal points;  For each of the <b>NPI</b> internal
+          points, there must be a record specifying <b>XINT(I)</b> and <b>YINT(I)</b>:
+          <ul>
+            <li>
+              <b>XINT(I)</b> is the X coordinate of the I-th internal point;
+            </li>
+            <li>
+              <b>YINT(I)</b> is the Y coordinate of the I-th internal point;
+            </li>
+          </ul>
+        </li>
+        <li>
+          The coordinates of boundary points;  The boundary points are indexed from 1 to
+          <b>NP+1</b>, and are assumed to be given in counterclockwise order;
+          Logically, the boundary point information is given consecutively;
+          however, if one or more points are omitted, their values will be determined
+          by linear interpolation from the preceding and succeeding values that are
+          given.  Thus, the very least input would specify points 1 and <b>NP+1</b>;
+          the fullest information would specify all <b>NP+1</b> points.  Most input
+          would omit points that are interior to an equally spaced line.
+          <ul>
+            <li>
+              <b>I</b>, the index of the boundary point.
+            </li>
+            <li>
+              <b>X(I)</b> is the X coordinate of the I-th boundary point;
+            </li>
+            <li>
+              <b>Y(I)</b> is the Y coordinate of the I-th boundary point;
+            </li>
+          </ul>
+        </li>
+        <li>
+          The boundary conditions, specifying the boundary node index, the boundary
+          code, and the values of the potential, and the "before" and "after" fluxes
+          at the node.  A typical boundary condition will only specify the potential
+          or the flux; the values not specified can be given as 0.  A boundary condition
+          must be given for every boundary node.  Logically, the boundary nodes are
+          input in order; however boundary nodes may be omitted, in which case
+          the data will be linearly interpolated; however, the preceding and succeeding
+          boundary conditions must have the same value of <b>NCOD</b> for this to be done.
+          <ul>
+            <li>
+              <b>I</b>, the index of the boundary point.
+            </li>
+            <li>
+              <b>NCOD(I)</b> is the boundary condition code for boundary node I;
+              these codes are between 1 and 5.
+            </li>
+            <li>
+              <b>FI(I)</b> is the prescribed potential at node I for codes 2, 3, 4 or 5;
+              for code 1 it is not specified, so may be listed as 0.0;
+            </li>
+            <li>
+              <b>DFI(I,1)</b> is the prescribed "before" flux at node I for codes 1 or 3;
+              for codes 2, 4 and 5 it is not specified, so may be listed as 0.0;
+            </li>
+            <li>
+              <b>DFI(I,2)</b> is the prescribed "after" flux at node I for codes 1 or 2;
+              for codes 3, 4, and 5 it is not specified, so may be listed as 0.0;
+            </li>
+          </ul>
+        </li>
+      </ol>
+    </p>
+
+    <p>
+      Note that if the boundary condition code <b>NCOD(I)</b> is 4, then the unknown
+      value of <b>DFI(I,2)</b> is assumed to be associated with a node at a corner;
+      if the boundary condition is 5, then the value of <b>DFI(I,2)</b> is assumed
+      to be associated with a node in a "continuous" boundary.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <blockquote><code>
+        <b>betis</b>
+      </code></blockquote>
+      The user will be prompted for
+      <ul>
+        <li>
+          <b>namedat</b>, the name of the input file;
+        </li>
+        <li>
+          <b>namesal</b>, the name of the output file; (note that the program
+          will terminate if there is already a file named <b>namesal</b>).
+          The program will not overwrite an output file, so it is the user's
+          responsibility to delete an old, unwanted file of the same name.
+        </li>
+        <li>
+          <b>igauss</b>, the number of points to use in the Gauss quadrature rule.
+          a value of 4 is often sufficient.  This value must be between 1 and 50.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../m_src/fem_50/fem_50.html">
+      FEM_50</a>,
+      a MATLAB program which
+      solves Laplace's equation in an arbitrary region using the finite element method.
+    </p>
+
+    <p>
+      <a href = "../../f_src/fem2d_poisson/fem2d_poisson.html">
+      FEM2D_POISSON</a>,
+      a FORTRAN90 program which
+      solves Poisson's equation in an arbitrary triangulated region
+      using the finite element method.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/fem2d_poisson_rectangle/fem2d_poisson_rectangle.html">
+      FEM2D_POISSON_RECTANGLE</a>,
+      a FORTRAN77 program which
+      solves Poisson's equation in a 2D rectangle using the finite element method.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/fishpack/fishpack.html">
+      FISHPACK</a>,
+      a FORTRAN77 library which
+      solves Poisson, Laplace or Helmholtz equations
+      in a variety of 2D and 3D geometries, using the finite difference method.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/serba/serba.html">
+      SERBA</a>,
+      a FORTRAN77 program which
+      solves problems in planar elasticity using the boundary element method.
+    </p>
+
+    <h3 align = "center">
+      Author:
+    </h3>
+
+    <p>
+      Federico Paris and Jose Canas,<br>
+      Department of Elasticity and Strength of Materials,<br>
+      Industrial Engineering School,<br>
+      University of Seville, Spain.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Federico Paris, Jose Canas,<br>
+          Boundary Element Method: Fundamentals and Applications,<br>
+          Oxford, 1997,<br>
+          ISBN: 0-19-856543-7,<br>
+          LC: TA347.B69.P34.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "betis.f">betis.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "betis.sh">betis.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      Example 1 is a heat conduction problem in a square with mixed boundary conditions,
+      using 12 elements:
+      <ul>
+        <li>
+          <a href = "input01.txt">input01.txt</a>,
+          the input file.
+        </li>
+        <li>
+          <a href = "output01.txt">output01.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      Example 2 is a heat conduction problem in a square with mixed boundary conditions,
+      using 4 elements:
+      <ul>
+        <li>
+          <a href = "input02.txt">input02.txt</a>,
+          the input file.
+        </li>
+        <li>
+          <a href = "output02.txt">output02.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      Example 3 is a heat conduction problem in a square with Neumann boundary conditions,
+      using 12 elements:
+      <ul>
+        <li>
+          <a href = "input03.txt">input03.txt</a>,
+          the input file.
+        </li>
+        <li>
+          <a href = "output03.txt">output03.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      Example 4 is a heat conduction problem in a square with Dirichlet boundary conditions,
+      using 12 elements:
+      <ul>
+        <li>
+          <a href = "input04.txt">input04.txt</a>,
+          the input file.
+        </li>
+        <li>
+          <a href = "output04.txt">output04.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      Example 5 is a torsion problem in a region bounded by two circular arcs,
+      using 20 elements, and applies boundary conditions on the discretized boundary:
+      <ul>
+        <li>
+          <a href = "input05.txt">input05.txt</a>,
+          the input file.
+        </li>
+        <li>
+          <a href = "output05.txt">output05.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      Example 6 is a torsion problem in a region bounded by two circular arcs,
+      using 20 elements, and applies boundary conditions on the original boundary:
+      <ul>
+        <li>
+          <a href = "input06.txt">input06.txt</a>,
+          the input file.
+        </li>
+        <li>
+          <a href = "output06.txt">output06.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      Example 7 is a torsion problem in a region bounded by two circular arcs,
+      which takes advantage of the symmetry of the region and only treats half of it,
+      using 10 elements, and applies boundary conditions on the discretized boundary:
+      <ul>
+        <li>
+          <a href = "input07.txt">input07.txt</a>,
+          the input file.
+        </li>
+        <li>
+          <a href = "output07.txt">output07.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>MAIN</b> is the main program for the BETIS boundary element code.
+        </li>
+        <li>
+          <b>HGNUM</b> calculates integrals when the point is not in the element.
+        </li>
+        <li>
+          <b>HGANA</b> calculates integrals along elements adjacent to the node.
+        </li>
+        <li>
+          <b>PIVO</b> applies Gauss elimination to solve the linear system.
+        </li>
+        <li>
+          <b>GAUSS_QN</b> determines a Gauss quadrature rule.
+        </li>
+        <li>
+          <b>COEFIC</b> sets the coefficients of a polynomial needed for the Gauss rule.
+        </li>
+        <li>
+          <b>EVALUA</b> evaluates the polynomial defining the Gauss rule.
+        </li>
+        <li>
+          <b>ROOTS</b> seeks roots of the polynomial defining the Gauss rule.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 15 December 2007.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

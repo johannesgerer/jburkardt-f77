@@ -1,0 +1,180 @@
+<html>
+
+  <head>
+    <title>
+      TOMS358 - Singular Value Decomposition of a Complex Matrix
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS358 <br> Singular Value Decomposition of a Complex Matrix
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS358</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 358, which computes the
+      singular value decomposition of a complex matrix.
+    </p>
+
+    <p>
+      The text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/lapack_examples/lapack_examples.html">
+      LAPACK_EXAMPLES</a>,
+      a FORTRAN90 program which
+      demonstrates the use of the LAPACK linear algebra library.
+    </p>
+
+    <p>
+      <a href = "../../f_src/svd_basis/svd_basis.html">
+      SVD_BASIS</a>,
+      a FORTRAN90 program which
+      computes
+      a reduced basis for a collection of data vectors using the SVD.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/toms581/toms581.html">
+      TOMS581</a>,
+      a FORTRAN77 library which
+      implements an improved algorithm for computing the singular value decomposition (SVD)
+      of a rectangular matrix;
+      this is ACM TOMS algorithm 571, by Tony Chan.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Edward Anderson, Zhaojun Bai, Christian Bischof, Susan Blackford,
+          James Demmel, Jack Dongarra, Jeremy DuCroz, Anne Greenbaum,
+          Sven Hammarling, Alan McKenney, Danny Sorensen,<br>
+          LAPACK User's Guide,<br>
+          Third Edition,<br>
+          SIAM, 1999,<br>
+          ISBN: 0898714478,<br>
+          LC: QA76.73.F25L36.
+        </li>
+        <li>
+          Peter Businger, Gene Golub,<br>
+          Algorithm 358:
+          Singular Value Decomposition of a Complex Matrix,<br>
+          Communications of the ACM,<br>
+          Volume 12, Number 10, October 1969, pages 564-565.
+        </li>
+        <li>
+          Jack Dongarra, Jim Bunch, Cleve Moler, Pete Stewart,<br>
+          LINPACK User's Guide,<br>
+          SIAM, 1979,<br>
+          ISBN13: 978-0-898711-72-1,<br>
+          LC: QA214.L56.
+        </li>
+        <li>
+          Gene Golub, Charles VanLoan,<br>
+          Matrix Computations,
+          Third Edition,<br>
+          Johns Hopkins, 1996,<br>
+          ISBN: 0-8018-4513-X,<br>
+          LC: QA188.G65.
+        </li>
+        <li>
+          Lloyd Trefethen, David Bau,<br>
+          Numerical Linear Algebra,<br>
+          SIAM, 1997,<br>
+          ISBN: 0-89871-361-7,<br>
+          LC: QA184.T74.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms358.f">toms358.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms358.sh">toms358.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      The example program calls CSVD for several matrices;
+      it compares the results to those obtained by the LINPACK
+      routine CSVDC, whose source is included in the calling program.
+      <ul>
+        <li>
+          <a href = "toms358_prb.f">toms358_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms358_prb.sh">toms358_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms358_prb_output.txt">toms358_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>CSVD</b> computes the singular value decomposition of a
+          complex matrix.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 03 May 2007.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

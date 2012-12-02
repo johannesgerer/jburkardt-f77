@@ -1,0 +1,162 @@
+<html>
+
+  <head>
+    <title>
+      TOMS463 - Determination of Scales for Computer Generated Plots
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS463 <br> Determination of Scales for Computer Generated Plots
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS463</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 463, for determining
+      a nice, rounded range and interval width for a computer-generated
+      plot.
+    </p>
+
+    <p>
+      The text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <dl>
+        <dt>
+          <b>call scale1 ( xmin, xmax, n, xminp, xmaxp, dist )</b>
+        </dt>
+        <dd>
+          where <b>XMIN</b> and <b>XMAX</b> are the data range, and <b>N</b>
+          is the desired number of intervals.  The revised range is
+          <b>XMINP</b> to <b>XMAXP</b>, with an interval width of
+          <b>DIST</b> and approximately N intervals.
+        </dd>
+        <dt>
+          <b>call scale2 ( xmin, xmax, n, xminp, xmaxp, dist )</b>
+        </dt>
+        <dd>
+          where <b>XMIN</b> and <b>XMAX</b> are the data range, and <b>N</b>
+          is the desired number of intervals.  The revised range is
+          <b>XMINP</b> to <b>XMAXP</b>, with an interval width of
+          <b>DIST</b>, and exactly N intervals.
+        </dd>
+        <dt>
+          <b>call scale3 ( xmin, xmax, n, xminp, xmaxp, dist )</b>
+        </dt>
+        <dd>
+          where <b>XMIN</b> and <b>XMAX</b> are the data range, and <b>N</b>
+          is the desired number of intervals.  The revised range is
+          <b>XMINP</b> to <b>XMAXP</b>, with N logarithmic intervals
+          whose successive ratio is <b>DIST</b>.
+        </dd>
+      </dl>
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          CR Lewart,<br>
+          Algorithm 463: Algorithms SCALE1, SCALE2 and SCALE3 for
+          Determination of Scales for Computer Generated Plots,<br>
+          Communications of the ACM,<br>
+          October 1973, Volume 16, Number 10, pages 639-640.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms463.f">toms463.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms463.sh">toms463.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms463_prb.f">toms463_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms463_prb.sh">toms463_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms463_prb_output.txt">toms463_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>SCALE1</b> determines a range for data which embraces
+          the original range and uses approximately N intervals.
+        </li>
+        <li>
+          <b>SCALE2</b> determines a range for data which embraces
+          the original range and uses exactly N intervals.
+        </li>
+        <li>
+          <b>SCALE3</b> determines a range for data such that N
+          logarithmically spaced intervals will cover the range.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 09 December 2005.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

@@ -1,0 +1,218 @@
+<html>
+
+  <head>
+    <title>
+      DRIV - Real and Complex ODE Solvers
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      DRIV <br> Real and Complex ODE Solvers
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>DRIV</b>
+      is a FORTRAN77 library which
+      includes solvers for systems of real or complex ordinary differential
+      equations,
+      by Kahaner and Sutherland.
+    </p>
+
+    <p>
+      Three levels of interface to the package are available, ranging
+      from "easy" to "hard", allowing the user to rely on default values
+      for various program parameters, or to tune them as necessary.
+    </p>
+
+    <p>
+      While primarily intended for systems of the form
+      <blockquote><code>
+        Y'=F(T,Y),
+      </code></blockquote>
+      the package can handle implicit problems
+      <blockquote><code>
+        A(T,Y) * Y' = F(T,Y),
+      </code></blockquote>
+      and mixed systems of
+      differential and algebraic equations.  Moreover, stiffness can be
+      handled by requesting a Gear method, or by having the program itself
+      watch out for stiffness and choose a Gear method itself.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f77_src/driv/driv.html">
+      CWG_ODE</a>,
+      a FORTRAN77 library which
+      implements three ODE solvers by C William Gear.
+    </p>
+
+    <p>
+      <a href = "../../f_src/nms/nms.html">
+      NMS</a>,
+      a FORTRAN90 library which
+      includes the <b>DRIV</b> package of ODE solvers.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/ode/ode.html">
+      ODE</a>,
+      a FORTRAN77 library which
+      solves a system of ordinary differential equations,
+      by Shampine and Gordon.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/odepack/odepack.html">
+      ODEPACK</a>,
+      a FORTRAN77 library which
+      contains nine ODE solvers, including LSODE, LSODES, LSODA,
+      LSODAR, LSODPK, LSODKR, LSODI, LSOIBT, and LSODIS,
+      by Alan Hindmarsh.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/rk4/rk4.html">
+      RK4</a>,
+      a FORTRAN77 library which
+      applies the fourth order Runge-Kutta algorithm to estimate the
+      solution of an ordinary differential equation at the next time step.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/rkf45/rkf45.html">
+      RKF45</a>,
+      a FORTRAN77 library which
+      applies the Runge-Kutta-Fehlberg method to solve a system of ODE's.
+    </p>
+
+    <p>
+      <a href = "../../f_src/test_ode/test_ode.html">
+      TEST_ODE</a>,
+      a FORTRAN90 library which
+      contains routines which define some test problems for ODE solvers.
+    </p>
+
+    <h3 align = "center">
+      Author:
+    </h3>
+
+    <p>
+      David Kahaner, C D Sutherland
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Charles Gear,<br>
+          Numerical Initial Value Problems in Ordinary Differential
+          Equations,<br>
+          Prentice-Hall, 1971,<br>
+          ISBN: 0136266061,<br>
+          LC: QA372.G4.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "driv.f">driv.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "driv.sh">driv.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "driv_prb.f">driv_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "driv_prb.sh">driv_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "driv_prb_output.txt">driv_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>CDRIV1</b> Simple interface to complex ODE solver.
+        </li>
+        <li>
+          <b>CDRIV2</b> Intermediate interface to complex ODE solver.
+        </li>
+        <li>
+          <b>CDRIV3</b> Full interface to complex ODE solver.
+        </li>
+        <li>
+          <b>DDRIV1</b> Simple interface to double precision ODE solver.
+        </li>
+        <li>
+          <b>DDRIV2</b> Intermediate interface to double precision ODE solver.
+        </li>
+        <li>
+          <b>DDRIV3</b> Full interface to double precision ODE solver.
+        </li>
+        <li>
+          <b>SDRIV1</b> Simple interface to single precision ODE solver.
+        </li>
+        <li>
+          <b>SDRIV2</b> Intermediate interface to single precision ODE solver.
+        </li>
+        <li>
+          <b>SDRIV3</b> Full interface to single precision ODE solver.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 02 January 2011.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

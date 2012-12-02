@@ -1,0 +1,147 @@
+<html>
+
+  <head>
+    <title>
+      TOMS365 - Complex Root Finding
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS365 <br> Complex Root Finding
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS365</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 365, for finding a root
+      of a complex analytic function.
+    </p>
+
+    <p>
+      The text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <dl>
+        <dt>
+          <b>call crf ( zs, hs, hm, dm, func, ds, ze, he, de, n )</b>
+        </dt>
+        <dd>
+          where <b>ZS</b> (complex) is the starting estimate for the root,
+          <b>HS</b> is the initial stepsize,
+          <b>HM</b> is the minimum stepsize,
+          <b>DM</b> is the maximum acceptable norm of the function,
+          <b>FUNC</b> is a routine which evaluates the function,
+          <b>DS</b> (output) is the norm of the function at the initial point,
+          <b>ZE</b> (output) is the final estimate for the root,
+          <b>HE</b> (output) is the last step length,
+          <b>DE</b> (output) is the norm of the function at ZE,
+          <b>N</b> is the number of iterations.
+        </dd>
+      </dl>
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Henning Bach,<br>
+          On the Downhill Method,<br>
+          Communications of the ACM,<br>
+          Volume 121, Number 12, page 675-678, December 1969.
+        </li>
+        <li>
+          Henning Bach,<br>
+          Algorithm 365:
+          Complex Root Finding,<br>
+          Communications of the ACM,<br>
+          Volume 121, Number 12, page 686-687, December 1969.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms365.f">toms365.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms365.sh">toms365.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms365_prb.f">toms365_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms365_prb.sh">toms365_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms365_prb_output.txt">toms365_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>CRF</b> determines a root of a complex transcendental equation.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 29 November 2007.
+
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

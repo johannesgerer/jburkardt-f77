@@ -1,0 +1,12 @@
+ 
+TOMS706_PRB1:
+  FORTRAN77 version
+  A test problem for DCUTRI.
+ 
+  RESULT=    0.1118128441701919D+02
+  ERROR =    0.4700904866903838D-05
+  NEVAL =      185
+  IFAIL =        0
+ 
+DCUTRI_PRB1:
+  Normal end of execution.

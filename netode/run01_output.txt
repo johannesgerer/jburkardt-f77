@@ -1,0 +1,136 @@
+  
+   IS THE PROBLEM DEFINITION IN A FILE?
+  
+ ENTER NAME OF RESTART FILE TO BE READ:
+  
+ Two node separation problem                                                     
+  
+ CURRENT TIME IS    0.0000000    
+  
+ SOLUTION y AND TIME DERIVATIVE ydot:
+  
+           1  0.25000000       0.0000000    
+           2  0.25000000       0.0000000    
+           3  100.000000       0.0000000    
+           4  100.000000       0.0000000    
+           5   1190.0000       0.0000000    
+           6   1190.0000       0.0000000    
+           7   295.00000       0.0000000    
+           8   295.00000       0.0000000    
+           9   0.0000000      -16.084999    
+          10   0.0000000      -16.084999    
+  
+ WANT TO GO ON AND SOLVE THE ode?
+ ENTER ABSOLUTE AND RELATIVE ERROR TOLERANCES.
+  
+ ENTER THE TARGET TIME
+  
+ ENTER NUMBER OF STEPS TO TAKE.
+  
+ ENTER LSODI METHOD mf:
+   12 FOR ADAMS FORMULAS, OR 
+   22 FOR BDF FORMULAS.
+ ENTER itask
+   1 TO SEE FINAL SOLUTION ONLY,
+   2 TO SEE INTERMEDIATE SOLUTIONS.
+  
+ Two node separation problem                                                     
+  
+ CURRENT TIME IS   1.00000000    
+  
+ SOLUTION y AND TIME DERIVATIVE ydot:
+  
+           1  0.12876546     -7.29051768E-04
+           2  0.37153009     -2.25633732E-04
+           3   98.707260      0.20981671    
+           4   98.379402      0.20503283    
+           5   1134.0585     -8.23525637E-02
+           6   1210.4390     -0.60557199    
+           7   295.03702      6.28664857E-04
+           8   294.93704      7.07083847E-04
+           9  0.57012957      1.13027282E-02
+          10 -0.14961693      8.61643255E-03
+  
+ Two node separation problem                                                     
+  
+ CURRENT TIME IS    2.0000000    
+  
+ SOLUTION y AND TIME DERIVATIVE ydot:
+  
+           1  5.95328324E-02  5.78282634E-04
+           2  0.44219956      1.27662951E-03
+           3   95.492210     -0.40604341    
+           4   95.135475     -0.41323450    
+           5   1069.0558      0.11068773    
+           6   1208.2240      -1.0559490    
+           7   295.04172     -2.39808252E-03
+           8   294.88889     -2.19607074E-03
+           9  0.65099651      2.59987880E-02
+          10 -8.99762660E-02  2.07494460E-02
+  
+ Two node separation problem                                                     
+  
+ CURRENT TIME IS    3.0000000    
+  
+ SOLUTION y AND TIME DERIVATIVE ydot:
+  
+           1  2.50232033E-02 -3.77163524E-05
+           2  0.47722656     -7.35680806E-05
+           3   92.705597     -1.87762454E-03
+           4   92.328575     -2.42323428E-03
+           5   996.60168      4.76884544E-02
+           6   1201.6765     -0.12426519    
+           7   295.03769     -2.72843463E-05
+           8   294.85992     -2.02562660E-08
+           9  0.71285141     -4.40381654E-03
+          10 -4.37807813E-02 -4.75522643E-03
+  
+ Two node separation problem                                                     
+  
+ CURRENT TIME IS    4.0000000    
+  
+ SOLUTION y AND TIME DERIVATIVE ydot:
+  
+           1  9.02457163E-03 -8.20520893E-03
+           2  0.49304092      8.00530612E-03
+           3   91.030327      -1.0950234    
+           4   90.642311      -1.1016117    
+           5   919.36377      -79.277092    
+           6   1196.8312      -3.4723032    
+           7   295.03424     -2.67004780E-03
+           8   294.84528     -8.25995952E-03
+           9  0.74813503      2.32337937E-02
+          10 -1.72622092E-02  1.78021807E-02
+  
+ Two node separation problem                                                     
+  
+ CURRENT TIME IS    5.0000000    
+  
+ SOLUTION y AND TIME DERIVATIVE ydot:
+  
+           1  2.74058594E-03  1.46465283E-03
+           2  0.49899006     -1.32641289E-03
+           3   90.259750     -0.12757882    
+           4   89.867104     -0.12849487    
+           5   838.92053     -0.42500734    
+           6   1194.3125     -0.56140125    
+           7   295.03247     -7.84990960E-04
+           8   294.83929      2.57723499E-04
+           9  0.76401258      5.83535759E-03
+          10 -5.18747745E-03  5.12888003E-03
+  
+ ENTER NAME OF RESTART FILE TO CREATE,
+ OR return FOR NO RESTART FILE.
+  
+ LSODI STATISTICS:
+  
+ LAST LSODI STEPSIZE=  0.77971280    
+ NEXT LSODI STEPSIZE=  0.86618984    
+ ACTUAL VALUE OF t =    5.6171684    
+ NUMBER OF lsodi STEPS =          55
+ NUMBER OF RESIDUALS =           385
+ NUMBER OF JACOBIANS =            26
+ LAST ORDER USED =                 2
+ NEXT ORDER TO USE =               3
+ NEEDED REAL WORKSPACE =         212
+ NEEDED INTEGER SPACE =           30

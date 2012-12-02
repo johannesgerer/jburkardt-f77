@@ -1,0 +1,51 @@
+20 July      2008   5:06:12.288 PM      
+ 
+POWER_METHOD_PRB
+  FORTRAN77 version:
+  Test the routines in POWER_METHOD.
+ 
+TEST01
+  Use the power method on the Fibonacci2 matrix.
+ 
+  Matrix order N       =       50
+  Maximum iterations   =      300
+  Error tolerance      =   0.100000E-05
+ 
+  Number of iterations =      193
+  CPU time             =   0.973000E-02
+  Estimated eigenvalue =   1.6180381956
+  Correct value        =   1.6180340052
+  Error                =   0.419042E-05
+ 
+  Sine of angle between true and estimated vectors =   0.0000044458
+ 
+TEST02
+  Use the power method2 on the Fibonacci2 matrix.
+ 
+  Matrix order N       =       50
+  Maximum iterations   =      300
+  Error tolerance      =   0.100000E-05
+ 
+  Number of iterations =      194
+  CPU time             =   0.101010E-01
+  Estimated eigenvalue =   1.6180374002  0.0000000000
+  Correct value        =   1.6180340052
+  Error                =   0.339500E-05
+ 
+TEST03
+  Use the power method2 on the TRIS matrix.
+ 
+  Matrix order N       =       50
+  Maximum iterations   =     4000
+  Error tolerance      =   0.100000E-05
+ 
+  Number of iterations =     2867
+  CPU time             =   0.147644    
+  Estimated eigenvalue =  10.0018177032  5.6479744911
+  Correct value        =  10.0000000000  5.6461250566
+  Error                =   0.259316E-02
+ 
+POWER_METHOD_PRB:
+  Normal end of execution.
+ 
+20 July      2008   5:06:12.480 PM      

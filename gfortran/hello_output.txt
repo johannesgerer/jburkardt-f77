@@ -1,0 +1,8 @@
+ 4 December  2008  11:19:53.526 AM      
+ 
+HELLO:
+  FORTRAN77 version.
+ 
+  Hello, worldc
+ 
+ 4 December  2008  11:19:53.528 AM      

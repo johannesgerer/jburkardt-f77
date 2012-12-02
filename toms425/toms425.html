@@ -1,0 +1,167 @@
+<html>
+
+  <head>
+    <title>
+      TOMS425 - Generation of Random Correlated Normal Variables
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS425 <br> Generation of Random Correlated Normal Variables
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS425</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 425, for generating random
+      correlated normal variables.
+    </p>
+
+    <p>
+      The code posted here has been updated to reflect a correction that
+      saves the variable G02 in RNOR between calls, and other updates
+      related to a remark by Page in June, 1974, supplied by Tim Hopkins,
+      24 January 2011.
+    <p>
+
+    <p>
+      The text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <blockquote>
+        call <b>rnvr</b> ( <i>x</i>, <i>a</i>, <i>nv</i>, <i>ni</i>, <i>ient</i>, <i>iarg</i> )
+      </blockquote>
+      where
+      <ul>
+        <li>
+          <i>x</i> contains the output normal variables;
+        </li>
+        <li>
+          <i>a</i> is the covariance matrix;
+        </li>
+        <li>
+          <i>nv</i> is the order of the covariance matrix;
+        </li>
+        <li>
+          <i>ni</i> is the order of the array;
+        </li>
+        <li>
+          <i>ient</i> is -1 to indicate the initial call;
+        </li>
+        <li>
+          <i>iarg</i> is a seed for the random number generator.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Rex Hurst, Robert Knop,<br>
+          Algorithm 425: Generation of Random Correlated Normal Variables,<br>
+          Communications of the ACM,<br>
+          Volume 15, Number 5, May 1972, pages 355-357.
+        </li>
+        <li>
+          R L Page,<br>
+          Remark on Algorithm 425: Generation of Random Correlated Normal Variables,<br>
+          Communications of the ACM,<br>
+          Volume 17, Number 6, June 1974, page 325.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "src.f">src.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "Makefile">Makefile</a>, a makefile.
+        </li>
+        <li>
+          <a href = "toms425.csh">toms425.csh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "driver.f">driver.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms425_prb.csh">toms425_prb.csh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "Res">Res</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>RNVR</b> generates a random correlated normal variable on
+          each call.
+        </li>
+        <li>
+          <b>RNOR</b> generates a random normal number on
+          each call.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 24 January 2011.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

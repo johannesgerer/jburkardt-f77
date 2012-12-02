@@ -1,0 +1,503 @@
+<html>
+
+  <head>
+    <title>
+      TEMPLATED - Iterative Solvers for Linear Systems
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TEMPLATED <br> Iterative Solvers <br> for Linear Systems
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TEMPLATED</b>
+      is a FORTRAN77 library which
+      outlines the
+      most common iterative methods of solving a linear system.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/dlap/dlap.html">
+      DLAP</a>,
+      a FORTRAN90 library which
+      implements iterative methods for solving
+      linear systems.
+    </p>
+
+    <p>
+      <a href = "../../datasets/hbsmc/hbsmc.html">
+      HBSMC</a>,
+      a dataset directory which
+      contains large sparse matrices stored in the
+      Harwell-Boeing format.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/linpack/linpack.html">
+      LINPACK</a>,
+      a FORTRAN77 library which 
+      carries out direct methods
+      for solving linear systems.
+    </p>
+
+    <p>
+      <a href = "../../data/mm/mm.html">
+      MM</a>,
+      a data directory which
+      contains a description and
+      examples of the Matrix Market format for storing matrices.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/multigrid_poisson_1d/multigrid_poisson_1d.html">
+      MULTIGRID_POISSON_1D</a>,
+      a FORTRAN77 library which
+      applies the multigrid method to a discretized version of the 
+      1D Poisson equation.
+    </p>
+
+    <p>
+      <a href = "../../c_src/super_lu/super_lu.html">
+      SUPER_LU</a>,
+      a C program which
+      applies a fast direct solution method to
+      a sparse linear system.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/templates/templates.html">
+      TEMPLATES</a>,
+      a FORTRAN77 library which
+      carries out simple versions of various iterative solvers.
+      This is the single precision version.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/test_mat/test_mat.html">
+      TEST_MAT</a>,
+      a FORTRAN77 library which 
+      defines test matrices.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Richard Barrett, Michael Berry, Tony Chan, James Demmel,
+          June Donato, Jack Dongarra, Victor Eijkhout, Roidan Pozo,
+          Charles Romine, Henk van der Vorst,<br>
+          Templates for the Solution of Linear Systems:<br>
+          Building Blocks for Iterative Methods,<br>
+          SIAM, 1994.
+        </li>
+        <li>
+          <a href = "http://www.netlib.org/templates/index.html">
+                     http://www.netlib.org/templates/index.html</a> <br>
+          the TEMPLATES web site;
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "templated.f">templated.f</a>,
+          the source code.
+        </li>
+        <li>
+          <a href = "templated.sh">templated.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "templated_prb.f">templated_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "templated_prb.sh">templated_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "test.data">test.data</a>,
+          a sample input file.
+        </li>
+        <li>
+          <a href = "test.results">test.results</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>APPLYGIVENS</b>
+        </li>
+        <li>
+          <b>APPROXRES</b>
+        </li>
+        <li>
+          <b>BACKSOLVE</b>
+        </li>
+        <li>
+          <b>BICG</b>
+        </li>
+        <li>
+          <b>BICGREVCOM</b>
+        </li>
+        <li>
+          <b>BICGSTAB</b>
+        </li>
+        <li>
+          <b>BICGSTABREVCOM</b>
+        </li>
+        <li>
+          <b>CG</b>
+        </li>
+        <li>
+          <b>CGREVCOM</b>
+        </li>
+        <li>
+          <b>CGS</b>
+        </li>
+        <li>
+          <b>CGSREVCOM</b>
+        </li>
+        <li>
+          <b>CHEBY</b>
+        </li>
+        <li>
+          <b>CHEBYREVCOM</b>
+        </li>
+        <li>
+          <b>COMP2DENSE</b>
+        </li>
+        <li>
+          <b>ELEMVEC</b> constructs the I-th elementary vector E, scaled by ALPHA.
+        </li>
+        <li>
+          <b>GEN57PT</b>
+        </li>
+        <li>
+          <b>GETEIG</b> computes the eigenvalues of a matrix.
+        </li>
+        <li>
+          <b>GETGIV</b>
+        </li>
+        <li>
+          <b>GETSTEN</b>
+        </li>
+        <li>
+          <b>GMRES</b>
+        </li>
+        <li>
+          <b>GMRESREVCOM</b>
+        </li>
+        <li>
+          <b>HENKDFUN</b>
+        </li>
+        <li>
+          <b>HENKFUN</b>
+        </li>
+        <li>
+          <b>ILAENV</b> sets local environment parameters for LAPACK.
+        </li>
+        <li>
+          <b>ISAMAX</b> finds the index of element having maximum absolute value.
+        </li>
+        <li>
+          <b>JACOBI</b>
+        </li>
+        <li>
+          <b>JACOBIREVCOM</b>
+        </li>
+        <li>
+          <b>JACSPLIT</b>
+        </li>
+        <li>
+          <b>LSAME</b> returns TRUE if CA is the same letter as CB regardless of case.
+        </li>
+        <li>
+          <b>LSAMEN</b> is TRUE if the first N characters of two strings match.
+        </li>
+        <li>
+          <b>MATCOPY</b>
+        </li>
+        <li>
+          <b>MATSPLIT</b>
+        </li>
+        <li>
+          <b>MATVEC</b>
+        </li>
+        <li>
+          <b>MATVECTRANS</b>
+        </li>
+        <li>
+          <b>NEGONEFUN</b>
+        </li>
+        <li>
+          <b>NEGTHOUSXFUN</b>
+        </li>
+        <li>
+          <b>ONEFUN</b>
+        </li>
+        <li>
+          <b>ORTHOH</b>
+        </li>
+        <li>
+          <b>PSOLVE</b>
+        </li>
+        <li>
+          <b>PSOLVEJAC</b>
+        </li>
+        <li>
+          <b>PSOLVEJACTRANS</b>
+        </li>
+        <li>
+          <b>PSOLVENONE</b>
+        </li>
+        <li>
+          <b>PSOLVENONETRANS</b>
+        </li>
+        <li>
+          <b>PSOLVEQ</b>
+        </li>
+        <li>
+          <b>PSOLVETRANS</b>
+        </li>
+        <li>
+          <b>PSOLVETRANSQ</b>
+        </li>
+        <li>
+          <b>QMR</b>
+        </li>
+        <li>
+          <b>QMRREVCOM</b>
+        </li>
+        <li>
+          <b>ROTVEC</b>
+        </li>
+        <li>
+          <b>SAXPY</b> computes constant times a vector plus a vector.
+        </li>
+        <li>
+          <b>SCOPY</b> copies a vector, x, to a vector, y.
+        </li>
+        <li>
+          <b>SDOT</b> forms the dot product of two vectors.
+        </li>
+        <li>
+          <b>SET_E</b>
+        </li>
+        <li>
+          <b>SGEMM</b> adds a matrix product to a matrix.
+        </li>
+        <li>
+          <b>SGEMV</b> adds a matrix-vector product to a vector.
+        </li>
+        <li>
+          <b>SGER</b> performs a rank-one update of a matrix.
+        </li>
+        <li>
+          <b>SLAE2</b> computes the eigenvalues of a 2x2 symmetric matrix.
+        </li>
+        <li>
+          <b>SLAEV2</b> computes the eigen-decomposition of a 2x2 symmetric matrix.
+        </li>
+        <li>
+          <b>SLAMC1</b> determines machine parameters.
+        </li>
+        <li>
+          <b>SLAMC2</b> determines machine parameters.
+        </li>
+        <li>
+          <b>SLAMC3</b> determines machine parameters.
+        </li>
+        <li>
+          <b>SLAMC4</b> determines machine parameters.
+        </li>
+        <li>
+          <b>SLAMC5</b> determines machine parameters.
+        </li>
+        <li>
+          <b>SLAMCH</b> determines machine parameters.
+        </li>
+        <li>
+          <b>SLANSY</b> returns the norm of a real symmetric matrix.
+        </li>
+        <li>
+          <b>SLAPY2</b> computes sqrt ( x*x + y*y ).
+        </li>
+        <li>
+          <b>SLARAN</b> returns a pseudorandom uniform value from [0,1].
+        </li>
+        <li>
+          <b>SLARFB</b>
+        </li>
+        <li>
+          <b>SLARF</b>
+        </li>
+        <li>
+          <b>SLARFG</b>
+        </li>
+        <li>
+          <b>SLARFT</b>
+        </li>
+        <li>
+          <b>SLARTG</b>
+        </li>
+        <li>
+          <b>SLASR</b>
+        </li>
+        <li>
+          <b>SLASSQ</b>
+        </li>
+        <li>
+          <b>SLATRD</b>
+        </li>
+        <li>
+          <b>SLAZRO</b>
+        </li>
+        <li>
+          <b>SNRM2</b> returns the euclidean norm of a real vector.
+        </li>
+        <li>
+          <b>SOR</b> solvea s linear system using the SOR iteration.
+        </li>
+        <li>
+          <b>SORG2L</b>
+        </li>
+        <li>
+          <b>SORG2R</b>
+        </li>
+        <li>
+          <b>SORGQL</b>
+        </li>
+        <li>
+          <b>SORQGR</b>
+        </li>
+        <li>
+          <b>SORGTR</b>
+        </li>
+        <li>
+          <b>SORREVCOM</b>
+        </li>
+        <li>
+          <b>SORSPLIT</b>
+        </li>
+        <li>
+          <b>SROT</b> applies a plane rotation.
+        </li>
+        <li>
+          <b>SROTG</b> constructs a Givens plane rotation.
+        </li>
+        <li>
+          <b>SSCAL</b> scales a vector by a constant.
+        </li>
+        <li>
+          <b>SSTEQR</b>
+        </li>
+        <li>
+          <b>SSTERF</b>
+        </li>
+        <li>
+          <b>SSWAP</b> interchanges two vectors.
+        </li>
+        <li>
+          <b>SSYEV</b>
+        </li>
+        <li>
+          <b>SSYMM</b>
+        </li>
+        <li>
+          <b>SSYMV</b>
+        </li>
+        <li>
+          <b>SSYR2K</b>
+        </li>
+        <li>
+          <b>SSYTD2</b>
+        </li>
+        <li>
+          <b>SSYTRD</b>
+        </li>
+        <li>
+          <b>STOPTEST2</b>
+        </li>
+        <li>
+          <b>STRMM</b>
+        </li>
+        <li>
+          <b>STRMV</b>
+        </li>
+        <li>
+          <b>STRSV</b>
+        </li>
+        <li>
+          <b>TEN5X2FUN</b>
+        </li>
+        <li>
+          <b>THOUSFUN</b>
+        </li>
+        <li>
+          <b>THOUSXFUN</b>
+        </li>
+        <li>
+          <b>UPDATE</b>
+        </li>
+        <li>
+          <b>WATHEN</b>
+        </li>
+        <li>
+          <b>XERBLA</b> is an error handler.
+        </li>
+        <li>
+          <b>ZEROFUN</b> evaluates f(x,y,z) = 0.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 24 September 2012.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+</html>

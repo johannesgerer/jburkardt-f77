@@ -1,0 +1,210 @@
+<html>
+
+  <head>
+    <title>
+      TOMS468 - Algorithm for Automatic Numerical Integration
+      Over a Finite Interval
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS468 <br> Algorithm for Automatic Numerical Integration
+      Over a Finite Interval
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS468</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 468, for estimating the
+      integral of a function over a finite interval.
+    </p>
+
+    <p>
+      The text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <dl>
+        <dt>
+          <b>call quad ( a, b, result, k, epsil, npts, icheck, f )</b>
+        </dt>
+        <dd>
+          where <b>A</b> and <b>B</b> are the limits of the interval,
+          <b>RESULT</b> is an array of length 8, which on output will
+          contain the integral estimate in entry <b>RESULT(K)</b>,
+          <b>K</b> is set on output to indicate the appropriate entry
+          of <b>RESULT</b>, <b>EPSIL</b> is a requested relative accuracy,
+          <b>NPTS</b> is returned with the number of function evaluations,
+          <b>ICHECK</b> is an error flag which is 0 for normal return,
+          and <b>F</b> is the name of a user-supplied function which
+          evaluates the integrand at an arbitrary point X.
+        </dd>
+      </dl>
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/intlib/intlib.html">
+      INTLIB</a>,
+      a FORTRAN90 library which
+      includes many routines for estimating the integral of a function.
+    </p>
+
+    <p>
+      <a href = "../../f_src/quadpack/quadpack.html">
+      QUADPACK</a>,
+      a FORTRAN90 library which
+      includes many routines for estimating the integral of a function,
+      including weight functions, singularities, and infinite intervals.
+    </p>
+
+    <p>
+      <a href = "../../f_src/quadrule/quadrule.html">
+      QUADRULE</a>,
+      a FORTRAN90 library which
+      defines many simple quadrature schemes.
+    </p>
+
+    <p>
+      <a href = "../../f_src/stroud/stroud.html">
+      STROUD</a>,
+      a FORTRAN90 library which
+      defines quadrature schemes for a number of geometrically
+      interesting regions.
+    </p>
+
+    <p>
+      <a href = "../../f_src/test_int/test_int.html">
+      TEST_INT</a>,
+      a FORTRAN90 library which
+      contains routines which define integrands suitable for testing
+      integration software.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/toms351/toms351.html">
+      TOMS351</a>,
+      a FORTRAN77 library which
+      carries out Romberg integration of a function.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/toms379/toms379.html">
+      TOMS379</a>,
+      a FORTRAN77 library which
+      carries out adaptive integration of a function.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          TNL Patterson,<br>
+          The Optimal Addition of Points to Quadrature Formulae,<br>
+          Mathematics of Computation,<br>
+          Volume 22, 1968, pages 847-856.
+        </li>
+        <li>
+          TNL Patterson,<br>
+          Algorithm 468: Algorithm for Automatic Numerical Integration
+          Over a Finite Interval,<br>
+          Communications of the ACM,<br>
+          November 1973, Volume 16, Number 11, pages 694-699.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms468.f">toms468.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms468.sh">toms468.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms468_prb.f">toms468_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms468_prb.sh">toms468_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms468_prb_output.txt">toms468_prb_output.txt</a>,
+          the output from a run of the sample program.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>QUAD</b> is the basis quadrature routine.
+        </li>
+        <li>
+          <b>QSUB</b> uses QUAD in a nonadaptive subdivision scheme.
+        </li>
+        <li>
+          <b>QSUBA</b> uses QUAD in an adaptive subdivision scheme.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 12 January 2006.
+
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

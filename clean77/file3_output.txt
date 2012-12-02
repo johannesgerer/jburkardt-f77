@@ -1,0 +1,99 @@
+1CLEAN77 - V2.23 (GENL)  *PRESET*                                      PAGE   1
+
+
+
+
+ PRESENT COMMAND STATUS:
+
+     ADD CONTINUE STMTS...........ADDCONT =  ENABLED
+     BRACKET COMMENTS.............BRACKET =  ENABLED
+     COLLECT FORMATS..............COLLECT = DISABLED
+     COPY ROUTINE INTACT.............COPY = DISABLED
+     EXEMPT COMMENTS..............EXEMPTC = DISABLED
+     EXEMPT FORMATS...............EXEMPTF = DISABLED
+     EXEMPT NONEXECUTABLE.........EXEMPTN = DISABLED
+     EXEMPT STATEMENT CHAR........EXEMPTS = DISABLED
+     FORMAT LABEL BASE............FORMATB = DISABLED
+     FORMAT LABEL INCREMENT.......FORMATI = DISABLED
+     HFIELD CONVERSION.............HFIELD =  ENABLED
+     INDENT COMMENTS..............INDENTC = DISABLED
+     INDENTATION INCREMENT........INDENTI =        3
+     INDENT STATEMENTS............INDENTS =  ENABLED
+     ISSUE COMMENTS................ISSUEC =  ENABLED
+     LABEL BASE....................LABELB =       10
+     LABEL INCREMENT...............LABELI =       10
+     LEFT JUSTIFY LABELS............LEFTJ = DISABLED
+     NEW FILE LINE LENGTH.........LINELEN =       72
+     LIST OLD FILE CARD IDS.......LISTIDS = DISABLED
+     LIST NEW FILE................LISTNEW =  ENABLED
+     LIST OLD FILE................LISTOLD =  ENABLED
+     OLD FILE LINE LENGTH..........OLDLEN =       72
+     PAGE LENGTH..................PAGELEN =       60
+     PROPAGATE COMMANDS..............PROP = DISABLED
+     QUOTE MARK CONVERSION CHAR...QUOTECH =        '
+     RETURN LABEL PREFIX..........RETPRFX =        *
+     RIGHT JUSTIFY LABELS..........RIGHTJ =  ENABLED
+     SPEC STMT SIZE DEFS..........SIZEDEF = DISABLED
+     SPLIT NUMBERS AND VARS.......SPLITNV = DISABLED
+     SPLIT STRINGS................SPLITST = DISABLED
+     STATUS REPORT.................STATUS =  ENABLED
+     UNCONDITIONAL FLOW CHANGE.....UNCOND = DISABLED
+     VARS USE EXTENDED CHAR SET...VARUECS = DISABLED
+
+
+
+1CLEAN77 - V2.23 (GENL)  *SOURCE*                                      PAGE   2
+
+    1.       COMMON/XYZ/A(30,50),B(30,50)                                      
+       C                                                                       
+    2.       DO 1 I=1,30                                                       
+    3.       DO 1 J=1,50                                                       
+    4.       DO 2 K=1,3                                                        
+    5. 2     A(I,J)=A(I,J)*FUNCT(K)                                            
+    6. 1     CONTINUE                                                          
+       C                                                                       
+    7.       DO 3 I=1,30                                                       
+    8.       DO 3 J=1,50                                                       
+    9.       IF (B(I,J).LT.0.0)GOTO3                                           
+   10.       B(I,J)=A(I,J)                                                     
+   11. 3     B(I,J)=B(I,J)F*UNCT2(83.7)                                        
+       C                                                                       
+   12.       RETURN                                                            
+       C                                                                       
+   13.       END                                                               
+ 
+ 
+    OLD    NEW      OLD    NEW      OLD    NEW                                  
+   -----  -----    -----  -----    -----  -----                                 
+       1     20        2     10        3     30                                 
+1CLEAN77 - V2.23 (GENL)  *RESULT*  PROG/*NONAME*                       PAGE   3
+
+    1.       COMMON /XYZ/ A(30,50),B(30,50)
+       C
+    2.       DO 20 I = 1, 30
+    3.          DO 20 J = 1, 50
+    4.             DO 10 K = 1, 3
+    5.                A(I,J) = A(I,J)*FUNCT(K)
+    6.    10       CONTINUE
+    7.    20 CONTINUE
+       C
+    8.       DO 30 I = 1, 30
+    9.          DO 30 J = 1, 50
+   10.             IF (B(I,J).LT.0.0) GO TO 30
+   11.             B(I,J) = A(I,J)
+   12.    30       B(I,J) = B(I,J)F*UNCT2(83.7)
+       C
+   13.       RETURN
+       C
+   14.       END
+
+
+
+
+
+     FINAL CLEAN77 TOTALS:
+
+                17 LINES READ.          
+                13 STATEMENTS PROCESSED.
+                 1 ROUTINES DETECTED.   
+                18 LINES WRITTEN.       

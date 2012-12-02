@@ -1,0 +1,170 @@
+<html>
+
+  <head>
+    <title>
+      REVNEW - Newton Method with Reverse Communication
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      REVNEW <br> Newton Method with Reverse Communication
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>REVNEW</b>
+      is a FORTRAN77 program which
+      is a simple demonstration of solving a system of nonlinear equations
+      with Newton's method, using reverse communication.
+    </p>
+
+    <h3 align = "center">
+      Licensing:
+    </h3>
+
+    <p>
+      The computer code and data files described and made available on this web page
+      are distributed under
+      <a href = "../../txt/gnu_lgpl.txt">the GNU LGPL license.</a>
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../m_src/kelley/kelley.html">
+      KELLEY</a>,
+      a MATLAB library which
+      can seek solutions of systems of nonlinear equations.
+    </p>
+
+    <p>
+      <a href = "../../f_src/minpack/minpack.html">
+      MINPACK</a>,
+      a FORTRAN90 library which
+      is a minimization
+      package for which most of these problems were used as tests,
+      as part of ACM TOMS algorithm 566.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          James Ortega, Werner Rheinboldt<br>
+          Iterative Solution of Nonlinear Equations in Several Variables,<br>
+          SIAM, 1987,<br>
+          ISBN13: 978-0898714616,<br>
+          LC: QA297.8.O77.
+        </li>
+        <li>
+          Werner Rheinboldt,<br>
+          Methods for Solving Systems of Nonlinear Equations,<br>
+          SIAM, 1998,<br>
+          ISBN: 089871415X,<br>
+          LC: QA214.R44.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "revnew.f">revnew.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "revnew.sh">revnew.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "revnew_prb.f">revnew_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "revnew_prb.sh">revnew_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "revnew_prb_output.txt">revnew_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>REVNEW</b> solves a small system of nonlinear equations.
+        </li>
+        <li>
+          <b>R8_EPSILON</b> returns the R8 roundoff unit.
+        </li>
+        <li>
+          <b>DAXPY</b> computes constant times a vector plus a vector.
+        </li>
+        <li>
+          <b>DDOT</b> forms the dot product of two vectors.
+        </li>
+        <li>
+          <b>DGEFA</b> factors a double precision matrix by gaussian elimination.
+        </li>
+        <li>
+          <b>DGESL</b> solves a linear system factored by DGEFA.
+        </li>
+        <li>
+          <b>DSCAL</b> scales a vector by a constant.
+        </li>
+        <li>
+          <b>DSWAP</b> interchanges two vectors.
+        </li>
+        <li>
+          <b>IDAMAX</b> finds the index of element having maximum absolute value.
+        </li>
+        <li>
+          <b>TIMESTAMP</b> prints out the current YMDHMS date as a timestamp.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 04 January 2009.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

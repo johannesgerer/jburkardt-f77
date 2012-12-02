@@ -1,0 +1,216 @@
+<html>
+
+  <head>
+    <title>
+      TOMS706 - (DCUTRI) - Quadrature over a Triangulated Region
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS706 <br> (DCUTRI) - Quadrature over a Triangulated Region
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS706</b>
+      is a FORTRAN77 library which
+      approximates the integral of a function over a triangulated region.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/dunavant/dunavant.html">
+      DUNAVANT</a>,
+      a FORTRAN90 library which
+      defines a Dunavant rule for quadrature over a triangle.
+    </p>
+
+    <p>
+      <a href = "../../f_src/fekete/fekete.html">
+      FEKETE</a>,
+      a FORTRAN90 library which
+      defines a Fekete rule for quadrature or interpolation over a triangle.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/machine/machine.html">
+      MACHINE</a>,
+      a FORTRAN77 library which 
+      stores the appropriate values
+      of machine constants for a given machine.
+    </p>
+
+    <p>
+      <a href = "../../f_src/stroud/stroud.html">
+      STROUD</a>,
+      a FORTRAN90 library which
+      defines quadrature rules on a
+      regions of a variety of shapes and dimensions.
+    </p>
+
+    <p>
+      <a href = "../../f_src/test_tri_int/test_tri_int.html">
+      TEST_TRI_INT</a>,
+      a FORTRAN90 library which
+      can be used to test algorithms
+      for quadrature over a triangle.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/toms612/toms612.html">
+      TOMS612</a>,
+      a FORTRAN77 library which
+      estimates the integral of a function
+      over a triangle.
+    </p>
+
+    <p>
+      <a href = "../../f_src/triangulation/triangulation.html">
+      TRIANGULATION</a>,
+      a FORTRAN90 library which
+      carries out triangulations and
+      includes some quadrature rules on triangles.
+    </p>
+
+    <p>
+      <a href = "../../f_src/wandzura/wandzura.html">
+      WANDZURA</a>,
+      a FORTRAN90 library which
+      defines Wandzura rules for quadrature
+      on a triangle.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Jarle Berntsen, Terje Espelid,<br>
+          Algorithm 706:
+          DCUTRI, an Algorithm for Adaptive Cubature over a Collection
+          of Triangles,<br>
+          ACM Transactions on Mathematical Software,<br>
+          Volume 18, Number 3, September 1992, pages 329-342.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms706.f">toms706.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms706.sh">toms706.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <b>TOMS706_PRB1</b> is a simple example which integrates
+      exp(x^2+y^2) over a single triangle.
+      <ul>
+        <li>
+          <a href = "toms706_prb1.f">toms706_prb1.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms706_prb1.sh">toms706_prb1.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms706_prb1_output.txt">toms706_prb1_output.txt</a>,
+          the output from a run of the sample program.
+        </li>
+        <li>
+          <a href = "toms706_prb1_sun_output.txt">toms706_prb1_sun_output.txt</a>,
+          the expected output from the run.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>TOMS706_PRB2</b> is an example which integrates
+      many functions over a triangulated region.
+      <ul>
+        <li>
+          <a href = "toms706_prb2.f">toms706_prb2.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms706_prb2.sh">toms706_prb2.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms706_prb2_output.txt">toms706_prb2_output.txt</a>,
+          the output from a run of the sample program.
+        </li>
+        <li>
+          <a href = "toms706_prb2_sun_output.txt">toms706_prb2_sun_output.txt</a>,
+          the expected output from the run.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>D1MACH</b> returns double precision machine-dependent constants.
+        </li>
+        <li>
+          <b>DCHTRI</b> checks the validity of the input parameters to DCUTRI.
+        </li>
+        <li>
+          <b>DCUTRI</b> integrates a function over a triangulated region.
+        </li>
+        <li>
+          <b>DRLTRI</b> computes basic integration rules and error estimates.
+        </li>
+        <li>
+          <b>DTRTRI</b> maintains a heap of subregions.
+        </li>
+        <li>
+          <b>DADTRI</b> computes integrals over triangular regions.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 09 December 2006.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

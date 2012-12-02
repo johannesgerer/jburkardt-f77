@@ -1,0 +1,201 @@
+<html>
+
+  <head>
+    <title>
+      SCPACK - Numerical Computation of Schwarz-Christoffel Conformal Maps
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      SCPACK <br> Numerical Computation of Schwarz-Christoffel Conformal Maps
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>SCPACK</b>
+      is a FORTRAN77 program which
+      implements the Schwarz-Christoffel conformal map from a disk to
+      a polygon, which may contain vertices at infinity.
+    </p>
+
+    <h3 align = "center">
+      License:
+    </h3>
+
+    <p>
+      The package may be freely copied and used, but reference to
+      the paper by Nick Trefethen should be given in any publications arising
+      from its use.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Tobin Driscoll, Lloyd Trefethen,<br>
+          Schwarz-Christoffel Mapping,<br>
+          Cambridge, 2002,<br>
+          ISBN: 0-521-80726-3,<br>
+          LC: QA360.D75.
+        </li>
+        <li>
+          Nick Trefethen,<br>
+          Numerical Computation of the Schwarz-Christoffel Transformation,<br>
+          SIAM Journal of Scientific and Statistical Computing,<br>
+          Volume 1, 1980, pages 82-102.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "scpack.f">scpack.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "scpack_sub.f">scpack_sub.f</a>,
+          the source code for utility routines.
+        </li>
+        <li>
+          <a href = "scpack.sh">scpack.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "scpack_prb.f">scpack_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "scpack_prb.sh">scpack_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "scpack_prb_output.txt">scpack_prb_output.txt</a>,
+          the output from a run of the sample program.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "scpack_prb.xy">scpack_prb.xy</a>,
+          an XY file containing node coordinates.
+        </li>
+        <li>
+          <a href = "scpack_prb.xyl">scpack_prb.xyl</a>,
+          an XYL file listing the indices of nodes that form lines.
+        </li>
+        <li>
+          <a href = "scpack_prb.png">scpack_prb.png</a>,
+          a PNG image of the grid created by XYL_DISPLAY.
+        </li>
+      </ul>
+    </p>
+
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>QINIT</b> computes nodes and weights for Gauss-Jacobi quadrature.
+        </li>
+        <li>
+          <b>SCSOLV</b> computes parameters for the Schwarz-Christoffel mapping.
+        </li>
+        <li>
+          <b>WSC</b> computes forward map w(zz)
+        </li>
+        <li>
+          <b>ZSC</b> computes the inverse map Z(WW) by Newton iteration.
+        </li>
+        <li>
+          <b>ZFODE</b> computes the function ZDZDT needed by ODE in ZSC.
+        </li>
+        <li>
+          <b>CHECK</b> checks geometry of the problem.
+        </li>
+        <li>
+          <b>YZTRAN</b> transforms y(k) to z(k).
+        </li>
+        <li>
+          <b>SCFUN</b> is the function whose zero must be found in SCSOLV.
+        </li>
+        <li>
+          <b>SCOUTP</b> prints K, W(K), TH(K), BETAM(K) and Z(K).
+        </li>
+        <li>
+          <b>SCTEST</b> tests the computed map for accuracy.
+        </li>
+        <li>
+          <b>ZQUAD</b> computes the line integral of ZPROD.
+        </li>
+        <li>
+          <b>ZQUAD1</b> computes half of the line integral of ZPROD.
+        </li>
+        <li>
+          <b>DIST</b> determines the distance from zz to the nearest singularity z(k).
+        </li>
+        <li>
+          <b>ZQSUM</b> computes the integral of ZPROD.
+        </li>
+        <li>
+          <b>ZPROD</b> computes a Schwarz-Christoffel integrand.
+        </li>
+        <li>
+          <b>RPROD</b> computes the absolute value of a Schwarz-Christoffel integrand.
+        </li>
+        <li>
+          <b>NEARZ</b> returns information about the nearest prevertex.
+        </li>
+        <li>
+          <b>ANGLES</b> computes external angles.
+        </li>
+        <li>
+          <b>COUNT0</b> ?
+        </li>
+        <li>
+          <b>COUNT</b> ?
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on Thu Dec  6 16:43:35 2007
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

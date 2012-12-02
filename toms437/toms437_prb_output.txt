@@ -1,0 +1,45 @@
+ 
+TOMS437_PRB
+  Test TOMS algorithm 437, product-type
+  Simpson's integration.
+ 
+TEST01
+  Integral of F(X) * G(X) from -1 to 1,
+  with F(X) = 1, G(X) = 1/(1+x**2 )
+ 
+       N    VINT
+ 
+       1     5.49020    
+       2     2.47843    
+       3     2.90842    
+       4     2.57255    
+       5     2.69529    
+       6     2.63329    
+       7     2.66030    
+       8     2.64773    
+       9     2.65342    
+      10     2.65082    
+ 
+  Exact:     2.65164    
+ 
+TEST02
+  Integral of F(X) * G(X) from 0 to PI,
+  with F(X) = EXP(-X), G(X) = COS(X)
+ 
+       N    VINT
+ 
+       1    0.500972    
+       2    0.523002    
+       3    0.521976    
+       4    0.521733    
+       5    0.521660    
+       6    0.521633    
+       7    0.521621    
+       8    0.521615    
+       9    0.521612    
+      10    0.521610    
+ 
+  Exact:    0.521607    
+ 
+TOMS437_PRB
+  Normal end of execution.

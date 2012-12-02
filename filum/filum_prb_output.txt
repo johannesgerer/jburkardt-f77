@@ -1,0 +1,218 @@
+22 November  2011   8:39:14.636 AM      
+ 
+FILUM_PRB:
+  FORTRAN77 version
+  Test the FILUM library.
+ 
+TEST03
+  FILE_COLUMN_COUNT counts the columns in a file.
+ 
+  It is assumed that the file contains a number of lines,
+  with each line containing the same number of words.
+  The task is to determine the number of words in a line,
+  that is, the number of "columns" of text.
+ 
+  Examining the file: 
+    "filum_prb_4by5.txt".
+ 
+  Number of columns:        5
+ 
+TEST06
+  FILE_EXIST reports whether a file "exists".
+ 
+  Exist?  File_name
+ 
+       T  filum_prb.f
+       T  filum.f
+       F  raisin.txt
+       F  make.money.fast
+ 
+TEST14
+  FILE_NAME_INC increments a string
+ 
+     Input             Output
+ 
+  file???.dat                               
+  (Empty output string.  Quit loop!)
+ 
+  file072.dat           file073.dat         
+  file073.dat           file074.dat         
+  file074.dat           file075.dat         
+  file075.dat           file076.dat         
+ 
+  2cat9.dat             3cat0.dat           
+  3cat0.dat             3cat1.dat           
+  3cat1.dat             3cat2.dat           
+  3cat2.dat             3cat3.dat           
+ 
+  fred99.txt            fred00.txt          
+  fred00.txt            fred01.txt          
+  fred01.txt            fred02.txt          
+  fred02.txt            fred03.txt          
+ 
+TEST145
+  FILE_NAME_INC increments a string.
+  This test checks that a file name is properly
+  incremented when carrying is required.
+ 
+     Input             Output
+ 
+  file???.dat                               
+  (File name not incrementable.  Quit loop!)
+ 
+  file072.dat           file073.dat         
+  file073.dat           file074.dat         
+  file074.dat           file075.dat         
+  file075.dat           file076.dat         
+  file076.dat           file077.dat         
+  file077.dat           file078.dat         
+  file078.dat           file079.dat         
+  file079.dat           file080.dat         
+  file080.dat           file081.dat         
+  file081.dat           file082.dat         
+ 
+  2cat9.dat             3cat0.dat           
+  3cat0.dat             3cat1.dat           
+  3cat1.dat             3cat2.dat           
+  3cat2.dat             3cat3.dat           
+  3cat3.dat             3cat4.dat           
+  3cat4.dat             3cat5.dat           
+  3cat5.dat             3cat6.dat           
+  3cat6.dat             3cat7.dat           
+  3cat7.dat             3cat8.dat           
+  3cat8.dat             3cat9.dat           
+ 
+  fred98.txt            fred99.txt          
+  fred99.txt            fred00.txt          
+  fred00.txt            fred01.txt          
+  fred01.txt            fred02.txt          
+  fred02.txt            fred03.txt          
+  fred03.txt            fred04.txt          
+  fred04.txt            fred05.txt          
+  fred05.txt            fred06.txt          
+  fred06.txt            fred07.txt          
+  fred07.txt            fred08.txt          
+ 
+TEST15
+  FILE_NAME_INC "increments" a string, such 
+  as a file name.
+ 
+  In this example, the string is a file name
+  of the form
+ 
+     "file_00.txt".
+ 
+  We know we have a sequence of files named
+    file_001.txt, file_002.txt, ...
+  and we want to generate the name of the
+  next file and open it.  If it doesn't 
+  exist, exit.
+ 
+  Looking for file "file_01.txt".
+ 
+TEST16
+  FILE_NAME_INC "increments" a string, such
+  as a file name.
+ 
+  In this example, the string is a file name
+  of the form
+ 
+     "file_s00_t000.txt
+ 
+  The user is going to carry out several simulations.
+  For each simulation, a number of time steps are done.
+  In the file name, the "s" file records the simulation,
+  and the "t" field records the time step.
+ 
+  So a typical file name is "file_s05_t017.txt".
+ 
+  Assuming we have 5 simulations, and 4 time steps,
+  the following double loop will generate all the
+  file names, from
+    "file_s01_t001.txt"
+  to
+    "file_s05_t004.txt".
+ 
+  Begin simulation        1
+ 
+  file_s01_t001.txt
+  file_s01_t002.txt
+  file_s01_t003.txt
+  file_s01_t004.txt
+ 
+  Begin simulation        2
+ 
+  file_s02_t001.txt
+  file_s02_t002.txt
+  file_s02_t003.txt
+  file_s02_t004.txt
+ 
+  Begin simulation        3
+ 
+  file_s03_t001.txt
+  file_s03_t002.txt
+  file_s03_t003.txt
+  file_s03_t004.txt
+ 
+  Begin simulation        4
+ 
+  file_s04_t001.txt
+  file_s04_t002.txt
+  file_s04_t003.txt
+  file_s04_t004.txt
+ 
+  Begin simulation        5
+ 
+  file_s05_t001.txt
+  file_s05_t002.txt
+  file_s05_t003.txt
+  file_s05_t004.txt
+ 
+TEST165
+  FILE_NAME_INC_NOWRAP increments a string.
+  This test checks that a file name is properly
+  incremented when carrying is required.
+ 
+     Input             Output
+ 
+  file???.dat                               
+  (File name not incrementable.  Quit loop!)
+ 
+  file072.dat           file073.dat         
+  file073.dat           file074.dat         
+  file074.dat           file075.dat         
+  file075.dat           file076.dat         
+  file076.dat           file077.dat         
+  file077.dat           file078.dat         
+  file078.dat           file079.dat         
+  file079.dat           file080.dat         
+  file080.dat           file081.dat         
+  file081.dat           file082.dat         
+ 
+  2cat9.dat             3cat0.dat           
+  3cat0.dat             3cat1.dat           
+  3cat1.dat             3cat2.dat           
+  3cat2.dat             3cat3.dat           
+  3cat3.dat             3cat4.dat           
+  3cat4.dat             3cat5.dat           
+  3cat5.dat             3cat6.dat           
+  3cat6.dat             3cat7.dat           
+  3cat7.dat             3cat8.dat           
+  3cat8.dat             3cat9.dat           
+ 
+  fred98.txt            fred99.txt          
+  fred99.txt                                
+  (File name not incrementable.  Quit loop!)
+ 
+TEST22
+  FILE_ROW_COUNT counts the "rows" in a file.
+ 
+  Examining file:
+    "filum_prb_test.txt".
+ 
+  Number of lines:            16
+ 
+FILUM_PRB:
+  Normal end of execution.
+ 
+22 November  2011   8:39:14.638 AM      

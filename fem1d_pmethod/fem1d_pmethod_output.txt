@@ -1,0 +1,89 @@
+29 April     2007   8:24:39.000 AM      
+  
+ FEM1D_PMETHOD
+   FORTRAN77 version
+  
+ Solve the two-point boundary value problem
+  
+   - d/dX (P dU/dX) + Q U = F
+  
+ on the interval [-1,1], with
+ U(-1)=U(1)=0.
+  
+ The P method is used, which represents U as
+ a weighted sum of orthogonal polynomials.
+  
+  
+ Highest degree polynomial to use is  2
+ Number of points to be used for output= 10
+  
+   Problem #2:
+   U=cos(0.5*pi*x),
+   P=1,
+   Q=0,
+   F=0.25*pi*pi*cos(0.5*pi*x)
+  
+ Basis function orthogonality test:
+  
+    i   j     b(i,j)/a(i)
+  
+  
+   0   0   1.00000    
+   0   1  0.208167E-16
+   0   2 -0.624500E-16
+  
+   1   0  0.346945E-16
+   1   1   1.00000    
+   1   2  0.173472E-16
+  
+   2   0 -0.227682E-15
+   2   1  0.379471E-16
+   2   2   1.00000    
+  
+ Representation of solution:
+  
+ Basis function coefficients:
+  
+   0  0.954930    
+   1 -0.125361E-17
+   2 -0.220787    
+  
+  
+        X     Approximate Solution
+  
+  -1.00000       0.00000    
+ -0.800000      0.308802    
+ -0.600000      0.588546    
+ -0.400000      0.809559    
+ -0.200000      0.950645    
+   0.00000      0.999087    
+  0.200000      0.950645    
+  0.400000      0.809559    
+  0.600000      0.588546    
+  0.800000      0.308802    
+   1.00000       0.00000    
+  
+  
+ Comparison of computed and exact solutions:
+  
+     X        U computed    U exact     Error
+  
+ -0.1000E+01  0.0000E+00  0.6123E-16  0.6123E-16
+ -0.8000E+00  0.3088E+00  0.3090E+00  0.2149E-03
+ -0.6000E+00  0.5885E+00  0.5878E+00 -0.7612E-03
+ -0.4000E+00  0.8096E+00  0.8090E+00 -0.5423E-03
+ -0.2000E+00  0.9506E+00  0.9511E+00  0.4112E-03
+  0.0000E+00  0.9991E+00  0.1000E+01  0.9130E-03
+  0.2000E+00  0.9506E+00  0.9511E+00  0.4112E-03
+  0.4000E+00  0.8096E+00  0.8090E+00 -0.5423E-03
+  0.6000E+00  0.5885E+00  0.5878E+00 -0.7612E-03
+  0.8000E+00  0.3088E+00  0.3090E+00  0.2149E-03
+  0.1000E+01  0.0000E+00  0.6123E-16  0.6123E-16
+  
+ Little L2 error =  0.00173531106
+  
+  
+ FEM1D_PMETHOD
+   Normal end of execution.
+  
+29 April     2007   8:24:39.000 AM      

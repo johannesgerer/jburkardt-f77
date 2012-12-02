@@ -1,0 +1,189 @@
+<html>
+
+  <head>
+    <title>
+      TOMS439 - Product Type Three-point Guass-Legendre Simpson's Integration
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS439 <br> Product Type Three-point Guass-Legendre Simpson's Integration
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS439</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 439, which carries out a
+      product type three point Gauss-Legendre-Simpson's integration rule
+      to estimate the integral from A to B of F(X) * G(X).
+    </p>
+
+    <p>
+      While the text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>, most of the early
+      algorithms are not available.  This is one of them.  I typed it
+      in.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <dl>
+        <dt>
+          <b>call p3pgs ( a, b, n, fn, gn, vint )</b>
+        </dt>
+        <dd>
+          where <b>A</b> and <b>B</b> are the left and right endpoints
+          of the interval, <b>N</b> is the number of times the
+          rule is to be compounded, <b>FN</b> and <b>GN</b> are external
+          functions for evaluating the integrand factors, and <b>VINT</b>
+          is returned as the estimated value of the integral of
+          <b>FN(X)</b> * <b>GN(X)</b> from <b>A</b> to <b>B</b>.
+        </dd>
+      </dl>
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/intlib/intlib.html">
+      INTLIB</a>,
+      a FORTRAN90 library which
+      estimates integrals.
+    </p>
+
+    <p>
+      <a href = "../../f_src/quadrule/quadrule.html">
+      QUADRULE</a>,
+      a FORTRAN90 library which 
+      can define various quadrature
+      rules to estimate integrals.
+    </p>
+
+    <p>
+      <a href = "../../f_src/test_int/test_int.html">
+      TEST_INT</a>,
+      a FORTRAN90 library which
+      defines a number of scalar functions of
+      to test routines that estimate integrals.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/toms436/toms436.html">
+      TOMS436</a>,
+      a FORTRAN77 library which
+      carries out product type trapezoidal integration.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/toms437/toms437.html">
+      TOMS437</a>,
+      a FORTRAN77 library which
+      carries out product type Simpson's integration.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/toms438/toms438.html">
+      TOMS438</a>,
+      a FORTRAN77 library which
+      carries out product type two-point Gauss-Legendre-Simpson's
+      integration.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Robert Boland,<br>
+          Algorithm 439:
+          Product Type Three-point Guass-Legendre Simpson's Integration,<br>
+          Communications of the ACM,<br>
+          Volume 15, Number 12, December 1972, pages 1072.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms439.f">toms439.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms439.sh">toms439.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms439_prb.f">toms439_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms439_prb.sh">toms439_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms439_prb_output.txt">toms439_prb_output.txt</a>,
+          the output from a run of the sample program.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>P3PGS</b> carries out a product type three-point
+          Gauss-Legendre-Simpson's integration.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 06 December 2005.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

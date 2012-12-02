@@ -1,0 +1,31 @@
+12 January   2007  11:40:39.000 AM      
+ 
+TIMESTAMP_PRB
+  FORTRAN77 version
+  Demonstrate the use of TIMESTAMP.
+ 
+TEST01
+  TIMESTAMP prints out the current wallclock
+  time, including the year, month, day, 
+  hours, minutes, seconds, thousandths of a 
+  second, and AM/PM.
+ 
+  This can be useful in keeping track of the
+  date of execution of a particular program
+  or to give a rough idea of the length of
+  time required to run a program.
+ 
+12 January   2007  11:40:39.000 AM      
+ 
+TEST02
+  TIMESTRING returns the current wallclock time,
+  including the year, month, day, hours, minutes,
+  seconds, thousandths of a second, and AM/PM
+  in a string, which the user may print or manipulate.
+ 
+  TIMESTRING returned the value "12 January   2007  11:40:39.000 AM      ".
+ 
+TIMESTAMP_PRB
+  Normal end of execution.
+ 
+12 January   2007  11:40:39.000 AM      

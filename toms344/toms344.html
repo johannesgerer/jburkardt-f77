@@ -1,0 +1,159 @@
+<html>
+
+  <head>
+    <title>
+      TOMS344 - Student's T-Distribution
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS344 <br> Student's T-Distribution
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS344</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 344, for evaluating Student's
+      T distribution.
+    </p>
+
+    <p>
+      The text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <dl>
+        <dt>
+          <b>call ttest ( t, df, ans, kerr )</b>
+        </dt>
+        <dd>
+          where <b>T</b> is the argument, <b>DF</b> is the (integer)
+          number of degrees of freedom, <b>ANS</b> is output as the
+          value of Student's T distribution, and <b>KERR</b> is
+          an error code which is 0 for successful computation.
+        </dd>
+      </dl>
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/dcdflib/dcdflib.html">
+      DCDFLIB</a>,
+      a FORTRAN90 library which
+      evaluates many statistical distributions.
+    </p>
+
+    <p>
+      <a href = "../../f_src/prob/prob.html">
+      PROB</a>,
+      a FORTRAN90 library which
+      evaluates many statistical distributions.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/test_values/test_values.html">
+      TEST_VALUES</a>,
+      a FORTRAN77 library which
+      includes selected tabulated values of many mathematical functions.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          David Levine,<br>
+          Algorithm 344:
+          Student's T-Distribution,<br>
+          Communications of the ACM,<br>
+          Volume 11, Number 1, pages 37-38, January 1969.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms344.f">toms344.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms344.sh">toms344.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms344_prb.f">toms344_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms344_prb.sh">toms344_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms344_prb_output.txt">toms344_prb_output.txt</a>,
+          the output from a run of the sample program.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>TTEST</b> evaluates Student's T-distribution.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 06 January 2006.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

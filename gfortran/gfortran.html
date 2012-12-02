@@ -1,0 +1,320 @@
+<html>
+
+  <head>
+    <title>
+      GFORTRAN - The GFORTRAN Compiler for FORTRAN77 code
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      GFORTRAN <br> The GFORTRAN Compiler for FORTRAN77 code
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>GFORTRAN</b>
+      is a directory of FORTRAN77 programs which
+      illustrate the use of the Gnu GFORTRAN compiler.
+    </p>
+
+    <p>
+      This web page investigates the relationship between <b>GFORTRAN</b>
+      and FORTRAN77, especially questions involving the implementation of
+      the various arithmetic precisions.
+    </p>
+
+    <h3 align = "center">
+      Licensing:
+    </h3>
+
+    <p>
+      The computer code and data files described and made available on this web page
+      are distributed under
+      <a href = "../../txt/gnu_lgpl.txt">the GNU LGPL license.</a>
+    </p>
+
+    <h3 align = "center">
+      Languages:
+    </h3>
+
+    <p>
+      <b>GFORTRAN</b> examples are available in
+      <a href = "../../f77_src/gfortran/gfortran.html">a FORTRAN77 version</a> and
+      <a href = "../../f_src/gfortran/gfortran.html">a FORTRAN90 version</a>.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../c_src/c/c.html">
+      C</a>,
+      C programs which
+      illustrate features of the C language.
+    </p>
+
+    <p>
+      <a href = "../../cpp_src/cpp/cpp.html">
+      C++</a>,
+      C++ programs which
+      illustrate features of the C++ language.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/f77/f77.html">
+      F77</a>,
+      FORTRAN77 programs which
+      illustrate features of the FORTRAN77 language.
+    </p>
+
+    <p>
+      <a href = "../../f_src/f90/f90.html">
+      F90</a>,
+      FORTRAN90 programs which
+      illustrate features of the FORTRAN90 language.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/f77_intrinsics/f77_intrinsics.html">
+      F77_INTRINSICS</a>,
+      FORTRAN77 programs which
+      illustrate the use of FORTRAN77 intrinsic functions.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/gfortran_intrinsics/gfortran_intrinsics.html">
+      GFORTRAN_INTRINSICS</a>,
+      a FORTRAN77 program which
+      demonstrates the use of some of the intrinsic functions
+      included with the GFORTRAN compiler.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/makefiles/makefiles.html">
+      MAKEFILES</a>,
+      FORTRAN77 programs which
+      show how to use makefiles with a set of FORTRAN77 files.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/mixed/mixed.html">
+      MIXED</a>,
+      FORTRAN77 programs which
+      show how to write a program partly in FORTRAN77
+      and partly in some other language.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/mpi/mpi.html">
+      MPI</a>,
+      FORTRAN77 programs which
+      show how to set up parallel programs using the message passing interface.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/timer/timer.html">
+      TIMER</a>,
+      FORTRAN77 programs which
+      show how to compute elapsed CPU time in FORTRAN77.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/timestamp/timestamp.html">
+      TIMESTAMP</a>,
+      a FORTRAN77 library which
+      shows how to get a timestamp in FORTRAN90.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          The Gnu FORTRAN page,
+          <a href = "http://www.gnu.org/software/fortran/fortran.html">
+                     http://www.gnu.org/software/fortran/fortran.html </a>.
+        </li>
+        <li>
+          The GFORTRAN Manual,
+          <a href = "http://gcc.gnu.org/onlinedocs/gcc-4.6.0/gfortran.pdf">
+                     http://gcc.gnu.org/onlinedocs/gcc-4.6.0/gfortran.pdf</a>.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <b>BOUNDS</b> shows GFORTRAN can help you catch illegal array references.
+      You need to compile with the "-fbounds-check" switch, and your program needs
+      to correctly declare the dimensions of your arrays.  You can't declare an
+      array to be of size (*) or size (1), or allocate it as (10) in the calling
+      routine and then declare it to be of size (20) in a routine to which it
+      is passed!
+      <ul>
+        <li>
+          <a href = "bounds.f">bounds.f</a>, the source code;
+        </li>
+        <li>
+          <a href = "bounds.sh">bounds.sh</a>, commands that
+          compile and run the source code;
+        </li>
+        <li>
+          <a href = "bounds_output.txt">bounds_output.txt</a>,
+          the output file;
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>CONSTANT_TYPE</b> shows that FORTRAN77 constants have a type, and that
+      if you don't specify it for real values, the default will be
+      single precision.
+      <ul>
+        <li>
+          <a href = "constant_type.f">constant_type.f</a>, the source code;
+        </li>
+        <li>
+          <a href = "constant_type.sh">constant_type.sh</a>, commands that
+          compile and run the source code;
+        </li>
+        <li>
+          <a href = "constant_type_output.txt">constant_type_output.txt</a>,
+          the output file;
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>DIGITS</b> investigates how many digits you can usefully specify
+      for data.
+      <ul>
+        <li>
+          <a href = "digits.f">digits.f</a>, the source code;
+        </li>
+        <li>
+          <a href = "digits.sh">digits.sh</a>, commands that
+          compile and run the source code with the F90 compiler;
+        </li>
+        <li>
+          <a href = "digits_output.txt">digits_output.txt</a>,
+          the output file;
+      </ul>
+    </p>
+
+    <p>
+      <b>DIVISION</b> shows that, if you're expecting double precision accuracy,
+      you need to specify your constants carefully, as double precision
+      values.
+      <ul>
+        <li>
+          <a href = "division.f">division.f</a>, the source code;
+        </li>
+        <li>
+          <a href = "division.sh">division.sh</a>, commands that
+          compile and run the source code;
+        </li>
+        <li>
+          <a href = "division_output.txt">division_output.txt</a>,
+          the output file;
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>DOUBLE_COMPLEX</b> shows how you can declare "double precision complex" values.
+      <ul>
+        <li>
+          <a href = "double_complex.f">double_complex.f</a>, the source code;
+        </li>
+        <li>
+          <a href = "double_complex.sh">double_complex.sh</a>, commands that
+          compile and run the source code;
+        </li>
+        <li>
+          <a href = "double_complex_output.txt">double_complex_output.txt</a>,
+          the output file;
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>EXPONENT_FORMAT_OVERFLOW</b> shows that (at least some) FORTRAN compilers
+      <b>cannot properly print real numbers with exponents of magnitude greater than 99</b>.
+      This becomes an especially serious problem if you write a very large or very
+      small number out, and then read it back in, only to find that it has suddenly
+      entirely lost its exponent, and now has magnitude roughly 1!
+      <ul>
+        <li>
+          <a href = "exponent_format_overflow.f">exponent_format_overflow.f</a>,
+          the source code;
+        </li>
+        <li>
+          <a href = "exponent_format_overflow.sh">exponent_format_overflow.sh</a>, commands that
+          compile and run the source code with the F90 compiler;
+        </li>
+        <li>
+          <a href = "exponent_format_overflow_output.txt">exponent_format_overflow_output.txt</a>,
+          the output file;
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>HELLO</b> is just a "Hello, world!" program.
+      <ul>
+        <li>
+          <a href = "hello.f">hello.f</a>, the source code;
+        </li>
+        <li>
+          <a href = "hello.sh">hello.sh</a>, commands that
+          compile and run the source code;
+        </li>
+        <li>
+          <a href = "hello_output.txt">hello_output.txt</a>,
+          the output file;
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>SORT_TEST</b> bubble-sorts a real vector.
+      <ul>
+        <li>
+          <a href = "sort_test.f">sort_test.f</a>, the source code;
+        </li>
+        <li>
+          <a href = "sort_test.sh">sort_test.sh</a>, commands that
+          compile and run the source code;
+        </li>
+        <li>
+          <a href = "sort_test_output.txt">sort_test_output.txt</a>,
+          the output file;
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 04 December 2008.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+</html>

@@ -1,0 +1,41 @@
+28 October   2008  11:48:27.683 AM      
+ 
+SPARSEKIT_PRB12
+  FORTRAN77 version
+ 
+  Test EXPPRO, which computes the matrix exponential.
+  Dimension of Krylov subspace M =      5
+ 
+  First 10 components of final answer:
+ 
+  0.99987084136676185     
+  0.99989865077188700     
+  0.99992362563248216     
+  0.99994591599263294     
+  0.99996566937231868     
+  0.99998303067218919     
+  0.99999814207912252     
+   1.0000111429726994     
+   1.0000221698327056     
+   1.0000313561478134     
+ 
+ 
+  First 10 components of exact solution 
+ 
+  1.00000000000000000     
+  0.99999999999999989     
+  1.00000000000000000     
+  0.99999999999999989     
+  0.99999999999999989     
+   1.0000000000000002     
+  0.99999999999999989     
+  0.99999999999999989     
+  1.00000000000000000     
+  1.00000000000000000     
+ 
+   RMS error (approx-exact)=  3.36587473490775974E-005
+ 
+SPARSEKIT_PRB12
+  Normal end of execution.
+ 
+28 October   2008  11:48:27.685 AM      

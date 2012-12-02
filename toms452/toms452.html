@@ -1,0 +1,153 @@
+<html>
+
+  <head>
+    <title>
+      TOMS452 - Combinations of M things out of N
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS452 <br> Combinations of M things out of N
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS452</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 452, for generating, one at a
+      time, the combinations of M things out of N.
+    </p>
+
+    <p>
+      The text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <dl>
+        <dt>
+          <b>call nxcbn ( n, m, ic )</b>
+        </dt>
+        <dd>
+          where <b>N</b> is the total number of things, <b>M</b> is the number of
+          things in the combination, and <b>IC(1:N)</b> contains exactly
+          <b>M</b> values of 1, with the rest being 0.  On output, <b>IC</b> will
+          be altered to indicate the "next" combination.
+        </dd>
+      </dl>
+    </p>
+
+    <h3 align = "center">
+      Related Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/combo/combo.html">
+      COMBO</a>,
+      a FORTRAN90 library which
+      contains several routines for generating, ranking, or randomly
+      selecting a combination.
+    </p>
+
+    <p>
+      <a href = "../../f_src/subset/subset.html">
+      SUBSET</a>,
+      a FORTRAN90 library which
+      contains many routines for generating, ranking, or randomly
+      selecting a combination.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          CN Liu, DT Tang,<br>
+          Algorithm 452: Enumerating Combinations of M out of N Objects,<br>
+          Communications of the ACM,<br>
+          August 1973, Volume 16, Number 8, page 485.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms452.f">toms452.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms452.sh">toms452.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms452_prb.f">toms452_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms452_prb.sh">toms452_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms452_prb_output.txt">toms452_prb_output.txt</a>,
+          the output from a run of the sample program.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>NXCBN</b> generates the next combination of M things out of N.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 01 December 2005.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

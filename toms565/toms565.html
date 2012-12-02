@@ -1,0 +1,192 @@
+<html>
+
+  <head>
+    <title>
+      TOMS565 - PDETWO: Approximation of a PDE in 1 Time and 2 Space Dimensions
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS565 <br> PDETWO: Approximation of a PDE in 1 Time and 2 Space Dimensions
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS565</b>
+      is a FORTRAN77 library which
+      approximates a time-dependent partial differential equation (PDE)
+      in two spatial dimensions.
+    </p>
+
+    <p>
+      The text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Software:
+    </h3>
+
+    <p>
+      <a href = "../../f77_src/toms494/toms494.html">
+      TOMS494</a>
+      a FORTRAN77 library which
+      approximates a 1D PDE as a system of ODE's;<br>
+      this library is commonly called <b>PDEONE</b>;<br>
+      this is ACM TOMS algorithm 494.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          David Melgaard, Richard Sincovec,<br>
+          Algorithm 565:
+          PDETWO/PSETM/GEARB: Solution of systems of two-dimensional
+          nonlinear partial differential equations,<br>
+          Volume 7, Number 1, March 1981, pages 126-135.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms565.f">toms565.f</a>, the source code;
+        </li>
+        <li>
+          <a href = "toms565.sh">toms565.sh</a>,
+          commands to compile the source code;
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      Problem 1 is a simple elliptic equation.
+      <ul>
+        <li>
+          <a href = "toms565_prb1.f">toms565_prb1.f</a>, a sample calling
+          program;
+        </li>
+        <li>
+          <a href = "toms565_prb1.sh">toms565_prb1.sh</a>, commands to
+          compile, link and run the sample calling program;
+        </li>
+        <li>
+          <a href = "toms565_prb1_output.txt">toms565_prb1_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      Problem 2 is the Burgers equation.
+      <ul>
+        <li>
+          <a href = "toms565_prb2.f">toms565_prb2.f</a>, a sample calling
+          program;
+        </li>
+        <li>
+          <a href = "toms565_prb2.sh">toms565_prb2.sh</a>, commands to
+          compile, link and run the sample calling program;
+        </li>
+        <li>
+          <a href = "toms565_prb2_output.txt">toms565_prb2_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      Problem 3 is a coupled system of PDE's.  This problem currently
+      causes the time integrator to fail.
+      <ul>
+        <li>
+          <a href = "toms565_prb3.f">toms565_prb3.f</a>, a sample calling
+          program;
+        </li>
+        <li>
+          <a href = "toms565_prb3.sh">toms565_prb3.sh</a>, commands to
+          compile, link and run the sample calling program;
+        </li>
+        <li>
+          <a href = "toms565_prb3_output.txt">toms565_prb3_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>PSETM</b> generates the jacobian matrix.
+        </li>
+        <li>
+          <b>PDETWO</b> converts the user's PDE system into ODE's for the time integrator.
+        </li>
+        <li>
+          <b>STRSET</b> sets up storage.
+        </li>
+        <li>
+          <b>DRIVEP</b> is the driver program for the time integrator.
+        </li>
+        <li>
+          <b>INTERP</b> interpolates values of the dependent variable.
+        </li>
+        <li>
+          <b>STIFFP</b> takes one integration step.
+        </li>
+        <li>
+          <b>COSET</b> sets integration coefficients.
+        </li>
+        <li>
+          <b>DECBR</b> computes the LU decomposition of a banded matrix.
+        </li>
+        <li>
+          <b>SOLBR</b> solves a banded linear system.
+        </li>
+        <li>
+          <b>PDB</b> defines the jacobian if MITER = 1.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 06 February 2011.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+</html>

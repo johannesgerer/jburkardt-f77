@@ -1,0 +1,862 @@
+<html>
+
+  <head>
+    <title>
+      NAPACK - A Numerical Linear Algebra Package.
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      NAPACK <br> A Numerical Linear Algebra Package
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>NAPACK</b> 
+      is a FORTRAN77 library which
+      handles various common tasks in numerical linear algebra and optimization,
+      by William Hager.
+    </p>
+
+    <p>
+      <b>NAPACK</b>  may be used to 
+      <ul>
+        <li>
+          solve linear systems;
+        </li>
+        <li>
+          estimate the condition number of a matrix;
+        </li>
+        <li>
+          compute the norm of a matrix;
+        </li>
+        <li>
+          compute the determinant of a matrix;
+        </li>
+        <li>
+          multiply a matrix by a vector; 
+        </li>
+        <li>
+          invert a matrix;
+        </li>
+        <li>
+          solve linear least squares problems;
+        </li>
+        <li>
+          perform unconstrained minimization of a function f(x);
+        </li>
+        <li>
+          compute eigenvalues and eigenvectors of a matrix;
+        </li>
+        <li>
+          compute the singular value decomposition of a matrix;
+        </li>
+        <li> 
+          compute the QR factors of a matrix.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      The package has special routines for general, band, symmetric, indefinite, 
+      tridiagonal, upper Hessenberg, and circulant matrices.
+    </p>
+
+    <p>
+      Many of the routines use a standard naming convention, in which the first
+      letter indicates the matrix type, and the remainder of the name indicates
+      the operation.
+    </p>
+    <p>
+      <ul>
+        <li>
+          <b>B</b>, Band matrix;
+        </li>
+        <li>    
+          <b>C</b>, Complex matrix;
+        </li>
+        <li>
+          <b>E</b>, Upper Hessenberg matrix;
+        </li>
+        <li>
+          <b>H</b>, Symmetric band matrix;
+        </li>
+        <li>
+          <b>i</b>, Symmetric matrix (symmetric pivoting);
+        </li>
+        <li>
+          <b>K</b>, General matrix (complete pivoting);
+        </li>
+        <li>
+          <b>O</b>, Circulant matrix;
+        </li>
+        <li>
+          <b>P</b>, Tridiagonal matrix (partial pivoting);
+        </li>
+        <li>
+          <b>S</b>, Symmetric matrix;
+        </li>
+        <li>
+          <b>T</b>, Tridiagonal matrix;
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      The original, true, correct version of NAPACK  
+      is available through NETLIB:
+      <a href = "http://www.netlib.org/napack/index.html">
+                 http://www.netlib.org/napack/index.html"</a>.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f77_src/blas1/blas1.html">
+      BLAS1</a>,
+      a FORTRAN77 library which
+      contains level 1 basic linear algebra routines.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/condition/condition.html">
+      CONDITION</a>,
+      a FORTRAN77 library which
+      implements methods of computing or estimating the condition number of a matrix.
+    </p>
+
+    <p>
+      <a href = "../../f_src/dlap/dlap.html">
+      DLAP</a>,
+      a FORTRAN90 library which
+      carries out the iterative solution of sparse linear systems.
+    </p>
+
+    <p>
+      <a href = "../../cpp_src/gsl/gsl.html">
+      GSL</a>, 
+      a C++ library which
+      includes many linear algebra routines.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/lapack_examples/lapack_examples.html">
+      LAPACK_EXAMPLES</a>,
+      a FORTRAN77 program which
+      demonstrates the use of the LAPACK linear algebra library.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/linpack/linpack.html">
+      LINPACK</a>, 
+      a FORTRAN77 library which
+      factors and solves systems of linear equations in a variety of
+      formats and arithmetic types.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/linplus/linplus.html">
+      LINPLUS</a>,
+      a FORTRAN77 library which
+      factors and solves systems of linear equations in a variety of
+      formats and arithmetic types.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/mgmres/mgmres.html">
+      MGMRES</a>,
+      a FORTRAN77 library which 
+      applies the restarted GMRES algorithm to solve a sparse linear system.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/sparsekit/sparsekit.html">
+      SPARSEKIT</a>, 
+      a FORTRAN77 library which
+      carries out operations on sparse matrices, including conversion between various formats.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/test_mat/test_mat.html">
+      TEST_MAT</a>,
+      a FORTRAN77 library which 
+      defines test matrices, some of
+      which have known determinants, eigenvalues and eigenvectors,
+      inverses and so on.
+    </p>
+
+    <h3 align = "center">
+      Author:
+    </h3>
+
+    <p>
+      William Hager
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          William Hager,<br>
+          Applied Numerical Linear Algebra,<br>
+          Prentice-Hall, 1988,<br>
+          ISBN13: 978-0130412942,<br>
+          LC: QA184.H33.
+        </li>
+        <li>
+          William Hager,<br>
+          Condition Estimates,<br>
+          SIAM Journal on Scientific and Statistical Computing,<br>
+          Volume 5, Number 2, June 1984, pages 311-316.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "napack.f">napack.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "napack.csh">napack.csh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "napack_prb.f">napack_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "napack_prb.csh">napack_prb.csh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "napack_prb_output.txt">napack_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>ADDCHG</b> adds an increment vector to a vector.
+        </li>
+        <li>
+          <b>AHESS</b> balances a real matrix, and reduces it to upper Hessenberg form.
+        </li>
+        <li>
+          <b>AMAG</b> returns the L1 norm of a complex number.
+        </li>
+        <li>
+          <b>BAL</b> balances (rescales the rows and columns of) a real matrix.
+        </li>
+        <li>
+          <b>BASIS</b> computes an orthonormal basis for a collection of vectors
+        </li>
+        <li>
+          <b>BCON</b> estimates the condition number of a band matrix.
+        </li>
+        <li>
+          <b>BDET</b> computes the determinant of a band matrix factored by BFACT.
+        </li>
+        <li>
+          <b>BFACT</b> factors a band matrix with partial pivoting.
+        </li>
+        <li>
+          <b>BIDAG</b> reduces a general matrix to bidiagonal form
+        </li>
+        <li>
+          <b>BIDAG2</b> reduces a general matrix a to bidiagonal form.
+        </li>
+        <li>
+          <b>BMULT</b> multiplies a real band matrix a by a vector x.
+        </li>
+        <li>
+          <b>BSOLVE</b> solves a factored band system.
+        </li>
+        <li>
+          <b>BTRANS</b> solves transpose of a factored band system
+        </li>
+        <li>
+          <b>BVERT</b> inverts a band matrix
+        </li>
+        <li>
+          <b>CAHESS</b> balances a complex matrix, and reduces it to Upper Hessenberg form.
+        </li>
+        <li>
+          <b>CBALL</b> balances (rescales the rows and columns of) a complex matrix.
+        </li>
+        <li>
+          <b>CC</b>
+        </li>
+        <li>
+          <b>CDIAG</b> diagonalizes a general complex matrix.
+        </li>
+        <li>
+          <b>CEDIAG</b> diagonalizes a complex Hessenberg matrix.
+        </li>
+        <li>
+          <b>CEF</b>
+        </li>
+        <li>
+          <b>CEIG</b>
+        </li>
+        <li>
+          <b>CEMULT</b> mltiplies a complex Hessenberg matrix by a complex vector.
+        </li>
+        <li>
+          <b>CEVALS</b> computes all eigenvalues of a complex Hessenberg matrix.
+        </li>
+        <li>
+          <b>CEVECT</b> computes an eigenvector of a complex Hessenberg matrix.
+        </li>
+        <li>
+          <b>CHESS</b> reduces a complex matrix to Hessenberg form.
+        </li>
+        <li>
+          <b>CON</b> estimates the 1-norm condition number of a general matrix.
+        </li>
+        <li>
+          <b>CONG</b> minimizes a function using the conjugate gradient method.
+        </li>
+        <li>
+          <b>CP</b>
+        </li>
+        <li>
+          <b>CPACK</b> packs the elements of a complex array.
+        </li>
+        <li>
+          <b>CPOWER</b> uses the power method for a complex matrix.
+        </li>
+        <li>
+          <b>CSIM</b> computes the Hessenberg similarity transform for a complex matrix.
+        </li>
+        <li>
+          <b>CUB</b>
+        </li>
+        <li>
+          <b>CUBIC</b>
+        </li>
+        <li>
+          <b>CUNPACK</b> reverses the operation of CPACK by unpacking the matrix.
+        </li>
+        <li>
+          <b>CVALS</b> computes the eigenvalues of a general complex matrix.
+        </li>
+        <li>
+          <b>CVC</b>
+        </li>
+        <li>
+          <b>CVECT</b> computes an eigenvector of a general complex matrix.
+        </li>
+        <li>
+          <b>CVERT</b> inverts a complex matrix.
+        </li>
+        <li>
+          <b>CZERO</b> computes zeros of a complex polynomial.
+        </li>
+        <li>
+          <b>DAG</b> diagonalizes a complex Hessenberg matrix.
+        </li>
+        <li>
+          <b>DB</b>
+        </li>
+        <li>
+          <b>DET</b> computes the determinant of a matrix factored by FACT.
+        </li>
+        <li>
+          <b>DIAG</b> diagonalizes a general real matrix.
+        </li>
+        <li>
+          <b>ECON</b> computes the condition number of an upper Hessenberg matrix.
+        </li>
+        <li>
+          <b>EDET</b> computes the determinant of an upper Hessenberg matrix.
+        </li>
+        <li>
+          <b>EDIAG</b> diagonalizes an upper Hessenberg matrix.
+        </li>
+        <li>
+          <b>EFACT</b> factors an upper Hessenberg matrix.
+        </li>
+        <li>
+          <b>EIG2</b>
+        </li>
+        <li>
+          <b>EIG3</b>
+        </li>
+        <li>
+          <b>EMULT</b> multiplies an upper Hessenberg matrix times a vector.
+        </li>
+        <li>
+          <b>EQL</b>
+        </li>
+        <li>
+          <b>ERR</b>
+        </li>
+        <li>
+          <b>ESOLVE</b> solves an upper Hessenberg linear system factored by EFACT.
+        </li>
+        <li>
+          <b>ETRANS</b> solves a transposed upper Hessenberg linear system factored by EFACT.
+        </li>
+        <li>
+          <b>EVALS</b> computes the eigenvalues of an upper Hessenberg matrix.
+        </li>
+        <li>
+          <b>EVECT</b> computes the eigenvectors of an upper Hessenberg matrix.
+        </li>
+        <li>
+          <b>EVERT</b> inverts an upper Hessenberg matrix.
+        </li>
+        <li>
+          <b>FACT</b> factors a general matrix, using partial pivoting.
+        </li>
+        <li>
+          <b>FD</b>
+        </li>
+        <li>
+          <b>FF</b>
+        </li>
+        <li>
+          <b>FFC</b> computes the conjugate Fast Fourier Transform.
+        </li>
+        <li>
+          <b>FFC0</b>
+        </li>
+        <li>
+          <b>FFT</b> computes the Fast Fourier Transform.
+        </li>
+        <li>
+          <b>FFT0</b>
+        </li>
+        <li>
+          <b>FGV</b>
+        </li>
+        <li>
+          <b>FV</b>
+        </li>
+        <li>
+          <b>FVD</b>
+        </li>
+        <li>
+          <b>HCON</b> estimates the condition number of a symmetric band matrix.
+        </li>
+        <li>
+          <b>HDET</b> computes the determinant of a symmetric band matrix.
+        </li>
+        <li>
+          <b>HDIAG</b> diagonalizes a symmetric band matrix.
+        </li>
+        <li>
+          <b>HESS</b> reduces a real matrix to Hessenberg form.
+        </li>
+        <li>
+          <b>HFACT</b> factors a symmetric band matrix.
+        </li>
+        <li>
+          <b>HHESS</b> reduces a real symmetric matrix to tridiagonal form.
+        </li>
+        <li>
+          <b>HMULT</b> multiplies a symmetric band matrix times a vector.
+        </li>
+        <li>
+          <b>HSE</b>
+        </li>
+        <li>
+          <b>HSIM</b> reduces a real symmetric band matrix to tridiagonal form.
+        </li>
+        <li>
+          <b>HSOLVE</b> solves a symmetric band matrix linear system.
+        </li>
+        <li>
+          <b>HSR1</b>
+        </li>
+        <li>
+          <b>HSR2</b>
+        </li>
+        <li>
+          <b>HSR3</b>
+        </li>
+        <li>
+          <b>HSR4</b>
+        </li>
+        <li>
+          <b>HSR5</b>
+        </li>
+        <li>
+          <b>HTR</b>
+        </li>
+        <li>
+          <b>HTR2</b>
+        </li>
+        <li>
+          <b>HVALS</b> computes the eigenvalues of a symmetric band matrix.
+        </li>
+        <li>
+          <b>HVECT</b> computes the eigenvectors of a symmetric band matrix.
+        </li>
+        <li>
+          <b>HVERT</b> inverts a symmetric band matrix.
+        </li>
+        <li>
+          <b>ICON</b> estimates the condition number of a symmetric matrix.
+        </li>
+        <li>
+          <b>IDET</b> computes the determinant of a symmetric matrix.
+        </li>
+        <li>
+          <b>IFACT</b> computes the LU factorization of a symmetric matrix.
+        </li>
+        <li>
+          <b>INP</b>
+        </li>
+        <li>
+          <b>INS</b>
+        </li>
+        <li>
+          <b>ISIG</b> returns a sign function of a real number.
+        </li>
+        <li>
+          <b>ISOLVE</b> solves a symmetric linear system.
+        </li>
+        <li>
+          <b>IVERT</b> inverts a symmetric matrix.
+        </li>
+        <li>
+          <b>JT</b> (???Jenkins-Traub?))
+        </li>
+        <li>
+          <b>KCON</b> estimates the condition number of a general matrix.
+        </li>
+        <li>
+          <b>KDET</b> computes the determinant of a general matrix.
+        </li>
+        <li>
+          <b>KFACT</b> factors a general matrix.
+        </li>
+        <li>
+          <b>KSOLVE</b> solves a general linear system.
+        </li>
+        <li>
+          <b>KTRANS</b> solves a transposed general linear system.
+        </li>
+        <li>
+          <b>KVERT</b> inverts a general matrix.
+        </li>
+        <li>
+          <b>LANCZ</b> performs an iteration of Lanczos method to reduce a matrix to tridiagonal form.
+        </li>
+        <li>
+          <b>MPOWER</b>
+        </li>
+        <li>
+          <b>MULT</b> computes a matrix-vector product.
+        </li>
+        <li>
+          <b>NEWTON</b> applies one step of Newton's method to the characteristic polynomial for a tridiagonal matrix
+        </li>
+        <li>
+          <b>NORM1</b> estimates the 1-norm of a matrix.
+        </li>
+        <li>
+          <b>NULL</b> computes an orthonormal basis for the space perpendicular to a given collection of vectors
+        </li>
+        <li>
+          <b>OMULT</b> multiplies a circulant matrix times a vector.
+        </li>
+        <li>
+          <b>OSOLVE</b> solves a circulant linear system.
+        </li>
+        <li>
+          <b>OVALS</b> computes the eigenvalues of a circulant matrix.
+        </li>
+        <li>
+          <b>OVER</b> computes the least squares solution to an overdetermined linear system.
+        </li>
+        <li>
+          <b>OVERT</b> inverts a circulant matrix.
+        </li>
+        <li>
+          <b>PACK</b>
+        </li>
+        <li>
+          <b>PCON</b> estimates the condition number of a tridiagonal matrix.
+        </li>
+        <li>
+          <b>PDET</b> computes the determinant of a tridiagonal matrix.
+        </li>
+        <li>
+          <b>PFACT</b> factors a tridiagonal matrix.
+        </li>
+        <li>
+          <b>POWER</b>
+        </li>
+        <li>
+          <b>PRECG</b> solves a linear system using (preconditioned) conjugate gradients.
+        </li>
+        <li>
+          <b>PSEUDO</b> computes the regularized pseudoinverse,
+        </li>
+        <li>
+          <b>PSOLVE</b> solves a tridiagonal linear system.
+        </li>
+        <li>
+          <b>PTRANS</b> solves a transposed tridiagonal linear system.
+        </li>
+        <li>
+          <b>PVECT</b> computes the eigenvectors of a tridiagonal matrix.
+        </li>
+        <li>
+          <b>PVERT</b> inverts a tridiagonal matrix.
+        </li>
+        <li>
+          <b>PWK</b>
+        </li>
+        <li>
+          <b>PX</b>
+        </li>
+        <li>
+          <b>QAD</b>
+        </li>
+        <li>
+          <b>QR</b> computes the QR factorization of a general matrix with column pivoting.
+        </li>
+        <li>
+          <b>QUASI</b> uses a quasi-Newton method to solve a nonlinear system.
+        </li>
+        <li>
+          <b>R4MAT_NORM_L1</b> returns the matrix L1 norm of an R4MAT.
+        </li>
+        <li>
+          <b>R4MAT_PRINT</b> prints an R4MAT.
+        </li>
+        <li>
+          <b>R4MAT_PRINT_SOME</b> prints some of an R4MAT.
+        </li>
+        <li>
+          <b>RAD</b>
+        </li>
+        <li>
+          <b>RFN</b>
+        </li>
+        <li>
+          <b>ROOT</b> solves a scalar nonlinear equation.
+        </li>
+        <li>
+          <b>RPACK</b>
+        </li>
+        <li>
+          <b>RSOLVE</b> computes the regularized solution to a linear system.
+        </li>
+        <li>
+          <b>RUNPACK</b> reverses the operation of RPACK by unpacking the matrix.
+        </li>
+        <li>
+          <b>RVC</b>
+        </li>
+        <li>
+          <b>SCI</b>
+        </li>
+        <li>
+          <b>SCON</b> estimates the condition number of a symmetric matrix.
+        </li>
+        <li>
+          <b>SDET</b> computes the determinant of a symmetric matrix.
+        </li>
+        <li>
+          <b>SDIAG</b>
+        </li>
+        <li>
+          <b>SDIAG2</b> is the same as SDIAG, but the matrix is not stored in compressed format.
+        </li>
+        <li>
+          <b>SFACT</b> computes the LU factorization of a symmetric matrix.
+        </li>
+        <li>
+          <b>SFT</b>
+        </li>
+        <li>
+          <b>SHESS</b>
+        </li>
+        <li>
+          <b>SIM</b>
+        </li>
+        <li>
+          <b>SING</b> computes the singular value decomposition of a general matrix.
+        </li>
+        <li>
+          <b>SINGB</b> computes the singular value decomposition of a bidiagonal matrix
+        </li>
+        <li>
+          <b>SLICE</b> computes the eigenvalues in a given interval for a tridiagonal matrix.
+        </li>
+        <li>
+          <b>SMULT</b>
+        </li>
+        <li>
+          <b>SNG0</b>
+        </li>
+        <li>
+          <b>SNG1</b>
+        </li>
+        <li>
+          <b>SOLVE</b>
+        </li>
+        <li>
+          <b>SORT</b>
+        </li>
+        <li>
+          <b>SORT2</b>
+        </li>
+        <li>
+          <b>SQ</b>
+        </li>
+        <li>
+          <b>SQR</b>
+        </li>
+        <li>
+          <b>SSIM</b>
+        </li>
+        <li>
+          <b>SSOLVE</b>
+        </li>
+        <li>
+          <b>STM</b>
+        </li>
+        <li>
+          <b>STM2</b>
+        </li>
+        <li>
+          <b>STO</b>
+        </li>
+        <li>
+          <b>STOPIT</b> performs a test for convergence.
+        </li>
+        <li>
+          <b>STP</b>
+        </li>
+        <li>
+          <b>SVALS</b> computes the eigenvalues of a symmetric matrix.
+        </li>
+        <li>
+          <b>SVECT</b> computes the eigenvectors of a symmetric matrix.
+        </li>
+        <li>
+          <b>SVERT</b> inverts a symmetric matrix.
+        </li>
+        <li>
+          <b>TCON</b> estimates the condition number of a tridiagonal matrix.
+        </li>
+        <li>
+          <b>TDET</b> computes the determinant of a tridiagonal matrix.
+        </li>
+        <li>
+          <b>TDG</b>
+        </li>
+        <li>
+          <b>TDIAG</b> diagonalizes a tridiagonal matrix.
+        </li>
+        <li>
+          <b>TFACT</b> computes the LU factorization of a tridiagonal matrix.
+        </li>
+        <li>
+          <b>TIMESTAMP</b> prints out the current YMDHMS date as a timestamp.
+        </li>
+        <li>
+          <b>TMULT</b> multiplies a tridiagonal matrix times a vector.
+        </li>
+        <li>
+          <b>TRANS</b> solves A' * x = b, after A has been factored.
+        </li>
+        <li>
+          <b>TSOLVE</b> solves a tridiagonal linear system.
+        </li>
+        <li>
+          <b>TTRANS</b> solves a transposed tridiagonal linear system.
+        </li>
+        <li>
+          <b>TVAL</b> computes the k-th smallest or largest eigenvalue of a tridiagonal matrix whose cross-diagonal products are nonnegative.
+        </li>
+        <li>
+          <b>TVALS</b> computes the eigenvalues of a tridiagonal matrix.
+        </li>
+        <li>
+          <b>TVECT</b> computes the eigenvectors of a tridiagonal matrix.
+        </li>
+        <li>
+          <b>TVERT</b> inverts a tridiagonal matrix.
+        </li>
+        <li>
+          <b>UNDER</b> computes the least squares (minimum norm) solution to an underdetermined linear system.
+        </li>
+        <li>
+          <b>UNPACK</b> reverses the operation of PACK by unpacking the matrix.
+        </li>
+        <li>
+          <b>UPDATE</b> updates a vector, and computes the difference and norm.
+        </li>
+        <li>
+          <b>VALS</b> computes all eigenvalues of a general real matrix.
+        </li>
+        <li>
+          <b>VECT</b> computes an eigenvector of a general real matrix.
+        </li>
+        <li>
+          <b>VERT</b> inverts a general matrix.
+        </li>
+        <li>
+          <b>VLS</b> computes all eigenvalues of a complex Hessenberg matrix.
+        </li>
+        <li>
+          <b>WHATIS</b> prints the iteration number, iteration difference, and stopping criterion.
+        </li>
+        <li>
+          <b>XP</b>
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 16 November 2011.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

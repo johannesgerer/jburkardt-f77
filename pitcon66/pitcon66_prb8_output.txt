@@ -1,0 +1,109 @@
+ 
+22 August    2011   4:01:34.163 PM      
+  
+ PCPRB8:
+  
+ PITCON sample program.
+ Freudenstein-Roth function
+ 2 equations, 3 variables.
+  
+ Use user jacobian routine.
+  
+ Step  Type of point     X(1)         X(2)         X(3)
+  
+   0  Start point      15.0000      -2.00000       0.00000    
+  
+ PITCON 6.6
+ University of Pittsburgh continuation code
+  
+ Last modified on 09 September 1994
+ This version uses LAPACK for linear algebra.
+ This version uses double precision arithmetic.
+  
+   1  Corrected        15.0000      -2.00000       0.00000    
+   2  Continuation     14.7105      -1.94205      0.653814E-01
+   3  Continuation     14.2846      -1.72915      0.268744    
+   4  Limit point      14.2831      -1.74138      0.258577    
+   5  Continuation     16.9061      -1.20941      0.546845    
+   6  Continuation     24.9178     -0.599069      0.555138    
+   7  Continuation     34.8980     -0.405200E-01  0.353314    
+   8  Continuation     44.8808      0.487806      0.594444E-01
+   9  Continuation     54.8606       1.09476     -0.304456    
+  10  Continuation     61.3809       1.81338     -0.624496    
+  11  Continuation    -48.5972       4.67856       2.87995    
+  12  Target point     5.00000       4.00000       1.00000    
+  
+ We have reached the point we wanted.
+  
+ Jacobians                58
+ Factorizations           58
+ Solves                   58
+ Functions                61
+  
+ Approximate jacobian with forward difference.
+  
+ Step  Type of point     X(1)         X(2)         X(3)
+  
+   0  Start point      15.0000      -2.00000       0.00000    
+  
+ PITCON 6.6
+ University of Pittsburgh continuation code
+  
+ Last modified on 09 September 1994
+ This version uses LAPACK for linear algebra.
+ This version uses double precision arithmetic.
+  
+   1  Corrected        15.0000      -2.00000       0.00000    
+   2  Continuation     14.7105      -1.94206      0.653783E-01
+   3  Continuation     14.2844      -1.72999      0.268050    
+   4  Limit point      14.2831      -1.74154      0.258437    
+   5  Continuation     16.9216      -1.20775      0.547290    
+   6  Continuation     24.9812     -0.595161      0.554310    
+   7  Continuation     34.9615     -0.371659E-01  0.351682    
+   8  Continuation     44.9443      0.491270      0.573544E-01
+   9  Continuation     54.9241       1.09934     -0.307046    
+  10  Continuation     61.4044       1.82058     -0.626515    
+  11  Continuation    -60.3099       4.79787       3.30155    
+  12  Target point     5.00000       4.00000       1.00000    
+  
+ We have reached the point we wanted.
+  
+ Jacobians                 0
+ Factorizations           57
+ Solves                   57
+ Functions               288
+  
+ Approximate jacobian with central difference.
+  
+ Step  Type of point     X(1)         X(2)         X(3)
+  
+   0  Start point      15.0000      -2.00000       0.00000    
+  
+ PITCON 6.6
+ University of Pittsburgh continuation code
+  
+ Last modified on 09 September 1994
+ This version uses LAPACK for linear algebra.
+ This version uses double precision arithmetic.
+  
+   1  Corrected        15.0000      -2.00000       0.00000    
+   2  Continuation     14.7105      -1.94205      0.653814E-01
+   3  Continuation     14.2846      -1.72915      0.268744    
+   4  Limit point      14.2831      -1.74138      0.258577    
+   5  Continuation     16.9061      -1.20941      0.546845    
+   6  Continuation     24.9178     -0.599069      0.555138    
+   7  Continuation     34.8980     -0.405202E-01  0.353314    
+   8  Continuation     44.8808      0.487806      0.594445E-01
+   9  Continuation     54.8606       1.09476     -0.304455    
+  10  Continuation     61.3809       1.81338     -0.624496    
+  11  Continuation    -48.5966       4.67855       2.87993    
+  12  Target point     5.00000       4.00000       1.00000    
+  
+ We have reached the point we wanted.
+  
+ Jacobians                 0
+ Factorizations           58
+ Solves                   58
+ Functions               409
+ 
+22 August    2011   4:01:34.164 PM      

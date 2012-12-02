@@ -1,0 +1,19 @@
+ 
+MATMAT
+  A FORTRAN77 program using MPI to
+  compute a matrix vector product
+    c = A * b.
+ 
+  The number of processes is      4
+ 
+MATVEC - Master process:
+  Normal end of execution.
+ 
+MATVEC - Master process:
+  Normal end of execution.
+ 
+MATVEC - Master process:
+  Normal end of execution.
+ 
+MATVEC - Master process:
+  Normal end of execution.

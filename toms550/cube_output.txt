@@ -1,0 +1,66 @@
+ 
+20070111  145903.878
+ 
+TOMS550_PRB:
+  Compute properties of a solid.
+MASS OF CUBE                                                                    
+  Maximum number of vertices =        8
+  Maximum number of surfaces =        6
+  Density =    2.00000    
+ 
+ Vertex         X            Y            Z
+ 
+     1         0.00         0.00         0.00
+     2         1.00         0.00         0.00
+     3         1.00         1.00         0.00
+     4         0.00         1.00         0.00
+     5         0.00         0.00         1.00
+     6         1.00         0.00         1.00
+     7         1.00         1.00         1.00
+     8         0.00         1.00         1.00
+ 
+Face     Vertices
+ 
+    1         1    4    3    2    1
+ 
+Face     Vertices
+ 
+    2         2    3    7    6    2
+ 
+Face     Vertices
+ 
+    3         5    6    7    8    5
+ 
+Face     Vertices
+ 
+    4         1    5    8    4    1
+ 
+Face     Vertices
+ 
+    5         1    2    6    5    1
+ 
+Face     Vertices
+ 
+    6         3    4    8    7    3
+ 
+MASS PROPERTIES OF THE SOLID
+ 
+          Density         Area          Volume         Weight
+ 
+          2.00000        6.00000       -1.00000       -2.00000
+ 
+             Axes        X-comp         Y-comp         Z-comp
+ 
+  cg       coord        0.50000        0.50000        0.50000
+moment     coord       -1.33333       -1.33333       -1.33333
+              cg       -0.33333       -0.33333       -0.33333
+ 
+             Axes        XY-comp        YZ-comp        ZX-comp
+
+prod mom   coord       -0.50000       -0.50000       -0.50000
+              cg        0.00000        0.00000        0.00000
+ 
+TOMS550_PRB:
+  Normal end of execution.
+ 
+20070111  145903.879

@@ -1,0 +1,17 @@
+
+ <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ <<                END OF DISLIN / VERSION 10.1                  <<
+ <<  Date    : 13.05.2012  Time    : 15:21:57  Pageformat: USAL  <<
+ <<  Vectors : 2048        Warnings: 0         Fileformat:  PNG  <<
+ <<  Metafile: quickplot_pie.png                                 <<
+ <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+ <<<< Warning   3: Incorrect level in disfin!   (   0)
+ 
+QUICKPLOT_PIE:
+  FORTRAN77 version
+  Demonstrate the DISLIN "quickplot" command
+  QPLPIE to plot a pie chart.
+ 
+DISLIN_PIE:
+  Normal end of execution.

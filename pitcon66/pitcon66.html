@@ -1,0 +1,488 @@
+<html>
+
+  <head>
+    <title>
+      PITCON66 - Continuation Code for Parameterized Nonlinear Equations
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      PITCON66 <br> Continuation Code for Parameterized Nonlinear Equations
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>PITCON66</b>
+      is a FORTRAN77 program which
+      carries out the continuation method for producing a series of
+      solutions of a set of nonlinear equations with one degree of freedom.
+    </p>
+
+    <p>
+      The program is designed for problems in which <b>N</b> variables <b>X</b>
+      are constrained by <b>N</b>-1 nonlinear equations <b>F(X)=0</b>.
+      Generally, there is an entire family of solutions to such a problem,
+      which can be thought of as a curve in <b>N</b>-dimensional space.
+      We can imagine this curve parameterized by a variable <b>LAMBDA</b>.
+      Given one solution <b>(X,LAMBDA0)</b>, the program attempts to determine
+      more points on the curve of solutions.
+    </p>
+
+    <p>
+      <b>PITCON66</b> is a revision of the continuation code originally
+      published as ACM TOMS algorithm 596.  The revisions to the code have
+      corrected a problem that occurred because it was assumed that local
+      variables were automatically saved between calls.  Other modifications
+      and improvements have been made.
+    </p>
+
+    <h3 align = "center">
+      Licensing:
+    </h3>
+
+    <p>
+      The computer code and data files described and made available on this web page
+      are distributed under
+      <a href = "../../txt/gnu_lgpl.txt">the GNU LGPL license.</a>
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/pitcon7/pitcon7.html">
+      PITCON7</a>,
+      a FORTRAN90 library which
+      seeks to produce a sequence of points that satisfy a set of nonlinear
+      equations with one degree of freedom;
+      this is version 7.0 of ACM TOMS algorithm 596.
+    </p>
+
+    <p>
+      <a href = "../../f_src/test_con/test_con.html">
+      TEST_CON</a>,
+      a FORTRAN90 library which
+      implements test problems for numerical continuation.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/toms502/toms502.html">
+      TOMS502</a>,
+      a FORTRAN77 library which
+      seeks to produce a sequence of points that satisfy a set of nonlinear
+      equations with one degree of freedom;
+      this library is commonly called <b>DERPAR</b>;<br>
+      this is ACM TOMS algorithm 502.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/toms596/toms596.html">
+      TOMS596</a>,
+      a FORTRAN77 library which
+      seeks to produce a sequence of points that satisfy a set of nonlinear
+      equations with one degree of freedom;
+      this library is commonly called <b>PITCON</b>;<br>
+      this is ACM TOMS algorithm 596.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Ivo Babuska, Werner Rheinboldt,<br>
+          Reliable Error Estimations and Mesh Adaptation for the Finite
+          Element Method,<br>
+          in International Conference on Computational Methods
+          in Nonlinear Mechanics,<br>
+          edited by John Oden,<br>
+          Elsevier, 1980,<br>
+          ISBN: 0444853820,<br>
+          LC: QA808.I57.
+        </li>
+        <li>
+          Richard Brent,<br>
+          Algorithms for Minimization without Derivatives,<br>
+          Dover, 2002,<br>
+          ISBN: 0-486-41998-3,<br>
+          LC: QA402.5.B74.
+        </li>
+        <li>
+          Cor denHeijer, Werner Rheinboldt,<br>
+          On Steplength Algorithms for a Class of Continuation Methods,<br>
+          SIAM Journal on Numerical Analysis,<br>
+          Volume 18, Number 5, October 1981, pages 925-947.
+        </li>
+        <li>
+          Jack Dongarra, Jim Bunch, Cleve Moler, Pete Stewart,<br>
+          LINPACK User's Guide,<br>
+          SIAM, 1979,<br>
+          ISBN13: 978-0-898711-72-1,<br>
+          LC: QA214.L56.
+        </li>
+        <li>
+          Ferdinand Freudenstein, Bernhard Roth,<br>
+          Numerical Solutions of Nonlinear Equations,<br>
+          Journal of the ACM,<br>
+          Volume 10, Number 4, October 1963, pages 550-556.
+        </li>
+        <li>
+          Herbert Keller,<br>
+          Numerical Methods for Two-point Boundary Value Problems,<br>
+          Dover, 1992,<br>
+          ISBN: 0486669254,<br>
+          LC: QA372.K42.
+        </li>
+        <li>
+          Raman Mehra, William Kessel, James Carroll,<br>
+          Global stability and contral analysis of aircraft at high angles of attack,<br>
+          Technical Report CR-215-248-1, -2, -3,<br>
+          Office of Naval Research, June 1977.
+        </li>
+        <li>
+          John Oden,<br>
+          Finite Elements of Nonlinear Continua,<br>
+          Dover, 2006,<br>
+          ISBN: 0486449734,<br>
+          LC: QA808.2.O33.
+        </li>
+        <li>
+          Werner Rheinboldt,<br>
+          Solution Field of Nonlinear Equations and Continuation Methods,<br>
+          SIAM Journal on Numerical Analysis,<br>
+          Volume 17, Number 2, April 1980, pages 221-237.
+        </li>
+        <li>
+          Werner Rheinboldt,<br>
+          Numerical Analysis of Continuation Methods for Nonlinear
+          Structural Problems,<br>
+          Computers and Structures,<br>
+          Volume 13, 1981, pages 103-114.
+        </li>
+        <li>
+          Werner Rheinboldt, John Burkardt,<br>
+          A Locally Parameterized Continuation Process,<br>
+          ACM Transactions on Mathematical Software,<br>
+          Volume 9, Number 2, June 1983, pages 215-235.
+        </li>
+        <li>
+          Werner Rheinboldt, John Burkardt,<br>
+          Algorithm 596:
+          A Program for a Locally Parameterized
+          Continuation Process,<br>
+          ACM Transactions on Mathematical Software,<br>
+          Volume 9, Number 2, June 1983, pages 236-241.
+        </li>
+        <li>
+          Albert Schy, Margery Hannah,<br>
+          Prediction of Jump Phenomena in Roll-coupled Maneuvers
+          of Airplanes,<br>
+          Journal of Aircraft,<br>
+          Volume 14, 1977,  pages 375-382.
+        </li>
+        <li>
+          John Young, Albert Schy, Katherine Johnson,<br>
+          Prediction of Jump Phenomena in Aircraft Maneuvers, Including
+          Nonlinear Aerodynamic Effects,<br>
+          Journal of Guidance and Control,<br>
+          Volume 1, 1978, pages 26-31.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "pitcon66.f">pitcon66.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "pitcon66_sub.f">pitcon66_sub.f</a>, linear algebra
+          and other subsidiary routines.
+        </li>
+        <li>
+          <a href = "pitcon66.sh">pitcon66.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <b>PITCON66_PRB1</b> sets up the Freudenstein Roth function.
+      There are 2 equations, and N = 3 variables.  The solution curve has
+      some severe bends.
+      <ul>
+        <li>
+          <a href = "pitcon66_prb1.f">pitcon66_prb1.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "pitcon66_prb1.sh">pitcon66_prb1.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "pitcon66_prb1_output.txt">pitcon66_prb1_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>PITCON66_PRB2</b> sets up the aircraft stability problem, with N = 8.
+      There are 7 equations in N = 8 variables.  This is a mildly nonlinear problem,
+      whose solution curve has some limit points that are difficult to track.
+      <ul>
+        <li>
+          <a href = "pitcon66_prb2.f">pitcon66_prb2.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "pitcon66_prb2.sh">pitcon66_prb2.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "pitcon66_prb2_output.txt">pitcon66_prb2_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>PITCON66_PRB3</b> sets up a two point boundary value problem with a parameter,
+      LAMBDA, and variable number set to N = 22.  (This problem can easily be modified
+      to use larger values of N).  This problem
+      has a limit point in the LAMBDA parameter, which we seek.  We
+      solve this problem 6 times, illustrating the use of full and banded
+      jacobians, and of user-generated, or forward or central difference
+      approximated jacobian matrices.  The program seeks limit points in LAMBDA.
+      <ul>
+        <li>
+          <a href = "pitcon66_prb3.f">pitcon66_prb3.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "pitcon66_prb3.sh">pitcon66_prb3.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "pitcon66_prb3_output.txt">pitcon66_prb3_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>PITCON66_PRB4</b> sets up the Freudenstein Roth function, with N = 3,
+      and investigates the use of the fixed parameterization option.
+      <ul>
+        <li>
+          <a href = "pitcon66_prb4.f">pitcon66_prb4.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "pitcon66_prb4.sh">pitcon66_prb4.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "pitcon66_prb4_output.txt">pitcon66_prb4_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>PITCON66_PRB5</b> repeats problem 3, the two point boundary value problem.
+      This time, we do NOT seek the limit point in the LAMBDA parameter,
+      but rather the two target points where LAMBDA=0.8, which occurs twice,
+      before and after LAMBDA "goes around the bend".
+      Here, the interest is in investigating the ability to request a full, modified,
+      or "cheap" Newton iteration.
+      <ul>
+        <li>
+          <a href = "pitcon66_prb5.f">pitcon66_prb5.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "pitcon66_prb5.sh">pitcon66_prb5.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "pitcon66_prb5_output.txt">pitcon66_prb5_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>PITCON66_PRB6</b> sets up the Freudenstein Roth function, with N = 3,
+      and investigates the use of the options for checking the accuracty of
+      a user-supplied jacobian.
+      This version of the problem demonstrates the jacobian checking option.
+      Two runs are made.  Each is allowed only five steps.  The first
+      run is with the correct jacobian.  The second run uses a defective
+      jacobian, and demonstrates not only the jacobian checker, but also
+      shows that "slightly" bad jacobians can cause the Newton convergence
+      to become linear rather than quadratic.
+      <ul>
+        <li>
+          <a href = "pitcon66_prb6.f">pitcon66_prb6.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "pitcon66_prb6.sh">pitcon66_prb6.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "pitcon66_prb6_output.txt">pitcon66_prb6_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>PITCON66_PRB7</b> sets up the materially nonlinear rod, with a variety
+      of values of N depending on the user choices for the piecewise polynomial basis
+      and continuity conditions.  The program is currently restricted to N=71 variables
+      maximum.
+      <ul>
+        <li>
+          <a href = "pitcon66_prb7.f">pitcon66_prb7.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "pitcon66_prb7.sh">pitcon66_prb7.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "pitcon66_prb7_output.txt">pitcon66_prb7_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>PITCON66_PRB8</b> sets up the Freudenstein Roth function, with N = 3,
+      and investigates the use of the options for approximating the jacobian using
+      finite differences.
+      <ul>
+        <li>
+          <a href = "pitcon66_prb8.f">pitcon66_prb8.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "pitcon66_prb8.sh">pitcon66_prb8.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "pitcon66_prb8_output.txt">pitcon66_prb8_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>PITCON</b> is the driver routine for the continuation algorithm.
+        </li>
+        <li>
+          <b>BANJAC</b> estimates a banded jacobian matrix.
+        </li>
+        <li>
+          <b>BANSLV</b> solves a banded linear system.
+        </li>
+        <li>
+          <b>CHECKW</b> checks the input arrays on the first call.
+        </li>
+        <li>
+          <b>COQUAL</b> computes the "correction quality".
+        </li>
+        <li>
+          <b>CORECT</b> applies a correction method to an approximate solution of the system.
+        </li>
+        <li>
+          <b>DENJAC</b> estimates a dense jacobian.
+        </li>
+        <li>
+          <b>DENSLV</b> solves a dense linear system
+        </li>
+        <li>
+          <b>DGBDET</b> computes the determinant of a band matrix factored by DGBTRF.
+        </li>
+        <li>
+          <b>DGEDET</b> computes the determinant of a matrix A that has been
+        </li>
+        <li>
+          <b>LIMIT</b> is used to seek a limit point between two continuation points.
+        </li>
+        <li>
+          <b>R8_EPSILON</b> returns the R8 roundoff unit.
+        </li>
+        <li>
+          <b>ROOT</b> seeks a root of the scalar equation F(X)=0.0.
+        </li>
+        <li>
+          <b>SETSTP</b> computes the stepsize to be used by the Euler prediction step.
+        </li>
+        <li>
+          <b>STAJAC</b> generates and factors the jacobian the very first time.
+        </li>
+        <li>
+          <b>START</b> forces the starting point to satisfy the nonlinear system.
+        </li>
+        <li>
+          <b>TANGNT</b> computes a tangent vector to the solution curve F(X)=0.
+        </li>
+        <li>
+          <b>TANPAR</b> controls the computation of the next tangent vector.
+        </li>
+        <li>
+          <b>TARGET</b> controls the computation of a target point.
+        </li>
+        <li>
+          <b>TIMESTAMP</b> prints out the current YMDHMS date as a timestamp.
+        </li>
+        <li>
+          <b>TRYSTP</b> tries to carry out a continuation step.
+        </li>
+        <li>
+          <b>UPDATE</b> updates information after a successful continuation step.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 16 May 2008.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

@@ -1,0 +1,152 @@
+<html>
+
+  <head>
+    <title>
+      TOMS443 - Solution of the Transcendental Equation W*EXP(W)=X
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS443 <br> Solution of the Transcendental Equation W*EXP(W)=X
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS443</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 443, for evaluating Lambert's
+      W function.
+    </p>
+
+    <p>
+      The text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/test_values/test_values.html">
+      TEST_VALUES</a>,
+      a FORTRAN90 library which
+      contains routines which return sample values of various functions,
+      including the modified beta function, and the logarithm of the
+      gamma function.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <dl>
+        <dt>
+          w = <b>wew ( x, en )</b>
+        </dt>
+        <dd>
+          where <b>X</b>, is the argument, <b>EN</b> is the last correction
+          to the output value made by the Newton iteration, and the value
+          of W(<b>X)</b>) is returned in <b>WEW</b>.
+        </dd>
+      </dl>
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Fred Fritsch, R Shafer, W Crowley,<br>
+          Algorithm 443: Calculation of Optimum Parameters for Alternating
+          Direction Implicit Procedures,<br>
+          Communications of the ACM,<br>
+          October 1973, Volume 16, Number 2, pages 123-124.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms443.f">toms443.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms443.sh">toms443.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms443_prb.f">toms443_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms443_prb.sh">toms443_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms443_prb_output.txt">toms443_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>WEW_A</b> evaluates Lambert's W function using
+          code appropriate for a CDC 6600 (default 64 bit precision).
+        </li>
+        <li>
+          <b>WEW_B</b> evaluates Lambert's W function using
+          code appropriate for a computer with precision of
+          about 3.0E-07.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 03 December 2005.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

@@ -1,0 +1,21 @@
+20080712  103243.653
+ 
+BLAS3_PRB
+  FORTRAN77 version
+  Tests for the Level 3 BLAS3,
+  Basic Linear Algebra Subprograms.
+ 
+TEST01
+  Demonstrate Cholesky factor/solve routines
+  built out of level 1, 2 and 3 BLAS.
+ 
+ 
+  First 10 entries of solution:
+ 
+   1.00000       2.00000       3.00000       4.00000       5.00000    
+   6.00000       7.00000       8.00000       9.00000       10.0000    
+ 
+BLAS3_PRB
+  Normal end of execution.
+ 
+20080712  103243.655

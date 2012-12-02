@@ -1,0 +1,266 @@
+<html>
+
+  <head>
+    <title>
+      TOMS655 - Weights for Interpolatory Quadrature
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS655 <br> Weights for Interpolatory Quadrature
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS655</b>
+      is a FORTRAN77 library which
+      computes weights for interpolatory
+      quadrature schemes.
+    </p>
+
+    <p>
+      Thus, the typical use of this library is for the user to specify
+      a quadrature interval, a weight function, and a sequence of abscissas
+      (which may be repeated), and to request the corresponding weight
+      vector so that an interpolatory quadrature rule is produced.
+    </p>
+
+    <p>
+      Note that when an abscissa is repeated, this indicates that, at this
+      point, not only the function value but one or more derivatives are
+     to be used in the quadrature formula.
+    </p>
+
+    <p>
+      The library is also suitable for the simpler task of computing
+      both the abscissas and weights for a variety of classical Gaussian
+      quadrature rules, including
+      <table border="1">
+        <tr>
+          <th>Name</th><th>Interval</th><th>Weight function</th>
+        </tr>
+        <tr>
+          <td>Legendre</td><td>(a,b)</td><td>1.0</td>
+        </tr>
+        <tr>
+          <td>Chebyshev Type 1</td><td>(a,b)</td><td>((b-x)*(x-a))^(-0.5)</td>
+        </tr>
+        <tr>
+          <td>Gegenbauer</td><td>(a,b)</td><td>((b-x)*(x-a))^alpha</td>
+        </tr>
+        <tr>
+          <td>Jacobi</td><td>(a,b)</td><td>(b-x)^alpha*(x-a)^beta</td>
+        </tr>
+        <tr>
+          <td>Laguerre and Generalized Laguerre</td><td>(a,+oo)</td><td>(x-a)^alpha*exp(-b*(x-a))</td>
+        </tr>
+        <tr>
+          <td>Hermite and Generalized Hermite</td><td>(-oo,+oo)</td><td>|x-a|^alpha*exp(-b*(x-a)^2)</td>
+        </tr>
+        <tr>
+          <td>Exponential</td><td>(a,b)</td><td>|x-(a+b)/2.0|^alpha</td>
+        </tr>
+        <tr>
+          <td>Rational</td><td>(a,+oo)</td><td>(x-a)^alpha*(x+b)^beta</td>
+        </tr>
+      </table>
+    </p>
+
+    <p>
+      The original, true, correct version of ACM TOMS Algorithm 655
+      is available through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Languages:
+    </h3>
+
+    <p>
+      <b>TOMS655</b> is available in
+      <a href = "../../c_src/toms655/toms655.html">a C version</a> and
+      <a href = "../../cpp_src/toms655/toms655.html">a C++ version</a> and
+      <a href = "../../f77_src/toms655/toms655.html">a FORTRAN77 version</a> and
+      <a href = "../../f_src/toms655/toms655.html">a FORTRAN90 version</a> and
+      <a href = "../../m_src/toms655/toms655.html">a MATLAB version</a>.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/chebyshev1_rule/chebyshev1_rule.html">
+      CHEBYSHEV1_RULE</a>,
+      a FORTRAN90 program which
+      can compute and print a Gauss-Chebyshev type 1 quadrature rule.
+    </p>
+
+    <p>
+      <a href = "../../f_src/chebyshev2_rule/chebyshev2_rule.html">
+      CHEBYSHEV2_RULE</a>,
+      a FORTRAN90 program which
+      can compute and print a Gauss-Chebyshev type 2 quadrature rule.
+    </p>
+
+    <p>
+      <a href = "../../f_src/gegenbauer_rule/gegenbauer_rule.html">
+      GEGENBAUER_RULE</a>,
+      a FORTRAN90 program which
+      can compute and print a Gauss-Gegenbauer quadrature rule.
+    </p>
+
+    <p>
+      <a href = "../../f_src/gen_hermite_rule/gen_hermite_rule.html">
+      GEN_HERMITE_RULE</a>,
+      a FORTRAN90 program which
+      can compute and print a generalized Gauss-Hermite quadrature rule.
+    </p>
+
+    <p>
+      <a href = "../../f_src/gen_laguerre_rule/gen_laguerre_rule.html">
+      GEN_LAGUERRE_RULE</a>,
+      a FORTRAN90 program which
+      can compute and print a generalized Gauss-Laguerre quadrature rule.
+    </p>
+
+    <p>
+      <a href = "../../f_src/hermite_rule/hermite_rule.html">
+      HERMITE_RULE</a>,
+      a FORTRAN90 program which
+      computes a Gauss-Hermite quadrature rule.
+    </p>
+
+    <p>
+      <a href = "../../f_src/jacobi_rule/jacobi_rule.html">
+      JACOBI_RULE</a>,
+      a FORTRAN90 program which
+      can compute and print a Gauss-Jacobi quadrature rule.
+    </p>
+
+    <p>
+      <a href = "../../f_src/laguerre_rule/laguerre_rule.html">
+      LAGUERRE_RULE</a>,
+      a FORTRAN90 program which
+      can compute and print a Gauss-Laguerre quadrature rule.
+    </p>
+
+    <p>
+      <a href = "../../f_src/legendre_rule/legendre_rule.html">
+      LEGENDRE_RULE</a>,
+      a FORTRAN90 program which
+      computes a Gauss-Legendre quadrature rule.
+    </p>
+
+    <p>
+      <a href = "../../f_src/quadrule/quadrule.html">
+      QUADRULE</a>,
+      a FORTRAN90 library which
+      contains information about quadrature rules, both as tabulated values,
+      and as computational procedures.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/toms793/toms793.html">
+      TOMS793</a>,
+      a FORTRAN77 library which
+      carries out Gauss quadrature for rational functions,
+      by Walter Gautschi;
+      this is ACM TOMS algorithm 793.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Sylvan Elhay, Jaroslav Kautsky,<br>
+          Algorithm 655:
+          IQPACK,
+          FORTRAN Subroutines for the Weights of Interpolatory Quadrature,<br>
+          ACM Transactions on Mathematical Software,<br>
+          Volume 13, Number 4, December 1987, pages 399-415.
+        </li>
+        <li>
+          Jaroslav Kautsky, Sylvan Elhay,<br>
+          Calculation of the Weights of Interpolatory Quadratures,<br>
+          Numerische Mathematik,<br>
+          Volume 40, Number 3, October 1982, pages 407-422.
+        </li>
+        <li>
+          Roger Martin, James Wilkinson,<br>
+          The Implicit QL Algorithm,<br>
+          Numerische Mathematik,<br>
+          Volume 12, Number 5, December 1968, pages 377-383.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms655.f">toms655.f</a>,
+          the source code;
+        </li>
+        <li>
+          <a href = "toms655.sh">toms655.sh</a>,
+          commands to compile the source code;
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <b>TOMS655_PRB</b> is the test distributed with the code.
+      <ul>
+        <li>
+          <a href = "toms655_prb.f">toms655_prb.f</a>,
+          a sample calling program;
+        </li>
+        <li>
+          <a href = "toms655_prb.sh">toms655_prb.sh</a>,
+          commands to compile, link and run the test program;
+        </li>
+        <li>
+          <a href = "toms655_prb_output.txt">toms655_prb_output.txt</a>,
+          the output file.
+        </li>
+        <li>
+          <a href = "toms655_prb_check.txt">toms655_prb_check.txt</a>,
+          the expected output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 10 January 2010.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+</html>

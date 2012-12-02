@@ -1,0 +1,198 @@
+<html>
+
+  <head>
+    <title>
+      TOMS351 - Modified Romberg Quadrature
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS351 <br> Modified Romberg Quadrature
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS351</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 351, for modified Romberg
+      quadrature.
+    </p>
+
+    <p>
+      The text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <dl>
+        <dt>
+          <b>call romint ( val, err, eps, a, b, n, maxe, f )</b>
+        </dt>
+        <dd>
+          where <b>VAL</b> is returned as the estimated integral,
+          <b>ERR</b> is returned as an error bound for the estimated integral,
+          <b>EPS</b> is the desired accuracy,
+          <b>A</b> and <b>B</b> define the interval of integration,
+          <b>N</b> is the number of function evaluations,
+          <b>MAXE</b> is the number of extrapolations,
+          and <b>F</b> is the name of the FORTRAN function that evaluates
+          the integrand.
+        </dd>
+      </dl>
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/intlib/intlib.html">
+      INTLIB</a>,
+      a FORTRAN90 library which
+      can estimate the integral of a function.
+    </p>
+
+    <p>
+      <a href = "../../f_src/quadpack/quadpack.html">
+      QUADPACK</a>,
+      a FORTRAN90 library which
+      can estimate the integral of a function,
+      including weight functions, singularities, and infinite intervals.
+    </p>
+
+    <p>
+      <a href = "../../f_src/quadrule/quadrule.html">
+      QUADRULE</a>,
+      a FORTRAN90 library which
+      defines many simple quadrature schemes.
+    </p>
+
+    <p>
+      <a href = "../../f_src/stroud/stroud.html">
+      STROUD</a>,
+      a FORTRAN90 library which
+      defines quadrature schemes for a number of geometrically
+      interesting regions.
+    </p>
+
+    <p>
+      <a href = "../../f_src/test_int/test_int.html">
+      TEST_INT</a>,
+      a FORTRAN90 library which
+      contains routines which define integrands suitable for testing
+      integration software.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/toms468/toms468.html">
+      TOMS468</a>,
+      a FORTRAN77 library which
+      carries out the automatic integration of a function.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          ND Cook,<br>
+          Remark on Algorithm 351: Modified Romberg Quadrature,<br>
+          Communications of the ACM,<br>
+          April 1970, Volume 13, Issue 4, page 263.
+        </li>
+        <li>
+          Graeme Fairweather,<br>
+          Algorithm 351: Modified Romberg Quadrature,<br>
+          Communications of the ACM,<br>
+          June 1969, Volume 12, page 324.
+        </li>
+        <li>
+          George Wallick,<br>
+          Remark on Algorithm 351: Modified Romberg Quadrature,<br>
+          Communications of the ACM,<br>
+          June 1970, Volume 13, Issue 6, page 374-376.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms351.f">toms351.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms351.sh">toms351.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms351_prb.f">toms351_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms351_prb.sh">toms351_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms351_prb_output.txt">toms351_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>ROMINT</b> estimates an integral using modified Romberg quadrature.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 05 January 2006.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

@@ -1,0 +1,207 @@
+
+ DETAILS OF ITERATIVE TEMPLATES TEST:
+
+    Univ. of Tennessee and Oak Ridge National Laboratory
+    October 1, 1993
+    Details of these algorithms are described in "Templates
+    for the Solution of Linear Systems: Building Blocks for
+    Iterative Methods", Barrett, Berry, Chan, Demmel, Donato,
+    Dongarra, Eijkhout, Pozo, Romine, and van der Vorst,
+    SIAM Publications, 1993.
+    (ftp netlib2.cs.utk.edu; cd linalg; get templates.ps).
+
+
+MACHINE PRECISION = 5.96E-08
+CONVERGENCE TEST TOLERANCE = 1.00E-07
+
+
+  For a detailed description of the following information,
+  see the end of this file.
+
+ ======================================================
+            CONVERGENCE  NORMALIZED  NUM
+   METHOD    CRITERION    RESIDUAL   ITER  INFO  FLAG
+ ======================================================
+
+  see the end of this file.
+Order  36 SPD 2-d Poisson matrix (no preconditioning)
+
+  CG        5.56E-08    1.66E-02       6
+  Chebyshev 8.79E-08    3.73E-02      97
+  SOR       8.66E-08    1.45E-02      72
+  BiCG      5.56E-08    1.66E-02       6
+  CGS       2.16E-05    1.22E+00     122
+  BiCGSTAB  1.42E-08    1.86E-02       6
+  GMRESm    2.15E-08    8.01E+07       1            X
+  QMR       9.93E-08    2.07E-02       6
+  Jacobi    9.21E-08    2.90E-02     136
+ -------------------------------------------------------
+Order  36 SPD 2-d Poisson matrix (Jacobi preconditioning)
+
+  CG        5.56E-08    1.66E-02       6
+  Chebyshev 1.20E-06    1.16E-01     144      1
+  SOR       8.66E-08    1.45E-02      72
+  BiCG      5.56E-08    1.66E-02       6
+  CGS       2.16E-05    1.22E+00     122
+  BiCGSTAB  1.42E-08    1.86E-02       6
+  GMRESm    9.12E-09    3.79E+05       1            X
+  QMR       9.93E-08    2.07E-02       6
+ -------------------------------------------------------
+Order   21 SPD Wathen matrix (no preconditioning)
+
+  CG        8.47E-08    6.64E-03      23
+  Chebyshev 1.52E-02    2.32E+02      84      1
+  SOR       9.65E-08    4.15E-03      56
+  BiCG      8.47E-08    6.64E-03      23
+  CGS       1.79E-08    3.17E-01      48
+  BiCGSTAB  4.07E-08    1.16E-02      21
+  GMRESm    1.37E-08    2.95E+07       1            X
+  QMR       2.99E-07    4.98E-03      84      1
+ -------------------------------------------------------
+Order   21 SPD Wathen matrix (Jacobi preconditioning)
+
+  CG        4.36E-08    5.81E-03      15
+  Chebyshev 5.58E-01    5.28E+03      84      1
+  SOR       9.65E-08    4.15E-03      56
+  BiCG      4.36E-08    5.81E-03      15
+  CGS       3.73E+10    7.76E+04      84      1
+  BiCGSTAB  1.14E-08    3.95E+04      51            X
+  GMRESm    8.16E-08    9.33E+03       1            X
+  QMR       1.06E-07    9.96E-03      84      1
+ -------------------------------------------------------
+Order  27 SPD 3-d Poisson matrix (no preconditioning)
+
+  CG        1.16E-08    8.94E-03       4
+  Chebyshev 7.01E-08    2.68E-02      30
+  SOR       9.87E-08    1.79E-02      12
+  BiCG      1.16E-08    8.94E-03       4
+  CGS       5.67E-09    1.79E-02       4
+  BiCGSTAB  6.69E-10    1.12E-02       4
+  GMRESm    1.50E-08    4.50E+07       1            X
+  QMR       4.08E-08    1.79E-02       4
+  Jacobi    6.94E-08    1.12E-02      47
+ -------------------------------------------------------
+Order  27 SPD 3-d Poisson matrix (Jacobi preconditioning)
+
+  CG        8.26E-08    1.12E-02       4
+  Chebyshev 8.94E-08    1.01E-01      51
+  SOR       9.87E-08    1.79E-02      12
+  BiCG      8.26E-08    1.12E-02       4
+  CGS       1.87E-08    1.79E-02       4
+  BiCGSTAB  4.67E-10    2.01E-02       4
+  GMRESm    2.65E-08    5.25E+04       1            X
+  QMR       1.42E-07    2.01E-02     108      1
+ -------------------------------------------------------
+Order   36 PDE4 nonsymmetric matrix (no preconditioning)
+
+  BiCG      5.31E-08    3.36E-02      48
+  CGS       5.49E-01    1.86E+03     144      1
+  BiCGSTAB  3.05E+00    2.56E+04     103    -10
+  GMRESm    7.36E-09    1.42E+05       1            X
+  QMR       7.59E-06    4.11E-02     144      1
+ -------------------------------------------------------
+Order   36 PDE4 nonsymmetric matrix (Jacobi preconditioning)
+
+  BiCG      5.31E-08    3.36E-02      48
+  CGS       5.49E-01    1.86E+03     144      1
+  BiCGSTAB  3.05E+00    2.56E+04     103    -10
+  GMRESm    3.89E-08    8.80E+04       1            X
+  QMR       7.59E-06    4.11E-02     144      1
+ -------------------------------------------------------
+
+ ======
+ LEGEND:
+ ======
+
+    ==================
+    SYSTEM DESCRIPTION
+    ==================
+
+    SPD matrices:
+
+       WATH: "Wathen Matrix": consistent mass matrix
+       F2SH: 2-d Poisson problem
+       F3SH: 3-d Poisson problem
+
+       PDE1: u_xx+u_yy+au_x+(a_x/2)u
+             for a = 20exp[3.5(x**2+y**2 )]
+
+    Nonsymmetric matrices:
+
+       PDE2: u_xx+u_yy+u_zz+1000u_x
+       PDE3  u_xx+u_yy+u_zz-10**5x**2(u_x+u_y+u_z )
+       PDE4: u_xx+u_yy+u_zz+1000exp(xyz)(u_x+u_y-u_z)
+
+    =====================
+    CONVERGENCE CRITERION
+    =====================
+
+    Convergence criteria: residual as reported by the
+    algorithm: ||AX - B|| / ||B||. Note that NaN may signify
+    divergence of the residual to the point of numerical overflow.
+
+    ===================
+    NORMALIZED RESIDUAL
+    ===================
+
+    Normalized Residual: ||AX - B|| / (||A||||X||*N*TOL).
+    This is an apostiori check of the iterated solution.
+
+    ====
+    INFO
+    ====
+
+    If this column is blank, then the algorithm claims to have
+    found the solution to tolerance (i.e. INFO = 0).
+    This should be verified by checking the normalizedresidual.
+
+    Otherwise:
+
+       = 1: Convergence not achieved given the maximum number of iterations.
+
+       Input parameter errors:
+
+       = -1: matrix dimension N < 0
+       = -2: LDW < N
+       = -3: Maximum number of iterations <= 0.
+       = -4: For SOR: OMEGA not in interval (0,2)
+             For GMRES: LDW2 < 2*RESTRT
+       = -5: incorrect index request by uper level.
+       = -6: incorrect job code from upper level.
+
+       <= -10: Algorithm was terminated due to breakdown.
+               See algorithm documentation for details.
+
+    ====
+    FLAG
+    ====
+
+       X: Algorithm has reported convergence, but
+          approximate solution fails scaled
+          residual check.
+
+    =====
+    NOTES
+    =====
+
+    GMRES: For the symmetric test matrices, the restart parameter is
+    set to N. This should, theoretically, result in no restarting. For
+    nonsymmetric testing the restart parameter is set to N / 2.
+
+    Stationary methods:
+
+    - Since the residual norm ||b-Ax|| is not available as part of
+      the algorithm, the convergence criteria is different from the
+      nonstationary methods. Here we use
+
+         || X - X1 || / || X ||.
+
+      That is, we compare the current approximated solution with the
+      approximation from the previous step.
+
+    - Since Jacobi and SOR do not use preconditioning,
+      Jacobi is only iterated once per system, and SOR loops over
+      different values for OMEGA (the first time through OMEGA = 1,
+      i.e. the algorithm defaults to Gauss-Siedel). This explains the 
+      different residual norms for SOR with the same matrix.
+

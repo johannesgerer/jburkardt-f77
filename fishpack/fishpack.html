@@ -1,0 +1,643 @@
+<html>
+
+  <head>
+    <title>
+      FISHPACK - A Poisson Equation Solver
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      FISHPACK <br> A Poisson Equation Solver
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>FISHPACK</b> 
+      is a FORTRAN77 library which 
+      solves several forms of Poisson's equation,
+      by John Adams, Paul Swarztraube, Roland Sweet.
+    </p>
+
+    <p>
+      <b>FISHPACK</b> is a package of subroutines for solving separable partial
+      differential equations in various coordinate systems.  Such equations
+      include the Laplace, Poisson and Helmholtz equations and have the form:
+      <pre><code>
+        Uxx + Uyy            = 0         (Laplace)
+        Uxx + Uyy            = F(X,Y)    (Poisson)
+        Uxx + Uyy + lambda*U = F(X,Y)    (Helmholtz)
+      </code></pre>
+      in two dimensional cartesian coordinates.
+    </p>
+
+    <p>
+     <b>FISHPACK</b> is not limited to the 2D cartesian case.  It can set up
+     and solve the equations in coordinate systems including:
+     <ul>
+       <li>
+         2D cartesian,
+       </li>
+       <li>
+         2D polar,
+       </li>
+       <li>
+         2D cylindrical,
+       </li>
+       <li>
+         3D spherical,
+       </li>
+       <li>
+         3D axisymmetric spherical (cylindrical),
+       </li>
+       <li>
+         3D cartesian.
+       </li>
+     </ul>
+    </p>
+
+    <p>
+      The algorithm uses 5 point finite differences
+      and an evenly spaced grid.  Other routines are included
+      which solve related problems in which the derivative terms have
+      coefficient functions.
+    </p>
+
+    <p>
+      In the documentation, the words "standard" and "staggered"
+      grid are used.  The difference between these grids is simple.  In
+      the one dimensional case, a standard grid of size H on the interval
+      (A,B) would be (A, A+H, A+2*H, ..., B-H, B) whereas a staggered
+      grid would be (A+H/2, A+3H/2, ..., B-3H/2, B-H/2).  Versions of
+      2D solvers are offered below using both kinds of grids.  Depending
+      on the boundary conditions, or other singularities near the boundary,
+      one or the other type of grid may be preferred.
+    <p>
+
+    <p>
+      The version of FISHPACK presented here has been altered and adapted somewhat.
+      To obtain a clean and correct copy of the original version, go to
+      <a href = "http://www.netlib.org/fishpack/index.html">
+                 http://www.netlib.org/fishpack/index.html </a>
+    </p>
+
+    <h3 align = "center">
+      Related Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f77_src/betis/betis.html">
+      BETIS</a>,
+      a FORTRAN77 program which
+      solves Laplace's equation in a 2D region using the boundary element method.
+    </p>
+
+    <p>
+      <a href = "../../m_src/fem_50/fem_50.html">
+      FEM_50</a>,
+      a MATLAB program which
+      solves Laplace's equation in an arbitrary region using the finite element method.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/fem2d_poisson_rectangle/fem2d_poisson_rectangle.html">
+      FEM2D_POISSON_RECTANGLE</a>,
+      a FORTRAN77 program which
+      solves Poisson's equation in a 2D rectangle using the finite element method.
+    </p>
+
+    <p>
+      <a href = "../../f_src/fftpack5/fftpack5.html">
+      FFTPACK5</a>,
+      a FORTRAN90 library which
+      computes Fast Fourier Transforms.  A version of this library
+      is included in FISHPACK.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/serba/serba.html">
+      SERBA</a>,
+      a FORTRAN77 program which
+      solves problems in planar elasticity using the boundary element method.
+    </p>
+
+    <p>
+      <a href = "../../f_src/slatec/slatec.html">
+      SLATEC</a>,
+      a FORTRAN90 library which
+      includes a copy of FISHPACK.
+    </p>
+
+    <h3 align = "center">
+      Author:
+    </h3>
+
+    <p>
+      Paul Swarztrauber, Roland Sweet.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Ulrich Schumann, Roland Sweet,<br>
+          A direct method for the solution of Poisson's equation with Neumann
+          boundary conditions on a staggered grid of arbitrary size,<br>
+          Journal of Computational Physics,<br>
+          Volume 20, 1976, pages 171-182.
+        </li>
+        <li>
+          Paul Swarztrauber,<br>
+          A direct method for the discrete solution of separable elliptic 
+          equations,<br>
+          SIAM Journal on Numerical Analysis,<br>
+          Volume 11, 1974, pages 1136-1150.
+        </li>
+        <li>
+          Paul Swarztrauber, Roland Sweet,<br>
+          Efficient FORTRAN Subprograms for the Solution of Elliptic Equations,<br>
+          NCAR Technical Report TN/IA-109,<br>
+          National Center for Atmospheric Research, 1975.
+        </li>
+        <li>
+          Roland Sweet,<br>
+          A cyclic reduction algorithm for solving block tridiagonal systems 
+          of arbitrary dimensions,<br>
+          SIAM Journal on Numerical Analysis,<br>
+          Volume 14, September 1977, pages 706-720.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "fishpack.f">fishpack.f</a>, the source code;
+        </li>
+        <li>
+          <a href = "fishpack.sh">fishpack.sh</a>, 
+          commands to compile the source code;
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <b>FISHPACK_PRB</b> runs many tests on the FISHPACK software.
+      <ul>
+        <li>
+          <a href = "fishpack_prb.f">fishpack_prb.f</a>, a sample calling
+          program;
+        </li>
+        <li>
+          <a href = "fishpack_prb.sh">fishpack_prb.sh</a>, commands to 
+          compile, link and run the sample calling program;
+        </li>
+        <li>
+          <a href = "fishpack_prb_output.txt">fishpack_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>BCRH</b>
+        </li>
+        <li>
+          <b>BLKTR1</b> solves the linear system
+        </li>
+        <li>
+          <b>BLKTRI</b> solve linear system derived from a separable elliptic equation.
+        </li>
+        <li>
+          <b>BSRH</b>
+        </li>
+        <li>
+          <b>CBLKTR</b> is a complex version of BLKTRI.
+        </li>
+        <li>
+          <b>CCMPB</b> computes the roots of the b polynomials using routine
+        </li>
+        <li>
+          <b>CHKPR4</b> checks the input parameters.
+        </li>
+        <li>
+          <b>CHKPRM</b> checks the input parameters for errors.
+        </li>
+        <li>
+          <b>CHKSN4</b> checks if the PDE that SEPX4 must solve is a singular operator.
+        </li>
+        <li>
+          <b>CHKSNG</b> checks if the PDE that SEPELI must solve is a singular operator.
+        </li>
+        <li>
+          <b>CMGNBN:</b> complex generalized Buneman algorithm, linear equation solver.
+        </li>
+        <li>
+          <b>CMPCSG</b> computes required cosine values in ascending order.
+        </li>
+        <li>
+          <b>CMPMRG</b> merges two ascending strings of numbers.
+        </li>
+        <li>
+          <b>CMPOSD</b> solves Poisson's equation for Dirichlet boundary conditions.
+        </li>
+        <li>
+          <b>CMPOSN</b> solves Poisson's equation with Neumann boundary conditions.
+        </li>
+        <li>
+          <b>CMPOSP</b> solves poisson equation with periodic boundary conditions.
+        </li>
+        <li>
+          <b>CMPTR3</b> solves a tridiagonal system.
+        </li>
+        <li>
+          <b>CMPTRX</b> solves a system of linear equations where the
+        </li>
+        <li>
+          <b>COFX</b> sets coefficients in the x-direction.
+        </li>
+        <li>
+          <b>COFX4</b> sets coefficients in the x-direction.
+        </li>
+        <li>
+          <b>COFY</b> sets coefficients in y direction
+        </li>
+        <li>
+          <b>COMPB</b> computes the roots of the b polynomials using subroutine
+        </li>
+        <li>
+          <b>COSGEN</b> computes required cosine values in ascending order.
+        </li>
+        <li>
+          <b>COSQB</b> backward cosine quarter wave transform.
+        </li>
+        <li>
+          <b>COSQB1</b> is a utility routine for COSQB.
+        </li>
+        <li>
+          <b>COSQF</b> forward cosine quarter wave transform.
+        </li>
+        <li>
+          <b>COSQF1</b> is a utility routine for COSQF.
+        </li>
+        <li>
+          <b>COSQI</b> initializes the cosine quarter wave transform.
+        </li>
+        <li>
+          <b>COST</b> cosine transform.
+        </li>
+        <li>
+          <b>COSTI</b> initializes the cosine transform.
+        </li>
+        <li>
+          <b>CPADD</b> computes the eigenvalues of the periodic tridiagonal matrix
+        </li>
+        <li>
+          <b>cproc</b> applies a sequence of matrix operations to the vector x and
+        </li>
+        <li>
+          <b>cprocp</b> applies a sequence of matrix operations to the vector x and
+        </li>
+        <li>
+          <b>cprod</b> applies a sequence of matrix operations to the vector x and
+        </li>
+        <li>
+          <b>cprodp</b> applies a sequence of matrix operations to the vector x and
+        </li>
+        <li>
+          <b>DEFE4</b> first approximates the truncation error given by
+        </li>
+        <li>
+          <b>DEFER</b> first approximates the truncation error given by
+        </li>
+        <li>
+          <b>DX</b> computes second order finite difference
+        </li>
+        <li>
+          <b>DX4</b> computes second order finite difference
+        </li>
+        <li>
+          <b>DY</b> computes second order finite difference
+        </li>
+        <li>
+          <b>DY4</b> computes second order finite difference
+        </li>
+        <li>
+          <b>EPMACH</b> computes an approximate machiine epsilon (accuracy)
+        </li>
+        <li>
+          <b>FDUMP</b> creates an error dump.
+        </li>
+        <li>
+          <b>GENBUN:</b> generalized Buneman algorithm, linear equation solver.
+        </li>
+        <li>
+          <b>HSTCRT:</b> solves the standard five-point finite difference
+          approximation on a staggered grid to the Helmholtz equation in
+          cartesian coordinates.
+        </li>
+        <li>
+          <b>HSTCS1</b> is a utility routine for HSTCSP.
+        </li>
+        <li>
+          <b>HSTCSP</b> solves the standard five-point finite difference
+          approximation on a staggered grid to the modified Helmholtz equation
+          in spherical coordinates assuming axisymmetry (no dependence on
+          longitude).
+        </li>
+        <li>
+          <b>HSTCYL</b> solves the standard five-point finite difference
+          approximation on a staggered grid to the modified helmholtz
+          equation in cylindrical coordinates.
+          This two-dimensional modified Helmholtz equation results
+          from the Fourier transform of a three-dimensional Poisson
+          equation.
+        </li>
+        <li>
+          <b>HSTPLR</b> solves the standard five-point finite difference
+          approximation on a staggered grid to the Helmholtz equation in
+          polar coordinates.
+        </li>
+        <li>
+          <b>HSTSSP</b> solves the standard five-point finite difference
+          approximation on a staggered grid to the Helmholtz equation in
+          spherical coordinates and on the surface of the unit sphere
+          (radius of 1).
+        </li>
+        <li>
+          <b>HW3CRT</b> solves the standard seven-point finite
+          difference approximation to the Helmholtz equation in Cartesian
+          coordinates.
+        </li>
+        <li>
+          <b>HWSCRT</b> solves the standard five-point finite
+          difference approximation to the Helmholtz equation in Cartesian
+          coordinates.
+        </li>
+        <li>
+          <b>HWSCS1</b> is a utility routine for HWSCSP.
+        </li>
+        <li>
+          <b>HWSCSP</b> solves a finite difference approximation to the
+          modified Helmholtz equation in spherical coordinates assuming
+          axisymmetry  (no dependence on longitude).
+          This two dimensional modified Helmholtz equation results from
+          the Fourier transform of the three dimensional Poisson equation.
+        </li>
+        <li>
+          <b>HWSCYL</b> solves a finite difference approximation to the
+          Helmholtz equation in cylindrical coordinates.
+          This modified Helmholtz equation results from the Fourier
+          transform of the three-dimensional Poisson equation.
+        </li>
+        <li>
+          <b>HWSPLR</b> solves a finite difference approximation to the
+          Helmholtz equation in polar coordinates.
+        </li>
+        <li>
+          <b>HWSSS1</b> is a utility routine for HWSSSP.
+        </li>
+        <li>
+          <b>HWSSSP</b> solves a finite difference approximation to the
+          Helmholtz equation in spherical coordinates and on the surface of
+          the unit sphere (radius of 1).
+        </li>
+        <li>
+          <b>INDXB</b> indexes the first root of the B(I,IR) polynomial.
+        </li>
+        <li>
+          <b>INDXC</b>
+        </li>
+        <li>
+          <b>INXCA</b>
+        </li>
+        <li>
+          <b>INXCB</b>
+        </li>
+        <li>
+          <b>INXCC</b>
+        </li>
+        <li>
+          <b>J4SAVE</b> sets or gets variables needed by the error handler.
+        </li>
+        <li>
+          <b>MERGE</b> merges two ascending strings of numbers in the array TCOS.
+        </li>
+        <li>
+          <b>MINSO4</b> orthogonalizes the array usol with respect to
+        </li>
+        <li>
+          <b>MINSOL</b> orthogonalizes the array usol with respect to
+        </li>
+        <li>
+          <b>ORTHO4</b> orthogonalizes the array usol with respect to
+        </li>
+        <li>
+          <b>ORTHOG</b> orthogonalizes the array usol with respect to
+        </li>
+        <li>
+          <b>PGSF</b>
+        </li>
+        <li>
+          <b>PIMACH</b> supplies the value of the constant pi correct to
+        </li>
+        <li>
+          <b>POIS3D</b> solves a special set of linear equations.
+        </li>
+        <li>
+          <b>POISD2</b> solves Poisson's equation for Dirichlet boundary conditions.
+        </li>
+        <li>
+          <b>POISN2</b> solves Poisson's equation with Neumann boundary conditions.
+        </li>
+        <li>
+          <b>POISP2</b> solves Poisson's equation with periodic boundary conditions.
+        </li>
+        <li>
+          <b>POISTG</b> solves a special set of linear equations.
+        </li>
+        <li>
+          <b>POS3D1</b>
+        </li>
+        <li>
+          <b>POSTG2</b> solves Poisson's equation on a staggered grid.
+        </li>
+        <li>
+          <b>PPADD</b> computes the eigenvalues of the periodic tridiagonal matrix
+        </li>
+        <li>
+          <b>PROC</b> applies a sequence of matrix operations to the vector x and
+        </li>
+        <li>
+          <b>PROCP</b> applies a sequence of matrix operations to the vector x and
+        </li>
+        <li>
+          <b>PROD</b> applies a sequence of matrix operations to the vector x and
+        </li>
+        <li>
+          <b>PRODP</b> applies a sequence of matrix operations to the vector x
+        </li>
+        <li>
+          <b>RADB2</b> - backward Fourier transform, radix 2.
+        </li>
+        <li>
+          <b>RADB3</b> - backward Fourier transform, radix 3.
+        </li>
+        <li>
+          <b>RADB4</b> - backward Fourier transform, radix 4.
+        </li>
+        <li>
+          <b>RADB5</b> - backward Fourier transform, radix 5.
+        </li>
+        <li>
+          <b>RADBG</b> - backward Fourier transform, general radix.
+        </li>
+        <li>
+          <b>RADF2</b> - forward Fourier transform, radix 2.
+        </li>
+        <li>
+          <b>RADF3</b> - forward Fourier transform, radix 3.
+        </li>
+        <li>
+          <b>RADF4</b> - forward Fourier transform, radix 4.
+        </li>
+        <li>
+          <b>RADF5</b> - forward Fourier transform, radix 5.
+        </li>
+        <li>
+          <b>RADFG</b> - forward Fourier transform, general radix.
+        </li>
+        <li>
+          <b>RFFTB</b> - backward Fourier transform.
+        </li>
+        <li>
+          <b>RFFTB1</b>
+        </li>
+        <li>
+          <b>RFFTF</b> - forward Fourier transform.
+        </li>
+        <li>
+          <b>RFFTF1</b>
+        </li>
+        <li>
+          <b>RFFTI</b> - initialized Fourier transform.
+        </li>
+        <li>
+          <b>RFFTI1</b>
+        </li>
+        <li>
+          <b>SEPELI</b> 2D general separable elliptic problem, second or fourth order scheme.
+        </li>
+        <li>
+          <b>SEPX4</b> 2D restricted separable elliptic problem, second or fourth order scheme.
+        </li>
+        <li>
+          <b>SINQB</b> backward sine quarter wave transform.
+        </li>
+        <li>
+          <b>SINQF</b> forward sine quarter wave transform.
+        </li>
+        <li>
+          <b>SINQI</b> initializes the sine quarter wave transform.
+        </li>
+        <li>
+          <b>SINT:</b> the sine transform.
+        </li>
+        <li>
+          <b>SINTI</b> initializes the sine transform.
+        </li>
+        <li>
+          <b>SPELI4</b> sets up vectors and arrays for input to BLKTRI
+        </li>
+        <li>
+          <b>SPELIP</b> sets up vectors and arrays for input to BLKTRI
+        </li>
+        <li>
+          <b>STORE</b> forces its argument to be stored.
+        </li>
+        <li>
+          <b>TEVLC</b>
+        </li>
+        <li>
+          <b>TEVLS</b> finds the eigenvalues of a symmetric tridiagonal matrix.
+        </li>
+        <li>
+          <b>TRI3</b>
+        </li>
+        <li>
+          <b>TRID</b>
+        </li>
+        <li>
+          <b>TRIS4</b> solves for a non-zero eigenvector corresponding
+        </li>
+        <li>
+          <b>TRISP</b> solves for a non-zero eigenvector corresponding
+        </li>
+        <li>
+          <b>TRIX</b> solves a system of linear equations where the
+        </li>
+        <li>
+          <b>XERCNT</b> allows the user to control error handling.
+        </li>
+        <li>
+          <b>XERHLT</b> aborts the program and prints an error message.
+        </li>
+        <li>
+          <b>XERMAX</b> sets the maximum number of appearances of an error message.
+        </li>
+        <li>
+          <b>XERMSG</b> processes an error message.
+        </li>
+        <li>
+          <b>XERPRN</b> prints an error message.
+        </li>
+        <li>
+          <b>XERSVE</b> records that an error has occurred.
+        </li>
+        <li>
+          <b>XGETUA</b> returns error unit numbers.
+        </li>
+        <li>
+          <b>XSETF</b> sets the error control flag.
+        </li>
+        <li>
+          <b>XSETUN</b> sets the error message output unit.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 15 October 2012.
+    </i>
+
+    <!-- John Burkardt -->
+ 
+  </body>
+
+</html>

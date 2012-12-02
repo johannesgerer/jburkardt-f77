@@ -1,0 +1,183 @@
+<html>
+
+  <head>
+    <title>
+      TOMS343 - Eigenvalues and Eigenvectors of a Real General Matrix
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS343 <br> Eigenvalues and Eigenvectors of a Real General Matrix
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS343</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 343, for computing the eigenvalues
+      and eigenvectors of a real general matrix.
+    </p>
+
+    <p>
+      The text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <dl>
+        <dt>
+          <b>call eigenp ( n, nm, a, t, evr, evi, vecr, veci, indic )</b>
+        </dt>
+        <dd>
+          <b>N</b> is the order of the matrix, <b>NM</b> is the leading
+          dimension of the two dimensional arrays (which must be at least
+          equal to <b>N</b>), <b>A(NM,N)</b> contains the matrix on input,
+          but the contents are destroyed on output, <b>t</b> is a real
+          value equal to the number of binary digits of a single precision
+          floating point number (23, for instance); <b>EVR</b> and <b>EVI</b>
+          contain the real and imaginary parts of the eigenvalues, while
+          the columns of <b>VECR</b> and <b>VECI</b> contain the real and
+          imaginary parts of the eigenvectors, and <b>INDIC</b> is an
+          integer vector of length <b>N</b> which indicates success or
+          failure for each of the N eigenvalue/eigenvector computations.
+        </dd>
+      </dl>
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/eispack/eispack.html">
+      EISPACK</a>,
+      a FORTRAN90 library which
+      handle eigenvalue and eigenvector computations.
+    </p>
+
+    <p>
+      <a href = "../../f_src/lapack_examples/lapack_examples.html">
+      LAPACK_EXAMPLES</a>,
+      a FORTRAN90 program which
+      demonstrates the use of the LAPACK linear algebra library.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/toms384/toms384.html">
+      TOMS384</a>,
+      a FORTRAN77 routine which
+      computes the eigenvalues and eigenvectors
+      of a symmetric matrix.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          J Grad, MA Brebner,<br>
+          Algorithm 343: Eigenvalues and Eigenvectors of a Real
+          General Matrix,<br>
+          Communications of the ACM,<br>
+          Volume 11, Number 12, December 1968, pages 820-826.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms343.f">toms343.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms343.sh">toms343.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms343_prb.f">toms343_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms343_prb.sh">toms343_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms343_prb_output.txt">toms343_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>EIGENP</b> computes the eigenvalues and eigenvectors
+          of a real general matrix;
+        </li>
+        <li>
+          <b>SCALE</b> scales the matrix so that it is balanced;
+        </li>
+        <li>
+          <b>HESQR</b> applies the QR method to the matrix to find the
+          eigenvalues;
+        </li>
+        <li>
+          <b>REALVE</b> computes eigenvectors associated with a
+          real eigenvalue;
+        </li>
+        <li>
+          <b>COMPVE</b> computes eigenvectors associated with a
+          complex eigenvalue;
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 20 January 2006.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

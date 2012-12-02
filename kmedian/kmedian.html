@@ -1,0 +1,141 @@
+<html>
+
+  <head>
+    <title>
+      KMEDIAN - A Program for the K-Medians Problem
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      KMEDIAN <br> A Program for the K-Medians Problem
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>KMEDIAN</b>
+      is a FORTRAN77 program which
+      seeks solutions of the K-Medians problem,
+      by G Cornuejols, M L Fisher, G L Nemhauser
+    </p>
+
+    <h3 align = "center">
+      Languages:
+    </h3>
+
+    <p>
+      <b>KMEDIAN</b> is available in
+      <a href = "../../f_src/kmedian/kmedian.html">a FORTRAN77 version</a> and
+      <a href = "../../f_src/kmedian/kmedian.html">a FORTRAN90 version</a>.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/kmeans/kmeans.html">
+      KMEANS</a>,
+      a FORTRAN90 library which
+      contains several different algorithms for the K-Means problem,
+      which organizes a set of N points in M dimensions into K clusters;
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          G Cornuejols, M L Fisher, G L Nemhauser,<br>
+          Location of Bank Accounts to Optimize Float,
+          an Analytic Study of Exact and Approximate Algorithms,<br>
+          Management Science,<br>
+          Volume 23, Number 8, pages 789-810, 1977.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "kmedian.f">kmedian.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "kmedian.sh">kmedian.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "co04_dist.txt">co04_dist.txt</a>,
+          a set of intercity distances.
+        </li>
+        <li>
+          <a href = "kmedian.dat">kmedian.dat</a>,
+          an output file.
+        </li>
+        <li>
+          <a href = "kmedian_output.txt">kmedian_output.txt</a>,
+          the output from a run of the sample program.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>MAIN</b> is the main program for KMEDIAN.
+        </li>
+        <li>
+          <b>SOL</b> takes one step of the iteration.
+        </li>
+        <li>
+          <b>GREEDY</b> finds a nonoptimal solution using a greedy algorithm.
+        </li>
+        <li>
+          <b>KWRITER</b> gets input from the user.
+        </li>
+        <li>
+          <b>SORT</b> sorts the closest fund stock for each target stock.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 03 November 2006.
+    </i>
+
+    <!-- John Burkardt -->
+
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

@@ -1,0 +1,167 @@
+<html>
+
+  <head>
+    <title>
+      TOMS332 - Jacobi Polynomials
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS332 <br> Jacobi Polynomials
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS332</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 332, for evaluating a Jacobi
+      polynomial.
+    </p>
+
+    <p>
+      The text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <dl>
+        <dt>
+          <b>call jacobi ( degree, alfa, beta, x, f, fd, e, ed, flagf,
+          flagfd )</b>
+        </dt>
+        <dd>
+          where <b>DEGREE</b> is the degree of the polynomial,
+          <b>ALFA</b> and <b>BETA</b> are the parameters of the polynomial,
+          <b>X</b> is the point where the polynomial is to be evaluated,
+          <b>F</b> and <b>FD</b> are the computed values of the polynomial
+          and its derivative,
+          <b>E</b> and <b>ED</b> are estimates for the error in the values
+          of the polynomial and its derivative,
+          <b>FLAGF</b> and <b>FLAGFD</b> are 0, 1 or 2 depending on whether
+          the reported error estimates are relative, absolute, or zero.
+        </dd>
+      </dl>
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/polpak/polpak.html">
+      POLPAK</a>,
+      a FORTRAN90 library which
+      includes routines for evaluating Jacobi polynomials.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/test_values/test_values.html">
+      TEST_VALUES</a>,
+      a FORTRAN77 library which
+      contains routines which return sample values of various functions,
+      including the modified beta function, and the logarithm of the
+      gamma function.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Bruno Witte,<br>
+          Algorithm 332:
+          Jacobi Polynomials,<br>
+          Communications of the ACM,<br>
+          Volume 11, Number 6, June 1968, page 436.
+        </li>
+        <li>
+          Ove Skovgaard,<br>
+          Remark on Algorithm 332,<br>
+          Communications of the ACM,<br>
+          Volume 18, Number 2, February 1975, pages 116-117.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms332.f">toms332.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms332.sh">toms332.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms332_prb.f">toms332_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms332_prb.sh">toms332_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms332_prb_output.txt">toms332_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>JACOBI</b> evaluates a Jacobi polynomial.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 04 January 2006.
+
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

@@ -1,0 +1,641 @@
+14 November  2009   9:20:36.126 PM      
+ 
+LAMP_PRB
+  FORTRAN77 version
+ 
+  Tests for Burkard and Derigs routines for
+  linear assignment and matching problems.
+ 
+TEST01
+  BMP solves the
+  Bottleneck Matching Problem.
+ 
+  Cost matrix:
+ 
+   0  33  55  46  29  68  38  37
+  33   0  57  95  46  30  38  28
+  55  57   0  43  71  60  51  42
+  46  95  43   0  20  37  14  57
+  29  46  71  20   0  48  46  93
+  68  30  60  37  48   0  68  77
+  38  38  51  14  46  68   0  61
+  37  28  42  57  93  77  61   0
+ 
+  Optimal Matching:
+ 
+     I      K           K
+        (computed)  (correct)
+ 
+     1           5           5
+     2           6           6
+     3           8           8
+     4           7           7
+     5           1           1
+     6           2           2
+     7           4           4
+     8           3           3
+ 
+  Optimal cost (computed) =       42
+  Optimal cost (correct)  =       42
+ 
+TEST02
+  CMP solves the
+  Cardinality matching problem.
+ 
+  Optimal Matching:
+ 
+     I      K           K
+        (computed)  (correct)
+ 
+     1          12          12
+     2          19          19
+     3           8           8
+     4          10          10
+     5           9           9
+     6           0           0
+     7          11          11
+     8           3           3
+     9           5           5
+    10           4           4
+    11           7           7
+    12           1           1
+    13          15          15
+    14          20          20
+    15          13          13
+    16          17          17
+    17          16          16
+    18          21          21
+    19           2           2
+    20          14          14
+    21          18          18
+    22          25          25
+    23          24          24
+    24          23          23
+    25          22          22
+    26          27          27
+    27          26          26
+ 
+  Cardinality (computed) =       13
+  Cardinality (correct)  =       13
+ 
+TEST03
+  CONNECT checks that a graph is connected.
+ 
+  ICON (computed) =        1
+  ICON (correct)  =        1
+ 
+TEST04
+  CPP solves the Chinese Postman Problem.
+ 
+  Call CONNECT to verify that the graph
+  is connected.
+ 
+  ICON (computed) =        1
+  ICON (correct)  =        1
+ 
+  List of edges and associated costs:
+ 
+     1     2    26
+     1     3    52
+     1     4    18
+     2     1    26
+     2    17    17
+     2    28   141
+     2    29    14
+     3     1    52
+     3     5    20
+     3    21   161
+     3    52  1605
+     4     1    18
+     4     5    41
+     4     7    32
+     4    17    26
+     5     3    20
+     5     4    41
+     5     6    37
+     6     5    37
+     6     8    39
+     6     9    43
+     7     4    32
+     7     8    13
+     7    17    43
+     7    18    82
+     8     6    39
+     8     7    13
+     8    18     7
+     9     6    43
+     9    10    47
+     9    19    47
+    10     9    47
+    10    11    44
+    10    18    37
+    10    20    27
+    11    10    44
+    11    12    23
+    11    19    36
+    11    42    35
+    12    11    23
+    12    13    14
+    12    23    35
+    13    12    14
+    13    14    57
+    13    37    37
+    14    13    57
+    14    15    34
+    14    39    54
+    15    14    34
+    15    16   101
+    15    24    55
+    16    15   101
+    16    25    25
+    16    26    59
+    17     2    17
+    17     4    26
+    17     7    43
+    18     7    82
+    18     8     7
+    18    10    37
+    19     9    47
+    19    11    36
+    19    22    16
+    19    23    26
+    20    10    27
+    21     3   161
+    21    22    47
+    21    26    12
+    22    19    16
+    22    21    47
+    22    27    16
+    23    12    35
+    23    19    26
+    23    24    22
+    24    15    55
+    24    23    22
+    24    25    24
+    25    16    25
+    25    24    24
+    25    27    40
+    26    16    59
+    26    21    12
+    26    27    25
+    27    22    16
+    27    25    40
+    27    26    25
+    28     2   141
+    28    47    19
+    28    50    12
+    29     2    14
+    30    31    42
+    30    49     8
+    30    50    18
+    31    30    42
+    31    50    25
+    32    33    62
+    32    34    18
+    32    40    31
+    32    43    17
+    33    32    62
+    33    34    48
+    33    51    31
+    34    32    18
+    34    33    48
+    34    35    23
+    34    37    44
+    35    34    23
+    35    36    45
+    35    39    46
+    36    35    45
+    36    39    72
+    36    51    24
+    37    13    37
+    37    34    44
+    37    38    17
+    37    40    18
+    38    37    17
+    39    14    54
+    39    35    46
+    39    36    72
+    40    32    31
+    40    37    18
+    40    41    28
+    40    42    19
+    41    40    28
+    42    11    35
+    42    40    19
+    42    43    42
+    43    32    17
+    43    42    42
+    43    44    18
+    44    43    18
+    44    45    27
+    44    48    29
+    45    44    27
+    45    46    48
+    45    48     9
+    46    45    48
+    46    47   113
+    46    51    32
+    47    28    19
+    47    46   113
+    47    49    38
+    48    44    29
+    48    45     9
+    48    49    17
+    49    30     8
+    49    47    38
+    49    48    17
+    50    28    12
+    50    30    18
+    50    31    25
+    51    33    31
+    51    36    24
+    51    46    32
+    52     3  1605
+ 
+  The tour starts at node       52
+ 
+  List of duplicated edges.
+ 
+  (   3,   1)
+  (   6,   5)
+  (  10,   9)
+  (  13,  12)
+  (  15,  14)
+  (  17,   2)
+  (  18,   8)
+  (  20,  10)
+  (  24,  23)
+  (  25,  16)
+  (  26,  21)
+  (  27,  22)
+  (  29,   2)
+  (  38,  37)
+  (  39,  35)
+  (  40,  37)
+  (  41,  40)
+  (  43,  42)
+  (  45,  44)
+  (  47,  28)
+  (  49,  48)
+  (  50,  30)
+  (  51,  33)
+  (  51,  36)
+  (  51,  46)
+  (  52,   3)
+ 
+  Next Node characterization of the tour:
+ 
+     1     3     4
+     2     1    17    29
+     3    52     1    21
+     4     5     7
+     5     3     6
+     6     8     5
+     7    18    17
+     8     7    18
+     9    10     6
+    10    11     9    20
+    11    42    19
+    12    11    13
+    13    12    37
+    14    13    15
+    15    14    24
+    16    15    25
+    17     2     4
+    18    10     8
+    19     9    23
+    20    10
+    21    22    26
+    22    19    27
+    23    12    24
+    24    25    23
+    25    16    27
+    26    16    21
+    27    26    22
+    28     2    47
+    29     2
+    30    50    31
+    31    50
+    32    43    34
+    33    32    51
+    34    33    35
+    35    39    36
+    36    39    51
+    37    40    34    38
+    38    37
+    39    14    35
+    40    32    37    41
+    41    40
+    42    40    43
+    43    44    42
+    44    45    48
+    45    46    44
+    46    47    51
+    47    28    49
+    48    45    49
+    49    30    48
+    50    28    30
+    51    33    36    46
+    52     3
+ 
+  Cost of the duplicated edges (computed) =     2248
+  Cost of the duplicated edges (correct)  =     2248
+  Cost of the postman tour     (computed) =     6700
+  Cost of the postman tour     (correct)  =     6700
+ 
+TEST05
+  LBAP solves the
+  Linear bottleneck assignment problem
+ 
+  Matrix order N =        8
+ 
+  Cost matrix C:
+ 
+    13    12    35    34    21    42    16    26
+    21    36    32    54     6    19    34    20
+    20    25    13     7    45    39    38     5
+    12    41    36     8    18    15     3    17
+     8    40    26    12    24    14    34    45
+    26    11    21    22    34    16    40    31
+    22     4    13    11    12    28    22    37
+    11     8    37    40    48    46    24    43
+ 
+  Optimal assignment:
+ 
+     I      K           K
+        (computed)  (correct)
+ 
+     1           1           1
+     2           8           8
+     3           7           7
+     4           5           5
+     5           2           2
+     6           6           6
+     7           4           4
+     8           3           3
+ 
+  Optimal cost (computed) =       16
+  Optimal cost (correct)  =       16
+ 
+TEST06
+  LSAPI solves the 
+  linear bottleneck assignment problem
+  for an INTEGER cost matrix.
+ 
+  Matrix order N =        8
+ 
+  Cost matrix C:
+ 
+    13    12    35    34    21    42    16    26
+    21    36    32    54     6    19    34    20
+    20    25    13     7    45    39    38     5
+    12    41    36     8    18    15     3    17
+     8    40    26    12    24    14    34    45
+    26    11    21    22    34    16    40    31
+    22     4    13    11    12    28    22    37
+    11     8    37    40    48    46    24    43
+ ZEILE(           3  ) =            3
+ Label(           3  ) = true
+ ZEILE(           7  ) =            2
+ Label(           7  ) = true
+ ZEILE(           4  ) =            7
+ Label(           4  ) = true
+ ZEILE(           8  ) =            0
+ Label(           8  ) = true
+ ZEILE(           3  ) =            4
+ Label(           3  ) = true
+ ZEILE(           4  ) =            7
+ Label(           4  ) = true
+ ZEILE(           5  ) =            1
+ Label(           5  ) = true
+ ZEILE(           1  ) =            0
+ Label(           1  ) = true
+ 
+  Optimal assignment:
+ 
+     I      K           K
+        (computed)  (correct)
+ 
+     1           1           1
+     2           8           8
+     3           7           7
+     4           5           5
+     5           2           2
+     6           6           6
+     7           4           4
+     8           3           3
+ 
+  Optimal cost (computed) =       76
+  Optimal cost (correct)  =       76
+ 
+TEST07
+  LSAPR solves the 
+  linear bottleneck assignment problem
+  for a REAL cost matrix.
+ 
+  Matrix order N =        8
+ 
+  Cost matrix C:
+ 
+   13.00   12.00   35.00   34.00   21.00   42.00   16.00   26.00
+   21.00   36.00   32.00   54.00    6.00   19.00   34.00   20.00
+   20.00   25.00   13.00    7.00   45.00   39.00   38.00    5.00
+   12.00   41.00   36.00    8.00   18.00   15.00    3.00   17.00
+    8.00   40.00   26.00   12.00   24.00   14.00   34.00   45.00
+   26.00   11.00   21.00   22.00   34.00   16.00   40.00   31.00
+   22.00    4.00   13.00   11.00   12.00   28.00   22.00   37.00
+   11.00    8.00   37.00   40.00   48.00   46.00   24.00   43.00
+ 
+  Optimal assignment:
+ 
+     I      K           K
+        (computed)  (correct)
+ 
+     1           1           1
+     2           8           8
+     3           7           7
+     4           5           5
+     5           2           2
+     6           6           6
+     7           4           4
+     8           3           3
+ 
+  Optimal cost (computed) =    76.00
+  Optimal cost (correct)  =    76.00
+ 
+TEST08 is being skipped for now.
+  The QAP routine is being debugged.
+ 
+TEST09
+  QAPH1 is a heuristic solver for the 
+  the Quadratic Assignment Problem.
+ 
+  Instead of a "correct" solution, we have
+  an "example" solution computed with a
+  small number of repetitions.
+ 
+  Matrix order N =       12
+ 
+  Distance matrix A:
+ 
+     0     1     2     3     1     2     3     4     2     3     4     5
+     1     0     1     2     2     1     2     3     3     2     3     4
+     2     1     0     1     3     2     1     2     4     3     2     3
+     3     2     1     0     4     3     2     1     5     4     3     2
+     1     2     3     4     0     1     2     3     1     2     3     4
+     2     1     2     3     1     0     1     2     2     1     2     3
+     3     2     1     2     2     1     0     1     3     2     1     2
+     4     3     2     1     3     2     1     0     4     3     2     1
+     2     3     4     5     1     2     3     4     0     1     2     3
+     3     2     3     4     2     1     2     3     1     0     1     2
+     4     3     2     3     3     2     1     2     2     1     0     1
+     5     4     3     2     4     3     2     1     3     2     1     0
+ 
+  Connection matrix B:
+ 
+     0     5     2     4     1     0     0     6     2     1     1     1
+     5     0     3     0     2     2     2     0     4     5     0     0
+     2     3     0     0     0     0     0     5     5     2     2     2
+     4     0     0     0     5     2     2    10     0     0     5     5
+     1     2     0     5     0    10     0     0     0     5     1     1
+     0     2     0     2    10     0     5     1     1     5     4     0
+     0     2     0     2     0     5     0    10     5     2     3     3
+     6     0     5    10     0     1    10     0     0     0     5     0
+     2     4     5     0     0     1     5     0     0     0    10    10
+     1     5     2     0     5     5     2     0     0     0     5     0
+     1     0     2     5     1     4     3     5    10     5     0     2
+     1     0     2     5     1     0     3     0    10     0     2     0
+ 
+  Optimal permutation:
+ 
+     I           P          P
+        (computed)  (example)
+ 
+     1           3           1
+     2           2          10
+     3           1           5
+     4          10           6
+     5          12           2
+     6           8          11
+     7           4           4
+     8           5           8
+     9           9           3
+    10          11           9
+    11           7          12
+    12           6           7
+ 
+  Objective functional value (computed) =      618
+  Objective functional value (example)  =      620
+ 
+TEST10
+  QAPH2 is a heuristic solver for the 
+  the Quadratic Assignment Problem.
+ 
+  Instead of a "correct" solution, we have
+  an "example" solution computed with a
+  small number of repetitions.
+ 
+  Matrix order N =       12
+ 
+  Distance matrix A:
+ 
+     0     1     2     3     1     2     3     4     2     3     4     5
+     1     0     1     2     2     1     2     3     3     2     3     4
+     2     1     0     1     3     2     1     2     4     3     2     3
+     3     2     1     0     4     3     2     1     5     4     3     2
+     1     2     3     4     0     1     2     3     1     2     3     4
+     2     1     2     3     1     0     1     2     2     1     2     3
+     3     2     1     2     2     1     0     1     3     2     1     2
+     4     3     2     1     3     2     1     0     4     3     2     1
+     2     3     4     5     1     2     3     4     0     1     2     3
+     3     2     3     4     2     1     2     3     1     0     1     2
+     4     3     2     3     3     2     1     2     2     1     0     1
+     5     4     3     2     4     3     2     1     3     2     1     0
+ 
+  Connection matrix B:
+ 
+     0     5     2     4     1     0     0     6     2     1     1     1
+     5     0     3     0     2     2     2     0     4     5     0     0
+     2     3     0     0     0     0     0     5     5     2     2     2
+     4     0     0     0     5     2     2    10     0     0     5     5
+     1     2     0     5     0    10     0     0     0     5     1     1
+     0     2     0     2    10     0     5     1     1     5     4     0
+     0     2     0     2     0     5     0    10     5     2     3     3
+     6     0     5    10     0     1    10     0     0     0     5     0
+     2     4     5     0     0     1     5     0     0     0    10    10
+     1     5     2     0     5     5     2     0     0     0     5     0
+     1     0     2     5     1     4     3     5    10     5     0     2
+     1     0     2     5     1     0     3     0    10     0     2     0
+ 
+  Optimal permutation:
+ 
+     I           P          P
+        (computed)  (example)
+ 
+     1          12           5
+     2           7           6
+     3           9          10
+     4           3           2
+     5           4           4
+     6           8           8
+     7          11          11
+     8           1           1
+     9           5          12
+    10           6           7
+    11          10           9
+    12           2           3
+ 
+  Objective functional value (computed) =      578
+  Objective functional value (example)  =      578
+ 
+TEST11
+  SMP solves the Sum Matching Problem. 
+ 
+  Cost matrix C:
+ 
+     0    33    55    46    29    68    38    37
+    33     0    57    95    46    30    38    28
+    55    57     0    43    71    60    51    42
+    46    95    43     0    20    37    14    57
+    29    46    71    20     0    48    46    93
+    68    30    60    37    48     0    68    77
+    38    38    51    14    46    68     0    61
+    37    28    42    57    93    77    61     0
+ 
+  Optimal matching:
+ 
+     I           P          P
+        (computed)  (correct)
+ 
+     1           5           5
+     2           6           6
+     3           8           8
+     4           7           7
+     5           1           1
+     6           2           2
+     7           4           4
+     8           3           3
+ 
+  Cost of optimal matching (computed) =      115
+  Cost of optimal matching (correct)  =      115
+ 
+TEST12
+  ZUFALL generates pseudorandom permutations.
+ 
+     I          SEED     1   2   3   4   5   6   7   8   9  10
+ 
+     1     123456789     3  10   8   5   4   1   6   2   7   9
+     2    1361431000     1   6   5   9   8   2  10   4   3   7
+     3      29242052     9   8   1   2   4  10   3   6   7   5
+     4     573662182     7   6   9   4  10   3   1   8   2   5
+     5     397959036     6   4   7   3   2   9   1   5  10   8
+     6    1770944023     1   8   2   9   7   4  10   6   5   3
+     7     873960648    10   6   1   5   2   4   7   9   3   8
+     8      37457009     2   3   5   1   6   7   9  10   8   4
+     9     462764781     8   7   4   9  10   6   3   1   2   5
+    10     627737138    10   7   4   2   8   9   5   3   6   1
+ 
+LAMP_PRB
+  Normal end of execution.
+ 
+14 November  2009   9:20:36.186 PM      

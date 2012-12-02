@@ -1,0 +1,387 @@
+ 
+HELMHOLTZ
+  FORTRAN77/OpenMP version
+ 
+  A program for the 2D Helmholtz equation.
+  The number of processors =        8
+  The number of threads    =        1
+ 
+  The region is [-1,1] x [-1,1].
+  The number of nodes in the X direction is M =      500
+  The number of nodes in the Y direction is N =      500
+  The scalar coefficient is ALPHA =   0.250000    
+  The relaxation value is OMEGA =    1.10000    
+  The error tolerance is TOL =   0.100000E-07
+  The maximum number of Jacobi iterations is IT_MAX =      100
+ 
+  Right hand side RMS =    1458.46    
+ 
+  Jacobi residual RMS              0.585723E-02
+  Jacobi residual RMS              0.585433E-02
+  Jacobi residual RMS              0.585240E-02
+  Jacobi residual RMS              0.585083E-02
+  Jacobi residual RMS              0.584946E-02
+  Jacobi residual RMS              0.584823E-02
+  Jacobi residual RMS              0.584710E-02
+  Jacobi residual RMS              0.584604E-02
+  Jacobi residual RMS              0.584505E-02
+  Jacobi residual RMS              0.584411E-02
+  Jacobi residual RMS              0.584321E-02
+  Jacobi residual RMS              0.584235E-02
+  Jacobi residual RMS              0.584152E-02
+  Jacobi residual RMS              0.584072E-02
+  Jacobi residual RMS              0.583995E-02
+  Jacobi residual RMS              0.583919E-02
+  Jacobi residual RMS              0.583846E-02
+  Jacobi residual RMS              0.583775E-02
+  Jacobi residual RMS              0.583705E-02
+  Jacobi residual RMS              0.583637E-02
+  Jacobi residual RMS              0.583570E-02
+  Jacobi residual RMS              0.583505E-02
+  Jacobi residual RMS              0.583441E-02
+  Jacobi residual RMS              0.583378E-02
+  Jacobi residual RMS              0.583316E-02
+  Jacobi residual RMS              0.583255E-02
+  Jacobi residual RMS              0.583196E-02
+  Jacobi residual RMS              0.583137E-02
+  Jacobi residual RMS              0.583079E-02
+  Jacobi residual RMS              0.583021E-02
+  Jacobi residual RMS              0.582965E-02
+  Jacobi residual RMS              0.582909E-02
+  Jacobi residual RMS              0.582854E-02
+  Jacobi residual RMS              0.582800E-02
+  Jacobi residual RMS              0.582746E-02
+  Jacobi residual RMS              0.582693E-02
+  Jacobi residual RMS              0.582640E-02
+  Jacobi residual RMS              0.582588E-02
+  Jacobi residual RMS              0.582537E-02
+  Jacobi residual RMS              0.582486E-02
+  Jacobi residual RMS              0.582436E-02
+  Jacobi residual RMS              0.582386E-02
+  Jacobi residual RMS              0.582336E-02
+  Jacobi residual RMS              0.582287E-02
+  Jacobi residual RMS              0.582239E-02
+  Jacobi residual RMS              0.582190E-02
+  Jacobi residual RMS              0.582143E-02
+  Jacobi residual RMS              0.582095E-02
+  Jacobi residual RMS              0.582048E-02
+  Jacobi residual RMS              0.582002E-02
+  Jacobi residual RMS              0.581955E-02
+  Jacobi residual RMS              0.581909E-02
+  Jacobi residual RMS              0.581864E-02
+  Jacobi residual RMS              0.581819E-02
+  Jacobi residual RMS              0.581774E-02
+  Jacobi residual RMS              0.581729E-02
+  Jacobi residual RMS              0.581685E-02
+  Jacobi residual RMS              0.581641E-02
+  Jacobi residual RMS              0.581597E-02
+  Jacobi residual RMS              0.581553E-02
+  Jacobi residual RMS              0.581510E-02
+  Jacobi residual RMS              0.581467E-02
+  Jacobi residual RMS              0.581424E-02
+  Jacobi residual RMS              0.581382E-02
+  Jacobi residual RMS              0.581340E-02
+  Jacobi residual RMS              0.581298E-02
+  Jacobi residual RMS              0.581256E-02
+  Jacobi residual RMS              0.581214E-02
+  Jacobi residual RMS              0.581173E-02
+  Jacobi residual RMS              0.581132E-02
+  Jacobi residual RMS              0.581091E-02
+  Jacobi residual RMS              0.581051E-02
+  Jacobi residual RMS              0.581010E-02
+  Jacobi residual RMS              0.580970E-02
+  Jacobi residual RMS              0.580930E-02
+  Jacobi residual RMS              0.580890E-02
+  Jacobi residual RMS              0.580850E-02
+  Jacobi residual RMS              0.580811E-02
+  Jacobi residual RMS              0.580772E-02
+  Jacobi residual RMS              0.580733E-02
+  Jacobi residual RMS              0.580694E-02
+  Jacobi residual RMS              0.580655E-02
+  Jacobi residual RMS              0.580616E-02
+  Jacobi residual RMS              0.580578E-02
+  Jacobi residual RMS              0.580540E-02
+  Jacobi residual RMS              0.580501E-02
+  Jacobi residual RMS              0.580463E-02
+  Jacobi residual RMS              0.580426E-02
+  Jacobi residual RMS              0.580388E-02
+  Jacobi residual RMS              0.580351E-02
+  Jacobi residual RMS              0.580313E-02
+  Jacobi residual RMS              0.580276E-02
+  Jacobi residual RMS              0.580239E-02
+  Jacobi residual RMS              0.580202E-02
+  Jacobi residual RMS              0.580165E-02
+  Jacobi residual RMS              0.580129E-02
+  Jacobi residual RMS              0.580092E-02
+  Jacobi residual RMS              0.580056E-02
+  Jacobi residual RMS              0.580019E-02
+  Jacobi residual RMS              0.579983E-02
+ 
+Total number of iterations      101
+ 
+  Computed U RMS norm :         0.640273    
+  Computed U_EXACT RMS norm :    266.133    
+  RMS error :                    265.517    
+ 
+  Elapsed wall clock time =   0.738002    
+ 
+HELMHOLTZ
+  Normal end of execution.
+ 
+HELMHOLTZ
+  FORTRAN77/OpenMP version
+ 
+  A program for the 2D Helmholtz equation.
+  The number of processors =        8
+  The number of threads    =        2
+ 
+  The region is [-1,1] x [-1,1].
+  The number of nodes in the X direction is M =      500
+  The number of nodes in the Y direction is N =      500
+  The scalar coefficient is ALPHA =   0.250000    
+  The relaxation value is OMEGA =    1.10000    
+  The error tolerance is TOL =   0.100000E-07
+  The maximum number of Jacobi iterations is IT_MAX =      100
+ 
+  Right hand side RMS =    1458.46    
+ 
+  Jacobi residual RMS              0.585723E-02
+  Jacobi residual RMS              0.585433E-02
+  Jacobi residual RMS              0.585240E-02
+  Jacobi residual RMS              0.585083E-02
+  Jacobi residual RMS              0.584946E-02
+  Jacobi residual RMS              0.584823E-02
+  Jacobi residual RMS              0.584710E-02
+  Jacobi residual RMS              0.584604E-02
+  Jacobi residual RMS              0.584505E-02
+  Jacobi residual RMS              0.584411E-02
+  Jacobi residual RMS              0.584321E-02
+  Jacobi residual RMS              0.584235E-02
+  Jacobi residual RMS              0.584152E-02
+  Jacobi residual RMS              0.584072E-02
+  Jacobi residual RMS              0.583995E-02
+  Jacobi residual RMS              0.583919E-02
+  Jacobi residual RMS              0.583846E-02
+  Jacobi residual RMS              0.583775E-02
+  Jacobi residual RMS              0.583705E-02
+  Jacobi residual RMS              0.583637E-02
+  Jacobi residual RMS              0.583570E-02
+  Jacobi residual RMS              0.583505E-02
+  Jacobi residual RMS              0.583441E-02
+  Jacobi residual RMS              0.583378E-02
+  Jacobi residual RMS              0.583316E-02
+  Jacobi residual RMS              0.583255E-02
+  Jacobi residual RMS              0.583196E-02
+  Jacobi residual RMS              0.583137E-02
+  Jacobi residual RMS              0.583079E-02
+  Jacobi residual RMS              0.583021E-02
+  Jacobi residual RMS              0.582965E-02
+  Jacobi residual RMS              0.582909E-02
+  Jacobi residual RMS              0.582854E-02
+  Jacobi residual RMS              0.582800E-02
+  Jacobi residual RMS              0.582746E-02
+  Jacobi residual RMS              0.582693E-02
+  Jacobi residual RMS              0.582640E-02
+  Jacobi residual RMS              0.582588E-02
+  Jacobi residual RMS              0.582537E-02
+  Jacobi residual RMS              0.582486E-02
+  Jacobi residual RMS              0.582436E-02
+  Jacobi residual RMS              0.582386E-02
+  Jacobi residual RMS              0.582336E-02
+  Jacobi residual RMS              0.582287E-02
+  Jacobi residual RMS              0.582239E-02
+  Jacobi residual RMS              0.582190E-02
+  Jacobi residual RMS              0.582143E-02
+  Jacobi residual RMS              0.582095E-02
+  Jacobi residual RMS              0.582048E-02
+  Jacobi residual RMS              0.582002E-02
+  Jacobi residual RMS              0.581955E-02
+  Jacobi residual RMS              0.581909E-02
+  Jacobi residual RMS              0.581864E-02
+  Jacobi residual RMS              0.581819E-02
+  Jacobi residual RMS              0.581774E-02
+  Jacobi residual RMS              0.581729E-02
+  Jacobi residual RMS              0.581685E-02
+  Jacobi residual RMS              0.581641E-02
+  Jacobi residual RMS              0.581597E-02
+  Jacobi residual RMS              0.581553E-02
+  Jacobi residual RMS              0.581510E-02
+  Jacobi residual RMS              0.581467E-02
+  Jacobi residual RMS              0.581424E-02
+  Jacobi residual RMS              0.581382E-02
+  Jacobi residual RMS              0.581340E-02
+  Jacobi residual RMS              0.581298E-02
+  Jacobi residual RMS              0.581256E-02
+  Jacobi residual RMS              0.581214E-02
+  Jacobi residual RMS              0.581173E-02
+  Jacobi residual RMS              0.581132E-02
+  Jacobi residual RMS              0.581091E-02
+  Jacobi residual RMS              0.581051E-02
+  Jacobi residual RMS              0.581010E-02
+  Jacobi residual RMS              0.580970E-02
+  Jacobi residual RMS              0.580930E-02
+  Jacobi residual RMS              0.580890E-02
+  Jacobi residual RMS              0.580850E-02
+  Jacobi residual RMS              0.580811E-02
+  Jacobi residual RMS              0.580772E-02
+  Jacobi residual RMS              0.580733E-02
+  Jacobi residual RMS              0.580694E-02
+  Jacobi residual RMS              0.580655E-02
+  Jacobi residual RMS              0.580616E-02
+  Jacobi residual RMS              0.580578E-02
+  Jacobi residual RMS              0.580540E-02
+  Jacobi residual RMS              0.580501E-02
+  Jacobi residual RMS              0.580463E-02
+  Jacobi residual RMS              0.580426E-02
+  Jacobi residual RMS              0.580388E-02
+  Jacobi residual RMS              0.580351E-02
+  Jacobi residual RMS              0.580313E-02
+  Jacobi residual RMS              0.580276E-02
+  Jacobi residual RMS              0.580239E-02
+  Jacobi residual RMS              0.580202E-02
+  Jacobi residual RMS              0.580165E-02
+  Jacobi residual RMS              0.580129E-02
+  Jacobi residual RMS              0.580092E-02
+  Jacobi residual RMS              0.580056E-02
+  Jacobi residual RMS              0.580019E-02
+  Jacobi residual RMS              0.579983E-02
+ 
+Total number of iterations      101
+ 
+  Computed U RMS norm :         0.640273    
+  Computed U_EXACT RMS norm :    266.133    
+  RMS error :                    265.517    
+ 
+  Elapsed wall clock time =   0.392660    
+ 
+HELMHOLTZ
+  Normal end of execution.
+ 
+HELMHOLTZ
+  FORTRAN77/OpenMP version
+ 
+  A program for the 2D Helmholtz equation.
+  The number of processors =        8
+  The number of threads    =        4
+ 
+  The region is [-1,1] x [-1,1].
+  The number of nodes in the X direction is M =      500
+  The number of nodes in the Y direction is N =      500
+  The scalar coefficient is ALPHA =   0.250000    
+  The relaxation value is OMEGA =    1.10000    
+  The error tolerance is TOL =   0.100000E-07
+  The maximum number of Jacobi iterations is IT_MAX =      100
+ 
+  Right hand side RMS =    1458.46    
+ 
+  Jacobi residual RMS              0.585723E-02
+  Jacobi residual RMS              0.585433E-02
+  Jacobi residual RMS              0.585240E-02
+  Jacobi residual RMS              0.585083E-02
+  Jacobi residual RMS              0.584946E-02
+  Jacobi residual RMS              0.584823E-02
+  Jacobi residual RMS              0.584710E-02
+  Jacobi residual RMS              0.584604E-02
+  Jacobi residual RMS              0.584505E-02
+  Jacobi residual RMS              0.584411E-02
+  Jacobi residual RMS              0.584321E-02
+  Jacobi residual RMS              0.584235E-02
+  Jacobi residual RMS              0.584152E-02
+  Jacobi residual RMS              0.584072E-02
+  Jacobi residual RMS              0.583995E-02
+  Jacobi residual RMS              0.583919E-02
+  Jacobi residual RMS              0.583846E-02
+  Jacobi residual RMS              0.583775E-02
+  Jacobi residual RMS              0.583705E-02
+  Jacobi residual RMS              0.583637E-02
+  Jacobi residual RMS              0.583570E-02
+  Jacobi residual RMS              0.583505E-02
+  Jacobi residual RMS              0.583441E-02
+  Jacobi residual RMS              0.583378E-02
+  Jacobi residual RMS              0.583316E-02
+  Jacobi residual RMS              0.583255E-02
+  Jacobi residual RMS              0.583196E-02
+  Jacobi residual RMS              0.583137E-02
+  Jacobi residual RMS              0.583079E-02
+  Jacobi residual RMS              0.583021E-02
+  Jacobi residual RMS              0.582965E-02
+  Jacobi residual RMS              0.582909E-02
+  Jacobi residual RMS              0.582854E-02
+  Jacobi residual RMS              0.582800E-02
+  Jacobi residual RMS              0.582746E-02
+  Jacobi residual RMS              0.582693E-02
+  Jacobi residual RMS              0.582640E-02
+  Jacobi residual RMS              0.582588E-02
+  Jacobi residual RMS              0.582537E-02
+  Jacobi residual RMS              0.582486E-02
+  Jacobi residual RMS              0.582436E-02
+  Jacobi residual RMS              0.582386E-02
+  Jacobi residual RMS              0.582336E-02
+  Jacobi residual RMS              0.582287E-02
+  Jacobi residual RMS              0.582239E-02
+  Jacobi residual RMS              0.582190E-02
+  Jacobi residual RMS              0.582143E-02
+  Jacobi residual RMS              0.582095E-02
+  Jacobi residual RMS              0.582048E-02
+  Jacobi residual RMS              0.582002E-02
+  Jacobi residual RMS              0.581955E-02
+  Jacobi residual RMS              0.581909E-02
+  Jacobi residual RMS              0.581864E-02
+  Jacobi residual RMS              0.581819E-02
+  Jacobi residual RMS              0.581774E-02
+  Jacobi residual RMS              0.581729E-02
+  Jacobi residual RMS              0.581685E-02
+  Jacobi residual RMS              0.581641E-02
+  Jacobi residual RMS              0.581597E-02
+  Jacobi residual RMS              0.581553E-02
+  Jacobi residual RMS              0.581510E-02
+  Jacobi residual RMS              0.581467E-02
+  Jacobi residual RMS              0.581424E-02
+  Jacobi residual RMS              0.581382E-02
+  Jacobi residual RMS              0.581340E-02
+  Jacobi residual RMS              0.581298E-02
+  Jacobi residual RMS              0.581256E-02
+  Jacobi residual RMS              0.581214E-02
+  Jacobi residual RMS              0.581173E-02
+  Jacobi residual RMS              0.581132E-02
+  Jacobi residual RMS              0.581091E-02
+  Jacobi residual RMS              0.581051E-02
+  Jacobi residual RMS              0.581010E-02
+  Jacobi residual RMS              0.580970E-02
+  Jacobi residual RMS              0.580930E-02
+  Jacobi residual RMS              0.580890E-02
+  Jacobi residual RMS              0.580850E-02
+  Jacobi residual RMS              0.580811E-02
+  Jacobi residual RMS              0.580772E-02
+  Jacobi residual RMS              0.580733E-02
+  Jacobi residual RMS              0.580694E-02
+  Jacobi residual RMS              0.580655E-02
+  Jacobi residual RMS              0.580616E-02
+  Jacobi residual RMS              0.580578E-02
+  Jacobi residual RMS              0.580540E-02
+  Jacobi residual RMS              0.580501E-02
+  Jacobi residual RMS              0.580463E-02
+  Jacobi residual RMS              0.580426E-02
+  Jacobi residual RMS              0.580388E-02
+  Jacobi residual RMS              0.580351E-02
+  Jacobi residual RMS              0.580313E-02
+  Jacobi residual RMS              0.580276E-02
+  Jacobi residual RMS              0.580239E-02
+  Jacobi residual RMS              0.580202E-02
+  Jacobi residual RMS              0.580165E-02
+  Jacobi residual RMS              0.580129E-02
+  Jacobi residual RMS              0.580092E-02
+  Jacobi residual RMS              0.580056E-02
+  Jacobi residual RMS              0.580019E-02
+  Jacobi residual RMS              0.579983E-02
+ 
+Total number of iterations      101
+ 
+  Computed U RMS norm :         0.640273    
+  Computed U_EXACT RMS norm :    266.133    
+  RMS error :                    265.517    
+ 
+  Elapsed wall clock time =   0.226722    
+ 
+HELMHOLTZ
+  Normal end of execution.

@@ -1,0 +1,15 @@
+
+ <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ <<                END OF DISLIN / VERSION 10.1                  <<
+ <<  Date    : 20.05.2011  Time    : 20:47:18  Pageformat: USAP  <<
+ <<  Vectors : 12200       Warnings: 0         Fileformat:  PNG  <<
+ <<  Metafile: orbital.png                                       <<
+ <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+ 
+ORBITAL:
+  FORTRAN77 version
+  Use DISLIN to make a contour plot of Z(X,Y) data.
+ 
+ORBITAl:
+  Normal end of execution.

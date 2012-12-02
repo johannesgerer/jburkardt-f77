@@ -1,0 +1,22 @@
+26 April     2007  12:51:52.000 PM      
+ 
+ARGS
+  FORTRAN77 version
+  Demonstrate the use of the command line
+  argument routines GETARG and IARGC.
+ 
+  ARGS was called with IARGC() =        3 arguments.
+ 
+  CALL GETARG(I,ARG) returns the arguments:
+ 
+  I     ARG 
+ 
+    0  /home/u8/users/burkardt/binf77/Alpha/args                                       
+    1  17                                                                              
+    2  apple                                                                           
+    3  3.14159                                                                         
+ 
+ARGS:
+  Normal end of execution.
+ 
+26 April     2007  12:51:52.000 PM      

@@ -1,0 +1,89 @@
+20060115  080959.000
+ 
+TOMS470_PRB
+  Test TOMS algorithm 470, for solving
+  an "almost tridiagonal" linear system.
+ 
+TEST01
+  Test FAKUB, a linear system solver
+  for "almost tridiagonal" systems.
+ 
+  Actually, try a true tridiagonal system.
+ 
+  Number of equations, N =      5
+ 
+  Tridiagonal elements:
+ 
+  0.  4. -1.
+ -1.  4. -1.
+ -1.  4. -1.
+ -1.  4. -1.
+ -1.  4.  0.
+ 
+  Right hand side of linear system:
+ 
+  2.
+  4.
+  6.
+  8.
+  16.
+ 
+  Solution, which should be (1,2,3,...,n):
+ 
+  1.
+  2.
+  3.
+  4.
+  5.00000048
+ 
+TEST02
+  Test FAKUB, a linear system solver
+  for "almost tridiagonal" systems.
+ 
+  Number of equations, N =      5
+ 
+  Tridiagonal elements:
+ 
+  0.  4. -1.
+ -1.  4. -1.
+ -1.  4. -1.
+ -1.  4. -1.
+ -1.  4.  0.
+ 
+  Indices of unknowns with nonzero
+  non-tridiagonal coefficients.
+ 
+ 5
+ 1
+ 
+  Right hand side of linear system:
+ 
+ -3.
+  4.
+  6.
+  8.
+  15.
+ 
+  Solution, which should be (1,2,3,...,n):
+ 
+  1.00000012
+  2.
+  3.
+  4.
+  5.
+ 
+TEST03
+  Test GAUSD, a linear system solver.
+ 
+  Solution, which should be (1,2,3,...,n):
+ 
+  1.00000012
+  1.99999976
+  2.99999976
+  4.00000048
+  5.
+ 
+TOMS470_PRB
+  Normal end of execution.
+ 
+20060115  080959.000

@@ -1,0 +1,225 @@
+<html>
+
+  <head>
+    <title>
+      TOMS581 - Singular Value Decomposition (SVD) of a Rectangular Matrix.
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS581 <br> Singular Value Decomposition (SVD) of a Rectangular Matrix
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS581</b>
+      is a FORTRAN77 library which
+      implements an improved algorithm for the singular value decomposition (SVD)
+      of a rectangular matrix, by Tony Chan.
+    </p>
+
+    <p>
+      The original, true, correct version of ACM TOMS Algorithm 581
+      is available through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Languages:
+    </h3>
+
+    <p>
+      <b>TOMS581</b> is available in
+      <a href = "../../f77_src/toms581/toms581.html">a FORTRAN77 version</a>.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f77_src/eispack/eispack.html">
+      EISPACK</a>,
+      a FORTRAN77 library which
+      carries out eigenvalue computations;
+      it includes a function to compute the singular value decomposition (SVD)
+      of a rectangular matrix.
+      superseded by LAPACK;
+    </p>
+
+    <p>
+      <a href = "../../f77_src/lawson/lawson.html">
+      LAWSON</a>,
+      a FORTRAN77 library which
+      contains routines for solving least squares problems and singular value
+      decompositions (SVD),
+      by Charles Lawson, Richard Hanson.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/linpack/linpack.html">
+      LINPACK</a>,
+      a FORTRAN77 library which
+      solves linear systems for a variety of matrix storage schemes,
+      real or complex arithmetic, and single or double precision.
+      It includes a routine for computing the singular value decomposition (SVD)
+      of a rectangular matrix.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/svd_demo/svd_demo.html">
+      SVD_DEMO</a>,
+      a FORTRAN77 program which
+      demonstrates the Singular Value Decomposition (SVD) for a simple example.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/toms358/toms358.html">
+      TOMS358</a>,
+      a FORTRAN77 library which
+      computes the singular value decomposition (SVD) of a complex matrix;
+      this is ACM TOMS algorithm 358.
+    </p>
+
+    <h3 align = "center">
+      Author:
+    </h3>
+
+    <p>
+      Tony Chan
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Tony Chan,<br>
+          An improved algorithm for computing the singular value decomposition,<br>
+          ACM Transactions on Mathematical Software,<br>
+          Volume 8, Number 1, March 1982, pages 72-83.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms581.f">toms581.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms581.sh">toms581.sh</a>,
+          BASH commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms581_prb.f">toms581_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms581_prb.sh">toms581_prb.sh</a>,
+          BASH commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms581_prb_output.txt">toms581_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>GRSVD</b> determines the singular value decomposition of a matrix with N <= M.
+        </li>
+        <li>
+          <b>HYBSVD</b> computes the singular value decomposition of a rectangular matrix.
+        </li>
+        <li>
+          <b>MGNSVD</b> computes the singular value decomposition for a matrix with N <= M.
+        </li>
+        <li>
+          <b>MINFIT</b> determines the singular value decomposition of a real M by N matrix.
+        </li>
+        <li>
+          <b>SASUM</b> takes the sum of the absolute values.
+        </li>
+        <li>
+          <b>SAXPY</b> computes constant times a vector plus a vector.
+        </li>
+        <li>
+          <b>SDOT</b> forms the dot product of two vectors.
+        </li>
+        <li>
+          <b>SNRM2</b> returns the euclidean norm of a real vector.
+        </li>
+        <li>
+          <b>SRELPR</b> computes the floating point relative precision.
+        </li>
+        <li>
+          <b>SROT</b> applies a plane rotation.
+        </li>
+        <li>
+          <b>SROTG</b> constructs a Givens plane rotation.
+        </li>
+        <li>
+          <b>SSCAL</b> scales a vector by a constant.
+        </li>
+        <li>
+          <b>SSVDC</b> orthogonally reduces a real NxP matrix X to diagonal form.
+        </li>
+        <li>
+          <b>SSWAP</b> interchanges two vectors.
+        </li>
+        <li>
+          <b>SVD</b> computes the singular value decomposition of a real rectangular matrix.
+        </li>
+        <li>
+          <b>TIMESTAMP</b> prints out the current YMDHMS date as a timestamp.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 21 June 2012.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

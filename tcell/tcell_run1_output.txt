@@ -1,0 +1,205 @@
+ 
+TCELL:
+  Solve the Navier Stokes fluid flow
+  equations in a TCELL region,
+  using finite elements.
+ 
+  Maximum number of nodes =      6561
+  Maximum number of elements =   3200
+  Number of nodes =      4961
+  Number of elements =   2400
+  Lower bandwidth =       364
+  Total bandwidth =       729
+ 
+GRID_WRITE - Wrote the file "elenode.dat".
+  for iteration no.  1 difference in iterates is 0.25902172E+06
+  for iteration no.  2 difference in iterates is 0.99867417E+02
+  for iteration no.  3 difference in iterates is 0.31966728E-01
+  for iteration no.  4 difference in iterates is 0.88121297E-04
+  for iteration no.  5 difference in iterates is 0.13582389E-06
+ Creating up001.txt           
+  for iteration no.  1 difference in iterates is 0.25076007E+06
+  for iteration no.  2 difference in iterates is 0.18910451E+01
+  for iteration no.  3 difference in iterates is 0.20906788E-02
+  for iteration no.  4 difference in iterates is 0.51355861E-05
+  for iteration no.  5 difference in iterates is 0.12773982E-07
+ Creating up002.txt           
+  for iteration no.  1 difference in iterates is 0.15733380E+04
+  for iteration no.  2 difference in iterates is 0.12641518E+01
+  for iteration no.  3 difference in iterates is 0.10309491E-02
+  for iteration no.  4 difference in iterates is 0.22258585E-05
+  for iteration no.  5 difference in iterates is 0.74982175E-08
+ Creating up003.txt           
+  for iteration no.  1 difference in iterates is 0.87285601E+03
+  for iteration no.  2 difference in iterates is 0.96490976E+00
+  for iteration no.  3 difference in iterates is 0.72662260E-03
+  for iteration no.  4 difference in iterates is 0.15254593E-05
+  for iteration no.  5 difference in iterates is 0.11899406E-07
+ Creating up004.txt           
+  for iteration no.  1 difference in iterates is 0.55115732E+03
+  for iteration no.  2 difference in iterates is 0.78833850E+00
+  for iteration no.  3 difference in iterates is 0.58590497E-03
+  for iteration no.  4 difference in iterates is 0.12318933E-05
+  for iteration no.  5 difference in iterates is 0.88709029E-08
+ Creating up005.txt           
+  for iteration no.  1 difference in iterates is 0.38217086E+03
+  for iteration no.  2 difference in iterates is 0.67111929E+00
+  for iteration no.  3 difference in iterates is 0.49940091E-03
+  for iteration no.  4 difference in iterates is 0.10532568E-05
+  for iteration no.  5 difference in iterates is 0.10962813E-07
+ Creating up006.txt           
+  for iteration no.  1 difference in iterates is 0.28307615E+03
+  for iteration no.  2 difference in iterates is 0.58738398E+00
+  for iteration no.  3 difference in iterates is 0.43837248E-03
+  for iteration no.  4 difference in iterates is 0.93910894E-06
+ Creating up007.txt           
+  for iteration no.  1 difference in iterates is 0.21973589E+03
+  for iteration no.  2 difference in iterates is 0.52446884E+00
+  for iteration no.  3 difference in iterates is 0.39193389E-03
+  for iteration no.  4 difference in iterates is 0.83762592E-06
+ Creating up008.txt           
+  for iteration no.  1 difference in iterates is 0.17649122E+03
+  for iteration no.  2 difference in iterates is 0.47539649E+00
+  for iteration no.  3 difference in iterates is 0.35494853E-03
+  for iteration no.  4 difference in iterates is 0.75746470E-06
+ Creating up009.txt           
+  for iteration no.  1 difference in iterates is 0.14544364E+03
+  for iteration no.  2 difference in iterates is 0.43599560E+00
+  for iteration no.  3 difference in iterates is 0.32452236E-03
+  for iteration no.  4 difference in iterates is 0.66938653E-06
+ Creating up010.txt           
+  for iteration no.  1 difference in iterates is 0.12226900E+03
+  for iteration no.  2 difference in iterates is 0.40361769E+00
+  for iteration no.  3 difference in iterates is 0.29894890E-03
+  for iteration no.  4 difference in iterates is 0.63237786E-06
+ Creating up011.txt           
+  for iteration no.  1 difference in iterates is 0.10443164E+03
+  for iteration no.  2 difference in iterates is 0.37650067E+00
+  for iteration no.  3 difference in iterates is 0.27701559E-03
+  for iteration no.  4 difference in iterates is 0.54354547E-06
+ Creating up012.txt           
+  for iteration no.  1 difference in iterates is 0.90357972E+02
+  for iteration no.  2 difference in iterates is 0.35342720E+00
+  for iteration no.  3 difference in iterates is 0.25798068E-03
+  for iteration no.  4 difference in iterates is 0.50139759E-06
+ Creating up013.txt           
+  for iteration no.  1 difference in iterates is 0.79024986E+02
+  for iteration no.  2 difference in iterates is 0.33352961E+00
+  for iteration no.  3 difference in iterates is 0.24127295E-03
+  for iteration no.  4 difference in iterates is 0.47447826E-06
+ Creating up014.txt           
+  for iteration no.  1 difference in iterates is 0.69741556E+02
+  for iteration no.  2 difference in iterates is 0.31617308E+00
+  for iteration no.  3 difference in iterates is 0.22644864E-03
+  for iteration no.  4 difference in iterates is 0.43395657E-06
+ Creating up015.txt           
+  for iteration no.  1 difference in iterates is 0.62025579E+02
+  for iteration no.  2 difference in iterates is 0.30088254E+00
+  for iteration no.  3 difference in iterates is 0.21317550E-03
+  for iteration no.  4 difference in iterates is 0.41104211E-06
+ Creating up016.txt           
+  for iteration no.  1 difference in iterates is 0.55531523E+02
+  for iteration no.  2 difference in iterates is 0.28729544E+00
+  for iteration no.  3 difference in iterates is 0.20120731E-03
+  for iteration no.  4 difference in iterates is 0.36480555E-06
+ Creating up017.txt           
+  for iteration no.  1 difference in iterates is 0.50005924E+02
+  for iteration no.  2 difference in iterates is 0.27513021E+00
+  for iteration no.  3 difference in iterates is 0.19038154E-03
+  for iteration no.  4 difference in iterates is 0.33717204E-06
+ Creating up018.txt           
+  for iteration no.  1 difference in iterates is 0.45259083E+02
+  for iteration no.  2 difference in iterates is 0.26416472E+00
+  for iteration no.  3 difference in iterates is 0.18051323E-03
+  for iteration no.  4 difference in iterates is 0.33042445E-06
+ Creating up019.txt           
+  for iteration no.  1 difference in iterates is 0.41146503E+02
+  for iteration no.  2 difference in iterates is 0.25422118E+00
+  for iteration no.  3 difference in iterates is 0.17145085E-03
+  for iteration no.  4 difference in iterates is 0.30737354E-06
+ Creating up020.txt           
+  for iteration no.  1 difference in iterates is 0.37556395E+02
+  for iteration no.  2 difference in iterates is 0.24515533E+00
+  for iteration no.  3 difference in iterates is 0.16309927E-03
+  for iteration no.  4 difference in iterates is 0.28267422E-06
+ Creating up021.txt           
+  for iteration no.  1 difference in iterates is 0.34401075E+02
+  for iteration no.  2 difference in iterates is 0.23684865E+00
+  for iteration no.  3 difference in iterates is 0.15540579E-03
+  for iteration no.  4 difference in iterates is 0.27487006E-06
+ Creating up022.txt           
+  for iteration no.  1 difference in iterates is 0.31610907E+02
+  for iteration no.  2 difference in iterates is 0.22920264E+00
+  for iteration no.  3 difference in iterates is 0.14826417E-03
+  for iteration no.  4 difference in iterates is 0.24475102E-06
+ Creating up023.txt           
+  for iteration no.  1 difference in iterates is 0.29129971E+02
+  for iteration no.  2 difference in iterates is 0.22213448E+00
+  for iteration no.  3 difference in iterates is 0.14162653E-03
+  for iteration no.  4 difference in iterates is 0.23068254E-06
+ Creating up024.txt           
+  for iteration no.  1 difference in iterates is 0.26912907E+02
+  for iteration no.  2 difference in iterates is 0.21557392E+00
+  for iteration no.  3 difference in iterates is 0.13542919E-03
+  for iteration no.  4 difference in iterates is 0.22456325E-06
+ Creating up025.txt           
+  for iteration no.  1 difference in iterates is 0.24922578E+02
+  for iteration no.  2 difference in iterates is 0.20946074E+00
+  for iteration no.  3 difference in iterates is 0.12963502E-03
+  for iteration no.  4 difference in iterates is 0.23235971E-06
+ Creating up026.txt           
+  for iteration no.  1 difference in iterates is 0.23128327E+02
+  for iteration no.  2 difference in iterates is 0.20374294E+00
+  for iteration no.  3 difference in iterates is 0.12419612E-03
+  for iteration no.  4 difference in iterates is 0.20815013E-06
+ Creating up027.txt           
+  for iteration no.  1 difference in iterates is 0.21504647E+02
+  for iteration no.  2 difference in iterates is 0.19837536E+00
+  for iteration no.  3 difference in iterates is 0.11908231E-03
+  for iteration no.  4 difference in iterates is 0.20494571E-06
+ Creating up028.txt           
+  for iteration no.  1 difference in iterates is 0.20030166E+02
+  for iteration no.  2 difference in iterates is 0.19331847E+00
+  for iteration no.  3 difference in iterates is 0.11428099E-03
+  for iteration no.  4 difference in iterates is 0.19304228E-06
+ Creating up029.txt           
+  for iteration no.  1 difference in iterates is 0.18686858E+02
+  for iteration no.  2 difference in iterates is 0.18853761E+00
+  for iteration no.  3 difference in iterates is 0.10974232E-03
+  for iteration no.  4 difference in iterates is 0.17240186E-06
+ Creating up030.txt           
+  for iteration no.  1 difference in iterates is 0.17459425E+02
+  for iteration no.  2 difference in iterates is 0.18400223E+00
+  for iteration no.  3 difference in iterates is 0.10545267E-03
+  for iteration no.  4 difference in iterates is 0.16919486E-06
+ Creating up031.txt           
+  for iteration no.  1 difference in iterates is 0.16334807E+02
+  for iteration no.  2 difference in iterates is 0.17968534E+00
+  for iteration no.  3 difference in iterates is 0.10140530E-03
+  for iteration no.  4 difference in iterates is 0.16339711E-06
+ Creating up032.txt           
+  for iteration no.  1 difference in iterates is 0.15301798E+02
+  for iteration no.  2 difference in iterates is 0.17556309E+00
+  for iteration no.  3 difference in iterates is 0.97566653E-04
+  for iteration no.  4 difference in iterates is 0.15441930E-06
+ Creating up033.txt           
+  for iteration no.  1 difference in iterates is 0.14350731E+02
+  for iteration no.  2 difference in iterates is 0.17161444E+00
+  for iteration no.  3 difference in iterates is 0.93923874E-04
+  for iteration no.  4 difference in iterates is 0.14476403E-06
+ Creating up034.txt           
+  for iteration no.  1 difference in iterates is 0.13473228E+02
+  for iteration no.  2 difference in iterates is 0.16782070E+00
+  for iteration no.  3 difference in iterates is 0.90472458E-04
+  for iteration no.  4 difference in iterates is 0.15295963E-06
+ Creating up035.txt           
+  for iteration no.  1 difference in iterates is 0.12661993E+02
+  for iteration no.  2 difference in iterates is 0.16416547E+00
+  for iteration no.  3 difference in iterates is 0.87184693E-04
+  for iteration no.  4 difference in iterates is 0.14189962E-06
+ Creating up036.txt           
+  for iteration no.  1 difference in iterates is 0.11910646E+02
+  for iteration no.  2 difference in iterates is 0.16063423E+00
+  for iteration no.  3 difference in iterates is 0.84059299E-04
+  for iteration no.  4 difference in iterates is 0.12858924E-06
+ Creating up037.txt           

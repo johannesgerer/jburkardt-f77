@@ -1,0 +1,1008 @@
+<html>
+
+  <head>
+    <title>
+      STARPAC - Statistical Data Analysis Library
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      STARPAC <br> Statistical Data Analysis Library
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>STARPAC</b> 
+      is a FORTRAN77 library which 
+      carries out statistical data analysis.
+    </p>
+
+    <h3 align = "center">
+      Languages:
+    </h3>
+
+    <p>
+      <b>STARPAC</b> is available in
+      <a href = "../../f_src/starpac/starpac.html">a FORTRAN77 version</a> and
+      <a href = "../../f_src/starpac/starpac.html">a FORTRAN90 version</a>.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f77_src/blas1/blas1.html">
+      BLAS1</a>,
+      a FORTRAN77 library which
+      implements the Basic Linear Algebra Subprograms, Level 1, and which are
+      called by <b>STARPAC</b>.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/lawson/lawson.html">
+      LAWSON</a>,
+      a FORTRAN77 library which
+      contains routines for solving least squares problems and singular value
+      decompositions, by Lawson and Hanson.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/machine/machine.html">
+      MACHINE</a>, 
+      a FORTRAN77 library which 
+      tabulates the values of certain machine-specific arithmetic quantities, and which are
+      called by <b>STARPAC</b>.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/nl2sol/nl2sol.html">
+      NL2SOL</a>, 
+      a FORTRAN77 library which
+      minimizes the
+      sum of squares of a set of nonlinear functions, and which are
+      called by <b>STARPAC</b>.
+    </p>
+
+    <p>
+      <a href = "../../f_src/prob/prob.html">
+      PROB</a>,
+      a FORTRAN90 library which
+      computes the
+      PDF, CDF, inverse CDF, and sampling various statistical
+      distributions.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/uniform/uniform.html">
+      UNIFORM</a>, 
+      a FORTRAN77 library which
+      can compute uniform random samples.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/xerror/xerror.html">
+      XERROR</a>,
+      a FORTRAN77 library which
+      handles errors.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Milton Abramowitz, Irene Stegun,<br>
+          Handbook of Mathematical Functions,<br>
+          National Bureau of Standards, 1964,<br>
+          LC: QA47.A34,<br>
+          ISBN: 0-486-61272-4.
+        </li>
+        <li>
+          Peter Bloomfield,<br>
+          Fourier Analysis of Time Series - An Introduction,<br>
+          Wiley, 2000,<br>
+          ISBN: 0471889482,<br>
+          LC: QA280.B59.
+        </li>
+        <li>
+          Nancy Bosten, Thomas Aird,<br>
+          Remark on Algorithm 179, <br>
+          Communications of the ACM,<br>
+          Volume 17, page 153, 1974.
+        </li>
+        <li>
+          George Box, Gwilym Jenkins,<br>
+          Time Series Analysis: Forecasting and Control,<br>
+          Prentice Hall, 1991,<br>
+          ISBN: 0139051007,<br>
+          LC: QA280.B67.
+        </li>
+        <li>
+          Kenneth Brown,<br>
+          A Quadratically Convergent Newton-like Method Based upon 
+          Gaussian Elimination,<br>
+          SIAM Journal on Numerical Analysis,<br>
+          Volume 6, pages 560-569, 1969.
+        </li>
+        <li>
+          Peter Businger, Gene Golub,<br>
+          Linear Least Squares Solutions by Householder Transformations,<br>
+          Numerische Mathematik,<br>
+          Volume 7, pages 269-276, 1965.
+        </li>
+        <li>
+          Alan Cline, Cleve Moler, Pete Stewart, James Wilkinson,<br>
+          An Estimate of the Condition Number of a Matrix,<br>
+          Technical Report TM-310,<br>
+          Applied Math Division,<br>
+          Argonne National Laboratory, 1977.
+        </li>
+        <li>
+          John Dennis, David Gay, Roy Welsch,<br>
+          Algorithm 573:
+          An Adaptive Nonlinear Least-Squares Algorithm,<br>
+          ACM Transactions on Mathematical Software,<br>
+          Volume 7, Number 3, 1981, pages 367-383.
+        </li>
+        <li>
+          Janet Donaldson, Peter Tryon,<br>
+          User's Guide to STARPAC,<br>
+          The Standards Time Series and Regression Package,<br> 
+          NIST, Boulder, Colorado, 1987.
+        </li>
+        <li>
+          Jack Dongarra, Jim Bunch, Cleve Moler, Pete Stewart,<br>
+          LINPACK User's Guide,<br>
+          SIAM, 1979,<br>
+          ISBN13: 978-0-898711-72-1,<br>
+          LC: QA214.L56.
+        </li>
+        <li>
+          Norman Draper, Harry Smith,<br>
+          Applied Regression Analysis,<br>
+          Wiley, 1998,<br>
+          ISBN: 978-0471170822,<br>
+          LC: QA278.2.D7.
+        </li>
+        <li>
+          Merran Evans, Nicholas Hastings, Brian Peacock,<br>
+          Statistical Distributions,<br>
+          Wiley, 2000,<br>
+          ISBN: 0471371246,<br>
+          LC: QA273.6E92.
+        </li>
+        <li>
+          Enrico Federghi,<br>
+          Extended Tables of the Percentage Points of Student's
+          T-Distribution,<br>
+          Journal of the American Statistical Association,<br>
+          Volume 54, Number 287, 1959, pages 683-688.
+        </li>
+        <li>
+          Phyllis Fox, Andrew Hall, Norman Schryer,<br>
+          Algorithm 528,
+          A Framework for a Portable Library,<br>
+          ACM Transactions on Mathematical Software,<br>
+          Volume 4, Number 2, June 1978, pages 177-188.
+        </li>
+        <li>
+          Walter Gautschi,<br>
+          Algorithm 542:
+          Incomplete Gamma Functions,<br>
+          ACM Transactions on Mathematical Software,<br>
+          Volume 5, Number 4, December 1979, pages 382-489.
+        </li>
+        <li>
+          David Gay,<br>
+          Computing Optimal Locally Constrained Steps,<br>
+          SIAM Journal on Scientific and Statistical Computing,<br>
+          Volume 2, Number 2, pages 186-197, 1981.
+        </li>
+        <li>
+          Philip Gill, Walter Murray,<br>
+          Algorithms for the Solution of the 
+          Non-linear Least-squares Problem, <br>
+          SIAM Journal on Numerical Analysis,<br>
+          Volume 15, Number 5, pages 977-991, 1978.
+        </li>
+        <li>
+          Steven Goldfeld, Richard Quandt, Hale Trotter,<br>
+          Maximization by Quadratic Hill-climbing,<br>
+          Econometrica,<br>
+          Volume 34, pages 541-551, 1966.
+        </li>
+        <li>
+          MD Hebden,<br>
+          An Algorithm for Minimization using Exact Second Derivatives,<br>
+          Report TP515,<br>
+          Theoretical Physics Division,<br>
+          AERE, Harwell, Oxon., England, 1973.
+        </li>
+        <li>
+          DC Hoaglin,<br>
+          Theoretical Properties of Congruential Random-Number Generators,
+          An Empirical View,<br>
+          Memorandum NS-340,<br>
+          Department of Statistics,<br>
+          Harvard University, 1976.
+        </li>
+        <li>
+          Gwilym Jenkins, Donald Watts,<br>
+          Spectral Analysis and its Applications,<br>
+          Holden-Day, 1968,<br>
+          ISBN: 1892803038,<br>
+          LC: QA280.J45.
+        </li>
+        <li>
+          Norman Johnson, Samuel Kotz, Narayanaswamy Balakrishnan,<br>
+          Continuous Univariate Distributions,<br>
+          Second edition,<br>
+          Wiley, 1994,<br>
+          ISBN: 0471584940,<br>
+          LC: QA273.6.J6
+        </li>
+        <li>
+          Donald Knuth,<br>
+          The Art of Computer Programming,<br>
+          Volume 2, Seminumerical Algorithms,<br> 
+          Third Edition,<br>
+          Addison Wesley, 1997,<br>
+          ISBN: 0201896842,<br>
+          LC: QA76.6.K64.
+        </li>
+        <li>
+          Charles Lawson, Richard Hanson,<br>
+          Solving Least Squares Problems,<br>
+          SIAM, 1995,<br>
+          ISBN: 0898713560,<br>
+          LC: QA275.L38.
+        </li>
+        <li>
+          Charles Lawson, Richard Hanson, David Kincaid, Fred Krogh,<br>
+          Algorithm 539:
+          Basic Linear Algebra Subprograms for Fortran Usage,<br>
+          ACM Transactions on Mathematical Software,<br>
+          Volume 5, Number 3, September 1979, pages 308-323.
+        </li>
+        <li>
+          George Marsaglia, Wai Wan Tsang,<br>
+          A fast, easily implemented method for sampling from decreasing or
+          symmetric unimodal density functions,<br>
+          SIAM Journal of Scientific and Statistical Computing,<br>
+          Volume 5, 1983, pages 349-359.
+        </li>
+        <li>
+          Jorge More,<br>
+          The Levenberg-Marquardt Algorithm, Implementation and Theory,<br>
+          in Springer Lecture Notes in Mathematics, Number 630,<br>
+          edited by G A Watson,<br>
+          Springer, 1978.
+        </li>
+        <li>
+          Donald Owen, <br>
+          Handbook of Statistical Tables,<br>
+          Addison-Wesley, 1962.
+        </li>
+        <li>
+          Egon Pearson, Herman Hartley, <br>
+          Biometrika Tables for Statisticians, <br>
+          Cambridge, 1970,<br>
+          ISBN: 978-0852647004.
+        </li>
+        <li>
+          Michael Powell,<br>
+          A Fortran Subroutine for Solving Systems of Nonlinear 
+          Algebraic Equations,<br>
+          in Numerical Methods for Nonlinear Algebraic Equations,<br>
+          edited by Philip Rabinowitz,<br>
+          Gordon and Breach, 1970,<br>
+          ISBN13: 978-0677142302,<br>
+          LC: QA218.N85.
+        </li>
+        <li>
+          CS Smith,<br>
+          Multiplicative Pseudo-Random Number Generators with Prime Modulus,<br>
+          Journal of the Association for Computing Machinery,<br>
+          Volume 19, pages 586-593, 1971.
+        </li>
+        <li>
+          Richard Varga,<br>
+          Minimal Gerschgorin Sets,<br>
+          Pacific Journal of Mathematics,<br>
+          Volume 15, pages 719-729, 1965.
+        </li>
+        <li>
+          Max Waldmeier,<br>
+          The Sunspot-Activity in the Years 1610-1960,<br>
+          Shulthess, 1961,<br>
+          LC: QB525.W34.
+        </li>
+        <li>
+          Martin Wilk, Ram Gnanadesikan, Marilyn Huyett,<br>
+          Probability Plots for the Gamma Distribution,<br>
+          Technometrics,<br>
+          Volume 4, Number 1, 1962, pages 1-15,
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "starpac.f">starpac.f</a>, 
+          the source code.
+        </li>
+        <li>
+          <a href = "starpac.csh">starpac.csh</a>, 
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      Test files you may copy include:
+      <ul>
+        <li>
+          <a href = "starpac_prb.f">starpac_prb.f</a>, 
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "starpac_prb.csh">starpac_prb.csh</a>, 
+          commands to compile, link and run the sample calling program.
+        </li>
+        <li>
+          <a href = "starpac_prb_output.txt">starpac_prb_output.txt</a>, 
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li><b>abscom</b></li>
+        <li><b>accdig</b></li>
+        <li><b>acfd</b></li>
+        <li><b>acfdtl</b></li>
+        <li><b>acfer</b></li>
+        <li><b>acf</b></li>
+        <li><b>acff</b></li>
+        <li><b>acffs</b></li>
+        <li><b>acflst</b></li>
+        <li><b>acfm</b></li>
+        <li><b>acfmn</b></li>
+        <li><b>acfmnf</b></li>
+        <li><b>acfmnm</b></li>
+        <li><b>acfms</b></li>
+        <li><b>acfout</b></li>
+        <li><b>acfsd</b></li>
+        <li><b>acfsdm</b></li>
+        <li><b>acfs</b></li>
+        <li><b>acvf</b></li>
+        <li><b>acvff</b></li>
+        <li><b>acvfm</b></li>
+        <li><b>adjlmt</b></li>
+        <li><b>aimec</b></li>
+        <li><b>aime</b></li>
+        <li><b>aimes</b></li>
+        <li><b>aimf</b></li>
+        <li><b>aimfs</b></li>
+        <li><b>aimx1</b></li>
+        <li><b>albeta</b></li>
+        <li><b>algams</b></li>
+        <li><b>alngam</b></li>
+        <li><b>alnrel</b></li>
+        <li><b>amdrv</b></li>
+        <li><b>amean</b></li>
+        <li><b>ameanm</b></li>
+        <li><b>amecnt</b></li>
+        <li><b>amedrv</b></li>
+        <li><b>ameer</b></li>
+        <li><b>amefin</b></li>
+        <li><b>amehdr</b></li>
+        <li><b>ameism</b></li>
+        <li><b>amemn</b></li>
+        <li><b>ameout</b></li>
+        <li><b>amept1</b></li>
+        <li><b>amept2</b></li>
+        <li><b>amestp</b></li>
+        <li><b>amfcnt</b></li>
+        <li><b>amfer</b></li>
+        <li><b>amfhdr</b></li>
+        <li><b>amfmn</b></li>
+        <li><b>amfout</b></li>
+        <li><b>amlst1</b></li>
+        <li><b>amlst</b></li>
+        <li><b>aos</b></li>
+        <li><b>aoslst</b></li>
+        <li><b>aov1er</b></li>
+        <li><b>aov1</b></li>
+        <li><b>aov1hd</b></li>
+        <li><b>aov1mn</b></li>
+        <li><b>aov1s</b></li>
+        <li><b>aov1xp</b></li>
+        <li><b>arcoef</b></li>
+        <li><b>arflt</b></li>
+        <li><b>assess</b></li>
+        <li><b>axpby</b></li>
+        <li><b>backop</b></li>
+        <li><b>betai</b></li>
+        <li><b>bfsdrv</b></li>
+        <li><b>bfser</b></li>
+        <li><b>bfs</b></li>
+        <li><b>bfsf</b></li>
+        <li><b>bfsfs</b></li>
+        <li><b>bfslag</b></li>
+        <li><b>bfsm</b></li>
+        <li><b>bfsmn</b></li>
+        <li><b>bfsms</b></li>
+        <li><b>bfsmv</b></li>
+        <li><b>bfsmvs</b></li>
+        <li><b>bfss</b></li>
+        <li><b>bfsv</b></li>
+        <li><b>bfsvs</b></li>
+        <li><b>ccfer</b></li>
+        <li><b>ccf</b></li>
+        <li><b>ccff</b></li>
+        <li><b>ccffs</b></li>
+        <li><b>ccflst</b></li>
+        <li><b>ccfm</b></li>
+        <li><b>ccfmn</b></li>
+        <li><b>ccfmnf</b></li>
+        <li><b>ccfmnm</b></li>
+        <li><b>ccfms</b></li>
+        <li><b>ccfout</b></li>
+        <li><b>ccfsd</b></li>
+        <li><b>ccfsdm</b></li>
+        <li><b>ccfs</b></li>
+        <li><b>ccfxp</b></li>
+        <li><b>ccvf</b></li>
+        <li><b>ccvff</b></li>
+        <li><b>ccvfm</b></li>
+        <li><b>cdfchi</b></li>
+        <li><b>cdff</b></li>
+        <li><b>cdfnml</b></li>
+        <li><b>cdft</b></li>
+        <li><b>center</b></li>
+        <li><b>chirho</b></li>
+        <li><b>cmpfd</b></li>
+        <li><b>cntr</b></li>
+        <li><b>correr</b></li>
+        <li><b>corr</b></li>
+        <li><b>corrhd</b></li>
+        <li><b>corrmn</b></li>
+        <li><b>corrs</b></li>
+        <li><b>corrxp</b></li>
+        <li><b>covclc</b></li>
+        <li><b>cpyasf</b></li>
+        <li><b>cpymss</b></li>
+        <li><b>cpyvii</b></li>
+        <li><b>csevl</b></li>
+        <li><b>d9gmit</b></li>
+        <li><b>d9lgic</b></li>
+        <li><b>d9lgit</b></li>
+        <li><b>d9lgmc</b></li>
+        <li><b>dasum</b></li>
+        <li><b>daxpy</b></li>
+        <li><b>dbetai</b></li>
+        <li><b>dckcnt</b></li>
+        <li><b>dckcrv</b></li>
+        <li><b>dckdrv</b></li>
+        <li><b>dcker</b></li>
+        <li><b>dckfpa</b></li>
+        <li><b>dckhdr</b></li>
+        <li><b>dckls1</b></li>
+        <li><b>dcklsc</b></li>
+        <li><b>dckls</b></li>
+        <li><b>dckmn</b></li>
+        <li><b>dckout</b></li>
+        <li><b>dckzro</b></li>
+        <li><b>dcoef</b></li>
+        <li><b>dcopy</b></li>
+        <li><b>dcsevl</b></li>
+        <li><b>ddot</b></li>
+        <li><b>demdrv</b></li>
+        <li><b>demod</b></li>
+        <li><b>demods</b></li>
+        <li><b>demodu</b></li>
+        <li><b>demord</b></li>
+        <li><b>demout</b></li>
+        <li><b>derfc</b></li>
+        <li><b>derf</b></li>
+        <li><b>dfault</b></li>
+        <li><b>dfbw</b></li>
+        <li><b>dfbwm</b></li>
+        <li><b>dgami</b></li>
+        <li><b>dgamit</b></li>
+        <li><b>dgamlm</b></li>
+        <li><b>dgamma</b></li>
+        <li><b>dgamr</b></li>
+        <li><b>difc</b></li>
+        <li><b>dif</b></li>
+        <li><b>difmc</b></li>
+        <li><b>difm</b></li>
+        <li><b>difser</b></li>
+        <li><b>dlbeta</b></li>
+        <li><b>dlgams</b></li>
+        <li><b>dlngam</b></li>
+        <li><b>dlnrel</b></li>
+        <li><b>dnrm2</b></li>
+        <li><b>dotc</b></li>
+        <li><b>dotcm</b></li>
+        <li><b>dotprd</b></li>
+        <li><b>drv1a</b></li>
+        <li><b>drv1b</b></li>
+        <li><b>drv2</b></li>
+        <li><b>drv3</b></li>
+        <li><b>drv4a</b></li>
+        <li><b>drv4b</b></li>
+        <li><b>drv</b></li>
+        <li><b>dscal</b></li>
+        <li><b>dsidi</b></li>
+        <li><b>dsifa</b></li>
+        <li><b>dswap</b></li>
+        <li><b>dtrco</b></li>
+        <li><b>dtrdi</b></li>
+        <li><b>dupdat</b></li>
+        <li><b>e9rint</b></li>
+        <li><b>ecvf</b></li>
+        <li><b>ehdr</b></li>
+        <li><b>eiage</b></li>
+        <li><b>eiagep</b></li>
+        <li><b>eiseq</b></li>
+        <li><b>eisge</b></li>
+        <li><b>eisii</b></li>
+        <li><b>eisle</b></li>
+        <li><b>eisrng</b></li>
+        <li><b>eiveo</b></li>
+        <li><b>eiveq</b></li>
+        <li><b>eivii</b></li>
+        <li><b>enfft</b></li>
+        <li><b>eprint</b></li>
+        <li><b>eragt</b></li>
+        <li><b>eragtm</b></li>
+        <li><b>eragtp</b></li>
+        <li><b>erdf</b></li>
+        <li><b>erfc</b></li>
+        <li><b>erf</b></li>
+        <li><b>eriodd</b></li>
+        <li><b>ersei</b></li>
+        <li><b>ersge</b></li>
+        <li><b>ersgt</b></li>
+        <li><b>ersie</b></li>
+        <li><b>ersii</b></li>
+        <li><b>erslf</b></li>
+        <li><b>erslfs</b></li>
+        <li><b>ervgt</b></li>
+        <li><b>ervgtm</b></li>
+        <li><b>ervgtp</b></li>
+        <li><b>ervii</b></li>
+        <li><b>ervwt</b></li>
+        <li><b>etamdl</b></li>
+        <li><b>extend</b></li>
+        <li><b>factor</b></li>
+        <li><b>fdump</b></li>
+        <li><b>fftct</b></li>
+        <li><b>fft</b></li>
+        <li><b>fftlen</b></li>
+        <li><b>fftr</b></li>
+        <li><b>fitext</b></li>
+        <li><b>fitpt1</b></li>
+        <li><b>fitpt2</b></li>
+        <li><b>fitsxp</b></li>
+        <li><b>fitxsp</b></li>
+        <li><b>fixprt</b></li>
+        <li><b>fltar</b></li>
+        <li><b>fltarm</b></li>
+        <li><b>fltma</b></li>
+        <li><b>fltmd</b></li>
+        <li><b>fltsl</b></li>
+        <li><b>gami</b></li>
+        <li><b>gamit</b></li>
+        <li><b>gamlim</b></li>
+        <li><b>gamma</b></li>
+        <li><b>gamr</b></li>
+        <li><b>geni</b></li>
+        <li><b>genr</b></li>
+        <li><b>getpi</b></li>
+        <li><b>gfaest</b></li>
+        <li><b>gfarf</b></li>
+        <li><b>gfarfs</b></li>
+        <li><b>gford</b></li>
+        <li><b>gfout</b></li>
+        <li><b>gfsest</b></li>
+        <li><b>gfslf</b></li>
+        <li><b>gfslfs</b></li>
+        <li><b>gmean</b></li>
+        <li><b>gqtstp</b></li>
+        <li><b>hipass</b></li>
+        <li><b>histc</b></li>
+        <li><b>hist</b></li>
+        <li><b>hpcoef</b></li>
+        <li><b>hpflt</b></li>
+        <li><b>hster</b></li>
+        <li><b>hstmn</b></li>
+        <li><b>i8save</b></li>
+        <li><b>icnti</b></li>
+        <li><b>icopy</b></li>
+        <li><b>idamax</b></li>
+        <li><b>imdcon</b></li>
+        <li><b>initds</b></li>
+        <li><b>inits</b></li>
+        <li><b>inperl</b></li>
+        <li><b>ipgdv</b></li>
+        <li><b>ipgm</b></li>
+        <li><b>ipgmn</b></li>
+        <li><b>ipgmp</b></li>
+        <li><b>ipgmps</b></li>
+        <li><b>ipgms</b></li>
+        <li><b>ipgord</b></li>
+        <li><b>ipgout</b></li>
+        <li><b>iprint</b></li>
+        <li><b>isamax</b></li>
+        <li><b>itsmry</b></li>
+        <li><b>j4save</b></li>
+        <li><b>ldscmp</b></li>
+        <li><b>linvrt</b></li>
+        <li><b>litvmu</b></li>
+        <li><b>livmul</b></li>
+        <li><b>llcnt</b></li>
+        <li><b>llcntg</b></li>
+        <li><b>llcntp</b></li>
+        <li><b>ller</b></li>
+        <li><b>llhdrg</b></li>
+        <li><b>llhdrp</b></li>
+        <li><b>lls</b></li>
+        <li><b>llsmn</b></li>
+        <li><b>llsp</b></li>
+        <li><b>llsps</b></li>
+        <li><b>llspw</b></li>
+        <li><b>llspws</b></li>
+        <li><b>llss</b></li>
+        <li><b>llsw</b></li>
+        <li><b>llsws</b></li>
+        <li><b>lmstep</b></li>
+        <li><b>loglmt</b></li>
+        <li><b>lopass</b></li>
+        <li><b>lpcoef</b></li>
+        <li><b>lpflt</b></li>
+        <li><b>lsqrt</b></li>
+        <li><b>lstlag</b></li>
+        <li><b>lstvcf</b></li>
+        <li><b>lstvec</b></li>
+        <li><b>lsvmin</b></li>
+        <li><b>ltsqar</b></li>
+        <li><b>madj</b></li>
+        <li><b>madr</b></li>
+        <li><b>maflt</b></li>
+        <li><b>matprf</b></li>
+        <li><b>matprt</b></li>
+        <li><b>mdflt</b></li>
+        <li><b>mdl1</b></li>
+        <li><b>mdl2</b></li>
+        <li><b>mdl3</b></li>
+        <li><b>mdl4</b></li>
+        <li><b>mdlts1</b></li>
+        <li><b>mdlts2</b></li>
+        <li><b>mdlts3</b></li>
+        <li><b>mgs</b></li>
+        <li><b>modsum</b></li>
+        <li><b>mppc</b></li>
+        <li><b>mpp</b></li>
+        <li><b>mppl</b></li>
+        <li><b>mppmc</b></li>
+        <li><b>mppm</b></li>
+        <li><b>mppml</b></li>
+        <li><b>msgx</b></li>
+        <li><b>multbp</b></li>
+        <li><b>mvchk</b></li>
+        <li><b>mvpc</b></li>
+        <li><b>mvp</b></li>
+        <li><b>mvpl</b></li>
+        <li><b>mvpmc</b></li>
+        <li><b>mvpm</b></li>
+        <li><b>mvpml</b></li>
+        <li><b>nchose</b></li>
+        <li><b>nl2itr</b></li>
+        <li><b>nl2sno</b></li>
+        <li><b>nl2sol</b></li>
+        <li><b>nl2x</b></li>
+        <li><b>nlcmp</b></li>
+        <li><b>nlcnta</b></li>
+        <li><b>nlcnt</b></li>
+        <li><b>nlcntn</b></li>
+        <li><b>nldrva</b></li>
+        <li><b>nldrvn</b></li>
+        <li><b>nler</b></li>
+        <li><b>nlerr</b></li>
+        <li><b>nlfin</b></li>
+        <li><b>nlhdra</b></li>
+        <li><b>nlhdrn</b></li>
+        <li><b>nlinit</b></li>
+        <li><b>nlism</b></li>
+        <li><b>nlitrp</b></li>
+        <li><b>nlmn</b></li>
+        <li><b>nlout</b></li>
+        <li><b>nlsc</b></li>
+        <li><b>nlsdc</b></li>
+        <li><b>nlsd</b></li>
+        <li><b>nlsds</b></li>
+        <li><b>nls</b></li>
+        <li><b>nlskl</b></li>
+        <li><b>nlspk</b></li>
+        <li><b>nlss</b></li>
+        <li><b>nlsupk</b></li>
+        <li><b>nlswc</b></li>
+        <li><b>nlswdc</b></li>
+        <li><b>nlswd</b></li>
+        <li><b>nlswds</b></li>
+        <li><b>nlsw</b></li>
+        <li><b>nlsws</b></li>
+        <li><b>nlsx1</b></li>
+        <li><b>nlsx2</b></li>
+        <li><b>nrandc</b></li>
+        <li><b>nrand</b></li>
+        <li><b>oanova</b></li>
+        <li><b>obssm2</b></li>
+        <li><b>obssum</b></li>
+        <li><b>parchk</b></li>
+        <li><b>parzen</b></li>
+        <li><b>pgmest</b></li>
+        <li><b>pgm</b></li>
+        <li><b>pgmmn</b></li>
+        <li><b>pgms</b></li>
+        <li><b>pgord</b></li>
+        <li><b>pgout</b></li>
+        <li><b>pline</b></li>
+        <li><b>pltchk</b></li>
+        <li><b>pltplx</b></li>
+        <li><b>pltsym</b></li>
+        <li><b>polar</b></li>
+        <li><b>ppc</b></li>
+        <li><b>ppcnt</b></li>
+        <li><b>pp</b></li>
+        <li><b>ppfchs</b></li>
+        <li><b>ppff</b></li>
+        <li><b>ppfnml</b></li>
+        <li><b>ppft</b></li>
+        <li><b>ppl</b></li>
+        <li><b>pplmt</b></li>
+        <li><b>ppmc</b></li>
+        <li><b>ppm</b></li>
+        <li><b>ppml</b></li>
+        <li><b>ppmn</b></li>
+        <li><b>prtcnt</b></li>
+        <li><b>qapply</b></li>
+        <li><b>qrfact</b></li>
+        <li><b>r9gmit</b></li>
+        <li><b>r9lgic</b></li>
+        <li><b>r9lgit</b></li>
+        <li><b>r9lgmc</b></li>
+        <li><b>randn</b></li>
+        <li><b>randu</b></li>
+        <li><b>ranko</b></li>
+        <li><b>realtr</b></li>
+        <li><b>relcom</b></li>
+        <li><b>reldst</b></li>
+        <li><b>repck</b></li>
+        <li><b>rmdcon</b></li>
+        <li><b>rptmul</b></li>
+        <li><b>s88fmt</b></li>
+        <li><b>sample</b></li>
+        <li><b>sasum</b></li>
+        <li><b>saxpy</b></li>
+        <li><b>scopy</b></li>
+        <li><b>sdot</b></li>
+        <li><b>seterr</b></li>
+        <li><b>setesl</b></li>
+        <li><b>setfrq</b></li>
+        <li><b>setiv</b></li>
+        <li><b>setlag</b></li>
+        <li><b>setra</b></li>
+        <li><b>setrow</b></li>
+        <li><b>setrv</b></li>
+        <li><b>slflt</b></li>
+        <li><b>slupdt</b></li>
+        <li><b>slvmul</b></li>
+        <li><b>smply</b></li>
+        <li><b>snrm2</b></li>
+        <li><b>spcck</b></li>
+        <li><b>sppc</b></li>
+        <li><b>spp</b></li>
+        <li><b>sppl</b></li>
+        <li><b>sppltc</b></li>
+        <li><b>sppltd</b></li>
+        <li><b>sppltl</b></li>
+        <li><b>sppmc</b></li>
+        <li><b>sppm</b></li>
+        <li><b>sppml</b></li>
+        <li><b>srtir</b></li>
+        <li><b>srtirr</b></li>
+        <li><b>srtri</b></li>
+        <li><b>srtrri</b></li>
+        <li><b>sscal</b></li>
+        <li><b>ssidi</b></li>
+        <li><b>ssifa</b></li>
+        <li><b>sswap</b></li>
+        <li><b>stat1</b></li>
+        <li><b>stat1w</b></li>
+        <li><b>stat2</b></li>
+        <li><b>stat2w</b></li>
+        <li><b>stater</b></li>
+        <li><b>stat</b></li>
+        <li><b>stats</b></li>
+        <li><b>statw</b></li>
+        <li><b>statws</b></li>
+        <li><b>stkclr</b></li>
+        <li><b>stkget</b></li>
+        <li><b>stkrel</b></li>
+        <li><b>stkset</b></li>
+        <li><b>stkst</b></li>
+        <li><b>stopx</b></li>
+        <li><b>stpadj</b></li>
+        <li><b>stpamo</b></li>
+        <li><b>stpcnt</b></li>
+        <li><b>stpdrv</b></li>
+        <li><b>stper</b></li>
+        <li><b>stphdr</b></li>
+        <li><b>stpls1</b></li>
+        <li><b>stpls2</b></li>
+        <li><b>stplsc</b></li>
+        <li><b>stpls</b></li>
+        <li><b>stpmn</b></li>
+        <li><b>stpout</b></li>
+        <li><b>stpsel</b></li>
+        <li><b>strco</b></li>
+        <li><b>strdi</b></li>
+        <li><b>sumbs</b></li>
+        <li><b>sumds</b></li>
+        <li><b>sumid</b></li>
+        <li><b>sumidw</b></li>
+        <li><b>sumot</b></li>
+        <li><b>sumss</b></li>
+        <li><b>sumts</b></li>
+        <li><b>sumwds</b></li>
+        <li><b>sumwss</b></li>
+        <li><b>sumwts</b></li>
+        <li><b>svpc</b></li>
+        <li><b>svp</b></li>
+        <li><b>svpl</b></li>
+        <li><b>svpmc</b></li>
+        <li><b>svpm</b></li>
+        <li><b>svpml</b></li>
+        <li><b>taper</b></li>
+        <li><b>uascft</b></li>
+        <li><b>uasdv</b></li>
+        <li><b>uaser</b></li>
+        <li><b>uasest</b></li>
+        <li><b>uas</b></li>
+        <li><b>uasf</b></li>
+        <li><b>uasfs</b></li>
+        <li><b>uasord</b></li>
+        <li><b>uasout</b></li>
+        <li><b>uass</b></li>
+        <li><b>uasvar</b></li>
+        <li><b>uasv</b></li>
+        <li><b>uasvs</b></li>
+        <li><b>ufparm</b></li>
+        <li><b>ufsdrv</b></li>
+        <li><b>ufser</b></li>
+        <li><b>ufsest</b></li>
+        <li><b>ufs</b></li>
+        <li><b>ufsf</b></li>
+        <li><b>ufsfs</b></li>
+        <li><b>ufslag</b></li>
+        <li><b>ufsm</b></li>
+        <li><b>ufsmn</b></li>
+        <li><b>ufsms</b></li>
+        <li><b>ufsmv</b></li>
+        <li><b>ufsmvs</b></li>
+        <li><b>ufsout</b></li>
+        <li><b>ufspcv</b></li>
+        <li><b>ufss</b></li>
+        <li><b>ufsv</b></li>
+        <li><b>ufsvs</b></li>
+        <li><b>v2norm</b></li>
+        <li><b>vaxpy</b></li>
+        <li><b>vcopy</b></li>
+        <li><b>vcvotf</b></li>
+        <li><b>vcvout</b></li>
+        <li><b>versp</b></li>
+        <li><b>vpc</b></li>
+        <li><b>vpcnt</b></li>
+        <li><b>vp</b></li>
+        <li><b>vphead</b></li>
+        <li><b>vpl</b></li>
+        <li><b>vplmt</b></li>
+        <li><b>vpmc</b></li>
+        <li><b>vpm</b></li>
+        <li><b>vpml</b></li>
+        <li><b>vpmn</b></li>
+        <li><b>vscopy</b></li>
+        <li><b>xacf</b></li>
+        <li><b>xaimd</b></li>
+        <li><b>xaimt</b></li>
+        <li><b>xaov1</b></li>
+        <li><b>xbfs</b></li>
+        <li><b>xccf</b></li>
+        <li><b>xcorr</b></li>
+        <li><b>xdckld</b></li>
+        <li><b>xdckle</b></li>
+        <li><b>xdcklt</b></li>
+        <li><b>xdemod</b></li>
+        <li><b>xdflt</b></li>
+        <li><b>xerabt</b></li>
+        <li><b>xerclr</b></li>
+        <li><b>xerctl</b></li>
+        <li><b>xerprt</b></li>
+        <li><b>xerror</b></li>
+        <li><b>xerrwv</b></li>
+        <li><b>xersav</b></li>
+        <li><b>xgetf</b></li>
+        <li><b>xgetua</b></li>
+        <li><b>xhist</b></li>
+        <li><b>xlls</b></li>
+        <li><b>xnlsd</b></li>
+        <li><b>xnlse</b></li>
+        <li><b>xnlst</b></li>
+        <li><b>xnrand</b></li>
+        <li><b>xpgm</b></li>
+        <li><b>xpp</b></li>
+        <li><b>xsetf</b></li>
+        <li><b>xstat</b></li>
+        <li><b>xstpld</b></li>
+        <li><b>xstple</b></li>
+        <li><b>xstplt</b></li>
+        <li><b>xuas</b></li>
+        <li><b>xufs</b></li>
+        <li><b>xvp</b></li>
+        <li><b>xxch10</b></li>
+        <li><b>xxch11</b></li>
+        <li><b>xxch12</b></li>
+        <li><b>xxch13</b></li>
+        <li><b>xxch1</b></li>
+        <li><b>xxch2</b></li>
+        <li><b>xxch3</b></li>
+        <li><b>xxch4</b></li>
+        <li><b>xxch5</b></li>
+        <li><b>xxch6</b></li>
+        <li><b>xxch7</b></li>
+        <li><b>xxch8</b></li>
+        <li><b>xxch9</b></li>
+
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 17 April 2006.
+    </i>
+
+    <!-- John Burkardt -->
+ 
+  </body>
+
+</html>

@@ -1,0 +1,87 @@
+1CLEAN77 - V2.23 (GENL)  *PRESET*                                      PAGE   1
+
+
+
+
+ PRESENT COMMAND STATUS:
+
+     ADD CONTINUE STMTS...........ADDCONT =  ENABLED
+     BRACKET COMMENTS.............BRACKET =  ENABLED
+     COLLECT FORMATS..............COLLECT = DISABLED
+     COPY ROUTINE INTACT.............COPY = DISABLED
+     EXEMPT COMMENTS..............EXEMPTC = DISABLED
+     EXEMPT FORMATS...............EXEMPTF = DISABLED
+     EXEMPT NONEXECUTABLE.........EXEMPTN = DISABLED
+     EXEMPT STATEMENT CHAR........EXEMPTS = DISABLED
+     FORMAT LABEL BASE............FORMATB = DISABLED
+     FORMAT LABEL INCREMENT.......FORMATI = DISABLED
+     HFIELD CONVERSION.............HFIELD =  ENABLED
+     INDENT COMMENTS..............INDENTC = DISABLED
+     INDENTATION INCREMENT........INDENTI =        3
+     INDENT STATEMENTS............INDENTS =  ENABLED
+     ISSUE COMMENTS................ISSUEC =  ENABLED
+     LABEL BASE....................LABELB =       10
+     LABEL INCREMENT...............LABELI =       10
+     LEFT JUSTIFY LABELS............LEFTJ = DISABLED
+     NEW FILE LINE LENGTH.........LINELEN =       72
+     LIST OLD FILE CARD IDS.......LISTIDS = DISABLED
+     LIST NEW FILE................LISTNEW =  ENABLED
+     LIST OLD FILE................LISTOLD =  ENABLED
+     OLD FILE LINE LENGTH..........OLDLEN =       72
+     PAGE LENGTH..................PAGELEN =       60
+     PROPAGATE COMMANDS..............PROP = DISABLED
+     QUOTE MARK CONVERSION CHAR...QUOTECH =        '
+     RETURN LABEL PREFIX..........RETPRFX =        *
+     RIGHT JUSTIFY LABELS..........RIGHTJ =  ENABLED
+     SPEC STMT SIZE DEFS..........SIZEDEF = DISABLED
+     SPLIT NUMBERS AND VARS.......SPLITNV = DISABLED
+     SPLIT STRINGS................SPLITST = DISABLED
+     STATUS REPORT.................STATUS =  ENABLED
+     UNCONDITIONAL FLOW CHANGE.....UNCOND = DISABLED
+     VARS USE EXTENDED CHAR SET...VARUECS = DISABLED
+
+
+
+1CLEAN77 - V2.23 (GENL)  *SOURCE*                                      PAGE   2
+
+       C+UNCOND=C                                                              
+    1.       SUBROUTINE SETC (A,B,C)                                           
+       C                                                                       
+    2.       IF(A.GT.0.0)THEN                                                  
+    3.       IF(A.GT.B)THEN                                                    
+    4.       C=A                                                               
+    5.       ELSE                                                              
+    6.       C=B/A                                                             
+    7.       ENDIF                                                             
+    8.       ELSE                                                              
+    9.       C=-A/B                                                            
+   10.       ENDIF                                                             
+   11.       RETURN                                                            
+   12.       END                                                               
+1CLEAN77 - V2.23 (GENL)  *RESULT*  SUBR/SETC                           PAGE   3
+
+    1.       SUBROUTINE SETC (A,B,C)
+       C
+    2.       IF (A.GT.0.0) THEN
+    3.          IF (A.GT.B) THEN
+    4.             C = A
+    5.          ELSE
+    6.             C = B/A
+    7.          ENDIF
+    8.       ELSE
+    9.          C = -A/B
+   10.       ENDIF
+   11.       RETURN
+       C
+   12.       END
+
+
+
+
+
+     FINAL CLEAN77 TOTALS:
+
+                14 LINES READ.          
+                12 STATEMENTS PROCESSED.
+                 1 ROUTINES DETECTED.   
+                14 LINES WRITTEN.       

@@ -1,0 +1,48 @@
+ 
+COST_TEST
+  FORTRAN77 version
+  For real fast cosine transforms, 1D,
+  COST1I initializes the transforms,
+  COST1F does a forward transforms;
+  COST1B does a backward transforms.
+ 
+  The number of data items is N = 4096
+ 
+  The original data:
+ 
+       1    0.154414E-01
+       2    0.524056    
+       3    0.809301    
+       4    0.916710    
+       5    0.149759    
+       6    0.647463E-02
+       7    0.819028    
+       8    0.400086    
+  ......  ..............
+    4096    0.625828    
+ 
+  The FFT coefficients:
+ 
+       1    0.496832    
+       2   -0.821193E-02
+       3   -0.151971E-03
+       4   -0.679063E-02
+       5    0.103587E-01
+       6   -0.145759E-01
+       7    0.104160E-02
+       8   -0.147735E-01
+  ......  ..............
+    4096    0.225514E-02
+ 
+  The retrieved data:
+ 
+       1    0.152117E-01
+       2    0.524233    
+       3    0.809319    
+       4    0.916705    
+       5    0.149771    
+       6    0.649590E-02
+       7    0.819020    
+       8    0.400090    
+  ......  ..............
+    4096    0.626049    

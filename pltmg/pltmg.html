@@ -1,0 +1,417 @@
+<html>
+
+  <head>
+    <title>
+      PLTMG - Piecewise Linear Multigrid Finite Element Program
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      PLTMG <br> Piecewise Linear Multigrid
+                   <br> Finite Element Program
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>PLTMG</b>
+      is a FORTRAN77 library which
+      can be used to
+      define and solve a finite element model of a partial differential
+      equation, using piecewise linear basis functions and the multigrid
+      method,
+      by Randy Bank.
+    </p>
+
+    <p>
+      <b>PLTMG</b> can be compiled with the MPI library, in which case
+      it can be run in parallel.
+    </p>
+
+    <p>
+      <b>PLTMG</b> can be compiled with the X11 library, in which case
+      it will use an interactive X Window based interface.  However,
+      in this case it relies on the Motif interface as well, which is
+      likely to be available on Sun machines, but not on many others.
+    </p>
+
+    <p>
+      <b>PLTMG</b> can be compiled with an OpenGL interface, which
+      can be used to display the graphics created by the program.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../data/fem1d/fem1d.html">
+      FEM1D</a>,
+      a data directory which
+      contains a description of the data files
+      that can be used to describe a finite element model.
+    </p>
+
+    <p>
+      <a href = "../../m_src/fem_io/fem_io.html">
+      FEM_IO</a>,
+      a MATLAB library which
+      reads the node, element and data files that define a finite element model.
+    </p>
+
+    <p>
+      <a href = "../../m_src/fem_to_tec/fem_to_tec.html">
+      FEM_TO_TEC</a>,
+      a MATLAB program which 
+      can convert an FEM model into a TEC graphics file.
+    </p>
+
+    <p>
+      <a href = "../../f_src/fem2d_poisson/fem2d_poisson.html">
+      FEM2D_POISSON</a>,
+      a FORTRAN90 program which
+      solves Poisson's equation
+      on a square, using the finite element method.
+    </p>
+
+    <h3 align = "center">
+      Author:
+    </h3>
+
+    <p>
+      Randy Bank
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Randolph Bank,<br>
+          PLTMG: A Software Package for Solving Elliptic Partial
+          Differential Equations,<br>
+          User's Guide, Version 8.0<br>
+          SIAM, 1994.
+        </li>
+        <li>
+          Randolph Bank,<br>
+          PLTMG: A Software Package for Solving Elliptic Partial
+          Differential Equations,<br>
+          User's Guide, Version 9.0<br>
+          <a href = "../../pdf/pltmg9.pdf">Available online</a>.
+        </li>
+        <li>
+          <a href = "../../html/pltmg_quick_ref/index.html">
+          The PLTMG Quick Reference Web Pages</a>
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "pltmg.f">pltmg.f</a>, the vector code;
+        </li>
+        <li>
+          <a href = "mgxdr.c">mgxdr.c</a>, an interface to the XDR library
+          (external data representation), which may also require the
+          RPCSVC library;
+        </li>
+        <li>
+          <a href = "pltmg.sh">pltmg.sh</a>, commands to compile
+          the source code;
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <b>ATEST</b> is a main program that is required when running
+      any of the following test programs.  <b>ATEST</b> can operate
+      in one of three modes, determined by the value of the <b>MODE</b>
+      parameter:
+      <ul>
+        <li>
+          <b>MODE=-1</b>, run as an interactive program, with a simple
+          terminal interface;
+        </li>
+        <li>
+          <b>MODE=0</b>, run as an interactive program, with an X Window
+          interface which allows graphical output;
+        </li>
+        <li>
+          <b>MODE=+1</b>, run as a batch program, with input read from
+          a "journal" file;
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>ATEST</b> can be run with a true or dummy MPI interface,
+      depending on whether MPI is available.
+      <b>ATEST</b> can be run with a true SG OpenGl graphics display interface,
+      or a dummy interface, depending on whether the OpenGL graphics
+      library is available.
+      <b>ATEST</b> can be run with a true X Window graphics display interface,
+      or a dummy interface, depending on whether the X Window
+      library is available.
+    </p>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "atest.f">atest.f</a>, a calling program;
+        </li>
+        <li>
+          <a href = "mgmpi.f">mgmpi.f</a>, the MPI interface; if this
+          is used, the user must also make the MPI libraries available;
+        </li>
+        <li>
+          <a href = "mgmpi_stubs.f">mgmpi_stubs.f</a>, the dummy MPI
+          interface, which keeps the compiler and loader happy, but
+          means that the MPI library is not needed and cannot be used;
+        </li>
+        <li>
+          <a href = "mgvio.f">mgvio.f</a>, the OpenGL interface; if this
+          is used, the user must also make the OpenGL graphics
+          libraries available;
+        </li>
+        <li>
+          <a href = "mgvio_stubs.f">mgvio_stubs.f</a>, the dummy OpenGL
+          interface, which keeps the compiler and loader happy, but
+          means that the OpenGL graphics library is not needed and
+          cannot be used;
+        </li>
+        <li>
+          <a href = "xgui.c">xgui.c</a>, the X Window interface; if this
+          is used, the user must also make the X Window
+          libraries available;
+        </li>
+        <li>
+          <a href = "xgui_stubs.c">xgui_stubs.c</a>, the dummy X Window
+          interface, which keeps the compiler and loader happy, but
+          means that the X Window library is not needed and
+          cannot be used;
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>BATTERY</b> defines the thermal battery problem.
+      <ul>
+        <li>
+          <a href = "battery.f">battery.f</a>, a calling program;
+        </li>
+        <li>
+          <a href = "battery.sh">battery.sh</a>, commands to
+          compile, link, load and run the calling program;
+        </li>
+        <li>
+          <a href = "battery_output.txt">battery_output.txt</a>, the output.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>BURGER</b> defines the Burgers equation problem.
+      <ul>
+        <li>
+          <a href = "burger.f">burger.f</a>, a calling program;
+        </li>
+        <li>
+          <a href = "burger.sh">burger.sh</a>, commands to
+          compile, link, load and run the calling program;
+        </li>
+        <li>
+          <a href = "burger_output.txt">burger_output.txt</a>, the output.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>CIRCLE</b> defines the circle problem.
+      <ul>
+        <li>
+          <a href = "circle.f">circle.f</a>, a calling program;
+        </li>
+        <li>
+          <a href = "circle.sh">circle.sh</a>, commands to
+          compile, link, load and run the calling program;
+        </li>
+        <li>
+          <a href = "circle_output.txt">circle_output.txt</a>, the output.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>CONTROL</b> defines the control problem.
+      <ul>
+        <li>
+          <a href = "control.f">control.f</a>, a calling program;
+        </li>
+        <li>
+          <a href = "control.sh">control.sh</a>, commands to
+          compile, link, load and run the calling program;
+        </li>
+        <li>
+          <a href = "control_output.txt">control_output.txt</a>, the output.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>DOMAINS</b> defines the domains problem.
+      <ul>
+        <li>
+          <a href = "domains.f">domains.f</a>, a calling program;
+        </li>
+        <li>
+          <a href = "domains.sh">domains.sh</a>, commands to
+          compile, link, load and run the calling program;
+        </li>
+        <li>
+          <a href = "domains_output.txt">domains_output.txt</a>, the output.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>IDENT</b> defines the IDENT problem.
+      <ul>
+        <li>
+          <a href = "ident.f">ident.f</a>, a calling program;
+        </li>
+        <li>
+          <a href = "ident.sh">ident.sh</a>, commands to
+          compile, link, load and run the calling program;
+        </li>
+        <li>
+          <a href = "ident_output.txt">ident_output.txt</a>, the output.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>JCN</b> defines the JCN problem.
+      <ul>
+        <li>
+          <a href = "jcn.f">jcn.f</a>, a calling program;
+        </li>
+        <li>
+          <a href = "jcn.sh">jcn.sh</a>, commands to
+          compile, link, load and run the calling program;
+        </li>
+        <li>
+          <a href = "jcn_output.txt">jcn_output.txt</a>, the output.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>MESSAGE</b> defines the message problem.
+      <ul>
+        <li>
+          <a href = "message.f">message.f</a>, a calling program;
+        </li>
+        <li>
+          <a href = "message.sh">message.sh</a>, commands to
+          compile, link, load and run the calling program;
+        </li>
+        <li>
+          <a href = "message_output.txt">message_output.txt</a>, the output.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>MNSURF</b> defines the MNSURF problem.
+      <ul>
+        <li>
+          <a href = "mnsurf.f">mnsurf.f</a>, a calling program;
+        </li>
+        <li>
+          <a href = "mnsurf.sh">mnsurf.sh</a>, commands to
+          compile, link, load and run the calling program;
+        </li>
+        <li>
+          <a href = "mnsurf_output.txt">mnsurf_output.txt</a>, the output.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>NACA</b> defines the NACA problem.
+      <ul>
+        <li>
+          <a href = "naca.f">naca.f</a>, a calling program;
+        </li>
+        <li>
+          <a href = "naca.sh">naca.sh</a>, commands to
+          compile, link, load and run the calling program;
+        </li>
+        <li>
+          <a href = "naca_output.txt">naca_output.txt</a>, the output.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>OB</b> defines the OB problem.
+      <ul>
+        <li>
+          <a href = "ob.f">ob.f</a>, a calling program;
+        </li>
+        <li>
+          <a href = "ob.sh">ob.sh</a>, commands to
+          compile, link, load and run the calling program;
+        </li>
+        <li>
+          <a href = "ob_output.txt">ob_output.txt</a>, the output.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>SQUARE</b> defines the square problem.
+      <ul>
+        <li>
+          <a href = "square.f">square.f</a>, a calling program;
+        </li>
+        <li>
+          <a href = "square.sh">square.sh</a>, commands to
+          compile, link, load and run the calling program;
+        </li>
+        <li>
+          <a href = "square_output.txt">square_output.txt</a>, the output.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 27 February 2006.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+</html>

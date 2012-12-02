@@ -1,0 +1,694 @@
+      SUBROUTINE GBSOL(A,M,NA,B,N,NRHS,ALOGDT,SIGNDT,PIVMAX,PIVMIN,IPIV,
+     .                 EPS,INFO,JERR)
+
+c*********************************************************************72
+c
+cc GBSOL solves a large banded system by Gauss elimination using disk storage.
+c
+C     NAME: GBSOL            FORTRAN 77                 JANUARY 15, 1988
+C
+C     PURPOSE:
+C     THIS ALGORITHM IS A 1977 AMERICAN NATIONAL STANDARD FORTRAN
+C     IMPLEMENTATION OF A GAUSSIAN ELIMINATION PROCEDURE WITH PARTIAL
+C     PIVOTING TO SOLVE SYSTEMS WITH LARGE BANDED MATRICES AND SEVERAL
+C     RIGHT-HAND SIDES.
+C
+C     THE ALGORITHM KEEPS ONLY THE DATA NECESSARY FOR THE ACTUAL COMPUTATION
+C     IN THE MEMORY AND SWAPS THE OTHER DATA ON A DISK. IN ORDER
+C     TO MINIMIZE I/O OPERATIONS, THE ELEMENTS OF THE MATRIX ARE CALCULATED
+C     WHEN THEY ARE NEEDED FOR THE COMPUTATION OF THE UPPER TRIANGULAR
+C     MATRIX. HENCE, THE USER HAS TO PROVIDE A SUBROUTINE WHICH
+C     CALCULATES THE ROWS OF THE MATRIX.
+C
+C     THE WHOLE PROGRAM CONFORMS TO STANDARD, BUT IT IS RECOMMENDED THAT
+C     THE SUBROUTINES FOR HANDLING RANDOM-ACCESS STORAGE (GOPEN, GCLOSE,
+C     AND GRWRAN) BE REPLACED BY INSTALLATION-DEPENDENT VERSIONS.
+C
+C     THE ELEMENTS OF THE BANDMATRIX ARE STORED IN ROWS AS ILLUSTRATED
+C     IN THE FOLLOWING EXAMPLE:
+C
+C
+C
+C                *  *  31 41 51  0  0  0  0  0  0
+C                   *  22 32 42 52  0  0  0  0  0
+C                      13 23 33 43 53  0  0  0  0
+C                       0 14 24 34 44 54  0  0  0
+C                       0  0 15 25 35 45 55  0  0
+C                       0  0  0 16 26 36 46 56  0
+C                       0  0  0  0 17 27 37 47 57
+C                       0  0  0  0  0 18 28 38 48  *
+C                       0  0  0  0  0  0 19 29 39  *  *
+C
+C
+C     THE FIRST INDEX SHOWS THE POSITION OF THE ELEMENT IN THE BAND,
+C     AND THE SECOND ONE INDICATES THE ROW. ONLY THE BAND IS STORED,
+C     AND THE USER HAS TO SUPPLY ZEROS FOR THE POSITIONS INDICATED WITH
+C     AN ASTERISK IN THE ABOVE EXAMPLE. THE MATRIX A DECLARED IN GBSOL
+C     CONTAINS THE FOLLOWING ELEMENTS:
+C
+C                             0  0  31 41 51
+C                             0  22 32 42 52
+C                            13  23 33 43 53
+C                            14  24 34 44 54
+C                            15  25 35 45 55
+C                            16  26 36 46 56
+C                            17  27 37 47 57
+C                            18  28 38 48  0
+C                            19  29 39  0  0
+C
+C     THE USER HAS TO PROVIDE A SUBROUTINE "ROW" THAT CALCULATES THE
+C     ROWS OF A. THIS SUBROUTINE IS CALLED BY GBSOL IN THE FORM
+C
+C                       CALL ROW( A(1,L),L )
+C
+C     WHERE A(1,L) POINTS TO THE ADDRESS OF THE FIRST ELEMENT IN THE
+C     L-TH ROW.
+C
+C     THE ELEMENTS OF THE ROWS OF A ARE STORED IN CONSECUTIVE ADDRESSES
+C     SO THAT THE PROGRAM CAN EASILY BE MODIFIED FOR MACHINES WITH PIPE-
+C     LINE ARCHITECTURE, SUCH AS THE CYBER 205 OR THE FPS164. THE MODI-
+C     FICATION CONSISTS OF REPLACING THE LOOPS MARKED IN THE CODE BY
+C     VECTOR OPERATIONS.
+C
+C     CALLING SEQUENCE:
+C
+C     CALL GBSOL(A,M,NA,B,N,NRHS,ALOGDT,SIGNDT,PIVMAX,PIVMIN,IPIV,
+C                                                   EPS,INFO,JERR)
+C     PARAMETERS:
+C     A:          DOUBLE PRECISION. A(M,NA), IS THE ARRAY DECLARED IN
+C                 THE SUBROUTINE TO PROVIDE MEMORY FOR THE COMPUTATION.
+C     M:          INTEGER, INPUT, NUMBER OF ELEMENTS IN EACH ROW OF THE
+C                 BAND.
+C     NA:         INTEGER, INPUT, SECOND DIMENSION OF A.
+C                 BY SPECIFYING NA, THE USER CHOOSES THE SIZE OF THE
+C                 PART OF THE MATRIX TO BE KEPT IN THE MEMORY:
+C                 NA>=N: THE WHOLE MATRIX IS KEPT IN THE MEMORY.
+C                        THERE ARE NO I/O OPERATIONS.
+C                 NA <N: ONLY PART OF THE MATRIX ( A "BLOCK") IS KEPT
+C                        IN THE MEMORY. THE ONLY REQUIREMENT IS
+C                                  NA >= (M+1)/2 + 2.
+C     B:          DOUBLE PRECISION. B(N,NRHS), CONTAINS THE RIGHT-HAND
+C                 SIDES AS INPUT AND THE SOLUTION VECTORS AS OUTPUT.
+C     N:          INTEGER, INPUT, NUMBER OF EQUATIONS.
+C     NRHS:       INTEGER, INPUT, NUMBER OF RIGHT-HAND SIDES.
+C     ALOGDT:     DOUBLE PRECISION, OUTPUT, LOGARITHM OF THE ABSOLUTE
+C                 VALUE OF THE DETERMINANT.
+C     SIGNDT:     DOUBLE PRECISION, OUTPUT, SIGN OF THE DETERMINANT.
+C                 THE DETERMINANT ITSELF CAN BE CALCULATED BY
+C                     DET( A )   =   SIGNDT * 10.0D0**ALOGDT.
+C     PIVMAX:     DOUBLE PRECISION, OUTPUT, MAXIMUM OF THE ABSOLUTE
+C                 VALUES OF THE PIVOT ELEMENTS.
+C     PIVMIN:     DOUBLE PRECISION, OUTPUT, MINIMUM OF THE ABSOLUTE
+C                 VALUES OF THE PIVOT ELEMENTS.
+C     IPIV:       INTEGER, OUTPUT, POSITION OF THE PIVOT WITH MINIMAL
+C                 ABSOLUTE VALUE.
+C     EPS:        DOUBLE PRECISION, INPUT. ALL PIVOT ELEMENTS WHOSE
+C                 ABSOLUTE VALUES ARE LESS THAN EPS ARE REPLACED BY
+C                                SIGN( PIVOT ) * EPS.
+C     INFO:       INTEGER,OUTPUT,
+C                 = 0, NO PIVOT ELEMENT IS REPLACED.
+C                 = L, POSITION OF THE LAST ELEMENT WHICH IS REPLACED.
+C
+C                 FOR NORMAL USE WE RECOMMEND SETTING
+C                    EPS = DSQRT( SMALLEST DOUBLE PRECISION CONSTANT )
+C                 IN ORDER TO AVOID OVERFLOW IN CASE OF A SINGULAR
+C                 MATRIX. WITH THIS SETTING AND A PROPERLY SCALED MATRIX
+C                 (I.E. PIVMAX = O(1)), A RETURNED VALUE OF INFO DIFFER-
+C                 ENT FROM ZERO INDICATES THAT THE SOLUTIONS HAVE NO
+C                 SIGNIFICANT FIGURES.
+C
+C     JERR:       INTEGER, OUTPUT,ERROR CODE:
+C                 JERR=0: NA >= (M+1)/2+2.
+C                 JERR=1: NA <  (M+1)/2+2. CHOOSE A LARGER VALUE FOR NA.
+C
+C     USER SUPPLIED SUBROUTINES CALLED:
+C
+C     ROW         CALCULATES A ROW OF THE BAND OF MATRIX AS DESCRIBED
+C                 ABOVE.
+C
+C     GBSOL CONTAINS THE FOLLOWING CALLS IN ORDER TO PERFORM THE
+C     INSTALLATION-DEPENDENT DIRECT-ACCESS IN- AND OUTPUT OPERATIONS:
+C
+C
+C     CALL GOPEN(M)    TO OPEN A TEMPORARY FILE FOR DIRECT-ACCESS I/O.
+C
+C     CALL GCLOSE      TO CLOSE AND FREE THE FILE OPENED WITH GOPEN.
+C
+C     CALL GRWRAN(IOP,A,NREAL8,NSTART,M)
+C
+C                      IOP=1: TO READ NREAL8 DOUBLE PRECISION NUMBERS
+C                             FROM A DISK TO THE ARRAY A, STARTING WITH
+C                             THE NSTART-TH NUMBER ON THE DISK, OR
+C
+C                      IOP=2: TO WRITE THE FIRST NREAL8 DOUBLE PRECISION
+C                             NUMBERS OF THE ARRAY A ON A DISK, STARTING
+C                             WITH THE POSITION NSTART.
+C
+C     THE USER SHOULD APPLY UTILITY PROGRAMS WRITTEN IN ASSEMBLER IN
+C     ORDER TO GUARANTEE RAPID I/O OPERATIONS. STANDARD FORTRAN VERSIONS
+C     OF THE ABOVE SUBROUTINES ARE SUPPLIED, BUT FORTRAN SUPPLIED I/O IS
+C     TOO SLOW.
+C
+C     AUTHOR:     GEZA SCHRAUF, CAL TECH
+C
+      DOUBLE PRECISION A(M,NA),B(N,NRHS)
+      DOUBLE PRECISION ABSPIV,AH,ALOGDT,EPS,PIV,PIVMAX,PIVMIN,RA1L,RA1N,
+     .                 RPIV,S,SIGNDT
+      INTEGER I,IH,INFO,IPIV,ISTART,J,JA,JB,JEND,JERR,JH,JPREL,JSTART,
+     .        K,L,LABS, LABS1,LAMLR,LB,LBLK,LBLKM1,LDONE,LEND,LENGTH,
+     .        LREL,LRELP1,LREL1,LSTABS,LSTREL,M,MD,MD1,M1,N,NA,NBLKM1,
+     .        NBLKS,NEWABS,NEWREL,NREAL8,NRHS,NRLB,NRPB,NRPBPJ,NRPS,
+     .        NRPSM1,NSTART,NTEMP,N1
+
+      ALOGDT = 0.D0
+      SIGNDT = 1.D0
+      PIVMAX = 0.D0
+      INFO = 0
+      IPIV = 1
+      JERR = 0
+
+      MD = (M+1)/2
+      MD1 = MD - 1
+      M1 = M - 1
+      N1 = N - 1
+
+      IF (NA.LT.N) GO TO 10
+
+      NRPB = N
+      NRLB = N
+      NBLKS = 1
+      NBLKM1 = NBLKS - 1
+      GO TO 30
+
+   10 NRPB = NA - MD
+      NBLKS = N/NRPB
+      NTEMP = NBLKS*NRPB
+      IF(N.NE.NTEMP) NBLKS = NBLKS + 1
+
+      NBLKM1 = NBLKS - 1
+      NRLB = N - NBLKM1*NRPB
+
+      IF (NRPB.GE.2) GO TO 20
+      JERR = 1
+      RETURN
+   20 CONTINUE
+
+      NREAL8 = M * NRPB
+C
+C  OPEN TEMPORARY FILE FOR DIRECT ACCESS.
+C
+      CALL GOPEN(M)
+   30 CONTINUE
+C
+C  CALCULATE THE FIRST MD ROWS OF THE MATRIX A.
+C
+      DO 40 L = 1,MD
+         CALL ROW(A(1,L),L)
+   40 CONTINUE
+C
+C  SHIFT THE MATRIX ELEMENTS OF THE FIRST MD1 ROWS TO THE LEFT.
+C
+      IH = MD
+      ISTART = IH
+
+      DO 70 J = 1,MD1
+         DO 50 I = 1,IH
+            A(I,J) = A(ISTART+I-1,J)
+   50    CONTINUE
+         IH = IH + 1
+         DO 60 I = IH,M
+            A(I,J) = 0.D0
+   60    CONTINUE
+         ISTART = ISTART - 1
+   70 CONTINUE
+C
+C  INITIALIZE PIVMIN.
+C
+      PIVMIN = 0.D0
+
+      DO 75 J=1,MD
+         AH = DABS(A(1,J))
+         IF (AH.GT.PIVMIN) PIVMIN = AH
+   75 CONTINUE
+C
+C  CALCULATION OF THE UPPER TRIANGULAR MATRIX.
+C
+      DO 200 LBLK = 1,NBLKS
+         LEND = NRPB
+         IF (LBLK.EQ.NBLKS) LEND = NRLB - 1
+
+         LDONE = (LBLK-1)*NRPB
+
+         DO 170 L = 1,LEND
+            LREL = L
+            LABS = LDONE + LREL
+            LREL1 = LREL - 1
+            LABS1 = LABS - 1
+            LSTABS = MIN0(LABS+MD1,N)
+            NRPS = LSTABS - LABS1
+C
+C  PIVOT SEARCH.
+C
+            ABSPIV = 0.D0
+            JPREL = 1
+            DO 80 J = 1,NRPS
+               AH = DABS(A(1,J+LREL1))
+               IF (AH.LE.ABSPIV) GO TO 80
+               JPREL = J
+               ABSPIV = AH
+   80       CONTINUE
+C
+C  INTERCHANGE THE ROWS OF A AND THE CORRESPONDING RHS'S.
+C
+            IF (JPREL.EQ.1) GO TO 110
+
+            JA = JPREL + LREL1
+            JB = JPREL + LABS1
+
+            DO 90 I = 1,M
+               S = A(I,JA)
+               A(I,JA) = A(I,LREL)
+               A(I,LREL) = S
+   90       CONTINUE
+            DO 100 I = 1,NRHS
+               S = B(JB,I)
+               B(JB,I) = B(LABS,I)
+               B(LABS,I) = S
+  100       CONTINUE
+
+  110       PIV = A(1,LREL)
+            IF (DABS(PIV).GE.EPS) GO TO 120
+            IF (PIV.NE.0.D0) PIV = DSIGN(EPS,PIV)
+            IF (PIV.EQ.0.D0) PIV = EPS
+            A(1,LREL) = PIV
+            INFO = LABS
+  120       CONTINUE
+
+            IF (JPREL.NE.1) SIGNDT = -SIGNDT
+            IF (PIV.LT.0.D0) SIGNDT = -SIGNDT
+            ABSPIV = DABS(PIV)
+            ALOGDT = ALOGDT + DLOG10(ABSPIV)
+            IF (ABSPIV.GT.PIVMAX) PIVMAX = ABSPIV
+            IF (ABSPIV.GT.PIVMIN) GO TO 130
+            PIVMIN = ABSPIV
+            IPIV = LABS
+  130       CONTINUE
+C
+C  ADD A SUITABLE MULTIPLE OF THE LREL-TH ROW OF A TO THE FOLLOWING
+C  ROWS OF A, AND SHIFT THE MATRIX ROWS TO THE LEFT, SO THAT THE
+C  NEXT PIVOT IS TO BE SEARCHED AGAIN IN THE FIRST COLUMN OF A.
+C  ADD THE SAME MULTIPLE OF THE LABS-TH ROW OF B TO THE FOLLOWING
+C  ROWS OF B.
+C
+            NRPSM1 = NRPS - 1
+            RPIV = 1.D0/PIV
+
+            JSTART = LABS + 1
+            JEND = LABS + NRPSM1
+            LAMLR = LABS - LREL
+
+            DO 150 I = 1,NRHS
+               S = -B(LABS,I)*RPIV
+c
+C  VECTORIZE THE FOLLOWING LOOP, IF POSSIBL.
+c
+               DO 161 J = JSTART,JEND
+                  B(J,I) = A(1,J-LAMLR)*S + B(J,I)
+  161          CONTINUE
+  150       CONTINUE
+
+            DO 160 JH = 1,NRPSM1
+               JA = LREL + JH
+               JB = LABS + JH
+               S = -A(1,JA)*RPIV
+c
+C  VECTORIZE THE FOLLOWING LOOP, IF POSSIBLE.
+c
+               DO 140 I = 1,M1
+                  A(I,JA) = A(I+1,LREL)*S + A(I+1,JA)
+  140          CONTINUE
+               A(M,JA) = 0.D0
+  160       CONTINUE
+
+            NEWABS = LABS + MD
+            NEWREL = NEWABS - LDONE
+
+            IF (NEWABS.LE.N) CALL ROW(A(1,NEWREL),NEWABS)
+  170    CONTINUE
+
+         IF (LBLK.EQ.NBLKS) GO TO 200
+C
+C  WRITE THE NREAL8 = M*NRPB NUMBERS JUST CALCULATED ON THE TEMPORARY FILE.
+C
+         NSTART = LDONE*M + 1
+         CALL GRWRAN(2,A,NREAL8,NSTART,M)
+C
+C  SHIFT THE REMAINING MD ROWS UP.
+C
+         DO 190 J = 1,MD
+            NRPBPJ = NRPB + J
+            DO 180 I = 1,M
+               A(I,J) = A(I,NRPBPJ)
+  180       CONTINUE
+  190    CONTINUE
+
+  200 CONTINUE
+c
+C  THE LAST ELEMENT.
+c
+      LRELP1 = LREL + 1
+      PIV = A(1,LRELP1)
+      IF (DABS(PIV).GE.EPS) GO TO 210
+      IF (PIV.NE.0.D0) PIV = DSIGN(EPS,PIV)
+      IF (PIV.EQ.0.D0) PIV = EPS
+      A(1,LRELP1) = PIV
+      INFO = N
+  210 CONTINUE
+
+      IF (PIV.LT.0.D0) SIGNDT = -SIGNDT
+      ABSPIV = DABS(PIV)
+      ALOGDT = ALOGDT + DLOG10(ABSPIV)
+      IF (ABSPIV.GT.PIVMAX) PIVMAX = ABSPIV
+      IF (ABSPIV.GT.PIVMIN) GO TO 220
+      PIVMIN = ABSPIV
+      IPIV = N
+  220 CONTINUE
+C
+C  SOLVE THE SYSTEMS WITH THE UPPER TRIANGULAR MATRIX.
+C
+      RA1N = 1.D0/A(1,LRELP1)
+      DO 230 I = 1,NRHS
+         B(N,I) = B(N,I)*RA1N
+  230 CONTINUE
+
+      DO 290 LB = 1,NBLKS
+         LBLK = NBLKS + 1 - LB
+         LBLKM1 = LBLK - 1
+         LEND = NRPB
+
+         IF (LBLK.NE.NBLKS) GO TO 240
+         LEND = NRLB - 1
+         GO TO 250
+
+  240    CONTINUE
+c
+C  READ NREAL8 = M*NRPB NUMBERS FROM THE TEMPORARY FILE.
+c
+         NSTART = LBLKM1*NREAL8 + 1
+         CALL GRWRAN(1,A,NREAL8,NSTART,M)
+
+  250    CONTINUE
+c
+C  BACKSOLVE.
+c
+         DO 280 L = 1,LEND
+            LREL = LEND + 1 - L
+            LABS = LBLKM1*NRPB + LREL
+            LENGTH = M1
+            IF (LBLK.EQ.NBLKS) LENGTH = MIN0(L,M1)
+
+            RA1L = 1.D0/A(1,LREL)
+            DO 270 K = 1,NRHS
+               S = 0.D0
+c
+C  VECTORIZE THE FOLLOWING LOOP, IF POSSIBLE.
+c
+               DO 260 I = 1,LENGTH
+                  S = A(I+1,LREL)*B(I+LABS,K) + S
+  260          CONTINUE
+               B(LABS,K) = (B(LABS,K)-S)*RA1L
+  270       CONTINUE
+  280    CONTINUE
+
+  290 CONTINUE
+c
+C  CLOSE AND FREE TEMPORARY FILE.
+c
+      IF ( NA .EQ. N ) GO TO 300
+      CALL GCLOSE
+  300 RETURN
+      END
+      SUBROUTINE GOPEN(M)
+
+c*********************************************************************72
+c
+cc GOPEN opens a temporary file for direct access.
+C
+C     CALLING SEQUENCE: CALL GOPEN(M)
+C
+C     PARAMETERS:
+C     M:          INTEGER, INPUT, NUMBER OF DOUBLE-PRECISION NUMBERS IN
+C                 EACH DIRECT-ACCESS RECORD. USED ONLY FOR THE STANDARD
+C                 FORTRAN 77 VERSION.
+C
+C     AUTHOR:     GEZA SCHRAUF, CAL TECH
+C
+
+      INTEGER IUNIT,IRECL,M
+      IUNIT = 9
+C
+C     STANDARD FORTRAN 77 VERSION. THIS VERSION SHOULD BE REPLACED BY
+C     A FASTER MACHINE-DEPENDENT ROUTINE.
+C
+C  CHOOSE THE RECORD LENGTH "IRECL" SO THAT ONE
+C  RECORD CONTAINS  M  DOUBLE PRECISION NUMBERS.
+C
+      IRECL = M * 8
+C
+      OPEN(IUNIT,STATUS='SCRATCH',ACCESS='DIRECT',RECL=IRECL)
+C
+C     INSTALLATION FOR THE IBM 4331 OF THE DEPARTMENT OF APPLIED MATHE-
+C     MATICS AT THE CALIFORNIA INSTITUTE OF TECHNOLOGY.
+C
+C     IBM FORTRAN UTILITIES FOR VM/370 *** (PROGRAM NUMBER: 5798-DFH)
+C
+C     UTILITY USED: UOPEN IN FORTRAN 77 LEVEL LANGUAGE (MANUAL P. 34).
+C
+C-    CALL UOPEN(IUNIT,'TEMP DATA A',5,3,0,0,' ',0,IERR)
+C
+C-    IF (IERR.EQ.0) GO TO 10
+C
+C-    WRITE (6,9001) IERR
+C9001 FORMAT (///' AN ERROR OCCURRED USING THE IBM FORTRAN UTILITY',
+C-   .  ' "UOPEN" WHICH WAS '/' CALLED BY "GOPEN":'//' IBM ERROR CODE:',
+C-   .  I4//' 0: OPENED AS REQUESTED.'/
+C-   .  ' 1: FILE ALREADY OPENED WITH ANOTHER UNIT NUMBER.'/
+C-   .  ' 2: SHOULD NOT OCCUR.'/
+C-   .  ' 3: UNIT NUMBER ALREADY ASSOCIATED WITH A FILE.'/
+C-   .  ' 8: DATA INPUT ERROR. FILE NOT OPENED.'///)
+C
+C- 10 CONTINUE
+C
+      RETURN
+      END
+      SUBROUTINE GCLOSE
+
+c*********************************************************************72
+c
+cc GCLOSE closes and frees a temporary file opened by GOPEN.
+C
+C     AUTHOR:     GEZA SCHRAUF, CAL TECH
+C
+      INTEGER IUNIT
+      IUNIT = 9
+C
+C     STANDARD FORTRAN 77 VERSION. THIS VERSION SHOULD BE REPLACED BY
+C     A MACHINE-DEPENDENT ROUTINE.
+C
+      CLOSE(IUNIT)
+C
+C     INSTALLATION FOR THE IBM 4331 OF THE DEPARTMENT OF APPLIED MATHE-
+C     MATICS AT THE CALIFORNIA INSTITUTE OF TECHNOLOGY.
+C
+C     IBM FORTRAN UTILITIES FOR VM/370 *** (PROGRAM NUMBER: 5798-DFH)
+C
+C     UTILITY USED: UCLOSE IN FORTRAN 77 LEVEL LANGUAGE (MANUAL P. 32).
+C
+C-    CALL UCLOSE(IUNIT,2,IERR)
+C
+C-    IF (IERR.EQ.0) GO TO 10
+C
+C-    WRITE (6,9001) IERR
+C9001 FORMAT (///' AN ERROR OCCURRED USING THE IBM FORTRAN UTILITY',
+C-   .  ' "UCLOSE" WHICH WAS '/' CALLED BY "GCLOSE":'//
+C-   .  ' IBM ERROR CODE:',I4//' 0: CLOSED AS REQUESTED.'/
+C-   .  ' 4: UNIT IS NOT OPENED.'/' 8: DATA INPUT ERROR.'///)
+C
+C- 10 CONTINUE
+C
+      RETURN
+      END
+      SUBROUTINE GRWRAN(IOP,ARRAY,NREAL8,NSTART,M)
+
+c*********************************************************************72
+c
+cc GRWRAN reads from or writes to a direct access file.
+c
+C     CALLING SEQUENCE: CALL GRWRAN(IOP,ARRAY,NREAL8,NSTART,M)
+C
+C     PARAMETERS:
+C     IOP:        INTEGER, OPERATION MODE:
+C                 IOP = 1: READ FROM THE FILE TO THE ARRAY "ARRAY."
+C                 IOP = 2: WRITE FROM THE ARRAY "ARRAY" TO THE FILE.
+C     ARRAY:      DOUBLE PRECISION, ARRAY TO OR FROM WHICH DATA IS
+C                 TRANSFERRED.
+C     NREAL8:     INTEGER, NUMBER OF DOUBLE-PRECISION NUMBERS TO BE
+C                 TRANSFERRED.
+C     NSTART:     INTEGER, THE FIRST DOUBLE-PRECISION NUMBER ON THE DISK
+C                 WHICH IS TO BE TRANSFERRED.
+C     M:          INTEGER, INPUT, NUMBER OF DOUBLE PRECISION NUMBERS IN
+C                 EACH DIRECT-ACCESS RECORD. ONLY USED FOR THE STANDARD
+C                 FORTRAN 77 VERSION.
+C
+C     AUTHOR:     GEZA SCHRAUF, CAL TECH
+C
+
+      DOUBLE PRECISION ARRAY(NREAL8)
+      INTEGER IOP,IUNIT,K,KFIRST,KLAST,L,LREC,LSTART,
+     .        M,NRPB,NREAL8,NSTART
+      IUNIT = 9
+C
+C     STANDARD FORTRAN 77 VERSION. THIS VERSION SHOULD BE REPLACED BY
+C     A FASTER MACHINE-DEPENDENT ROUTINE.
+C
+      LSTART = (NSTART - 1)/M
+      NRPB   = NREAL8/M
+C
+      IF   (IOP.EQ.1)   THEN
+         DO 10 L=1,NRPB
+            LREC   = LSTART + L
+            KFIRST = (L-1)*M + 1
+            KLAST  = KFIRST + M - 1
+            READ(IUNIT,REC=LREC)    (ARRAY(K),K=KFIRST,KLAST)
+   10    CONTINUE
+      ELSE IF (IOP.EQ.2)   THEN
+         DO 20 L=1,NRPB
+            LREC   = LSTART + L
+            KFIRST = (L-1)*M + 1
+            KLAST  = KFIRST + M - 1
+            WRITE(IUNIT,REC=LREC)   (ARRAY(K),K=KFIRST,KLAST)
+   20    CONTINUE
+      ENDIF
+C
+C     ACCELERATED STANDARD FORTRAN 77 VERSION WITH LARGER RECORD LENGTH.
+C     NREAL8 HAS TO BE  S M A L L E R  THAN THE MAXIMAL POSSIBLE RECORD
+C     LENGTH. TO USE THIS VERSION REPLACE THE STATEMENT "CALL GOPEN(M)"
+C     THE BY STATEMENT "CALL GOPEN(NREAL8)" IN SUBROUTINE GBSOL.
+C
+C-    LREC = (NSTART - 1)/NREAL8 + 1
+C
+C-    IF   (IOP.EQ.1)   THEN
+C-       READ(IUNIT,REC=LREC)  ARRAY
+C-    ELSE IF (IOP.EQ.2)   THEN
+C-       WRITE(IUNIT,REC=LREC) ARRAY
+C-    ENDIF
+C
+C     INSTALLATION FOR THE IBM 4331 OF THE DEPARTMENT OF APPLIED MATHE-
+C     MATICS AT THE CALIFORNIA INSTITUTE OF TECHNOLOGY.
+C
+C     IBM FORTRAN UTILITIES FOR VM/370 *** (PROGRAM NUMBER: 5798-DFH)
+C
+C     UTILITY USED: RWFIL IN FORTRAN 77 LEVEL LANGUAGE (MANUAL P. 25).
+C
+C-    IFIRST = 2*NSTART - 1
+C-    IWORDS = 2*NREAL8
+C
+C-    CALL RWFIL(IUNIT,IOP,IFIRST,ARRAY(1),IWORDS,IERR)
+C
+C-    IF (IERR.EQ.0) GO TO 10
+C
+C-    WRITE (6,9001) IERR,IOP,NREAL8,NSTART
+C9001 FORMAT (///' AN ERROR OCCURRED USING THE IBM FORTRAN UTILITY',
+C-   .  ' "RWFIL" WHICH WAS '/' CALLED BY "GRWRAN":'//
+C-   .  ' IBM ERROR CODE:',I4//' 0: NO ERROR.'/
+C-   .  ' 5: END OF FILE ENCOUNTERED.'/
+C-   .  ' 6: UNIT HAS NOT BEEN OPENED AS A DIRECT-ACCESS FILE.'/
+C-   .  ' 8: DATA INPUT ERROR.'//' PARAMETER VALUES OF "GRWRAN":'//
+C-   .  '    OPERATION CODE             IOP    =',
+C-   .  I4/'    NUMBER OF REAL*8 NUMBERS   NREAL8 =',
+C-   .  I10/'    FIRST REAL*8 NUMBER        NSTART =',I10///)
+C
+C- 10 CONTINUE
+C
+      RETURN
+      END
+      subroutine timestamp ( )
+
+c*********************************************************************72
+c
+cc TIMESTAMP prints out the current YMDHMS date as a timestamp.
+c
+c  Discussion:
+c
+c    This FORTRAN77 version is made available for cases where the
+c    FORTRAN90 version cannot be used.
+c
+c  Licensing:
+c
+c    This code is distributed under the GNU LGPL license.
+c
+c  Modified:
+c
+c    12 January 2007
+c
+c  Author:
+c
+c    John Burkardt
+c
+c  Parameters:
+c
+c    None
+c
+      implicit none
+
+      character * ( 8 ) ampm
+      integer d
+      character * ( 8 ) date
+      integer h
+      integer m
+      integer mm
+      character * ( 9 ) month(12)
+      integer n
+      integer s
+      character * ( 10 ) time
+      integer y
+
+      save month
+
+      data month /
+     &  'January  ', 'February ', 'March    ', 'April    ', 
+     &  'May      ', 'June     ', 'July     ', 'August   ', 
+     &  'September', 'October  ', 'November ', 'December ' /
+
+      call date_and_time ( date, time )
+
+      read ( date, '(i4,i2,i2)' ) y, m, d
+      read ( time, '(i2,i2,i2,1x,i3)' ) h, n, s, mm
+
+      if ( h .lt. 12 ) then
+        ampm = 'AM'
+      else if ( h .eq. 12 ) then
+        if ( n .eq. 0 .and. s .eq. 0 ) then
+          ampm = 'Noon'
+        else
+          ampm = 'PM'
+        end if
+      else
+        h = h - 12
+        if ( h .lt. 12 ) then
+          ampm = 'PM'
+        else if ( h .eq. 12 ) then
+          if ( n .eq. 0 .and. s .eq. 0 ) then
+            ampm = 'Midnight'
+          else
+            ampm = 'AM'
+          end if
+        end if
+      end if
+
+      write ( *, 
+     &  '(i2,1x,a,1x,i4,2x,i2,a1,i2.2,a1,i2.2,a1,i3.3,1x,a)' ) 
+     &  d, month(m), y, h, ':', n, ':', s, '.', mm, ampm
+
+      return
+      end

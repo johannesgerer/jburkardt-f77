@@ -1,0 +1,168 @@
+<html>
+
+  <head>
+    <title>
+      TOMS450 - Rosenbrock Function Minimization
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS450 <br> Rosenbrock Function Minimization
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS450</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 450, for seeking the minimizer
+      of a scalar function of N variables.
+    </p>
+
+    <p>
+      The text of the algorithm as printed in the original reference had
+      a number of errors which were corrected in a remark made the
+      following year.  The text of the algorithm has been corrected
+      accordingly.
+    </p>
+
+    <p>
+      The text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <dl>
+        <dt>
+          <b>call romin ( n, x, funct, step, monitr )</b>
+        </dt>
+        <dd>
+          where <b>N</b> is the number of variables, <b>x</b> is
+          the estimated minimizer, <b>funct</b> is an external
+          subroutine for evaluating the function, <b>step</b>
+          is a stepsize, and <b>monitr</b> is a user routine which
+          determines when to declare convergence.
+        </dd>
+      </dl>
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/minpack/minpack.html">
+      MINPACK</a>,
+      a FORTRAN90 library which
+      contains routines which can minimize the absolute value of
+      a function of several variables.
+    </p>
+
+    <p>
+      <a href = "../../f_src/test_opt/test_opt.html">
+      TEST_OPT</a>,
+      a FORTRAN90 library which
+      contains routines defining a number of scalar functions of
+      multiple variables to test minimization routines.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Marek Machura, Andrzej Mulawa,<br>
+          Algorithm 450: Rosenbrock Function Minimization,<br>
+          Communications of the ACM,<br>
+          August 1973, Volume 16, Number 8, pages 482-483.
+        </li>
+        <li>
+          Adhemar Bulktheel,<br>
+          Remark on Algorithm 450: Rosenbrock Function Minimization,<br>
+          Communications of the ACM,<br>
+          August 1974, Volume 17, Number 8, page 470.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms450.f">toms450.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms450.sh">toms450.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms450_prb.f">toms450_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms450_prb.sh">toms450_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms450_prb_output.txt">toms450_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>ROMIN</b> carries out Rosenbrock minimization of a scalar
+          function of N variables.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 01 December 2005.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

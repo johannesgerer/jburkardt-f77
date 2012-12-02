@@ -1,0 +1,450 @@
+ 
+22 August    2011   4:00:52.470 PM      
+  
+ PCPRB7
+ PITCON sample program
+  
+ The materially nonlinear problem.
+  
+ Piecewise linears
+ 1 continuity condition at breakpoints.
+  
+ Step  Type of point     Lambda
+  
+   0  Start point      0.00000    
+  
+ PITCON 6.6
+ University of Pittsburgh continuation code
+  
+ Last modified on 09 September 1994
+ This version uses LAPACK for linear algebra.
+ This version uses double precision arithmetic.
+  
+ CHECKW - Machine epsilon=  2.22044604925031308E-016
+ START  - Checking the initial point.
+   Fixing variable number           5
+  
+ Step      FX             X             DX
+  
+    0  0.141421E-02  0.100000E-02
+             19             5
+                                    43.5309    
+                                         26
+    1  0.849584E-02   43.5309    
+              7            26
+ CORECT - Warning!
+   The residual FX is not decreasing.
+ START -  Warning!
+   The first try to correct the starting point
+   has failed.  Correction of the starting 
+   point will be retried.
+  
+ Step      FX             X             DX
+  
+    0  0.141421E-02  0.100000E-02
+             19             5
+                                    43.5309    
+                                         26
+    1  0.849584E-02   43.5309    
+              7            26
+                                    7.90641    
+                                         26
+    2  0.190847E-02   35.6245    
+             11            26
+                                    7.54099    
+                                         26
+    3  0.695215E-03   43.1655    
+             11            26
+                                    1.54283    
+                                         26
+    4  0.309331E-04   41.6227    
+             11            26
+   1  corrected        41.6227    
+ TANPAR - Tangent vector has limit component = -0.97678696608069238     
+ TRYSTP - Predictor using stepsize   0.25000000000000000     
+ TRYSTP - Corrector is fixing index           26
+  
+ Step      FX             X             DX
+  
+    0  0.216395E-03   41.3785    
+             13            26
+                                   0.310619E-01
+                                         25
+    1  0.193775E-03   41.3785    
+              3            26
+                                   0.129302E-03
+                                         22
+    2  0.528259E-08   41.3785    
+              7            26
+   2  continuation     41.3785    
+ TANPAR - Tangent vector has limit component = -0.99999999999863132     
+ SETSTP - Next stepsize HTAN =   0.50000000000000000     
+ TRYSTP - Predictor using stepsize   0.50000000000000000     
+ TRYSTP - Corrector is fixing index           26
+  
+ Step      FX             X             DX
+  
+    0  0.798653E-08   40.8785    
+              9            26
+   3  continuation     40.8785    
+ TANPAR - Tangent vector has limit component = -0.99999999999966227     
+ SETSTP - Next stepsize HTAN =   0.50000000000000000     
+ TRYSTP - Predictor using stepsize   0.50000000000000000     
+ TRYSTP - Corrector is fixing index           26
+  
+ Step      FX             X             DX
+  
+    0  0.586063E-08   40.3785    
+              9            26
+   4  continuation     40.3785    
+ TANPAR - Tangent vector has limit component = -0.99999999999999312     
+ SETSTP - Next stepsize HTAN =   0.50000000000000000     
+ TRYSTP - Predictor using stepsize   0.50000000000000000     
+ TRYSTP - Corrector is fixing index           26
+  
+ Step      FX             X             DX
+  
+    0  0.565552E-08   39.8785    
+              9            26
+   5  continuation     39.8785    
+  
+ Current rod coordinates:
+  
+ X,  U(X),  U'(X)
+  
+   0.625000E-01  0.218186E-08  0.349098E-07
+   0.187500      0.526409E-08  0.144058E-07
+   0.312500      0.529456E-08 -0.139182E-07
+   0.437500      0.241063E-08 -0.322247E-07
+   0.562500     -0.151613E-08 -0.306035E-07
+   0.687500     -0.421503E-08 -0.125790E-07
+   0.812500     -0.428267E-08  0.114968E-07
+   0.937500     -0.178206E-08  0.285129E-07
+  
+ TANPAR - Tangent vector has limit component = -0.99999999999999889     
+ SETSTP - Next stepsize HTAN =   0.50000000000000000     
+ TRYSTP - Predictor using stepsize   0.50000000000000000     
+ TRYSTP - Corrector is fixing index           26
+  
+ Step      FX             X             DX
+  
+    0  0.558252E-08   39.3785    
+              9            26
+   6  continuation     39.3785    
+ TANPAR - Tangent vector has limit component = -0.99999999999999978     
+ SETSTP - Next stepsize HTAN =   0.50000000000000000     
+ TRYSTP - Predictor using stepsize   0.50000000000000000     
+ TRYSTP - Corrector is fixing index           26
+  
+ Step      FX             X             DX
+  
+    0  0.554509E-08   38.8785    
+              9            26
+   7  continuation     38.8785    
+ TANPAR - Tangent vector has limit component =  -1.0000000000000000     
+ SETSTP - Next stepsize HTAN =   0.50000000000000000     
+ TRYSTP - Predictor using stepsize   0.50000000000000000     
+ TRYSTP - Corrector is fixing index           26
+  
+ Step      FX             X             DX
+  
+    0  0.552212E-08   38.3785    
+              9            26
+   8  continuation     38.3785    
+ TANPAR - Tangent vector has limit component =  -1.0000000000000000     
+ SETSTP - Next stepsize HTAN =   0.50000000000000000     
+ TRYSTP - Predictor using stepsize   0.50000000000000000     
+ TRYSTP - Corrector is fixing index           26
+  
+ Step      FX             X             DX
+  
+    0  0.550639E-08   37.8785    
+              9            26
+   9  continuation     37.8785    
+ TANPAR - Tangent vector has limit component =  -1.0000000000000000     
+ SETSTP - Next stepsize HTAN =   0.50000000000000000     
+ TRYSTP - Predictor using stepsize   0.50000000000000000     
+ TRYSTP - Corrector is fixing index           26
+  
+ Step      FX             X             DX
+  
+    0  0.549478E-08   37.3785    
+              9            26
+  10  continuation     37.3785    
+  
+ Current rod coordinates:
+  
+ X,  U(X),  U'(X)
+  
+   0.625000E-01  0.843727E-09  0.134996E-07
+   0.187500      0.204053E-08  0.564928E-08
+   0.312500      0.209124E-08 -0.483799E-08
+   0.437500      0.112418E-08 -0.106349E-07
+   0.562500     -0.113149E-09 -0.916240E-08
+   0.687500     -0.925055E-09 -0.382809E-08
+   0.812500     -0.101231E-08  0.243195E-08
+   0.937500     -0.430158E-09  0.688253E-08
+  
+ TANPAR - Tangent vector has limit component =  -1.0000000000000000     
+ SETSTP - Next stepsize HTAN =   0.50000000000000000     
+ TRYSTP - Predictor using stepsize   0.50000000000000000     
+ TRYSTP - Corrector is fixing index           26
+  
+ Step      FX             X             DX
+  
+    0  0.548572E-08   36.8785    
+              9            26
+  11  continuation     36.8785    
+ TANPAR - Tangent vector has limit component =  -1.0000000000000000     
+ SETSTP - Next stepsize HTAN =   0.50000000000000000     
+ TRYSTP - Predictor using stepsize   0.50000000000000000     
+ TRYSTP - Corrector is fixing index           26
+  
+ Step      FX             X             DX
+  
+    0  0.547836E-08   36.3785    
+              9            26
+  12  continuation     36.3785    
+ TANPAR - Tangent vector has limit component =  -1.0000000000000000     
+ SETSTP - Next stepsize HTAN =   0.50000000000000000     
+ TRYSTP - Predictor using stepsize   0.50000000000000000     
+ TRYSTP - Corrector is fixing index           26
+  
+ Step      FX             X             DX
+  
+    0  0.547216E-08   35.8785    
+              9            26
+  13  continuation     35.8785    
+ TANPAR - Tangent vector has limit component =  -1.0000000000000000     
+ SETSTP - Next stepsize HTAN =   0.50000000000000000     
+ TRYSTP - Predictor using stepsize   0.50000000000000000     
+ TRYSTP - Corrector is fixing index           26
+  
+ Step      FX             X             DX
+  
+    0  0.546678E-08   35.3785    
+              9            26
+  14  continuation     35.3785    
+ TANPAR - Tangent vector has limit component =  -1.0000000000000000     
+ SETSTP - Next stepsize HTAN =   0.50000000000000000     
+ TRYSTP - Predictor using stepsize   0.50000000000000000     
+ TRYSTP - Corrector is fixing index           26
+  
+ Step      FX             X             DX
+  
+    0  0.546201E-08   34.8785    
+              9            26
+  15  continuation     34.8785    
+  
+ Current rod coordinates:
+  
+ X,  U(X),  U'(X)
+  
+   0.625000E-01  0.598128E-09  0.957005E-08
+   0.187500      0.145530E-08  0.414473E-08
+   0.312500      0.152874E-08 -0.296964E-08
+   0.437500      0.937866E-09 -0.648442E-08
+   0.562500      0.209615E-09 -0.516759E-08
+   0.687500     -0.258089E-09 -0.231567E-08
+   0.812500     -0.367502E-09  0.565066E-09
+   0.937500     -0.166092E-09  0.265748E-08
+  
+ TANPAR - Tangent vector has limit component =  -1.0000000000000000     
+ SETSTP - Next stepsize HTAN =   0.50000000000000000     
+ TRYSTP - Predictor using stepsize   0.50000000000000000     
+ TRYSTP - Corrector is fixing index           26
+  
+ Step      FX             X             DX
+  
+    0  0.545769E-08   34.3785    
+              9            26
+  16  continuation     34.3785    
+ TANPAR - Tangent vector has limit component =  -1.0000000000000000     
+ SETSTP - Next stepsize HTAN =   0.50000000000000000     
+ TRYSTP - Predictor using stepsize   0.50000000000000000     
+ TRYSTP - Corrector is fixing index           26
+  
+ Step      FX             X             DX
+  
+    0  0.545371E-08   33.8785    
+              9            26
+  17  continuation     33.8785    
+ TANPAR - Tangent vector has limit component =  -1.0000000000000000     
+ SETSTP - Next stepsize HTAN =   0.50000000000000000     
+ TRYSTP - Predictor using stepsize   0.50000000000000000     
+ TRYSTP - Corrector is fixing index           26
+  
+ Step      FX             X             DX
+  
+    0  0.544998E-08   33.3785    
+              9            26
+  18  continuation     33.3785    
+ TANPAR - Tangent vector has limit component =  -1.0000000000000000     
+ SETSTP - Next stepsize HTAN =   0.50000000000000000     
+ TRYSTP - Predictor using stepsize   0.50000000000000000     
+ TRYSTP - Corrector is fixing index           26
+  
+ Step      FX             X             DX
+  
+    0  0.544644E-08   32.8785    
+              9            26
+  19  continuation     32.8785    
+ TANPAR - Tangent vector has limit component =  -1.0000000000000000     
+ SETSTP - Next stepsize HTAN =   0.50000000000000000     
+ TRYSTP - Predictor using stepsize   0.50000000000000000     
+ TRYSTP - Corrector is fixing index           26
+  
+ Step      FX             X             DX
+  
+    0  0.544304E-08   32.3785    
+              9            26
+  20  continuation     32.3785    
+  
+ Current rod coordinates:
+  
+ X,  U(X),  U'(X)
+  
+   0.625000E-01  0.502442E-09  0.803907E-08
+   0.187500      0.123301E-08  0.365003E-08
+   0.312500      0.133270E-08 -0.205495E-08
+   0.437500      0.911866E-09 -0.467845E-08
+   0.562500      0.398882E-09 -0.352929E-08
+   0.687500      0.659866E-10 -0.179703E-08
+   0.812500     -0.691105E-10 -0.364528E-09
+   0.937500     -0.459467E-10  0.735148E-09
+  
+ TANPAR - Tangent vector has limit component =  -1.0000000000000000     
+ SETSTP - Next stepsize HTAN =   0.50000000000000000     
+ TRYSTP - Predictor using stepsize   0.50000000000000000     
+ TRYSTP - Corrector is fixing index           26
+  
+ Step      FX             X             DX
+  
+    0  0.543974E-08   31.8785    
+              9            26
+  21  continuation     31.8785    
+ TANPAR - Tangent vector has limit component =  -1.0000000000000000     
+ SETSTP - Next stepsize HTAN =   0.50000000000000000     
+ TRYSTP - Predictor using stepsize   0.50000000000000000     
+ TRYSTP - Corrector is fixing index           26
+  
+ Step      FX             X             DX
+  
+    0  0.543651E-08   31.3785    
+              9            26
+  22  continuation     31.3785    
+ TANPAR - Tangent vector has limit component =  -1.0000000000000000     
+ SETSTP - Next stepsize HTAN =   0.50000000000000000     
+ TRYSTP - Predictor using stepsize   0.50000000000000000     
+ TRYSTP - Corrector is fixing index           26
+  
+ Step      FX             X             DX
+  
+    0  0.543331E-08   30.8785    
+              9            26
+  23  continuation     30.8785    
+ TANPAR - Tangent vector has limit component =  -1.0000000000000000     
+ SETSTP - Next stepsize HTAN =   0.50000000000000000     
+ TRYSTP - Predictor using stepsize   0.50000000000000000     
+ TRYSTP - Corrector is fixing index           26
+  
+ Step      FX             X             DX
+  
+    0  0.543013E-08   30.3785    
+              9            26
+  24  continuation     30.3785    
+ TANPAR - Tangent vector has limit component =  -1.0000000000000000     
+ SETSTP - Next stepsize HTAN =   0.50000000000000000     
+ TRYSTP - Predictor using stepsize   0.50000000000000000     
+ TRYSTP - Corrector is fixing index           26
+  
+ Step      FX             X             DX
+  
+    0  0.542694E-08   29.8785    
+              9            26
+  25  continuation     29.8785    
+  
+ Current rod coordinates:
+  
+ X,  U(X),  U'(X)
+  
+   0.625000E-01  0.458990E-09  0.734385E-08
+   0.187500      0.113830E-08  0.352514E-08
+   0.312500      0.126922E-08 -0.143039E-08
+   0.437500      0.952640E-09 -0.363496E-08
+   0.562500      0.558426E-09 -0.267246E-08
+   0.687500      0.289649E-09 -0.162798E-08
+   0.812500      0.123871E-09 -0.102448E-08
+   0.937500      0.299203E-10 -0.478725E-09
+  
+ TANPAR - Tangent vector has limit component =  -1.0000000000000000     
+ SETSTP - Next stepsize HTAN =   0.50000000000000000     
+ TRYSTP - Predictor using stepsize   0.50000000000000000     
+ TRYSTP - Corrector is fixing index           26
+  
+ Step      FX             X             DX
+  
+    0  0.542372E-08   29.3785    
+              9            26
+  26  continuation     29.3785    
+ TANPAR - Tangent vector has limit component =  -1.0000000000000000     
+ SETSTP - Next stepsize HTAN =   0.50000000000000000     
+ TRYSTP - Predictor using stepsize   0.50000000000000000     
+ TRYSTP - Corrector is fixing index           26
+  
+ Step      FX             X             DX
+  
+    0  0.542045E-08   28.8785    
+              9            26
+  27  continuation     28.8785    
+ TANPAR - Tangent vector has limit component =  -1.0000000000000000     
+ SETSTP - Next stepsize HTAN =   0.50000000000000000     
+ TRYSTP - Predictor using stepsize   0.50000000000000000     
+ TRYSTP - Corrector is fixing index           26
+  
+ Step      FX             X             DX
+  
+    0  0.541712E-08   28.3785    
+              9            26
+  28  continuation     28.3785    
+ TANPAR - Tangent vector has limit component =  -1.0000000000000000     
+ SETSTP - Next stepsize HTAN =   0.50000000000000000     
+ TRYSTP - Predictor using stepsize   0.50000000000000000     
+ TRYSTP - Corrector is fixing index           26
+  
+ Step      FX             X             DX
+  
+    0  0.541370E-08   27.8785    
+              9            26
+  29  continuation     27.8785    
+ TANPAR - Tangent vector has limit component =  -1.0000000000000000     
+ SETSTP - Next stepsize HTAN =   0.50000000000000000     
+ TRYSTP - Predictor using stepsize   0.50000000000000000     
+ TRYSTP - Corrector is fixing index           26
+  
+ Step      FX             X             DX
+  
+    0  0.541018E-08   27.3785    
+              9            26
+  30  continuation     27.3785    
+  
+ Current rod coordinates:
+  
+ X,  U(X),  U'(X)
+  
+   0.625000E-01  0.442847E-09  0.708555E-08
+   0.187500      0.111169E-08  0.361602E-08
+   0.312500      0.128109E-08 -0.905772E-09
+   0.437500      0.104166E-08 -0.292504E-08
+   0.562500      0.722675E-09 -0.217871E-08
+   0.687500      0.483521E-09 -0.164775E-08
+   0.812500      0.279805E-09 -0.161171E-08
+   0.937500      0.895364E-10 -0.143258E-08
+  
+  
+ Jacobians                36
+ Factorizations           36
+ Solves                   36
+ Functions                38
+ 
+22 August    2011   4:00:52.474 PM      

@@ -1,0 +1,241 @@
+ 
+22 August    2011   4:03:22.049 PM      
+  
+ PCPRB5
+ PITCON sample program.
+  
+ Two point BVP, limit point in Lambda
+  
+ This program will be run three times.
+  
+ This is run number            1
+  
+  
+ Using the full Newton method.
+ The jacobian is updated on every iteration.
+  
+ Step  Type of point     Lambda
+  
+   0  Start point      0.00000    
+  
+ PITCON 6.6
+ University of Pittsburgh continuation code
+  
+ Last modified on 09 September 1994
+ This version uses LAPACK for linear algebra.
+ This version uses double precision arithmetic.
+  
+   1  Corrected        0.00000    
+   2  Continuation    0.264435E-01
+   3  Continuation    0.104600    
+   4  Continuation    0.219656    
+   5  Continuation    0.327554    
+   6  Continuation    0.425474    
+   7  Continuation    0.513405    
+   8  Continuation    0.591469    
+   9  Continuation    0.659916    
+  10  Continuation    0.719109    
+  11  Continuation    0.769502    
+  12  Continuation    0.811616    
+  13  Target point    0.800000    
+  
+ Complete value for target point            1
+  
+    0.00000      0.602685E-01  0.118413      0.174305      0.227816    
+   0.278815      0.327169      0.372748      0.415422      0.455064    
+   0.491550      0.524765      0.554596      0.580941      0.603707    
+   0.622811      0.638182      0.649762      0.657507      0.661387    
+   0.661387      0.800000    
+  14  Continuation    0.846018    
+  15  Continuation    0.873303    
+  16  Continuation    0.894068    
+  17  Continuation    0.908904    
+  18  Continuation    0.918385    
+  19  Continuation    0.923057    
+  20  Continuation    0.923436    
+  21  Limit point     0.923282    
+  22  Continuation    0.920003    
+  23  Continuation    0.913206    
+  24  Continuation    0.904857    
+  25  Continuation    0.891133    
+  26  Continuation    0.877626    
+  27  Continuation    0.860121    
+  28  Continuation    0.842782    
+  29  Continuation    0.822586    
+  30  Continuation    0.802513    
+  31  Continuation    0.780519    
+  32  Target point    0.800000    
+  
+ Complete value for target point            2
+  
+    0.00000      0.152806      0.303281      0.451047      0.595673    
+   0.736669      0.873486       1.00551       1.13207       1.25242    
+    1.36578       1.47130       1.56811       1.65533       1.73208    
+    1.79754       1.85093       1.89160       1.91902       1.93283    
+    1.93283      0.800000    
+  
+ Jacobians                57
+ Factorizations           57
+ Solves                   57
+ Functions                60
+  
+ This is run number            2
+  
+  
+ Using the modified Newton method.
+ The jacobian is held fixed while correcting a 
+ point.
+  
+ Step  Type of point     Lambda
+  
+   0  Start point      0.00000    
+  
+ PITCON 6.6
+ University of Pittsburgh continuation code
+  
+ Last modified on 09 September 1994
+ This version uses LAPACK for linear algebra.
+ This version uses double precision arithmetic.
+  
+   1  Corrected        0.00000    
+   2  Continuation    0.264435E-01
+   3  Continuation    0.104600    
+   4  Continuation    0.219656    
+   5  Continuation    0.327554    
+   6  Continuation    0.425474    
+   7  Continuation    0.513405    
+   8  Continuation    0.591469    
+   9  Continuation    0.659916    
+  10  Continuation    0.719109    
+  11  Continuation    0.769502    
+  12  Continuation    0.811616    
+  13  Target point    0.800000    
+  
+ Complete value for target point            1
+  
+    0.00000      0.602685E-01  0.118413      0.174305      0.227816    
+   0.278815      0.327169      0.372748      0.415422      0.455064    
+   0.491550      0.524765      0.554596      0.580941      0.603707    
+   0.622811      0.638182      0.649762      0.657507      0.661387    
+   0.661387      0.800000    
+  14  Continuation    0.846018    
+  15  Continuation    0.873303    
+  16  Continuation    0.894068    
+  17  Continuation    0.908904    
+  18  Continuation    0.918385    
+  19  Continuation    0.923057    
+  20  Continuation    0.923436    
+  21  Limit point     0.923282    
+  22  Continuation    0.920003    
+  23  Continuation    0.913206    
+  24  Continuation    0.904857    
+  25  Continuation    0.891133    
+  26  Continuation    0.877626    
+  27  Continuation    0.860121    
+  28  Continuation    0.842782    
+  29  Continuation    0.822586    
+  30  Continuation    0.802513    
+  31  Continuation    0.780519    
+  32  Target point    0.800000    
+  
+ Complete value for target point            2
+  
+    0.00000      0.152806      0.303281      0.451047      0.595673    
+   0.736669      0.873486       1.00551       1.13207       1.25242    
+    1.36578       1.47130       1.56811       1.65533       1.73208    
+    1.79754       1.85093       1.89160       1.91902       1.93283    
+    1.93283      0.800000    
+  
+ Jacobians                57
+ Factorizations           57
+ Solves                   57
+ Functions                60
+  
+ This is run number            3
+  
+  
+ Using the "cheap" Newton method.
+ The jacobian is held fixed as long as possible,
+ perhaps over multiple points, until
+ convergence fails.
+  
+ Step  Type of point     Lambda
+  
+   0  Start point      0.00000    
+  
+ PITCON 6.6
+ University of Pittsburgh continuation code
+  
+ Last modified on 09 September 1994
+ This version uses LAPACK for linear algebra.
+ This version uses double precision arithmetic.
+  
+   1  Corrected        0.00000    
+   2  Continuation    0.264435E-01
+   3  Continuation    0.105774    
+   4  Continuation    0.237992    
+   5  Continuation    0.370209    
+   6  Continuation    0.502427    
+   7  Continuation    0.634644    
+   8  Continuation    0.766862    
+   9  Continuation    0.899079    
+  10  Target point    0.800000    
+  
+ Complete value for target point            1
+  
+    0.00000      0.608244E-01  0.119522      0.175964      0.230017    
+   0.281547      0.330421      0.376502      0.419659      0.459760    
+   0.496679      0.530296      0.560495      0.587170      0.610226    
+   0.629577      0.645148      0.656881      0.664728      0.668660    
+   0.668660      0.800000    
+ UPDATE - Predictor stepsize was reduced            2  times.
+  11  Continuation    0.913770    
+ TRYSTP - Retrying step with IWORK(4)=           1
+ UPDATE - Predictor stepsize was reduced            2  times.
+  12  Continuation    0.910880    
+  13  Continuation    0.911867    
+  14  Continuation    0.914828    
+  15  Continuation    0.920797    
+  16  Continuation    0.922580    
+  17  Continuation    0.919928    
+  18  Continuation    0.918788    
+  19  Continuation    0.908199    
+  20  Continuation    0.896361    
+  21  Continuation    0.888561    
+  22  Continuation    0.868307    
+  23  Continuation    0.856471    
+ UPDATE - Predictor stepsize was reduced            1  times.
+  24  Continuation    0.846112    
+  25  Continuation    0.840014    
+ UPDATE - Predictor stepsize was reduced            1  times.
+  26  Continuation    0.838567    
+ UPDATE - Predictor stepsize was reduced            1  times.
+  27  Continuation    0.832253    
+  28  Continuation    0.833277    
+ UPDATE - Predictor stepsize was reduced            1  times.
+  29  Continuation    0.828408    
+  30  Continuation    0.829395    
+ TRYSTP - Retrying step with IWORK(4)=           1
+ UPDATE - Predictor stepsize was reduced            1  times.
+  31  Continuation    0.826859    
+ LIMIT - Warning!
+   Iteration did not reach limit point after 
+   taking           25  steps.
+  
+ PITCON - Warning!
+   An error occurred during the
+   limit point computation.
+  
+   The computed limit point does not
+   satisfy the accuracy requirements.
+  
+   However, the code can continue.
+  32  Limit point     0.829395    
+ Iteration halted, IERROR=           8
+  
+ Jacobians                 4
+ Factorizations            4
+ Solves                  501
+ Functions               527
+ 
+22 August    2011   4:03:22.055 PM      

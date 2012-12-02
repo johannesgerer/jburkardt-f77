@@ -1,0 +1,163 @@
+21 November  2008   9:46:18.425 AM      
+  
+ MATMUL
+   An interactive demonstration of the speed
+   of matrix multiplication.
+  
+   This is version 1.19
+   Last modified on 28 August 1999.
+  
+   This is the version for Mac/G5    
+   The maximum matrix order allowed is N =         1100
+  
+ 
+Command?  (Type H for help)
+  
+ This is the list of legal commands.
+  
+ H                 Help. List the legal commands.
+ LDA=value         Set leading dimension of arrays.
+ M                 Multiply two matrices.
+ N=value           Assigns the size of the arrays.
+ N=nlo,nhi,ninc    Sets N=nlo, N=nlo+ninc, ....
+ N=nlo,nhi,*nmult  Sets N=nlo, N=nlo*nmult, ....
+ NREP=nrep         Sets the repetition factor.
+ ORDER=name        Chooses the algorithm.
+ P                 Prints out current results.
+ Q                 Quit.
+ SHOW=name         Include "name" in output.
+                   "name" = ORDER, LDA, N, CPU, OPS,
+                   MFLOPS, MACHINE, or LANGUAGE.
+                   If "name"=ALL, all items are shown.
+ NOSHOW=name       removes item from output list.
+  
+ 
+Command?  (Type H for help)
+ 
+Command?  (Type H for help)
+ N has been set to          100
+ 
+Command?  (Type H for help)
+  
+ The order has been set to ALL   
+ 
+Command?  (Type H for help)
+  
+ Order LDA   N      CPU Secs       Ops    MFLOPS  Machine  Language
+  
+C4_IJK1100 100      0.072914   2000000   27.4296 Mac/G5     Fortran
+DIJK  1100 100      0.054000   2000000   37.0370 Mac/G5     Fortran
+IJK   1100 100      0.050858   2000000   39.3252 Mac/G5     Fortran
+IJUK  1100 100      0.027676   2000000   72.2648 Mac/G5     Fortran
+IKJ   1100 100      0.025367   2000000   78.8426 Mac/G5     Fortran
+IUJK  1100 100      0.015374   2000000  130.0900 Mac/G5     Fortran
+JIK   1100 100      0.032550   2000000   61.4439 Mac/G5     Fortran
+JKI   1100 100      0.024999   2000000   80.0032 Mac/G5     Fortran
+LIJK  1100 100      0.019684   2000000  101.6054 Mac/G5     Fortran
+MIJK  1100 100      0.000000   2000000    0.0000 Mac/G5     Fortran
+MKJI  1100 100      0.000000   2000000    0.0000 Mac/G5     Fortran
+MXMA  1100 100      0.000015   2000000********** Mac/G5     Fortran
+NIJK  1100 100      0.032426   2000000   61.6789 Mac/G5     Fortran
+NIJK461100 100      0.032435   2000000   61.6618 Mac/G5     Fortran
+SAXPYC1100 100      0.002244   2000000  891.2673 Mac/G5     Fortran
+SAXPYR1100 100      0.010006   2000000  199.8810 Mac/G5     Fortran
+SDOT  1100 100      0.004445   2000000  449.9482 Mac/G5     Fortran
+SGEMM 1100 100      0.000711   2000000 2812.8455 Mac/G5     Fortran
+SGEMMS1100 100      0.000015   2000000********** Mac/G5     Fortran
+SIJK  1100 100      0.033356   2000000   59.9592 Mac/G5     Fortran
+TAXPYC1100 100      0.009114   2000000  219.4420 Mac/G5     Fortran
+TAXPYR1100 100      0.025584   2000000   78.1739 Mac/G5     Fortran
+TDOT  1100 100      0.017345   2000000  115.3073 Mac/G5     Fortran
+TGEMM 1100 100      0.015670   2000000  127.6324 Mac/G5     Fortran
+UIJK  1100 100      0.021831   2000000   91.6127 Mac/G5     Fortran
+ 
+The matrix multiplication has been carried out.
+ 
+Command?  (Type H for help)
+ 
+Command?  (Type H for help)
+  
+ The order has been set to TDOT  
+ 
+Command?  (Type H for help)
+ N has been set to          100
+ NHI has been set to          400
+ NMULT has been set to            2
+ 
+Command?  (Type H for help)
+  
+ Order LDA   N      CPU Secs       Ops    MFLOPS  Machine  Language
+  
+TDOT  1100 100      0.017347   2000000  115.2935 Mac/G5     Fortran
+  
+ Order LDA   N      CPU Secs       Ops    MFLOPS  Machine  Language
+  
+TDOT  1100 200      0.150251  16000000  106.4885 Mac/G5     Fortran
+  
+ Order LDA   N      CPU Secs       Ops    MFLOPS  Machine  Language
+  
+TDOT  1100 400      1.630105 128000000   78.5226 Mac/G5     Fortran
+ 
+The matrix multiplication has been carried out.
+ 
+Command?  (Type H for help)
+ 
+Command?  (Type H for help)
+  
+ The order has been set to IJK   
+ 
+Command?  (Type H for help)
+ N has been set to           50
+ NHI has been set to          400
+ NMULT has been set to            2
+ 
+Command?  (Type H for help)
+  
+ Order LDA   N      CPU Secs       Ops    MFLOPS  Machine  Language
+  
+IJK   1100  50      0.003480    250000   71.8350 Mac/G5     Fortran
+  
+ Order LDA   N      CPU Secs       Ops    MFLOPS  Machine  Language
+  
+IJK   1100 100      0.033911   2000000   58.9779 Mac/G5     Fortran
+  
+ Order LDA   N      CPU Secs       Ops    MFLOPS  Machine  Language
+  
+IJK   1100 200      0.303830  16000000   52.6610 Mac/G5     Fortran
+  
+ Order LDA   N      CPU Secs       Ops    MFLOPS  Machine  Language
+  
+IJK   1100 400      2.814587 128000000   45.4774 Mac/G5     Fortran
+ 
+The matrix multiplication has been carried out.
+ 
+Command?  (Type H for help)
+ 
+Command?  (Type H for help)
+  
+ The order has been set to KJI   
+ 
+Command?  (Type H for help)
+The repetition factor is now NREP =        5
+ 
+Command?  (Type H for help)
+ N has been set to          100
+ 
+Command?  (Type H for help)
+  
+ Order LDA   N      CPU Secs       Ops NREP    MFLOPS  Machine  Language
+  
+KJI   1100 100      0.123497   2000000    5   80.9733 Mac/G5     Fortran
+ 
+The matrix multiplication has been carried out.
+ 
+Command?  (Type H for help)
+ 
+Command?  (Type H for help)
+ 
+Type "Y" to confirm that you want to quit.
+ 
+MATMUL:
+  Normal end of execution.
+ 
+21 November  2008   9:46:24.321 AM      

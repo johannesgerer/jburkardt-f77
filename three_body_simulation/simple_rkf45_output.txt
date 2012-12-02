@@ -1,0 +1,24 @@
+ 7 October   2012  11:26:27.746 AM      
+ 
+SIMPLE_RKF45
+  FORTRAN77 version
+  Simulate the behavior of three bodies which
+  are constrained to lie in a plane, moving
+  under the influence of gravity.
+ 
+  Use RKF45 for the ODE integrator.
+ 
+SIMPLE_RKF45_RUN
+  Simulate the planar three-body problem as an ODE system
+  using RKF45 for the ODE integration.
+ 
+R8_RKFS - Fatal error!
+  Invalid input.
+ 
+SIMPLE_RKF45_RUN - Warningc
+  Output value of FLAG =    1
+ 
+R8_RKFS - Fatal error!
+  Integration cannot be continued.
+  The user did not respond to the output
+  value FLAG = 5, 6, 7, or 8.

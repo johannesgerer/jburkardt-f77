@@ -1,0 +1,14 @@
+ 
+DISLIN_EX13:
+  Demonstrate the creation of a map plot.
+
+ <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ <<                END OF DISLIN / VERSION  8.3                  <<
+ <<  Date    : 05.09.2005  Time    : 14:40:08  Pageformat: DA4L  <<
+ <<  Vectors : 11212       Warnings: 0         Fileformat:  PNG  <<
+ <<  Metafile: dislin_ex13.png                                   <<
+ <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+ 
+DISLIN_EX13:
+  Normal end of execution.

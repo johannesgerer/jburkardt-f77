@@ -1,0 +1,563 @@
+<html>
+
+  <head>
+    <title>
+      KNAPSACK - Algorithms for Knapsack Problems
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      KNAPSACK <br> Algorithms for Knapsack Problems
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>KNAPSACK</b>
+      is a FORTRAN77 library which
+      contains implementations of algorithms for a variety of knapsack problems,
+      by Silvano Martelo and Paolo Toth.
+    </p>
+
+    <p>
+      <table border="1">
+        <tr>
+          <th>Code</th><th>Problem</th><th>Type</th>
+        </tr>
+        <tr>
+          <td>MT1</td><td>0-1 Knapsack</td><td>Exact</td>
+        </tr>
+        <tr>
+          <td>MT1R</td><td>0-1 Knapsack</td><td>Exact (real data)</td>
+        </tr>
+        <tr>
+          <td>MT2</td><td>0-1 Knapsack</td><td>Exact/Approximate</td>
+        </tr>
+        <tr>
+          <td>MTB2</td><td>Bounded Knapsack</td><td>Exact/Approximate</td>
+        </tr>
+        <tr>
+          <td>MTU2</td><td>Unbounded Knapsack</td><td>Exact/Approximate</td>
+        </tr>
+        <tr>
+          <td>MTSL</td><td>Subset Sum</td><td>Exact/Approximate</td>
+        </tr>
+        <tr>
+          <td>MTC2</td><td>Change Making</td><td>Exact/Approximate</td>
+        </tr>
+        <tr>
+          <td>MTCB</td><td>Bounded Change Making</td><td>Exact/Approximate</td>
+        </tr>
+        <tr>
+          <td>MTM</td><td>0-1 Multiple Knapsack</tc><td>Exact/Approximate</td>
+        </tr>
+        <tr>
+          <td>MTHM</td><td>0-1 Multiple Knapsack</td><td>Approximate</td>
+        </tr>
+        <tr>
+          <td>MTG</td><td>Generalized Assignment</td><td>Exact/Approximate</td>
+        </tr>
+        <tr>
+          <td>MTHG</td><td>Generalized Assignment</td><td>Approximate</td>
+        </tr>
+        <tr>
+          <td>MTP</td><td>Bin Packing</td><td>Exact/Approximate</td>
+        </tr>
+      </table>
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../datasets/bin_packing/bin_packing.html">
+      BIN_PACKING</a>,
+      a dataset directory which
+      contains examples of the bin packing problem, in which a number of
+      objects are to be packed in the minimum possible number of uniform bins;
+    </p>
+
+    <p>
+      <a href = "../../datasets/change_making/change_making.html">
+      CHANGE_MAKING</a>,
+      a dataset directory which
+      contains test data for the change making problem;
+    </p>
+
+    <p>
+      <a href = "../../f_src/combo/combo.html">
+      COMBO</a>,
+      a FORTRAN90 library which
+      includes many combinatorial routines.
+    </p>
+
+    <p>
+      <a href = "../../datasets/generalized_assignment/generalized_assignment.html">
+      GENERALIZED_ASSIGNMENT</a>,
+      a dataset directory which
+      contains test data for the generalized assignment problem;
+    </p>
+
+    <p>
+      <a href = "../../m_src/knapsack/knapsack.html">
+      KNAPSACK</a>,
+      a MATLAB program which
+      solves the 0/1 knapsack problem by exhaustive search.
+    </p>
+
+    <p>
+      <a href = "../../datasets/knapsack_01/knapsack_01.html">
+      KNAPSACK_01</a>,
+      a dataset directory which
+      contains test data for the 0/1 knapsack problem;
+    </p>
+
+    <p>
+      <a href = "../../datasets/knapsack_multiple/knapsack_multiple.html">
+      KNAPSACK_MULTIPLE</a>,
+      a dataset directory which
+      contains test data for the multiple knapsack problem;
+    </p>
+
+    <p>
+      <a href = "../../f77_src/lamp/lamp.html">
+      LAMP</a>,
+      a FORTRAN77 library which
+      solves linear assignment and matching problems.
+    </p>
+
+    <p>
+      <a href = "../../f_src/lau_np/lau_np.html">
+      LAU_NP</a>,
+      a FORTRAN90 library which
+      implements heuristic algorithms for various NP-hard combinatorial problems.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/partition_problem/partition_problem.html">
+      PARTITION_PROBLEM</a>,
+      a FORTRAN77 library which
+      seeks solutions of the partition problem, splitting a set of integers into
+      two subsets with equal sum.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/subset/subset.html">
+      SUBSET</a>,
+      a FORTRAN77 library which
+      enumerates combinations, partitions, subsets, index sets,
+      and other combinatorial objects.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/subset_sum/subset_sum.html">
+      SUBSET_SUM</a>,
+      a FORTRAN77 library which
+      seeks solutions of the subset sum problem.
+    </p>
+
+    <p>
+      <a href = "../../datasets/subset_sum/subset_sum.html">
+      SUBSET_SUM</a>,
+      a dataset directory which
+      contains examples of the subset sum problem, in which a set of numbers is given,
+      and is desired to find at least one subset that sums to a given target value.
+    </p>
+
+    <h3 align = "center">
+      Author:
+    </h3>
+
+    <p>
+      Silvano Martello, Paolo Toth.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Silvano Martello, Paolo Toth,<br>
+          Knapsack Problems: Algorithms and Computer Implementations,<br>
+          Wiley, 1990,<br>
+          ISBN: 0-471-92420-2,<br>
+          LC: QA267.7.M37.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "knapsack.f">knapsack.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "knapsack.sh">knapsack.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "knapsack_prb.f">knapsack_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "knapsack_prb.sh">knapsack_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "knapsack_prb_output.txt">knapsack_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>BLD</b> explicitly determines set  a - a1  or set a - a1 - a2  when lev .gt. 1 .
+        </li>
+        <li>
+          <b>BLDF</b> explicitly determines set  a1  or set  a - a1 or set  a - a1 - a2  when  lev .eq. 1 .
+        </li>
+        <li>
+          <b>BLDSR1</b> explicitly determines set  a1  when lev .gt. 1 .
+        </li>
+        <li>
+          <b>CHMT1</b> checks the input data.
+        </li>
+        <li>
+          <b>CHMT1R</b> checks the input data.
+        </li>
+        <li>
+          <b>CHMT2</b> checks the input data.
+        </li>
+        <li>
+          <b>CHMTB2</b> checks the input data.
+        </li>
+        <li>
+          <b>CHMTC2</b> checks the input data.
+        </li>
+        <li>
+          <b>CHMTCB</b> checks the input data.
+        </li>
+        <li>
+          <b>CHMTG</b> checks the input data.
+        </li>
+        <li>
+          <b>CHMTHG</b> checks the input data.
+        </li>
+        <li>
+          <b>CHMTHM</b> checks the input data.
+        </li>
+        <li>
+          <b>CHMTM</b> checks the input data.
+        </li>
+        <li>
+          <b>CHMTP</b> checks the input data.
+        </li>
+        <li>
+          <b>CHMTSL</b> checks the input data.
+        </li>
+        <li>
+          <b>CHMTU2</b> checks the input data.
+        </li>
+        <li>
+          <b>CMPB</b> solves a bounded change-making problem through the branch-and-bound algorithm.
+        </li>
+        <li>
+          <b>CORE</b> determines the core problem.
+        </li>
+        <li>
+          <b>COREC</b> determines the core problem.
+        </li>
+        <li>
+          <b>CORES</b> determines the core problem.
+        </li>
+        <li>
+          <b>DEFPCK</b> ?
+        </li>
+        <li>
+          <b>DETNS1</b> computes the cardinality of set A1.
+        </li>
+        <li>
+          <b>DETNS2</b> computes the cardinality of set A2.
+        </li>
+        <li>
+          <b>DINSM</b> determines the dynamic programming lists.
+        </li>
+        <li>
+          <b>DMIND</b> defines array MIND to contain the pointers to the sorted items
+        </li>
+        <li>
+          <b>ENUMER</b> performs a branch-and-bound search.
+        </li>
+        <li>
+          <b>FEAS</b> checks for infeasibility.
+        </li>
+        <li>
+          <b>FFDLS</b> performs a first-fit decreasing heuristic and initializes LS and LSB.
+        </li>
+        <li>
+          <b>FIXRED</b> fixes the variables after a local reduction.
+        </li>
+        <li>
+          <b>FMED</b> computes median of the ratios of the first 2 and the last item.
+        </li>
+        <li>
+          <b>FORWRD</b> performs statements 1-9.
+        </li>
+        <li>
+          <b>GHA</b> applies the approximate algorithm gh with function (a).
+        </li>
+        <li>
+          <b>GHBCD</b> applies the approximate algorithm gh with functions (b), (c) and (d).
+        </li>
+        <li>
+          <b>GHX</b> applies the approximate algorithm gh with function (b) or (c) or (d).
+        </li>
+        <li>
+          <b>GR1</b> reduces a maximization gap.
+        </li>
+        <li>
+          <b>GR2</b> reduces a maximization gap.
+        </li>
+        <li>
+          <b>HBFDS</b> performs a best-fit decreasing heuristic.
+        </li>
+        <li>
+          <b>HEUR</b> determines the best initial heuristic solution.
+        </li>
+        <li>
+          <b>IMPR1:</b> first improvement.
+        </li>
+        <li>
+          <b>IMPR2:</b> second improvement.
+        </li>
+        <li>
+          <b>INSERT</b> inserts item i in bin m and updates fs, x, ifp, k.
+        </li>
+        <li>
+          <b>KP01M</b> solves, through branch-and-bound, a 0-1 single knapsack problem.
+        </li>
+        <li>
+          <b>KPMAX</b> solves a 0-1 single knapsack problem using an initial solution.
+        </li>
+        <li>
+          <b>KPMIN</b> solves a 0-1 single knapsack problem in minimization form.
+        </li>
+        <li>
+          <b>KSMALL</b> finds the  k-th  smallest of  n  elements in  o(n)  time.
+        </li>
+        <li>
+          <b>L2</b> computes the lower bound.
+        </li>
+        <li>
+          <b>L3</b> reduces the current problem, and compute lower bound  l3  and a new upper bound  nub .
+        </li>
+        <li>
+          <b>LCL2</b> computes a local lower bound and execute a preprocessing for reduction.
+        </li>
+        <li>
+          <b>MAXT</b> determines the three items of maximum weight.
+        </li>
+        <li>
+          <b>MGR1</b> finds an initial solution (quick algorithm).
+        </li>
+        <li>
+          <b>MGR2</b> finds an initial solution (accurate algorithm).
+        </li>
+        <li>
+          <b>MPSORT</b> rearranges a(i1:i2) so a(it+i1-1) contains the  it-th  smallest element.
+        </li>
+        <li>
+          <b>MT1</b> solves the 0-1 single knapsack problem.
+        </li>
+        <li>
+          <b>MT1R</b> solves the 0-1 single knapsack problem with real parameters.
+        </li>
+        <li>
+          <b>MT2</b> solves the 0-1 single knapsack problem.
+        </li>
+        <li>
+          <b>MTB2</b> solves the bounded single knapsack problem
+        </li>
+        <li>
+          <b>MTC1</b> solves a change-making problem through  the branch-and-bound algorithm.
+        </li>
+        <li>
+          <b>MTC2</b> solves the unbounded change-making problem
+        </li>
+        <li>
+          <b>MTCB</b> solves the bounded change-making problem
+        </li>
+        <li>
+          <b>MTG</b> solves the generalized assignment problem
+        </li>
+        <li>
+          <b>MTHG</b> heuristically solves the generalized assignment problem
+        </li>
+        <li>
+          <b>MTHM</b> heuristically solves the 0-1 multiple knapsack problem
+        </li>
+        <li>
+          <b>MTM</b> solves the 0-1 multiple knapsack problem
+        </li>
+        <li>
+          <b>MTP</b> solves the bin packing problem
+        </li>
+        <li>
+          <b>MTS</b> solves a small subset sum problem.
+        </li>
+        <li>
+          <b>MTSL</b> solves the subset-sum problem
+        </li>
+        <li>
+          <b>MTU1</b> solves the unbounded single knapsack problem
+        </li>
+        <li>
+          <b>MTU2</b> solves the unbounded single knapsack problem
+        </li>
+        <li>
+          <b>MWFDS</b> performs a modified worst-fit decreasing heuristic.
+        </li>
+        <li>
+          <b>NEWBimproves</b> on the current upper bound iubf0 by taking into account the
+        </li>
+        <li>
+          <b>PAR</b> does a parametric computation of the upper bounds.
+        </li>
+        <li>
+          <b>PEN0</b> computes the penalty for an item  j  which was assigned to no knapsack.
+        </li>
+        <li>
+          <b>PEN1</b> computes the penalty foro an item  j  which was assigned more than one knapsack.
+        </li>
+        <li>
+          <b>PI</b> computes a feasible solution to the current problem.
+        </li>
+        <li>
+          <b>PREPEN</b> determines  pak ,  kap  and  pakl (pointers for computing penalties)
+        </li>
+        <li>
+          <b>PRESP</b> defines the core problem.
+        </li>
+        <li>
+          <b>REARR</b> re-arranges the initial solution.
+        </li>
+        <li>
+          <b>REDNS</b> reduces, without sorting, the items not in core.
+        </li>
+        <li>
+          <b>REDS</b> reduces the original problem.
+        </li>
+        <li>
+          <b>REDU</b> reduces an unbounded knapsack problem (po,wo) through dominance relations.
+        </li>
+        <li>
+          <b>RESTOR</b> restores the situation preceding the reduction of level  k and update  lastw .
+        </li>
+        <li>
+          <b>SEARCH</b> finds largest NL such that R < W(NL).
+        </li>
+        <li>
+          <b>SIGMA</b> computes an upper bound  ub  on the best final solution which
+        </li>
+        <li>
+          <b>SKP1</b> solves a 0-1 single knapsack problem.
+        </li>
+        <li>
+          <b>SKP2</b> solves the 0-1 single knapsack problem
+        </li>
+        <li>
+          <b>SOL</b> determines the solution vector x for the original problem.
+        </li>
+        <li>
+          <b>SORT7</b> sorts in increasing order the elements from
+        </li>
+        <li>
+          <b>SORTI</b> sorts the integer array a by decreasing values (derived from
+        </li>
+        <li>
+          <b>SORTI2</b> sorts the integer array a by increasing values (derived from
+        </li>
+        <li>
+          <b>SORTR</b> sorts the real array a by decreasing values (derived from subroutine
+        </li>
+        <li>
+          <b>TAB</b> builds the new dynamic programming list  tdb  from the current
+        </li>
+        <li>
+          <b>TERMIN</b> terminates the execution.
+        </li>
+        <li>
+          <b>TIMESTAMP</b> prints out the current YMDHMS date as a timestamp.
+        </li>
+        <li>
+          <b>TRANS</b> transforms a bounded knapsack problem (n, p, w, b) into
+        </li>
+        <li>
+          <b>TRIN</b> transforms an gap in minimization form to an equivalent instance in maximization form.
+        </li>
+        <li>
+          <b>UBFJV</b> computes the fisher-jaikumar-van wassenhove upper bound.
+        </li>
+        <li>
+          <b>UBRS</b> computes the improved ross-soland upper bound.
+        </li>
+        <li>
+          <b>UPDATE</b> updates the optimal solution after a local heuristic.
+        </li>
+        <li>
+          <b>UPSTAR</b> updates the current optimal solution.
+        </li>
+        <li>
+          <b>USEDIN</b> determines, through binary search, the location   loc  of  td
+        </li>
+        <li>
+          <b>YDEF</b> sets y(l,i,j) = ny .
+        </li>
+        <li>
+          <b>YUSE</b> sets ny = y(l,i,j) .
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 06 December 2009.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

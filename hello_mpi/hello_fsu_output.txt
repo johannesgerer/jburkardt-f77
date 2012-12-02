@@ -1,0 +1,23 @@
+  Process   2 says "Hello, world!"
+  Process   6 says "Hello, world!"
+24 October   2011   1:37:33.061 PM      
+ 
+HELLO_MPI - Master process:
+  FORTRAN77/MPI version
+  A simple MPI program.
+ 
+  The number of processes is   8
+ 
+  Process   0 says "Hello, world!"
+ 
+Elapsed wall clock time =   0.905991E-05 seconds.
+  Process   3 says "Hello, world!"
+  Process   4 says "Hello, world!"
+  Process   5 says "Hello, world!"
+  Process   1 says "Hello, world!"
+  Process   7 says "Hello, world!"
+ 
+HELLO_MPI:
+  Normal end of execution.
+ 
+24 October   2011   1:37:33.070 PM      

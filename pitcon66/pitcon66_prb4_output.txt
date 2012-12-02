@@ -1,0 +1,216 @@
+ 
+22 August    2011   4:03:20.154 PM      
+  
+ PCPRB4
+  
+ PITCON test problem
+ Freudenstein-Roth function
+ 2 equations, 3 variables.
+  
+ This is run number            1
+ PITCON is free to choose parameterization.
+ No limit points are sought.
+  
+ Step  Type of point     X(1)         X(2)         X(3)
+  
+   0  Start point      15.0000      -2.00000       0.00000    
+  
+ PITCON 6.6
+ University of Pittsburgh continuation code
+  
+ Last modified on 09 September 1994
+ This version uses LAPACK for linear algebra.
+ This version uses double precision arithmetic.
+  
+   1  Corrected        15.0000      -2.00000       0.00000    
+   2  Continuation     14.7105      -1.94205      0.653814E-01
+   3  Continuation     14.2846      -1.72915      0.268744    
+   4  Continuation     16.9061      -1.20941      0.546845    
+   5  Continuation     24.9178     -0.599069      0.555138    
+   6  Continuation     34.8980     -0.405200E-01  0.353314    
+   7  Continuation     44.8808      0.487806      0.594444E-01
+   8  Continuation     54.8606       1.09476     -0.304456    
+   9  Continuation     61.3809       1.81338     -0.624496    
+  10  Continuation    -48.5972       4.67856       2.87995    
+  11  Target point     5.00000       4.00000       1.00000    
+  
+ We have reached the point we wanted.
+ The code may stop now.
+  
+ This is run number            2
+ The user fixes the parameterization.
+ No limit points are sought.
+  
+ Step  Type of point     X(1)         X(2)         X(3)
+  
+   0  Start point      15.0000      -2.00000       0.00000    
+  
+ PITCON 6.6
+ University of Pittsburgh continuation code
+  
+ Last modified on 09 September 1994
+ This version uses LAPACK for linear algebra.
+ This version uses double precision arithmetic.
+  
+   1  Corrected        15.0000      -2.00000       0.00000    
+   2  Continuation     14.7407      -1.94890      0.578825E-01
+   3  Continuation     14.2963      -1.77723      0.227735    
+   4  Continuation     15.8338      -1.33743      0.504570    
+   5  Continuation     18.6039      -1.04741      0.578437    
+   6  Continuation     29.5771     -0.327668      0.476341    
+   7  Continuation     40.0071      0.227762      0.211791    
+   8  Continuation     49.5624      0.752615     -0.101854    
+   9  Continuation     57.9488       1.34333     -0.437080    
+  10  Continuation     60.8565       2.25880     -0.686030    
+  11  Continuation     55.6686       2.70414     -0.589661    
+  12  Continuation     40.7916       3.27084     -0.169093    
+  13  Continuation     29.3855       3.55244      0.189747    
+  14  Continuation     18.4706       3.77123      0.546943    
+  15  Continuation     7.78375       3.95562      0.905475    
+  16  Continuation    -2.76866       4.11736       1.26589    
+  17  Target point     5.00000       4.00000       1.00000    
+  
+ We have reached the point we wanted.
+ The code may stop now.
+  
+ This is run number            3
+ PITCON is free to choose parameterization.
+ Seek limit points in index            1
+  
+ Step  Type of point     X(1)         X(2)         X(3)
+  
+   0  Start point      15.0000      -2.00000       0.00000    
+  
+ PITCON 6.6
+ University of Pittsburgh continuation code
+  
+ Last modified on 09 September 1994
+ This version uses LAPACK for linear algebra.
+ This version uses double precision arithmetic.
+  
+   1  Corrected        15.0000      -2.00000       0.00000    
+   2  Continuation     14.7105      -1.94205      0.653814E-01
+   3  Continuation     14.2846      -1.72915      0.268744    
+   4  Limit point      14.2831      -1.74138      0.258577    
+   5  Continuation     16.9061      -1.20941      0.546845    
+   6  Continuation     24.9178     -0.599069      0.555138    
+   7  Continuation     34.8980     -0.405200E-01  0.353314    
+   8  Continuation     44.8808      0.487806      0.594444E-01
+   9  Continuation     54.8606       1.09476     -0.304456    
+  10  Continuation     61.3809       1.81338     -0.624496    
+  11  Continuation    -48.5972       4.67856       2.87995    
+  12  Target point     5.00000       4.00000       1.00000    
+  
+ We have reached the point we wanted.
+ The code may stop now.
+  
+ This is run number            4
+ The user fixes the parameterization.
+ Seek limit points in index            1
+  
+ Step  Type of point     X(1)         X(2)         X(3)
+  
+   0  Start point      15.0000      -2.00000       0.00000    
+  
+ PITCON 6.6
+ University of Pittsburgh continuation code
+  
+ Last modified on 09 September 1994
+ This version uses LAPACK for linear algebra.
+ This version uses double precision arithmetic.
+  
+   1  Corrected        15.0000      -2.00000       0.00000    
+   2  Continuation     14.7407      -1.94890      0.578825E-01
+   3  Continuation     14.2963      -1.77723      0.227735    
+   4  Continuation     15.8338      -1.33743      0.504570    
+   5  Limit point      14.2831      -1.74138      0.258578    
+   6  Continuation     18.6039      -1.04741      0.578437    
+   7  Continuation     29.5771     -0.327668      0.476341    
+   8  Continuation     40.0071      0.227762      0.211791    
+   9  Continuation     49.5624      0.752615     -0.101854    
+  10  Continuation     57.9488       1.34333     -0.437080    
+  11  Continuation     60.8565       2.25880     -0.686030    
+  12  Limit point      61.6694       1.98380     -0.663880    
+  13  Continuation     55.6686       2.70414     -0.589661    
+  14  Continuation     40.7916       3.27084     -0.169093    
+  15  Continuation     29.3855       3.55244      0.189747    
+  16  Continuation     18.4706       3.77123      0.546943    
+  17  Continuation     7.78375       3.95562      0.905475    
+  18  Continuation    -2.76866       4.11736       1.26589    
+  19  Target point     5.00000       4.00000       1.00000    
+  
+ We have reached the point we wanted.
+ The code may stop now.
+  
+ This is run number            5
+ PITCON is free to choose parameterization.
+ Seek limit points in index            3
+  
+ Step  Type of point     X(1)         X(2)         X(3)
+  
+   0  Start point      15.0000      -2.00000       0.00000    
+  
+ PITCON 6.6
+ University of Pittsburgh continuation code
+  
+ Last modified on 09 September 1994
+ This version uses LAPACK for linear algebra.
+ This version uses double precision arithmetic.
+  
+   1  Corrected        15.0000      -2.00000       0.00000    
+   2  Continuation     14.7105      -1.94205      0.653814E-01
+   3  Continuation     14.2846      -1.72915      0.268744    
+   4  Continuation     16.9061      -1.20941      0.546845    
+   5  Continuation     24.9178     -0.599069      0.555138    
+   6  Limit point      20.4871     -0.896712      0.587587    
+   7  Continuation     34.8980     -0.405200E-01  0.353314    
+   8  Continuation     44.8808      0.487806      0.594444E-01
+   9  Continuation     54.8606       1.09476     -0.304456    
+  10  Continuation     61.3809       1.81338     -0.624496    
+  11  Continuation    -48.5972       4.67856       2.87995    
+  12  Target point     5.00000       4.00000       1.00000    
+  
+ We have reached the point we wanted.
+ The code may stop now.
+  
+ This is run number            6
+ The user fixes the parameterization.
+ Seek limit points in index            3
+  
+ Step  Type of point     X(1)         X(2)         X(3)
+  
+   0  Start point      15.0000      -2.00000       0.00000    
+  
+ PITCON 6.6
+ University of Pittsburgh continuation code
+  
+ Last modified on 09 September 1994
+ This version uses LAPACK for linear algebra.
+ This version uses double precision arithmetic.
+  
+   1  Corrected        15.0000      -2.00000       0.00000    
+   2  Continuation     14.7407      -1.94890      0.578825E-01
+   3  Continuation     14.2963      -1.77723      0.227735    
+   4  Continuation     15.8338      -1.33743      0.504570    
+   5  Continuation     18.6039      -1.04741      0.578437    
+   6  Continuation     29.5771     -0.327668      0.476341    
+   7  Limit point      20.4862     -0.896777      0.587587    
+   8  Continuation     40.0071      0.227762      0.211791    
+   9  Continuation     49.5624      0.752615     -0.101854    
+  10  Continuation     57.9488       1.34333     -0.437080    
+  11  Continuation     60.8565       2.25880     -0.686030    
+  12  Limit point      61.0205       2.23010     -0.686353    
+  13  Continuation     55.6686       2.70414     -0.589661    
+  14  Continuation     40.7916       3.27084     -0.169093    
+  15  Continuation     29.3855       3.55244      0.189747    
+  16  Continuation     18.4706       3.77123      0.546943    
+  17  Continuation     7.78375       3.95562      0.905475    
+  18  Continuation    -2.76866       4.11736       1.26589    
+  19  Target point     5.00000       4.00000       1.00000    
+  
+ We have reached the point we wanted.
+ The code may stop now.
+  
+ All tests completed.
+ 
+22 August    2011   4:03:20.155 PM      

@@ -1,0 +1,36 @@
+ 
+TOMS351_PRB
+  Test TOMS algorithm 351,
+  Rombert integration.
+ 
+ 
+TEST01
+  Test ROMINT, for Romberg integration.
+ 
+  Error tolerance EPS =   0.100000E-05
+ 
+      A         B   MAXE  MAXE     N      ERR             VAL
+                    in    out
+ 
+    0.0000    1.5708   1     0     5    0.214529E-02     1.00013    
+    0.0000    1.5708   2     0     9    0.825524E-05    1.000000    
+    0.0000    1.5708   3     3    17    0.596046E-07     1.00000    
+    0.0000    1.5708   4     3    17    0.596046E-07     1.00000    
+    0.0000    1.5708   5     3    17    0.596046E-07     1.00000    
+ 
+TEST02
+  Test ROMINT, for Romberg integration.
+ 
+  Error tolerance EPS =   0.100000E-05
+ 
+      A         B   MAXE  MAXE     N      ERR             VAL
+                    in    out
+ 
+    0.0000    4.3000   1     0     5    0.718799E-01    0.816721    
+    0.0000    4.3000   2     0     9    0.692247E-01    0.890738    
+    0.0000    4.3000   3     0    17    0.567320E-02    0.886163    
+    0.0000    4.3000   4     0    33    0.861883E-04    0.886227    
+    0.0000    4.3000   5     5    65    0.149012E-06    0.886227    
+ 
+TOMS351_PRB
+  Normal end of execution.

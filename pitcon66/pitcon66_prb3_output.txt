@@ -1,0 +1,439 @@
+ 
+22 August    2011   4:03:18.428 PM      
+  
+ PCPRB3
+ PITCON sample program.
+  
+ Solve a two point boundary value problem with a
+ parameter lambda, and seek a limit point in lambda.
+  
+ This problem will be run six times.
+  
+  
+ This is run number            1
+  
+ This run uses the full linear solver DENSLV.
+ This run assumes that the user supplies the
+ jacobian matrix via a subroutine.
+  
+ Step  Type of point     Lambda
+  
+   0  Start point      0.00000    
+  
+ PITCON 6.6
+ University of Pittsburgh continuation code
+  
+ Last modified on 09 September 1994
+ This version uses LAPACK for linear algebra.
+ This version uses double precision arithmetic.
+  
+   1  Corrected        0.00000    
+   2  Continuation    0.264435E-01
+   3  Continuation    0.104600    
+   4  Continuation    0.219656    
+   5  Continuation    0.327554    
+   6  Continuation    0.425474    
+   7  Continuation    0.513405    
+   8  Continuation    0.591469    
+   9  Continuation    0.659916    
+  10  Continuation    0.719109    
+  11  Continuation    0.769502    
+  12  Continuation    0.811616    
+  13  Target point    0.800000    
+  
+ Value of target point            1
+    0.00000      0.602685E-01  0.118413      0.174305      0.227816    
+   0.278815      0.327169      0.372748      0.415422      0.455064    
+   0.491550      0.524765      0.554596      0.580941      0.603707    
+   0.622811      0.638182      0.649762      0.657507      0.661387    
+   0.661387      0.800000    
+  
+  14  Continuation    0.846018    
+  15  Continuation    0.873303    
+  16  Continuation    0.894068    
+  17  Continuation    0.908904    
+  18  Continuation    0.918385    
+  19  Continuation    0.923057    
+  20  Continuation    0.923436    
+  21  Limit point     0.923282    
+  22  Continuation    0.920003    
+  23  Continuation    0.913206    
+  24  Continuation    0.904857    
+  25  Continuation    0.891133    
+  26  Continuation    0.877626    
+  27  Continuation    0.860121    
+  28  Continuation    0.842782    
+  29  Continuation    0.822586    
+  30  Continuation    0.802513    
+  31  Continuation    0.780519    
+  32  Target point    0.800000    
+  
+ Value of target point            2
+    0.00000      0.152806      0.303281      0.451047      0.595673    
+   0.736669      0.873486       1.00551       1.13207       1.25242    
+    1.36578       1.47130       1.56811       1.65533       1.73208    
+    1.79754       1.85093       1.89160       1.91902       1.93283    
+    1.93283      0.800000    
+  
+  
+ Jacobians:                57
+ Factorizations:           57
+ Solves:                   57
+ Functions:                60
+  
+ This is run number            2
+  
+ This run uses the full linear solver DENSLV.
+ This run assumes that PITCON will approximate
+ the jacobian using forward differences.
+  
+ Step  Type of point     Lambda
+  
+   0  Start point      0.00000    
+  
+ PITCON 6.6
+ University of Pittsburgh continuation code
+  
+ Last modified on 09 September 1994
+ This version uses LAPACK for linear algebra.
+ This version uses double precision arithmetic.
+  
+   1  Corrected        0.00000    
+   2  Continuation    0.264435E-01
+   3  Continuation    0.104600    
+   4  Continuation    0.219656    
+   5  Continuation    0.327554    
+   6  Continuation    0.425475    
+   7  Continuation    0.513405    
+   8  Continuation    0.591469    
+   9  Continuation    0.659917    
+  10  Continuation    0.719110    
+  11  Continuation    0.769503    
+  12  Continuation    0.811617    
+  13  Target point    0.800000    
+  
+ Value of target point            1
+    0.00000      0.602686E-01  0.118413      0.174305      0.227816    
+   0.278815      0.327169      0.372748      0.415422      0.455064    
+   0.491551      0.524765      0.554596      0.580941      0.603707    
+   0.622811      0.638182      0.649762      0.657507      0.661387    
+   0.661387      0.800000    
+  
+  14  Continuation    0.846020    
+  15  Continuation    0.873304    
+  16  Continuation    0.894068    
+  17  Continuation    0.908905    
+  18  Continuation    0.918386    
+  19  Continuation    0.923057    
+  20  Continuation    0.923436    
+  21  Limit point     0.923282    
+  22  Continuation    0.920003    
+  23  Continuation    0.913205    
+  24  Continuation    0.904848    
+  25  Continuation    0.891132    
+  26  Continuation    0.877617    
+  27  Continuation    0.860119    
+  28  Continuation    0.842772    
+  29  Continuation    0.822584    
+  30  Continuation    0.802502    
+  31  Continuation    0.780517    
+  32  Target point    0.800000    
+  
+ Value of target point            2
+    0.00000      0.152804      0.303277      0.451041      0.595665    
+   0.736659      0.873475       1.00550       1.13206       1.25241    
+    1.36576       1.47128       1.56809       1.65531       1.73206    
+    1.79751       1.85090       1.89157       1.91900       1.93280    
+    1.93280      0.800000    
+  
+  
+ Jacobians:                 0
+ Factorizations:           57
+ Solves:                   57
+ Functions:              1371
+  
+ This is run number            3
+  
+ This run uses the full linear solver DENSLV.
+ This run assumes that PITCON will approximate
+ the jacobian using central differences.
+  
+ Step  Type of point     Lambda
+  
+   0  Start point      0.00000    
+  
+ PITCON 6.6
+ University of Pittsburgh continuation code
+  
+ Last modified on 09 September 1994
+ This version uses LAPACK for linear algebra.
+ This version uses double precision arithmetic.
+  
+   1  Corrected        0.00000    
+   2  Continuation    0.264435E-01
+   3  Continuation    0.104600    
+   4  Continuation    0.219656    
+   5  Continuation    0.327554    
+   6  Continuation    0.425474    
+   7  Continuation    0.513405    
+   8  Continuation    0.591469    
+   9  Continuation    0.659916    
+  10  Continuation    0.719109    
+  11  Continuation    0.769502    
+  12  Continuation    0.811616    
+  13  Target point    0.800000    
+  
+ Value of target point            1
+    0.00000      0.602685E-01  0.118413      0.174305      0.227816    
+   0.278815      0.327169      0.372748      0.415422      0.455064    
+   0.491550      0.524765      0.554596      0.580941      0.603707    
+   0.622811      0.638182      0.649762      0.657507      0.661387    
+   0.661387      0.800000    
+  
+  14  Continuation    0.846018    
+  15  Continuation    0.873303    
+  16  Continuation    0.894068    
+  17  Continuation    0.908904    
+  18  Continuation    0.918385    
+  19  Continuation    0.923057    
+  20  Continuation    0.923436    
+  21  Limit point     0.923282    
+  22  Continuation    0.920003    
+  23  Continuation    0.913206    
+  24  Continuation    0.904857    
+  25  Continuation    0.891133    
+  26  Continuation    0.877626    
+  27  Continuation    0.860121    
+  28  Continuation    0.842782    
+  29  Continuation    0.822586    
+  30  Continuation    0.802513    
+  31  Continuation    0.780519    
+  32  Target point    0.800000    
+  
+ Value of target point            2
+    0.00000      0.152806      0.303281      0.451047      0.595673    
+   0.736669      0.873486       1.00551       1.13207       1.25242    
+    1.36578       1.47130       1.56811       1.65533       1.73208    
+    1.79754       1.85093       1.89160       1.91902       1.93283    
+    1.93283      0.800000    
+  
+  
+ Jacobians:                 0
+ Factorizations:           57
+ Solves:                   57
+ Functions:              2568
+  
+ This is run number            4
+  
+ This run uses the banded linear solver BANSLV.
+ This run assumes that the user supplies the
+ jacobian matrix via a subroutine.
+  
+ Step  Type of point     Lambda
+  
+   0  Start point      0.00000    
+  
+ PITCON 6.6
+ University of Pittsburgh continuation code
+  
+ Last modified on 09 September 1994
+ This version uses LAPACK for linear algebra.
+ This version uses double precision arithmetic.
+  
+   1  Corrected        0.00000    
+   2  Continuation    0.264435E-01
+   3  Continuation    0.104600    
+   4  Continuation    0.219656    
+   5  Continuation    0.327554    
+   6  Continuation    0.425474    
+   7  Continuation    0.513405    
+   8  Continuation    0.591469    
+   9  Continuation    0.659916    
+  10  Continuation    0.719109    
+  11  Continuation    0.769502    
+  12  Continuation    0.811616    
+  13  Target point    0.800000    
+  
+ Value of target point            1
+    0.00000      0.602685E-01  0.118413      0.174305      0.227816    
+   0.278815      0.327169      0.372748      0.415422      0.455064    
+   0.491550      0.524765      0.554596      0.580941      0.603707    
+   0.622811      0.638182      0.649762      0.657507      0.661387    
+   0.661387      0.800000    
+  
+  14  Continuation    0.846018    
+  15  Continuation    0.873303    
+  16  Continuation    0.894068    
+  17  Continuation    0.908904    
+  18  Continuation    0.918385    
+  19  Continuation    0.923057    
+  20  Continuation    0.923436    
+  21  Limit point     0.923282    
+  22  Continuation    0.920003    
+  23  Continuation    0.913206    
+  24  Continuation    0.904857    
+  25  Continuation    0.891133    
+  26  Continuation    0.877626    
+  27  Continuation    0.860121    
+  28  Continuation    0.842782    
+  29  Continuation    0.822586    
+  30  Continuation    0.802513    
+  31  Continuation    0.780519    
+  32  Target point    0.800000    
+  
+ Value of target point            2
+    0.00000      0.152806      0.303281      0.451047      0.595673    
+   0.736669      0.873486       1.00551       1.13207       1.25242    
+    1.36578       1.47130       1.56811       1.65533       1.73208    
+    1.79754       1.85093       1.89160       1.91902       1.93283    
+    1.93283      0.800000    
+  
+  
+ Jacobians:                57
+ Factorizations:           57
+ Solves:                  112
+ Functions:                60
+  
+ This is run number            5
+  
+ This run uses the banded linear solver BANSLV.
+ This run assumes that PITCON will approximate
+ the jacobian using forward differences.
+  
+ Step  Type of point     Lambda
+  
+   0  Start point      0.00000    
+  
+ PITCON 6.6
+ University of Pittsburgh continuation code
+  
+ Last modified on 09 September 1994
+ This version uses LAPACK for linear algebra.
+ This version uses double precision arithmetic.
+  
+   1  Corrected        0.00000    
+   2  Continuation    0.264435E-01
+   3  Continuation    0.104600    
+   4  Continuation    0.219656    
+   5  Continuation    0.327554    
+   6  Continuation    0.425475    
+   7  Continuation    0.513405    
+   8  Continuation    0.591469    
+   9  Continuation    0.659917    
+  10  Continuation    0.719110    
+  11  Continuation    0.769503    
+  12  Continuation    0.811617    
+  13  Target point    0.800000    
+  
+ Value of target point            1
+    0.00000      0.602686E-01  0.118413      0.174305      0.227816    
+   0.278815      0.327169      0.372748      0.415422      0.455064    
+   0.491551      0.524765      0.554596      0.580941      0.603707    
+   0.622811      0.638182      0.649762      0.657507      0.661387    
+   0.661387      0.800000    
+  
+  14  Continuation    0.846020    
+  15  Continuation    0.873304    
+  16  Continuation    0.894068    
+  17  Continuation    0.908905    
+  18  Continuation    0.918386    
+  19  Continuation    0.923057    
+  20  Continuation    0.923436    
+  21  Limit point     0.923282    
+  22  Continuation    0.920003    
+  23  Continuation    0.913205    
+  24  Continuation    0.904848    
+  25  Continuation    0.891132    
+  26  Continuation    0.877617    
+  27  Continuation    0.860119    
+  28  Continuation    0.842772    
+  29  Continuation    0.822584    
+  30  Continuation    0.802502    
+  31  Continuation    0.780517    
+  32  Target point    0.800000    
+  
+ Value of target point            2
+    0.00000      0.152804      0.303277      0.451041      0.595665    
+   0.736659      0.873475       1.00550       1.13206       1.25241    
+    1.36576       1.47128       1.56809       1.65531       1.73206    
+    1.79751       1.85090       1.89157       1.91900       1.93280    
+    1.93280      0.800000    
+  
+  
+ Jacobians:                 0
+ Factorizations:           57
+ Solves:                  112
+ Functions:               345
+  
+ This is run number            6
+  
+ This run uses the banded linear solver BANSLV.
+ This run assumes that PITCON will approximate
+ the jacobian using central differences.
+  
+ Step  Type of point     Lambda
+  
+   0  Start point      0.00000    
+  
+ PITCON 6.6
+ University of Pittsburgh continuation code
+  
+ Last modified on 09 September 1994
+ This version uses LAPACK for linear algebra.
+ This version uses double precision arithmetic.
+  
+   1  Corrected        0.00000    
+   2  Continuation    0.264435E-01
+   3  Continuation    0.104600    
+   4  Continuation    0.219656    
+   5  Continuation    0.327554    
+   6  Continuation    0.425474    
+   7  Continuation    0.513405    
+   8  Continuation    0.591469    
+   9  Continuation    0.659916    
+  10  Continuation    0.719109    
+  11  Continuation    0.769502    
+  12  Continuation    0.811616    
+  13  Target point    0.800000    
+  
+ Value of target point            1
+    0.00000      0.602685E-01  0.118413      0.174305      0.227816    
+   0.278815      0.327169      0.372748      0.415422      0.455064    
+   0.491550      0.524765      0.554596      0.580941      0.603707    
+   0.622811      0.638182      0.649762      0.657507      0.661387    
+   0.661387      0.800000    
+  
+  14  Continuation    0.846018    
+  15  Continuation    0.873303    
+  16  Continuation    0.894068    
+  17  Continuation    0.908904    
+  18  Continuation    0.918385    
+  19  Continuation    0.923057    
+  20  Continuation    0.923436    
+  21  Limit point     0.923282    
+  22  Continuation    0.920003    
+  23  Continuation    0.913206    
+  24  Continuation    0.904857    
+  25  Continuation    0.891133    
+  26  Continuation    0.877626    
+  27  Continuation    0.860121    
+  28  Continuation    0.842782    
+  29  Continuation    0.822586    
+  30  Continuation    0.802513    
+  31  Continuation    0.780519    
+  32  Target point    0.800000    
+  
+ Value of target point            2
+    0.00000      0.152806      0.303281      0.451047      0.595673    
+   0.736669      0.873486       1.00551       1.13207       1.25242    
+    1.36578       1.47130       1.56811       1.65533       1.73208    
+    1.79754       1.85093       1.89160       1.91902       1.93283    
+    1.93283      0.800000    
+  
+  
+ Jacobians:                 0
+ Factorizations:           57
+ Solves:                  112
+ Functions:               516
+ 
+22 August    2011   4:03:18.437 PM      

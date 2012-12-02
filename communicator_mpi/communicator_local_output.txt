@@ -1,0 +1,21 @@
+13 January   2012  12:06:47.656 PM      
+ 
+COMMUNICATOR_MPI - Master process:
+  FORTRAN77/MPI version
+  An MPI example program.
+ 
+  The number of processes is    4
+ 
+  Process    0 says "Hello, world!".
+  Number of processes in even communicator =    2
+  Sum of global ID's in even communicator  =    2
+  Process    1 says "Hello, world!".
+  Number of processes in odd communicator  =    2
+  Sum of global ID's in odd communicator  =    4
+  Process    2 says "Hello, world!".
+  Process    3 says "Hello, world!".
+ 
+COMMUNICATOR_MPI:
+  Normal end of execution.
+ 
+13 January   2012  12:06:47.658 PM      

@@ -1,0 +1,210 @@
+<html>
+
+  <head>
+    <title>
+      LAPACK_EXAMPLES - Example Programs for LAPACK
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      LAPACK_EXAMPLES <br> Example Programs for LAPACK
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>LAPACK_EXAMPLES</b>
+      is a FORTRAN77 program which
+      makes example calls to the LAPACK library, which
+      can solve linear systems and compute eigevalues.
+    </p>
+
+    <p>
+      Many vendors supply a compiled copy of LAPACK, optimized for
+      their hardware, and easily available as a library.
+      <ul>
+        <li>
+          On Apple systems running OSX, a compiled copy of LAPACK is available
+          by adding the clause "-framework vecLib" to your link/load statement:
+          <pre>
+            gfortran myprog.f90 -framework vecLib
+          </pre>
+         </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>LAPACK</b> includes routines to
+      <ul>
+        <li>
+          Solve a linear system;
+        </li>
+        <li>
+          Solve an under- or over-determined linear system;
+        </li>
+        <li>
+          Compute the determinant;
+        </li>
+        <li>
+          Compute the inverse matrix;
+        </li>
+        <li>
+          Compute the condition number;
+        </li>
+        <li>
+          Compute the singular value decomposition;
+        </li>
+        <li>
+          Compute the QR decomposition;
+        </li>
+        <li>
+          Compute the eigenvalues and eigenvectors of a matrix;
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      The source code and documentation for LAPACK is available
+      through <a href = "http://www.netlib.org/">the NETLIB web site</a>.
+    </p>
+
+    <h3 align = "center">
+      Languages:
+    </h3>
+
+    <p>
+      <b>LAPACK_EXAMPLES</b> is available in
+      <a href = "../../f77_src/lapack_examples/lapack_examples.html">a FORTRAN77 version</a> and
+      <a href = "../../f_src/lapack_examples/lapack_examples.html">a FORTRAN90 version</a>.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f77_src/blas1/blas1.html">
+      BLAS1</a>,
+      a FORTRAN77 library which
+      carries out vector-vector routines needed by LAPACK.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/blas2/blas2.html">
+      BLAS2</a>,
+      a FORTRAN77 library which
+      carries out matrix-vector routines needed by LAPACK.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/blas3/blas3.html">
+      BLAS3</a>,
+      a FORTRAN77 library which
+      carries out matrix-matrix routines needed by LAPACK.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/eispack/eispack.html">
+      EISPACK</a>,
+      a FORTRAN77 library which
+      is an earlier standard package of eigenvalue routines.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/linpack/linpack.html">
+      LINPACK</a>,
+      a FORTRAN77 library which
+      is an earlier standard package of linear system solvers.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/linplus/linplus.html">
+      LINPLUS</a>,
+      a FORTRAN77 library which
+      contains simple linear solvers for a variety of matrix
+      formats.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/svd_demo/svd_demo.html">
+      SVD_DEMO</a>,
+      a FORTRAN77 program which
+      demonstrates the Singular Value Decomposition (SVD) for a simple example.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/test_eigen/test_eigen.html">
+      TEST_EIGEN</a>,
+      a FORTRAN77 library which
+      defines various eigenvalue test cases.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/test_mat/test_mat.html">
+      TEST_MAT</a>,
+      a FORTRAN77 library which
+      defines test matrices, some of
+      which have known determinants, eigenvalues and eigenvectors,
+      inverses, and so on.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Edward Anderson, Zhaojun Bai, Christian Bischof, Susan Blackford,
+          James Demmel, Jack Dongarra, Jeremy DuCroz, Anne Greenbaum,
+          Sven Hammarling, Alan McKenney, Danny Sorensen,<br>
+          LAPACK User's Guide,<br>
+          Third Edition,<br>
+          SIAM, 1999,<br>
+          ISBN: 0898714478,<br>
+          LC: QA76.73.F25L36
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "lapack_prb.f">lapack_prb.f</a>
+          is a sample calling program.
+        </li>
+        <li>
+          <a href = "lapack_prb.sh">lapack_prb.sh</a>
+          is a shell script that compiles and runs the sample program.
+        </li>
+        <li>
+          <a href = "lapack_prb_output.txt">lapack_prb_output.txt</a>
+          contains the output from a run of the sample program.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 19 March 2012.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

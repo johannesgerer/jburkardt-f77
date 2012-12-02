@@ -1,0 +1,144 @@
+24 October   2011   9:36:05.862 AM      
+ 
+MATVEC
+  FORTRAN77 version
+  A program using MPI to
+  compute a matrix vector product
+    b = A * x.
+ 
+  The number of processes is      8
+ 
+  Process        0 is active.
+ 
+  Process        1 is active.
+ 
+  Process        2 is active.
+ 
+  Process        5 is active.
+ 
+  Process        7 is active.
+ 
+  Process        3 is active.
+ 
+  Broadcasting vector X to all processes.
+  Process        3 shutting down.
+  Process        1 shutting down.
+  Process        7 shutting down.
+  Process        2 shutting down.
+ 
+  Process        6 is active.
+  Process        6 shutting down.
+  Process        5 shutting down.
+ 
+MATVEC - Master process:
+  Product vector b = A * x:
+  (Should be zero, except for a 1 in entry       17
+ 
+   1     -0.0000
+   2      0.0000
+   3      0.0000
+   4     -0.0000
+   5     -0.0000
+ 
+  Process        4 is active.
+  Process        4 shutting down.
+   6      0.0000
+   7     -0.0000
+   8      0.0000
+   9      0.0000
+  10     -0.0000
+  11      0.0000
+  12      0.0000
+  13     -0.0000
+  14      0.0000
+  15     -0.0000
+  16      0.0000
+  17      1.0000
+  18     -0.0000
+  19      0.0000
+  20     -0.0000
+  21      0.0000
+  22     -0.0000
+  23     -0.0000
+  24     -0.0000
+  25      0.0000
+  26      0.0000
+  27      0.0000
+  28     -0.0000
+  29      0.0000
+  30      0.0000
+  31     -0.0000
+  32      0.0000
+  33      0.0000
+  34      0.0000
+  35      0.0000
+  36     -0.0000
+  37     -0.0000
+  38     -0.0000
+  39     -0.0000
+  40     -0.0000
+  41      0.0000
+  42      0.0000
+  43     -0.0000
+  44      0.0000
+  45      0.0000
+  46      0.0000
+  47      0.0000
+  48      0.0000
+  49     -0.0000
+  50     -0.0000
+  51      0.0000
+  52     -0.0000
+  53      0.0000
+  54     -0.0000
+  55     -0.0000
+  56      0.0000
+  57     -0.0000
+  58      0.0000
+  59     -0.0000
+  60      0.0000
+  61     -0.0000
+  62      0.0000
+  63      0.0000
+  64      0.0000
+  65      0.0000
+  66     -0.0000
+  67      0.0000
+  68      0.0000
+  69     -0.0000
+  70      0.0000
+  71     -0.0000
+  72     -0.0000
+  73      0.0000
+  74      0.0000
+  75     -0.0000
+  76      0.0000
+  77     -0.0000
+  78      0.0000
+  79     -0.0000
+  80      0.0000
+  81     -0.0000
+  82      0.0000
+  83     -0.0000
+  84      0.0000
+  85     -1.0000
+  86     -0.0000
+  87      0.0000
+  88      0.0000
+  89      0.0000
+  90      0.0000
+  91      0.0000
+  92     -0.0000
+  93     -0.0000
+  94     -0.0000
+  95      0.0000
+  96      0.0000
+  97     -0.0000
+  98     -0.0000
+  99      0.0000
+ 100     -0.0000
+ 
+MATVEC - Master process:
+  Normal end of execution.
+ 
+24 October   2011   9:36:05.881 AM      

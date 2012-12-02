@@ -1,0 +1,30 @@
+ For five virual generators of the 32
+ This test generates 10000 numbers then resets the block
+      and does it again
+ Any disagreements are reported -- there should be none
+
+  Testing generator            1
+  Finished testing generator            1
+  Test completed successfully
+  Testing generator            5
+  Finished testing generator            5
+  Test completed successfully
+  Testing generator           10
+  Finished testing generator           10
+  Test completed successfully
+  Testing generator           20
+  Finished testing generator           20
+  Test completed successfully
+  Testing generator           32
+  Finished testing generator           32
+  Test completed successfully
+ 
+TEST_CHI
+  Generate Chi-Square deviates.
+ 
+  Parameters:
+  DF =    1.67844    
+ 
+ Mean Generated:                1.684736         True:        1.678439    
+ Variance Generated:            3.113460         True:        3.356879    
+ Minimun:                      0.2944824E-03     Maximum:     10.90453    

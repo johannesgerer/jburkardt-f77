@@ -1,0 +1,266 @@
+<html>
+
+  <head>
+    <title>
+      TOMS626 - A Contour Plot Program for Triangular Meshes
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS626 <br> A Contour Plot Program for Triangular Meshes
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS626</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 626, for creating contour
+      plots of scalar data associated with triangular meshes.
+    </p>
+
+    <p>
+      The text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../m_src/contour_sequence/contour_sequence.html">
+      CONTOUR_SEQUENCE</a>,
+      a MATLAB program which 
+      reads a sequence
+      of (X,Y,U(X,Y)) datasets, creates contour plots, and saves them as
+      PNG files which can be combined into an animation (by Quicktime
+      Pro, for instance).  It expects that each input file contains
+      the X and Y coordinates and the scalar data  (this means the
+      geometry can be time-dependent).
+    </p>
+
+    <p>
+      <a href = "../../m_src/contour_sequence3/contour_sequence3.html">
+      CONTOUR_SEQUENCE3</a>,
+      a MATLAB program which 
+      reads a sequence
+      of (X,Y,U(X,Y)) datasets, creates contour plots, and saves them as
+      PNG files which can be combined into an animation (by Quicktime
+      Pro, for instance).  It expects two separate node coordinate files,
+      one for the X coordinates and one for the Y coordinates,
+      and a separate file for the scalar quantity.
+    </p>
+
+    <p>
+      <a href = "../../m_src/contour_sequence4/contour_sequence4.html">
+      CONTOUR_SEQUENCE4</a>,
+      a MATLAB program which
+      reads a sequence
+      of (X,Y,U(X,Y)) datasets, creates contour plots, and saves them as
+      PNG files which can be combined into an animation (by Quicktime
+      Pro, for instance).  It expects a separate node coordinate file
+      of the XY coordinates, and a separate file for the scalar quantity.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/dislin/dislin.html">
+      DISLIN</a>,
+      a FORTRAN77 library which 
+      includes contouring software.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Hiroshi Akima,<br>
+          Bivariate Interpolation and Smooth Surface Fitting,<br>
+          ACM Transactions on Mathematical Software,<br>
+          Volume 4, Number 2, June 1978, pages 148-159.
+        </li>
+        <li>
+          Hiroshi Akima,<br>
+          Algorithm 526:
+          A Method of Bivariate Interpolation and Smooth Surface Fitting
+          for Values Given at Irregularly Distributed Points,<br>
+          ACM Transactions on Mathematical Software,<br>
+          Volume 4, Number 2, June 1978, pages 160-164.
+        </li>
+        <li>
+          Albrecht Preusser,<br>
+          Algorithm 626:
+          TRICP: A Contour Plot Program for Triangular Meshes,<br>
+          ACM Transactions on Mathematical Software,<br>
+          Volume 10, Number 4, December 1984, pages 473-475.
+        </li>
+        <li>
+          Hans Rudolf Schwarz,<br>
+          Methode der Finiten Elemente,<br>
+          Teubner Studienbuecher, 1980,<br>
+          ISBN: 3-519-02349-0.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms626.f">toms626.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms626.sh">toms626.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "calcomp.f">calcomp.f</a>,
+          some plotting routines needed for the examples.
+        </li>
+        <li>
+          <a href = "calcomp.sh">calcomp.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <b>PROBLEM1</b> demonstrates modes 0 (triangulation of the data
+      is required) and 2 (use the same triangles but different Z values):
+      <ul>
+        <li>
+          <a href = "toms626_prb1.f">toms626_prb1.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms626_prb1.sh">toms626_prb1.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms626_prb1_output.txt">toms626_prb1_output.txt</a>,
+          the output from a run of the sample program.
+        </li>
+        <li>
+          <a href = "toms626_prb1_001.png">toms626_prb1_001.png</a>,
+          a <a href = "../../data/png/png.html">PNG</a> image of
+          plot #1.
+        </li>
+        <li>
+          <a href = "toms626_prb1_002.png">toms626_prb1_002.png</a>,
+          a <a href = "../../data/png/png.html">PNG</a> image of
+          plot #2.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>PROBLEM2</b> demonstrates modes 1 (triangulation is provided by user)
+      and 3 (some partial derivatives are set):
+      <ul>
+        <li>
+          <a href = "toms626_prb2.f">toms626_prb2.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms626_prb2.sh">toms626_prb2.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms626_prb2_output.txt">toms626_prb2_output.txt</a>,
+          the output from a run of the sample program.
+        </li>
+        <li>
+          <a href = "toms626_prb2_001.png">toms626_prb2_001.png</a>,
+          a <a href = "../../data/png/png.html">PNG</a> image of
+          plot #1.
+        </li>
+        <li>
+          <a href = "toms626_prb2_002.png">toms626_prb2_002.png</a>,
+          a <a href = "../../data/png/png.html">PNG</a> image of
+          plot #2.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>IDCLDP</b> finds several data points closest to a given point.
+        </li>
+        <li>
+          <b>IDPDRV</b> estimates partial derivatives at the data points.
+        </li>
+        <li>
+          <b>IDTANG</b> determines a triangulation of points in the  plane.
+        </li>
+        <li>
+          <b>IDXCHG</b> determines whether to reform two triangles by swapping the diagonal.
+        </li>
+        <li>
+          <b>TIMESTAMP</b> prints out the current YMDHMS date as a timestamp.
+        </li>
+        <li>
+          <b>TRICP</b> is the user interface for the triangle contour plotting program.
+        </li>
+        <li>
+          <b>TRICPF</b> evaluates the interpolating function or its derivatives.
+        </li>
+        <li>
+          <b>TRICPZ</b> seeks a zero of a function between two points.
+        </li>
+        <li>
+          <b>TRP001</b> computes polynomial coefficients along sides.
+        </li>
+        <li>
+          <b>TRP002</b> computs polynomial coefficients inside the triangle.
+        </li>
+        <li>
+          <b>TRP00</b> calls TRP001 and TRP002 for the computation of polynomial coefficients.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 11 January 2007.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

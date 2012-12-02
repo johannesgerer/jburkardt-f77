@@ -1,0 +1,127 @@
+13 November  2012   3:18:34.371 PM      
+
+TOEPLITZ_CHOLESKY_PRB:
+  FORTRAN77 version
+  Test the TOEPLITZ_CHOLESKY library.
+
+TOEPLITZ_CHOLESKY_PRB01
+  Test the factorization of a simple example.
+
+TOEPLITZ_CHOLESKY_UPPER:
+ 
+  Toeplitz matrix A:
+ 
+  Col         1             2             3       
+  Row
+ 
+    1:   1.00000      0.500000     -0.375000    
+    2:  0.500000       1.00000      0.500000    
+    3: -0.375000      0.500000       1.00000    
+ 
+  Computed upper Cholesky factor R:
+ 
+  Col         1             2             3       
+  Row
+ 
+    1:   1.00000      0.500000     -0.375000    
+    2:   0.00000      0.866025      0.793857    
+    3:   0.00000       0.00000      0.478714    
+ 
+  Product R'R:
+ 
+  Col         1             2             3       
+  Row
+ 
+    1:   1.00000      0.500000     -0.375000    
+    2:  0.500000       1.00000      0.500000    
+    3: -0.375000      0.500000       1.00000    
+
+TOEP_CHOLESKY_UPPER:
+ 
+  Compressed Toeplitz matrix G:
+ 
+  Col         1             2             3       
+  Row
+ 
+    1:   1.00000      0.500000     -0.375000    
+    2:   0.00000      0.500000     -0.375000    
+ 
+  Computed upper Cholesky factor R:
+ 
+  Col         1             2             3       
+  Row
+ 
+    1:   1.00000      0.500000     -0.375000    
+    2:   0.00000      0.866025      0.793857    
+    3:   0.00000       0.00000      0.478714    
+ 
+  Product R'R:
+ 
+  Col         1             2             3       
+  Row
+ 
+    1:   1.00000      0.500000     -0.375000    
+    2:  0.500000       1.00000      0.500000    
+    3: -0.375000      0.500000       1.00000    
+
+TOEPLITZ_CHOLESKY_LOWER:
+ 
+  Toeplitz matrix A:
+ 
+  Col         1             2             3       
+  Row
+ 
+    1:   1.00000      0.500000     -0.375000    
+    2:  0.500000       1.00000      0.500000    
+    3: -0.375000      0.500000       1.00000    
+ 
+  Computed lower Cholesky factor L:
+ 
+  Col         1             2             3       
+  Row
+ 
+    1:   1.00000       0.00000       0.00000    
+    2:  0.500000      0.866025       0.00000    
+    3: -0.375000      0.793857      0.478714    
+ 
+  Product LL':
+ 
+  Col         1             2             3       
+  Row
+ 
+    1:   1.00000      0.500000     -0.375000    
+    2:  0.500000       1.00000      0.500000    
+    3: -0.375000      0.500000       1.00000    
+
+TOEP_CHOLESKY_LOWER:
+ 
+  Compressed Toeplitz matrix G:
+ 
+  Col         1             2             3       
+  Row
+ 
+    1:   1.00000      0.500000     -0.375000    
+    2:   0.00000      0.500000     -0.375000    
+ 
+  Computed lower Cholesky factor L:
+ 
+  Col         1             2             3       
+  Row
+ 
+    1:   1.00000       0.00000       0.00000    
+    2:  0.500000      0.866025       0.00000    
+    3: -0.375000      0.793857      0.478714    
+ 
+  Product LL':
+ 
+  Col         1             2             3       
+  Row
+ 
+    1:   1.00000      0.500000     -0.375000    
+    2:  0.500000       1.00000      0.500000    
+    3: -0.375000      0.500000       1.00000    
+
+TOEPLITZ_CHOLESKY_PRB:
+  Normal end of execution.
+
+13 November  2012   3:18:34.372 PM      

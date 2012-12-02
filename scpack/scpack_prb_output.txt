@@ -1,0 +1,152 @@
+ 
+ 6 February  2011   3:24:38.998 PM      
+ 
+SCPACK_PRB:
+  FORTRAN77 version
+  Test the SCPACK library.
+ 
+TEST01
+  Compare computed WSC and ZSC against
+  a known exact solution.
+     the sum-of-squares error at step   1 is 0.4628E+00
+     the sum-of-squares error at step   2 is 0.4628E+00
+     the sum-of-squares error at step   3 is 0.4628E+00
+     the sum-of-squares error at step   4 is 0.4628E+00
+     the sum-of-squares error at step   5 is 0.3426E+00
+     the sum-of-squares error at step   6 is 0.2393E-01
+     the sum-of-squares error at step   7 is 0.1367E+00
+     the sum-of-squares error at step   8 is 0.1084E-02
+     the sum-of-squares error at step   9 is 0.1240E-04
+     the sum-of-squares error at step  10 is 0.2607E-05
+     the sum-of-squares error at step  11 is 0.1611E-06
+     the sum-of-squares error at step  12 is 0.1487E-09
+     the sum-of-squares error at step  13 is 0.3594E-12
+     the sum-of-squares error at step  14 is 0.1277E-16
+     the sum-of-squares error at step  15 is 0.3803E-21
+     the sum-of-squares error at step  16 is 0.1762E-11
+     the sum-of-squares error at step  17 is 0.7154E-28
+
+ parameters defining map:               (n =  4)      (nptsq = 12)
+
+  k          w(k)          th(k)/pi     betam(k)             z(k)
+ ---         ----          --------     --------             ----
+
+  1    ( 0.000, 1.000)    0.50000000     1.00000   (-0.00000000, 1.00000000)
+  2    ( 0.000, 0.000)    1.00000000    -0.50000   (-1.00000000,-0.00000000)
+  3        infinity       1.50000000    -2.00000   ( 0.00000000,-1.00000000)
+  4    ( 0.000, 0.000)    2.00000000    -0.50000   ( 1.00000000, 0.00000000)
+
+ wc = ( 0.00000000E+00, 0.14142136E+01)
+  c = (-0.14142136E+01, 0.30773812E-13)
+
+ errest:  0.8660E-14
+
+ z,w,wex,err: (-0.300000000, 0.210000000) ( 0.196372164, 1.095421206) ( 0.196372164, 1.095421206)  0.1071D-13
+ z,w,wex,err: ( 0.000000000, 0.270000000) (-0.000000000, 1.153429088) ( 0.000000000, 1.153429088)  0.6225D-14
+ z,w,wex,err: ( 0.300000000, 0.330000000) (-0.132677964, 1.048400281) (-0.132677964, 1.048400281)  0.7115D-14
+ z,w,wex,err: ( 0.600000000, 0.390000000) (-0.125619730, 0.887129635) (-0.125619730, 0.887129635)  0.7287D-14
+
+ w,z,zex,err: (-1.000000000, 1.414213562) ( 0.383192367,-0.294582545) ( 0.383192367,-0.294582545)  0.7473D-14
+ w,z,zex,err: ( 0.000000000, 1.732050808) ( 0.000000000,-0.171572875) (-0.000000000,-0.171572875)  0.4075D-14
+ w,z,zex,err: ( 1.000000000, 2.000000000) (-0.245158096,-0.382817506) (-0.245158096,-0.382817506)  0.1152D-13
+ w,z,zex,err: ( 2.000000000, 2.236067977) (-0.298402538,-0.560491614) (-0.298402538,-0.560491614)  0.1616D-13
+ w,z,zex,err: ( 3.000000000, 2.449489743) (-0.295734162,-0.678627544) (-0.295734162,-0.678627544)  0.1876D-13
+ w,z,zex,err: ( 4.000000000, 2.645751311) (-0.276269187,-0.757379141) (-0.276269187,-0.757379141)  0.2011D-13
+ 
+TEST02
+  Determine the resistance of an L-shaped
+  resistor.
+
+ ndig =  1:
+   r,errest:  0.173778177476208D+01  0.104871711682982D-01
+
+ ndig =  6:
+   r,errest:  0.173205083229547D+01  0.609467013870173D-07
+
+ ndig = 11:
+   r,errest:  0.173205080756886D+01  0.243842152893326D-13
+ 
+TEST03
+  Generate a rectilinear grid.
+     the sum-of-squares error at step   1 is 0.6139E+01
+     the sum-of-squares error at step   2 is 0.6139E+01
+     the sum-of-squares error at step   3 is 0.6139E+01
+     the sum-of-squares error at step   4 is 0.6139E+01
+     the sum-of-squares error at step   5 is 0.6139E+01
+     the sum-of-squares error at step   6 is 0.6139E+01
+     the sum-of-squares error at step   7 is 0.6709E+01
+     the sum-of-squares error at step   8 is 0.5246E+01
+     the sum-of-squares error at step   9 is 0.1984E+01
+     the sum-of-squares error at step  10 is 0.1075E+01
+     the sum-of-squares error at step  11 is 0.1755E+01
+     the sum-of-squares error at step  12 is 0.6632E+00
+     the sum-of-squares error at step  13 is 0.6632E+00
+     the sum-of-squares error at step  14 is 0.6250E+00
+     the sum-of-squares error at step  15 is 0.2198E+00
+     the sum-of-squares error at step  16 is 0.3052E+00
+     the sum-of-squares error at step  17 is 0.1792E+00
+     the sum-of-squares error at step  18 is 0.1571E+00
+     the sum-of-squares error at step  19 is 0.1111E+00
+     the sum-of-squares error at step  20 is 0.8965E-01
+     the sum-of-squares error at step  21 is 0.8965E-01
+     the sum-of-squares error at step  22 is 0.5539E-01
+     the sum-of-squares error at step  23 is 0.5539E-01
+     the sum-of-squares error at step  24 is 0.5539E-01
+     the sum-of-squares error at step  25 is 0.3385E-01
+     the sum-of-squares error at step  26 is 0.9835E-02
+     the sum-of-squares error at step  27 is 0.4752E-03
+     the sum-of-squares error at step  28 is 0.1194E-04
+     the sum-of-squares error at step  29 is 0.8662E-06
+     the sum-of-squares error at step  30 is 0.4395E-07
+     the sum-of-squares error at step  31 is 0.5372E-09
+
+ parameters defining map:               (n =  6)      (nptsq =  3)
+
+  k          w(k)          th(k)/pi     betam(k)             z(k)
+ ---         ----          --------     --------             ----
+
+  1    ( 0.000, 1.000)    0.84160087    -0.50000   (-0.87871847, 0.47734040)
+  2    ( 0.000, 0.000)    0.84642843    -0.50000   (-0.88585658, 0.46395918)
+  3    ( 2.000, 0.000)    1.38632016     0.25000   (-0.34959216,-0.93690198)
+  4    ( 3.000,-1.000)    1.65452175    -0.50000   ( 0.46660146,-0.88446768)
+  5    ( 3.500,-0.500)    1.65867054    -0.43717   ( 0.47808947,-0.87831114)
+  6    ( 2.500, 1.000)    2.00000000    -0.31283   ( 1.00000000, 0.00000000)
+
+ wc = ( 0.20000000E+01, 0.50000000E+00)
+  c = ( 0.56710528E+00, 0.31702534E+00)
+
+ errest:  0.5284E-04
+
+ vertices of image rectangle: 
+   ( 0.000000E+00, 0.100000E+01)
+   ( 0.000000E+00, 0.000000E+00)
+   ( 0.401087E+01,-0.212712E-06)
+   ( 0.401087E+01, 0.100000E+01)
+
+ finished row  0/21 of grid points
+ finished row  1/21 of grid points
+ finished row  2/21 of grid points
+ finished row  3/21 of grid points
+ finished row  4/21 of grid points
+ finished row  5/21 of grid points
+ finished row  6/21 of grid points
+ finished row  7/21 of grid points
+ finished row  8/21 of grid points
+ finished row  9/21 of grid points
+ finished row 10/21 of grid points
+ finished row 11/21 of grid points
+ finished row 12/21 of grid points
+ finished row 13/21 of grid points
+ finished row 14/21 of grid points
+ finished row 15/21 of grid points
+ finished row 16/21 of grid points
+ finished row 17/21 of grid points
+ finished row 18/21 of grid points
+ finished row 19/21 of grid points
+ finished row 20/21 of grid points
+ finished row 21/21 of grid points
+ 
+SCPACK_PRB:
+  Normal end of execution.
+ 
+ 6 February  2011   3:24:39.052 PM      

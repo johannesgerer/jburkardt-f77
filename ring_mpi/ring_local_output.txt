@@ -1,0 +1,23 @@
+ 
+RING_MPI:
+  FORTRAN77/MPI version
+  Measure time required to transmit data
+  around a ring of processes
+ 
+  The number of processes is        8
+ 
+  Timings based on     10 experiments
+  N double precision values were sent
+  in a ring transmission starting and ending at process 0
+  and using a total of      8 processes.
+ 
+         N           T min           T ave           T max
+ 
+       100    0.269413E-04    0.687838E-04    0.386953E-03
+      1000    0.161886E-03    0.237107E-03    0.534058E-03
+     10000    0.583887E-03    0.818658E-03    0.255489E-02
+    100000    0.149889E-01    0.169055E-01    0.245829E-01
+   1000000    0.125658        0.145669        0.209865    
+ 
+RING_MPI:
+  Normal end of execution.

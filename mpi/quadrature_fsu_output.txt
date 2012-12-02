@@ -1,0 +1,62 @@
+24 October   2011   9:37:01.703 AM      
+ 
+QUADRATURE - Master process:
+  FORTRAN77 version
+ 
+  An MPI program to estimate an integral.
+  The number of processes is        8
+ 
+Process        0 is active.
+ 
+QUADRATURE - Master process:
+  Number of intervals is     1000
+ 
+QUADRATURE - Process        0
+  My contribution is   0.3935732198498028    
+ 
+Process        1 is active.
+ 
+Process        2 is active.
+ 
+QUADRATURE - Process        2
+  My contribution is   0.3930744714123472    
+ 
+Process        7 is active.
+ 
+Process        3 is active.
+ 
+Process        6 is active.
+ 
+QUADRATURE - Process        6
+  My contribution is   0.3920739620371805    
+ 
+QUADRATURE - Process        1
+  My contribution is   0.3933239721936012    
+ 
+Process        4 is active.
+ 
+QUADRATURE - Process        4
+  My contribution is   0.3925747154747329    
+ 
+Process        5 is active.
+ 
+QUADRATURE - Process        5
+  My contribution is   0.3923244628184344    
+ 
+QUADRATURE - Process        3
+  My contribution is   0.3928247187560486    
+ 
+QUADRATURE - Process        7
+  My contribution is   0.3918232143809787    
+ 
+QUADRATURE - Master process:
+  Integral estimate     3.141592736923126    
+  Exact value is        3.141592653589793    
+  Error is             0.8333333312293689E-07
+ 
+  Elapsed wall clock seconds =       0.017482
+ 
+QUADRATURE - Master process:
+  Normal end of execution.
+ 
+24 October   2011   9:37:01.731 AM      

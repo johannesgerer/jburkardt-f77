@@ -1,0 +1,12 @@
+29 October   2011   5:02:52.777 PM      
+ 
+MXM_SERIAL:
+  FORTRAN77 version
+  Compute matrix product C = A * B.
+  The matrix order N                 =      500
+  C(100,100)  =    1.00000    
+ 
+MXM_SERIAL:
+  Normal end of execution.
+ 
+29 October   2011   5:02:53.646 PM      

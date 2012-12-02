@@ -1,0 +1,741 @@
+ 
+TOMS648_NSD_PRB:
+  Example run of
+  ACM TOMS Algorithm 648
+  non-stiff sample ODE's.
+ 
+  Double precision arithmetic.
+
+RUN NUMBER ONE
+
+NONSTIFF DETEST PACKAGE    OPTION= 2, NORMEF= 0, NRMTYP= 1                   ON Dec Alpha                       
+
+
+GROUP  1                  DVERK,  HULL-ENRIGHT-JACKSON CODE BASED ON VERNER RK FORMULAS                   
+
+  A1   (UNSCALED)
+
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR
+       -2.00    0.000  0.000       56       7      0.05      0.05
+       -4.00    0.000  0.000      104      13      0.00      0.01
+       -6.00    0.000  0.000      184      23      0.00      0.01
+       -8.00    0.000  0.000      352      44      0.00      0.01
+
+                 SMOOTHNESS FIT OF LOG10(ERROR) VS LOG10(TOL)
+                 ENDPOINT GLOBAL ERROR
+                                       = 5.350E-02 *(TOL** 1.109) APPROX,
+      R.M.S. RESIDUAL= 2.0E-01 OVER  4 VALUES
+                 MAXIMUM  GLOBAL ERROR
+                                       = 5.350E-02 *(TOL** 1.109) APPROX,
+      R.M.S. RESIDUAL= 2.0E-01 OVER  4 VALUES
+
+  A2   (UNSCALED)
+
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR
+       -2.00    0.000  0.000       48       6      0.23      5.14
+       -4.00    0.000  0.000       64       8      0.68      7.53
+       -6.00    0.000  0.000       87      10      9.74     22.23
+       -8.00    0.000  0.000      160      20      6.56      6.73
+
+                 SMOOTHNESS FIT OF LOG10(ERROR) VS LOG10(TOL)
+                 ENDPOINT GLOBAL ERROR
+                                       = 7.500E-02 *(TOL** 0.725) APPROX,
+      R.M.S. RESIDUAL= 2.8E-01 OVER  4 VALUES
+                 MAXIMUM  GLOBAL ERROR
+                                       =  5.43     *(TOL** 0.959) APPROX,
+      R.M.S. RESIDUAL= 2.2E-01 OVER  4 VALUES
+
+  A3   (UNSCALED)
+
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR
+       -2.00    0.000  0.000      131      12     16.50     16.48
+       -4.00    0.000  0.000      264      26      2.24      2.90
+       -6.00    0.000  0.000      530      54     16.47     16.45
+       -8.00    0.000  0.000     1067     115      5.74      5.74
+
+                 SMOOTHNESS FIT OF LOG10(ERROR) VS LOG10(TOL)
+                 ENDPOINT GLOBAL ERROR
+                                       =  10.3     *(TOL** 1.025) APPROX,
+      R.M.S. RESIDUAL= 3.6E-01 OVER  4 VALUES
+                 MAXIMUM  GLOBAL ERROR
+                                       =  11.7     *(TOL** 1.031) APPROX,
+      R.M.S. RESIDUAL= 3.1E-01 OVER  4 VALUES
+
+  A4   (UNSCALED)
+
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR
+       -2.00    0.000  0.000       32       4      0.39      0.93
+       -4.00    0.000  0.000       63       7      0.50      1.17
+       -6.00    0.000  0.000      126      14      0.79      1.61
+       -8.00    0.000  0.000      238      28      0.94      1.73
+
+                 SMOOTHNESS FIT OF LOG10(ERROR) VS LOG10(TOL)
+                 ENDPOINT GLOBAL ERROR
+                                       = 0.283     *(TOL** 0.933) APPROX,
+      R.M.S. RESIDUAL= 2.4E-02 OVER  4 VALUES
+                 MAXIMUM  GLOBAL ERROR
+                                       = 0.767     *(TOL** 0.953) APPROX,
+      R.M.S. RESIDUAL= 2.3E-02 OVER  4 VALUES
+
+  A5   (UNSCALED)
+
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR
+       -2.00    0.000  0.000       32       4      0.02      0.03
+       -4.00    0.000  0.000       40       5      5.11      5.13
+       -6.00    0.000  0.000       79       9    130.99    130.96
+       -8.00    0.000  0.000      159      19     67.58     67.55
+
+                 SMOOTHNESS FIT OF LOG10(ERROR) VS LOG10(TOL)
+                 ENDPOINT GLOBAL ERROR
+                                       = 6.758E-03 *(TOL** 0.414) APPROX,
+      R.M.S. RESIDUAL= 6.6E-01 OVER  4 VALUES
+                 MAXIMUM  GLOBAL ERROR
+                                       = 7.321E-03 *(TOL** 0.419) APPROX,
+      R.M.S. RESIDUAL= 6.5E-01 OVER  4 VALUES
+
+SUMMARY OVER GROUP  1
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR
+       -2.00    0.000  0.000      299      33     16.50     16.48
+       -4.00    0.000  0.000      535      59      5.11      7.53
+       -6.00    0.000  0.000     1006     110    130.99    130.96
+       -8.00    0.000  0.000     1976     226     67.58     67.55
+ 
+GROUP  2                  DVERK,  HULL-ENRIGHT-JACKSON CODE BASED ON VERNER RK FORMULAS                   
+
+  B1   (UNSCALED)
+
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR
+       -2.00    0.000  0.000      278      26    166.40    296.72
+       -4.00    0.000  0.000      491      50      1.34     41.91
+       -6.00    0.000  0.000      961     100     18.77     88.66
+       -8.00    0.000  0.000     1825     208     66.33    283.48
+
+                 SMOOTHNESS FIT OF LOG10(ERROR) VS LOG10(TOL)
+                 ENDPOINT GLOBAL ERROR
+                                       =  23.6     *(TOL** 1.003) APPROX,
+      R.M.S. RESIDUAL= 7.9E-01 OVER  4 VALUES
+                 MAXIMUM  GLOBAL ERROR
+                                       =  114.     *(TOL** 0.987) APPROX,
+      R.M.S. RESIDUAL= 3.6E-01 OVER  4 VALUES
+
+  B2   (UNSCALED)
+
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR
+       -2.00    0.000  0.000      150      17      0.00      0.18
+       -4.00    0.000  0.000      190      22      0.00      0.18
+       -6.00    0.000  0.000      263      32      0.00      0.03
+       -8.00    0.000  0.000      472      59      0.01      0.01
+
+                 SMOOTHNESS FIT OF LOG10(ERROR) VS LOG10(TOL)
+                 ENDPOINT GLOBAL ERROR
+                                       = 1.000E-02 *(TOL** 1.000) APPROX,
+      R.M.S. RESIDUAL= 0.0E+00 OVER  4 VALUES
+                 MAXIMUM  GLOBAL ERROR
+                                       = 0.767     *(TOL** 1.230) APPROX,
+      R.M.S. RESIDUAL= 1.7E-01 OVER  4 VALUES
+
+  B3   (UNSCALED)
+
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR
+       -2.00    0.000  0.000       64       8      0.07      1.09
+       -4.00    0.000  0.000      112      14      0.02      1.27
+       -6.00    0.000  0.000      208      26      0.04      1.11
+       -8.00    0.000  0.000      400      50      0.18      1.10
+
+                 SMOOTHNESS FIT OF LOG10(ERROR) VS LOG10(TOL)
+                 ENDPOINT GLOBAL ERROR
+                                       = 2.546E-02 *(TOL** 0.927) APPROX,
+      R.M.S. RESIDUAL= 2.8E-01 OVER  4 VALUES
+                 MAXIMUM  GLOBAL ERROR
+                                       =  1.17     *(TOL** 1.003) APPROX,
+      R.M.S. RESIDUAL= 2.7E-02 OVER  4 VALUES
+
+  B4   (UNSCALED)
+
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR
+       -2.00    0.000  0.000      731      80    218.55    295.13
+       -4.00    0.000  0.000      309      36     49.74     48.52
+       -6.00    0.000  0.000      626      73    198.81    197.36
+       -8.00    0.000  0.000     1245     153    251.17    249.83
+
+                 SMOOTHNESS FIT OF LOG10(ERROR) VS LOG10(TOL)
+                 ENDPOINT GLOBAL ERROR
+                                       =  97.3     *(TOL** 0.961) APPROX,
+      R.M.S. RESIDUAL= 2.7E-01 OVER  4 VALUES
+                 MAXIMUM  GLOBAL ERROR
+                                       =  130.     *(TOL** 0.980) APPROX,
+      R.M.S. RESIDUAL= 3.1E-01 OVER  4 VALUES
+
+  B5   (UNSCALED)
+
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR
+       -2.00    0.000  0.000      147      14     53.75     59.24
+       -4.00    0.000  0.000      251      27      7.43      9.47
+       -6.00    0.000  0.000      532      56     19.07     28.36
+       -8.00    0.000  0.000     1018     115     18.39     26.44
+
+                 SMOOTHNESS FIT OF LOG10(ERROR) VS LOG10(TOL)
+                 ENDPOINT GLOBAL ERROR
+                                       =  34.2     *(TOL** 1.049) APPROX,
+      R.M.S. RESIDUAL= 2.8E-01 OVER  4 VALUES
+                 MAXIMUM  GLOBAL ERROR
+                                       =  35.5     *(TOL** 1.029) APPROX,
+      R.M.S. RESIDUAL= 2.8E-01 OVER  4 VALUES
+
+SUMMARY OVER GROUP  2
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR
+       -2.00    0.000  0.000     1370     145    218.55    296.72
+       -4.00    0.000  0.000     1353     149     49.74     48.52
+       -6.00    0.000  0.000     2590     287    198.81    197.36
+       -8.00    0.000  0.000     4960     585    251.17    283.48
+SUMMARY OVER ALL GROUPS      DVERK,  HULL-ENRIGHT-JACKSON CODE BASED ON VERNER RK FORMULAS                   
+
+        LOG10     TIME   OVHD     FCN    NO OF 
+         TOL                     CALLS   STEPS 
+       -2.00    0.000  0.000     1669     178
+       -4.00    0.000  0.000     1888     208
+       -6.00    0.000  0.000     3596     397
+       -8.00    0.000  0.000     6936     811
+     OVERALL
+      SUMMARY    0.000  0.000    14089    1594
+
+RUN NUMBER TWO
+
+NONSTIFF DETEST PACKAGE    OPTION= 3, NORMEF= 0, NRMTYP= 1                   ON Dec Alpha                       
+
+
+GROUP  1                  DVERK,  HULL-ENRIGHT-JACKSON CODE BASED ON VERNER RK FORMULAS                   
+
+  A1   (UNSCALED)
+
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM   MAXIMUM   FRACTION   FRACTION
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR   LOC ERR   DECEIVED   BAD DECV
+       -2.00    0.000  0.000       56       7      0.05      0.05     0.053     0.000      0.000
+       -4.00    0.000  0.000      104      13      0.00      0.01     0.008     0.000      0.000
+       -6.00    0.000  0.000      184      23      0.00      0.01     0.008     0.000      0.000
+       -8.00    0.000  0.000      352      44      0.00      0.01     0.006     0.000      0.000
+
+                 SMOOTHNESS FIT OF LOG10(ERROR) VS LOG10(TOL)
+                 ENDPOINT GLOBAL ERROR
+                                       = 5.350E-02 *(TOL** 1.109) APPROX,
+      R.M.S. RESIDUAL= 2.0E-01 OVER  4 VALUES
+                 MAXIMUM  GLOBAL ERROR
+                                       = 5.350E-02 *(TOL** 1.109) APPROX,
+      R.M.S. RESIDUAL= 2.0E-01 OVER  4 VALUES
+
+  A2   (UNSCALED)
+
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM   MAXIMUM   FRACTION   FRACTION
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR   LOC ERR   DECEIVED   BAD DECV
+       -2.00    0.000  0.000       48       6      0.23      5.14     5.139     0.167      0.167
+       -4.00    0.000  0.000       64       8      0.68      7.53     7.527     0.250      0.125
+       -6.00    0.000  0.000       87      10      9.74     22.23    22.217     0.800      0.500
+       -8.00    0.000  0.000      160      20      6.56      6.73     2.981     1.000      0.000
+
+                 SMOOTHNESS FIT OF LOG10(ERROR) VS LOG10(TOL)
+                 ENDPOINT GLOBAL ERROR
+                                       = 7.500E-02 *(TOL** 0.725) APPROX,
+      R.M.S. RESIDUAL= 2.8E-01 OVER  4 VALUES
+                 MAXIMUM  GLOBAL ERROR
+                                       =  5.43     *(TOL** 0.959) APPROX,
+      R.M.S. RESIDUAL= 2.2E-01 OVER  4 VALUES
+
+  A3   (UNSCALED)
+
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM   MAXIMUM   FRACTION   FRACTION
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR   LOC ERR   DECEIVED   BAD DECV
+       -2.00    0.000  0.000      131      12     16.50     16.48     2.062     0.167      0.000
+       -4.00    0.000  0.000      264      26      2.24      2.90     1.002     0.038      0.000
+       -6.00    0.000  0.000      530      54     16.47     16.45     2.476     0.037      0.000
+       -8.00    0.000  0.000     1067     115      5.74      5.74     0.691     0.000      0.000
+
+                 SMOOTHNESS FIT OF LOG10(ERROR) VS LOG10(TOL)
+                 ENDPOINT GLOBAL ERROR
+                                       =  10.3     *(TOL** 1.025) APPROX,
+      R.M.S. RESIDUAL= 3.6E-01 OVER  4 VALUES
+                 MAXIMUM  GLOBAL ERROR
+                                       =  11.7     *(TOL** 1.031) APPROX,
+      R.M.S. RESIDUAL= 3.1E-01 OVER  4 VALUES
+
+  A4   (UNSCALED)
+
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM   MAXIMUM   FRACTION   FRACTION
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR   LOC ERR   DECEIVED   BAD DECV
+       -2.00    0.000  0.000       32       4      0.39      0.93     0.915     0.000      0.000
+       -4.00    0.000  0.000       63       7      0.50      1.17     0.403     0.000      0.000
+       -6.00    0.000  0.000      126      14      0.79      1.61     0.189     0.000      0.000
+       -8.00    0.000  0.000      238      28      0.94      1.73     0.210     0.000      0.000
+
+                 SMOOTHNESS FIT OF LOG10(ERROR) VS LOG10(TOL)
+                 ENDPOINT GLOBAL ERROR
+                                       = 0.283     *(TOL** 0.933) APPROX,
+      R.M.S. RESIDUAL= 2.4E-02 OVER  4 VALUES
+                 MAXIMUM  GLOBAL ERROR
+                                       = 0.767     *(TOL** 0.953) APPROX,
+      R.M.S. RESIDUAL= 2.3E-02 OVER  4 VALUES
+
+  A5   (UNSCALED)
+
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM   MAXIMUM   FRACTION   FRACTION
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR   LOC ERR   DECEIVED   BAD DECV
+       -2.00    0.000  0.000       32       4      0.02      0.03     0.025     0.000      0.000
+       -4.00    0.000  0.000       40       5      5.11      5.13     0.957     0.000      0.000
+       -6.00    0.000  0.000       79       9    130.99    130.96    26.934     0.111      0.111
+       -8.00    0.000  0.000      159      19     67.58     67.55    12.364     0.105      0.053
+
+                 SMOOTHNESS FIT OF LOG10(ERROR) VS LOG10(TOL)
+                 ENDPOINT GLOBAL ERROR
+                                       = 6.758E-03 *(TOL** 0.414) APPROX,
+      R.M.S. RESIDUAL= 6.6E-01 OVER  4 VALUES
+                 MAXIMUM  GLOBAL ERROR
+                                       = 7.321E-03 *(TOL** 0.419) APPROX,
+      R.M.S. RESIDUAL= 6.5E-01 OVER  4 VALUES
+
+SUMMARY OVER GROUP  1
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM   MAXIMUM   FRACTION   FRACTION
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR   LOC ERR   DECEIVED   BAD DECV
+       -2.00    0.000  0.000      299      33     16.50     16.48     5.139     0.091      0.030
+       -4.00    0.000  0.000      535      59      5.11      7.53     7.527     0.051      0.017
+       -6.00    0.000  0.000     1006     110    130.99    130.96    26.934     0.100      0.055
+       -8.00    0.000  0.000     1976     226     67.58     67.55    12.364     0.097      0.004
+ 
+GROUP  2                  DVERK,  HULL-ENRIGHT-JACKSON CODE BASED ON VERNER RK FORMULAS                   
+
+  B1   (UNSCALED)
+
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM   MAXIMUM   FRACTION   FRACTION
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR   LOC ERR   DECEIVED   BAD DECV
+       -2.00    0.000  0.000      278      26    166.40    296.72    19.068     0.385      0.192
+       -4.00    0.000  0.000      491      50      1.34     41.91     4.742     0.360      0.000
+       -6.00    0.000  0.000      961     100     18.77     88.66     4.725     0.300      0.000
+       -8.00    0.000  0.000     1825     208     66.33    283.48     4.216     0.130      0.000
+
+                 SMOOTHNESS FIT OF LOG10(ERROR) VS LOG10(TOL)
+                 ENDPOINT GLOBAL ERROR
+                                       =  23.6     *(TOL** 1.003) APPROX,
+      R.M.S. RESIDUAL= 7.9E-01 OVER  4 VALUES
+                 MAXIMUM  GLOBAL ERROR
+                                       =  114.     *(TOL** 0.987) APPROX,
+      R.M.S. RESIDUAL= 3.6E-01 OVER  4 VALUES
+
+  B2   (UNSCALED)
+
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM   MAXIMUM   FRACTION   FRACTION
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR   LOC ERR   DECEIVED   BAD DECV
+       -2.00    0.000  0.000      150      17      0.00      0.18     0.183     0.000      0.000
+       -4.00    0.000  0.000      190      22      0.00      0.18     0.178     0.000      0.000
+       -6.00    0.000  0.000      263      32      0.00      0.03     0.027     0.000      0.000
+       -8.00    0.000  0.000      472      59      0.01      0.01     0.007     0.000      0.000
+
+                 SMOOTHNESS FIT OF LOG10(ERROR) VS LOG10(TOL)
+                 ENDPOINT GLOBAL ERROR
+                                       = 1.000E-02 *(TOL** 1.000) APPROX,
+      R.M.S. RESIDUAL= 0.0E+00 OVER  4 VALUES
+                 MAXIMUM  GLOBAL ERROR
+                                       = 0.767     *(TOL** 1.230) APPROX,
+      R.M.S. RESIDUAL= 1.7E-01 OVER  4 VALUES
+
+  B3   (UNSCALED)
+
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM   MAXIMUM   FRACTION   FRACTION
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR   LOC ERR   DECEIVED   BAD DECV
+       -2.00    0.000  0.000       64       8      0.07      1.09     1.085     0.125      0.000
+       -4.00    0.000  0.000      112      14      0.02      1.27     0.974     0.000      0.000
+       -6.00    0.000  0.000      208      26      0.04      1.11     0.449     0.000      0.000
+       -8.00    0.000  0.000      400      50      0.18      1.10     0.219     0.000      0.000
+
+                 SMOOTHNESS FIT OF LOG10(ERROR) VS LOG10(TOL)
+                 ENDPOINT GLOBAL ERROR
+                                       = 2.546E-02 *(TOL** 0.927) APPROX,
+      R.M.S. RESIDUAL= 2.8E-01 OVER  4 VALUES
+                 MAXIMUM  GLOBAL ERROR
+                                       =  1.17     *(TOL** 1.003) APPROX,
+      R.M.S. RESIDUAL= 2.7E-02 OVER  4 VALUES
+
+  B4   (UNSCALED)
+
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM   MAXIMUM   FRACTION   FRACTION
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR   LOC ERR   DECEIVED   BAD DECV
+       -2.00    0.000  0.000      731      80    218.55    295.13     9.562     0.500      0.125
+                                                                                                                  (LOC ASSESS ON   8)
+                     TRUE-SOLUTION OF TEST PACKAGE FAILED AT X =  9.01808E+00, ERROR FLAG (GLOBAL)   3, (LOCAL)  -1
+       -4.00    0.000  0.000      309      36     49.74     48.52     1.544     0.222      0.000
+       -6.00    0.000  0.000      626      73    198.81    197.36     0.791     0.000      0.000
+       -8.00    0.000  0.000     1245     153    251.17    249.83     0.375     0.000      0.000
+
+                 SMOOTHNESS FIT OF LOG10(ERROR) VS LOG10(TOL)
+                 ENDPOINT GLOBAL ERROR
+                                       =  97.3     *(TOL** 0.961) APPROX,
+      R.M.S. RESIDUAL= 2.7E-01 OVER  4 VALUES
+                 MAXIMUM  GLOBAL ERROR
+                                       =  11.4     *(TOL** 0.822) APPROX,
+      R.M.S. RESIDUAL= 1.2E-01 OVER  4 VALUES
+
+  B5   (UNSCALED)
+
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM   MAXIMUM   FRACTION   FRACTION
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR   LOC ERR   DECEIVED   BAD DECV
+       -2.00    0.000  0.000      147      14     53.75     59.24     7.175     0.357      0.071
+       -4.00    0.000  0.000      251      27      7.43      9.47     1.011     0.037      0.000
+       -6.00    0.000  0.000      532      56     19.07     28.36     0.967     0.000      0.000
+       -8.00    0.000  0.000     1018     115     18.39     26.44     0.582     0.000      0.000
+
+                 SMOOTHNESS FIT OF LOG10(ERROR) VS LOG10(TOL)
+                 ENDPOINT GLOBAL ERROR
+                                       =  34.2     *(TOL** 1.049) APPROX,
+      R.M.S. RESIDUAL= 2.8E-01 OVER  4 VALUES
+                 MAXIMUM  GLOBAL ERROR
+                                       =  35.5     *(TOL** 1.029) APPROX,
+      R.M.S. RESIDUAL= 2.8E-01 OVER  4 VALUES
+
+SUMMARY OVER GROUP  2
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM   MAXIMUM   FRACTION   FRACTION
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR   LOC ERR   DECEIVED   BAD DECV
+       -2.00    0.000  0.000     1370     145    218.55    296.72    19.068     0.274      0.096
+                                                                                                                  (LOC ASSESS ON  73)
+       -4.00    0.000  0.000     1353     149     49.74     48.52     4.742     0.181      0.000
+       -6.00    0.000  0.000     2590     287    198.81    197.36     4.725     0.105      0.000
+       -8.00    0.000  0.000     4960     585    251.17    283.48     4.216     0.046      0.000
+SUMMARY OVER ALL GROUPS      DVERK,  HULL-ENRIGHT-JACKSON CODE BASED ON VERNER RK FORMULAS                   
+
+        LOG10     TIME   OVHD     FCN    NO OF  MAXIMUM   FRACTION   FRACTION
+         TOL                     CALLS   STEPS  LOC ERR   DECEIVED   BAD DECV
+       -2.00    0.000  0.000     1669     178      19.068      0.217      0.075
+                                                                                                                  (LOC ASSESS ON 106)
+       -4.00    0.000  0.000     1888     208       7.527      0.144      0.005
+       -6.00    0.000  0.000     3596     397      26.934      0.103      0.015
+       -8.00    0.000  0.000     6936     811      12.364      0.060      0.001
+     OVERALL
+      SUMMARY    0.000  0.000    14089    1594      26.934      0.094      0.011
+
+RUN NUMBER THREE
+
+NONSTIFF DETEST PACKAGE    OPTION= 2, NORMEF= 2, NRMTYP= 1                   ON Dec Alpha                       
+
+
+GROUP  1                  DVERK,  HULL-ENRIGHT-JACKSON CODE BASED ON VERNER RK FORMULAS                   
+
+  A1   (UNSCALED)
+
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR
+       -2.00    0.000  0.000       56       7      0.05      0.05
+       -4.00    0.000  0.000      104      13      0.00      0.01
+       -6.00    0.000  0.000      184      23      0.00      0.01
+       -8.00    0.000  0.000      352      44      0.00      0.01
+
+                 SMOOTHNESS FIT OF LOG10(ERROR) VS LOG10(TOL)
+                 ENDPOINT GLOBAL ERROR
+                                       = 5.350E-02 *(TOL** 1.109) APPROX,
+      R.M.S. RESIDUAL= 2.0E-01 OVER  4 VALUES
+                 MAXIMUM  GLOBAL ERROR
+                                       = 5.350E-02 *(TOL** 1.109) APPROX,
+      R.M.S. RESIDUAL= 2.0E-01 OVER  4 VALUES
+
+      NORMALIZED EFFICIENCY - MAXIMUM  GLOBAL ERROR
+
+       EXPECTED   EQUIV    TIME   OVHD     FCN    NO OF
+       ACCURACY LOG10 TOL                 CALLS   STEPS
+      10** -4   -2.46    0.000  0.000       67       8
+      10** -5   -3.36    0.000  0.000       88      11
+      10** -6   -4.26    0.000  0.000      114      14
+      10** -7   -5.16    0.000  0.000      150      18
+      10** -8   -6.07    0.000  0.000      189      23
+      10** -9   -6.97    0.000  0.000      265      33
+      10**-10   -7.87    0.000  0.000      340      42
+
+  A2   (UNSCALED)
+
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR
+       -2.00    0.000  0.000       48       6      0.23      5.14
+       -4.00    0.000  0.000       64       8      0.68      7.53
+       -6.00    0.000  0.000       87      10      9.74     22.23
+       -8.00    0.000  0.000      160      20      6.56      6.73
+
+                 SMOOTHNESS FIT OF LOG10(ERROR) VS LOG10(TOL)
+                 ENDPOINT GLOBAL ERROR
+                                       = 7.500E-02 *(TOL** 0.725) APPROX,
+      R.M.S. RESIDUAL= 2.8E-01 OVER  4 VALUES
+                 MAXIMUM  GLOBAL ERROR
+                                       =  5.43     *(TOL** 0.959) APPROX,
+      R.M.S. RESIDUAL= 2.2E-01 OVER  4 VALUES
+
+      NORMALIZED EFFICIENCY - MAXIMUM  GLOBAL ERROR
+
+       EXPECTED   EQUIV    TIME   OVHD     FCN    NO OF
+       ACCURACY LOG10 TOL                 CALLS   STEPS
+      10** -2   -2.85    0.000  0.000       54       6
+      10** -3   -3.90    0.000  0.000       63       7
+      10** -4   -4.94    0.000  0.000       74       8
+      10** -5   -5.98    0.000  0.000       86       9
+      10** -6   -7.02    0.000  0.000      124      15
+      10** -7   -8.07    0.000  0.000      162      20
+
+  A3   (UNSCALED)
+
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR
+       -2.00    0.000  0.000      131      12     16.50     16.48
+       -4.00    0.000  0.000      264      26      2.24      2.90
+       -6.00    0.000  0.000      530      54     16.47     16.45
+       -8.00    0.000  0.000     1067     115      5.74      5.74
+
+                 SMOOTHNESS FIT OF LOG10(ERROR) VS LOG10(TOL)
+                 ENDPOINT GLOBAL ERROR
+                                       =  10.3     *(TOL** 1.025) APPROX,
+      R.M.S. RESIDUAL= 3.6E-01 OVER  4 VALUES
+                 MAXIMUM  GLOBAL ERROR
+                                       =  11.7     *(TOL** 1.031) APPROX,
+      R.M.S. RESIDUAL= 3.1E-01 OVER  4 VALUES
+
+      NORMALIZED EFFICIENCY - MAXIMUM  GLOBAL ERROR
+
+       EXPECTED   EQUIV    TIME   OVHD     FCN    NO OF
+       ACCURACY LOG10 TOL                 CALLS   STEPS
+      10** -1   -2.01    0.000  0.000      131      12
+      10** -2   -2.98    0.000  0.000      195      18
+      10** -3   -3.95    0.000  0.000      260      25
+      10** -4   -4.92    0.000  0.000      385      38
+      10** -5   -5.89    0.000  0.000      514      52
+      10** -6   -6.86    0.000  0.000      759      80
+      10** -7   -7.83    0.000  0.000     1020     109
+
+  A4   (UNSCALED)
+
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR
+       -2.00    0.000  0.000       32       4      0.39      0.93
+       -4.00    0.000  0.000       63       7      0.50      1.17
+       -6.00    0.000  0.000      126      14      0.79      1.61
+       -8.00    0.000  0.000      238      28      0.94      1.73
+
+                 SMOOTHNESS FIT OF LOG10(ERROR) VS LOG10(TOL)
+                 ENDPOINT GLOBAL ERROR
+                                       = 0.283     *(TOL** 0.933) APPROX,
+      R.M.S. RESIDUAL= 2.4E-02 OVER  4 VALUES
+                 MAXIMUM  GLOBAL ERROR
+                                       = 0.767     *(TOL** 0.953) APPROX,
+      R.M.S. RESIDUAL= 2.3E-02 OVER  4 VALUES
+
+      NORMALIZED EFFICIENCY - MAXIMUM  GLOBAL ERROR
+
+       EXPECTED   EQUIV    TIME   OVHD     FCN    NO OF
+       ACCURACY LOG10 TOL                 CALLS   STEPS
+      10** -2   -1.98    0.000  0.000       31       3
+      10** -3   -3.03    0.000  0.000       47       5
+      10** -4   -4.08    0.000  0.000       65       7
+      10** -5   -5.13    0.000  0.000       98      10
+      10** -6   -6.18    0.000  0.000      135      15
+      10** -7   -7.23    0.000  0.000      194      22
+
+  A5   (UNSCALED)
+
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR
+       -2.00    0.000  0.000       32       4      0.02      0.03
+       -4.00    0.000  0.000       40       5      5.11      5.13
+       -6.00    0.000  0.000       79       9    130.99    130.96
+       -8.00    0.000  0.000      159      19     67.58     67.55
+
+                 SMOOTHNESS FIT OF LOG10(ERROR) VS LOG10(TOL)
+                 ENDPOINT GLOBAL ERROR
+                                       = 6.758E-03 *(TOL** 0.414) APPROX,
+      R.M.S. RESIDUAL= 6.6E-01 OVER  4 VALUES
+                 MAXIMUM  GLOBAL ERROR
+                                       = 7.321E-03 *(TOL** 0.419) APPROX,
+      R.M.S. RESIDUAL= 6.5E-01 OVER  4 VALUES
+
+      NORMALIZED EFFICIENCY - MAXIMUM  GLOBAL ERROR
+
+       EXPECTED   EQUIV    TIME   OVHD     FCN    NO OF
+       ACCURACY LOG10 TOL                 CALLS   STEPS
+      10** -3   -2.06    0.000  0.000       32       4
+      10** -4   -4.45    0.000  0.000       48       5
+      10** -5   -6.84    0.000  0.000      112      13
+
+SUMMARY OVER GROUP  1
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR
+       -2.00    0.000  0.000      299      33     16.50     16.48
+       -4.00    0.000  0.000      535      59      5.11      7.53
+       -6.00    0.000  0.000     1006     110    130.99    130.96
+       -8.00    0.000  0.000     1976     226     67.58     67.55
+ 
+GROUP  2                  DVERK,  HULL-ENRIGHT-JACKSON CODE BASED ON VERNER RK FORMULAS                   
+
+  B1   (UNSCALED)
+
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR
+       -2.00    0.000  0.000      278      26    166.40    296.72
+       -4.00    0.000  0.000      491      50      1.34     41.91
+       -6.00    0.000  0.000      961     100     18.77     88.66
+       -8.00    0.000  0.000     1825     208     66.33    283.48
+
+                 SMOOTHNESS FIT OF LOG10(ERROR) VS LOG10(TOL)
+                 ENDPOINT GLOBAL ERROR
+                                       =  23.6     *(TOL** 1.003) APPROX,
+      R.M.S. RESIDUAL= 7.9E-01 OVER  4 VALUES
+                 MAXIMUM  GLOBAL ERROR
+                                       =  114.     *(TOL** 0.987) APPROX,
+      R.M.S. RESIDUAL= 3.6E-01 OVER  4 VALUES
+
+      NORMALIZED EFFICIENCY - MAXIMUM  GLOBAL ERROR
+
+       EXPECTED   EQUIV    TIME   OVHD     FCN    NO OF
+       ACCURACY LOG10 TOL                 CALLS   STEPS
+      10**  0   -2.08    0.000  0.000      287      27
+      10** -1   -3.10    0.000  0.000      394      39
+      10** -2   -4.11    0.000  0.000      517      52
+      10** -3   -5.13    0.000  0.000      755      78
+      10** -4   -6.14    0.000  0.000     1020     107
+      10** -5   -7.15    0.000  0.000     1458     162
+
+  B2   (UNSCALED)
+
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR
+       -2.00    0.000  0.000      150      17      0.00      0.18
+       -4.00    0.000  0.000      190      22      0.00      0.18
+       -6.00    0.000  0.000      263      32      0.00      0.03
+       -8.00    0.000  0.000      472      59      0.01      0.01
+
+                 SMOOTHNESS FIT OF LOG10(ERROR) VS LOG10(TOL)
+                 ENDPOINT GLOBAL ERROR
+                                       = 1.000E-02 *(TOL** 1.000) APPROX,
+      R.M.S. RESIDUAL= 0.0E+00 OVER  4 VALUES
+                 MAXIMUM  GLOBAL ERROR
+                                       = 0.767     *(TOL** 1.230) APPROX,
+      R.M.S. RESIDUAL= 1.7E-01 OVER  4 VALUES
+
+      NORMALIZED EFFICIENCY - MAXIMUM  GLOBAL ERROR
+
+       EXPECTED   EQUIV    TIME   OVHD     FCN    NO OF
+       ACCURACY LOG10 TOL                 CALLS   STEPS
+      10** -3   -2.35    0.000  0.000      156      17
+      10** -4   -3.16    0.000  0.000      173      19
+      10** -5   -3.97    0.000  0.000      189      21
+      10** -6   -4.79    0.000  0.000      218      25
+      10** -7   -5.60    0.000  0.000      248      29
+      10** -8   -6.41    0.000  0.000      306      37
+      10** -9   -7.23    0.000  0.000      391      48
+      10**-10   -8.04    0.000  0.000      476      59
+
+  B3   (UNSCALED)
+
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR
+       -2.00    0.000  0.000       64       8      0.07      1.09
+       -4.00    0.000  0.000      112      14      0.02      1.27
+       -6.00    0.000  0.000      208      26      0.04      1.11
+       -8.00    0.000  0.000      400      50      0.18      1.10
+
+                 SMOOTHNESS FIT OF LOG10(ERROR) VS LOG10(TOL)
+                 ENDPOINT GLOBAL ERROR
+                                       = 2.546E-02 *(TOL** 0.927) APPROX,
+      R.M.S. RESIDUAL= 2.8E-01 OVER  4 VALUES
+                 MAXIMUM  GLOBAL ERROR
+                                       =  1.17     *(TOL** 1.003) APPROX,
+      R.M.S. RESIDUAL= 2.7E-02 OVER  4 VALUES
+
+      NORMALIZED EFFICIENCY - MAXIMUM  GLOBAL ERROR
+
+       EXPECTED   EQUIV    TIME   OVHD     FCN    NO OF
+       ACCURACY LOG10 TOL                 CALLS   STEPS
+      10** -2   -2.06    0.000  0.000       65       8
+      10** -3   -3.06    0.000  0.000       89      11
+      10** -4   -4.06    0.000  0.000      114      14
+      10** -5   -5.06    0.000  0.000      162      20
+      10** -6   -6.05    0.000  0.000      213      26
+      10** -7   -7.05    0.000  0.000      308      38
+      10** -8   -8.05    0.000  0.000      404      50
+
+  B4   (UNSCALED)
+
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR
+       -2.00    0.000  0.000      731      80    218.55    295.13
+       -4.00    0.000  0.000      309      36     49.74     48.52
+       -6.00    0.000  0.000      626      73    198.81    197.36
+       -8.00    0.000  0.000     1245     153    251.17    249.83
+
+                 SMOOTHNESS FIT OF LOG10(ERROR) VS LOG10(TOL)
+                 ENDPOINT GLOBAL ERROR
+                                       =  97.3     *(TOL** 0.961) APPROX,
+      R.M.S. RESIDUAL= 2.7E-01 OVER  4 VALUES
+                 MAXIMUM  GLOBAL ERROR
+                                       =  130.     *(TOL** 0.980) APPROX,
+      R.M.S. RESIDUAL= 3.1E-01 OVER  4 VALUES
+
+      NORMALIZED EFFICIENCY - MAXIMUM  GLOBAL ERROR
+
+       EXPECTED   EQUIV    TIME   OVHD     FCN    NO OF
+       ACCURACY LOG10 TOL                 CALLS   STEPS
+      10**  0   -2.16    0.000  0.000      697      76
+      10** -1   -3.18    0.000  0.000      482      54
+      10** -2   -4.20    0.000  0.000      340      39
+      10** -3   -5.22    0.000  0.000      501      58
+      10** -4   -6.24    0.000  0.000      699      82
+      10** -5   -7.26    0.000  0.000     1014     123
+
+  B5   (UNSCALED)
+
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR
+       -2.00    0.000  0.000      147      14     53.75     59.24
+       -4.00    0.000  0.000      251      27      7.43      9.47
+       -6.00    0.000  0.000      532      56     19.07     28.36
+       -8.00    0.000  0.000     1018     115     18.39     26.44
+
+                 SMOOTHNESS FIT OF LOG10(ERROR) VS LOG10(TOL)
+                 ENDPOINT GLOBAL ERROR
+                                       =  34.2     *(TOL** 1.049) APPROX,
+      R.M.S. RESIDUAL= 2.8E-01 OVER  4 VALUES
+                 MAXIMUM  GLOBAL ERROR
+                                       =  35.5     *(TOL** 1.029) APPROX,
+      R.M.S. RESIDUAL= 2.8E-01 OVER  4 VALUES
+
+      NORMALIZED EFFICIENCY - MAXIMUM  GLOBAL ERROR
+
+       EXPECTED   EQUIV    TIME   OVHD     FCN    NO OF
+       ACCURACY LOG10 TOL                 CALLS   STEPS
+      10** -1   -2.48    0.000  0.000      171      17
+      10** -2   -3.45    0.000  0.000      222      23
+      10** -3   -4.42    0.000  0.000      310      33
+      10** -4   -5.39    0.000  0.000      446      47
+      10** -5   -6.37    0.000  0.000      621      66
+      10** -6   -7.34    0.000  0.000      857      95
+
+SUMMARY OVER GROUP  2
+        LOG10     TIME   OVHD     FCN    NO OF   END PNT   MAXIMUM
+         TOL                     CALLS   STEPS   GLB ERR   GLB ERR
+       -2.00    0.000  0.000     1370     145    218.55    296.72
+       -4.00    0.000  0.000     1353     149     49.74     48.52
+       -6.00    0.000  0.000     2590     287    198.81    197.36
+       -8.00    0.000  0.000     4960     585    251.17    283.48
+SUMMARY OVER ALL GROUPS      DVERK,  HULL-ENRIGHT-JACKSON CODE BASED ON VERNER RK FORMULAS                   
+
+        LOG10     TIME   OVHD     FCN    NO OF 
+         TOL                     CALLS   STEPS 
+       -2.00    0.000  0.000     1669     178
+       -4.00    0.000  0.000     1888     208
+       -6.00    0.000  0.000     3596     397
+       -8.00    0.000  0.000     6936     811
+     OVERALL
+      SUMMARY    0.000  0.000    14089    1594
+ 
+TOMS648_NSD_PRB:
+  Normal end of execution.

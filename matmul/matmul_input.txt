@@ -1,0 +1,21 @@
+h
+
+n = 100
+order = ALL
+m
+
+order = TDOT
+n = 100, 400, *2
+m
+
+order = IJK
+n=50,400,*2
+m
+
+order = KJI
+nrep = 5
+n = 100
+m
+
+q
+y

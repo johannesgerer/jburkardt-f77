@@ -1,0 +1,13 @@
+ 
+TOMS502_PRB
+  FORTRAN77 version
+  Test program for TOMS502
+    DERPAR  0.INITIAL NEWTON ITERATION
+                      X,ALFA,SQF=      0.0000000      0.0000000      0.0000000      0.0000000      0.0000000
+                                       0.0000000
+
+ DERPAR SINGULAR JACOBIAN MATRIX FOR X AND ALFA=    0.000000    0.000000    0.000000    0.000000    0.000000
+
+ 
+TOMS502_PRB
+  Normal end of execution.

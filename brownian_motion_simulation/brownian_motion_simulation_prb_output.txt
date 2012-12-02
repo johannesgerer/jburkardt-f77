@@ -1,0 +1,25 @@
+30 September 2012   8:05:57.994 PM      
+
+BROWNIAN_MOTION_SIMULATION_PRB
+  FORTRAN77 version
+  Test the BROWNIAN_MOTION_SIMULATION library.
+ 
+  BROWNIAN_MOTION data stored in "motion_1d_data.txt".
+  BROWNIAN_MOTION commands stored in "motion_1d_commands.txt".
+ 
+  BROWNIAN_MOTION data stored in "motion_2d_data.txt".
+  BROWNIAN_MOTION commands stored in "motion_2d_commands.txt".
+ 
+  BROWNIAN_DISPLACEMENT data stored in "displacement_1d_data.txt".
+  BROWNIAN_DISPLACEMENT plot commands stored in "displacement_1d_commands.txt".
+ 
+  BROWNIAN_DISPLACEMENT data stored in "displacement_2d_data.txt".
+  BROWNIAN_DISPLACEMENT plot commands stored in "displacement_2d_commands.txt".
+ 
+  BROWNIAN_DISPLACEMENT data stored in "displacement_3d_data.txt".
+  BROWNIAN_DISPLACEMENT plot commands stored in "displacement_3d_commands.txt".
+
+BROWNIAN_MOTION_SIMULATION_PRB
+  Normal end of execution.
+
+30 September 2012   8:05:58.099 PM      

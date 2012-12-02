@@ -1,0 +1,244 @@
+ 2 February  2008   3:51:13.015 PM      
+ 
+PRAXIS_PRB
+  FORTRAN90 version
+  Test the routines in the PRAXIS library.
+ 
+TEST01
+  The Beale function.
+ 
+  Initial point:
+ 
+         1    0.10000000    
+         2    0.10000000    
+  Function value =    12.9910    
+ 
+  Computed minimizer:
+ 
+         1     3.0000000    
+         2    0.50000000    
+  Function value =   0.911321E-24
+ 
+TEST02
+  The Box function.
+ 
+  Initial point:
+ 
+         1     0.0000000    
+         2     10.000000    
+         3     20.000000    
+  Function value =    1031.15    
+ 
+  Computed minimizer:
+ 
+         1     1.0066664    
+         2     9.9103408    
+         3    0.99511022    
+  Function value =   0.370246E-05
+ 
+TEST03
+  The Chebyquad function.
+ 
+  Initial point:
+ 
+         1    0.11111111    
+         2    0.22222222    
+         3    0.33333333    
+         4    0.44444444    
+         5    0.55555556    
+         6    0.66666667    
+         7    0.77777778    
+         8    0.88888889    
+  Function value =   0.386177E-01
+ 
+  Computed minimizer:
+ 
+         1    0.43308568E-01
+         2    0.19481737    
+         3    0.26051162    
+         4    0.47646000    
+         5    0.49501176    
+         6    0.69682118    
+         7    0.78547162    
+         8    0.92466398    
+  Function value =   0.482111E-02
+ 
+TEST04
+  The Cube function.
+ 
+  Initial point:
+ 
+         1    -1.2000000    
+         2    -1.0000000    
+  Function value =    57.8384    
+ 
+  Computed minimizer:
+ 
+         1     1.0000000    
+         2     1.0000000    
+  Function value =   0.869637E-18
+ 
+TEST05
+  The Fletcher-Powell Helix function.
+ 
+  Initial point:
+ 
+         1    -1.0000000    
+         2     0.0000000    
+         3     0.0000000    
+  Function value =    10000.0    
+ 
+  Computed minimizer:
+ 
+         1     1.0000000    
+         2    0.49044202E-09
+         3   -0.32311511E-08
+  Function value =   0.161983E-14
+ 
+TEST06
+  The Hilbert function.
+ 
+  Initial point:
+ 
+         1     1.0000000    
+         2     1.0000000    
+         3     1.0000000    
+         4     1.0000000    
+         5     1.0000000    
+         6     1.0000000    
+         7     1.0000000    
+         8     1.0000000    
+         9     1.0000000    
+        10     1.0000000    
+  Function value =    13.3754    
+ 
+  Computed minimizer:
+ 
+         1    0.14711974E-03
+         2   -0.72647419E-02
+         3    0.83291044E-01
+         4   -0.36514660    
+         5    0.67050860    
+         6   -0.34587908    
+         7   -0.30832866    
+         8    0.12112024    
+         9    0.38922913    
+        10   -0.23787746    
+  Function value =   0.218336E-08
+ 
+TEST07
+  The Powell 3D function.
+ 
+  Initial point:
+ 
+         1     0.0000000    
+         2     1.0000000    
+         3     2.0000000    
+  Function value =    1.50000    
+ 
+  Computed minimizer:
+ 
+         1     1.0000019    
+         2     1.0000010    
+         3    0.99999941    
+  Function value =   0.151412E-11
+ 
+TEST08
+  The Rosenbrock function.
+ 
+  Initial point:
+ 
+         1    -1.2000000    
+         2     1.0000000    
+  Function value =    24.2000    
+ 
+  Computed minimizer:
+ 
+         1     1.0000000    
+         2     1.0000000    
+  Function value =   0.882589E-20
+ 
+TEST09
+  The Powell Singular function.
+ 
+  Initial point:
+ 
+         1     3.0000000    
+         2    -1.0000000    
+         3     1.0000000    
+         4    0.88258917E-20
+  Function value =    945.000    
+ 
+  Computed minimizer:
+ 
+         1   -0.22166029E-02
+         2    0.22165897E-03
+         3   -0.30787398E-02
+         4   -0.30788820E-02
+  Function value =   0.166158E-08
+ 
+TEST10
+  The Tridiagonal function.
+ 
+  Initial point:
+ 
+         1     0.0000000    
+         2     0.0000000    
+         3     0.0000000    
+         4     0.0000000    
+  Function value =    0.00000    
+ 
+  Computed minimizer:
+ 
+         1     4.0000000    
+         2     3.0000000    
+         3     2.0000000    
+         4     1.0000000    
+  Function value =   -4.00000    
+ 
+TEST11
+  The Watson function.
+ 
+  Initial point:
+ 
+         1     0.0000000    
+         2     0.0000000    
+         3     0.0000000    
+         4     0.0000000    
+         5     0.0000000    
+         6     0.0000000    
+  Function value =    30.0000    
+ 
+  Computed minimizer:
+ 
+         1   -0.48622713E-01
+         2    0.97257014    
+         3    0.19066961    
+         4   -0.15145309    
+         5    0.17412968    
+         6    0.26447920    
+  Function value =   0.104346E-01
+ 
+TEST12
+  The Wood function.
+ 
+  Initial point:
+ 
+         1    -3.0000000    
+         2    -1.0000000    
+         3    -3.0000000    
+         4    -1.0000000    
+  Function value =    19192.0    
+ 
+  Computed minimizer:
+ 
+         1    0.94140046    
+         2    0.88592360    
+         3    -1.0477041    
+         4     1.1087902    
+  Function value =    4.21288    
+ 
+PRAXIS_PRB
+  Normal end of execution.
+ 
+ 2 February  2008   3:51:13.035 PM      

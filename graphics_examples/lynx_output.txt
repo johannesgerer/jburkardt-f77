@@ -1,0 +1,15 @@
+
+ <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ <<                END OF DISLIN / VERSION 10.1                  <<
+ <<  Date    : 27.04.2011  Time    : 16:39:42  Pageformat: USAL  <<
+ <<  Vectors : 2513        Warnings: 0         Fileformat:  PNG  <<
+ <<  Metafile: lynx.png                                          <<
+ <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+ 
+LYNX:
+  FORTRAN77 version
+  Use DISLIN routines to plot (X,Y) data as a curve.
+ 
+LYNX:
+  Normal end of execution.

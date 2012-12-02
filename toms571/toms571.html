@@ -1,0 +1,158 @@
+<html>
+
+  <head>
+    <title>
+      TOMS571 - The Von Mises and Fisher Directional Distributions
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS571 <br> The Von Mises and Fisher Directional Distributions
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS571</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 571, containing routines
+      to determine the concentration parameter from the average modulus
+      of a set of sample vectors, and vice versa, for both the
+      von Mises (circular) and Fisher (spherical) distributions of
+      directions.
+    </p>
+
+    <p>
+      The text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/prob/prob.html">
+      PROB</a>,
+      a FORTRAN90 library which
+      contains routines to sample the von Mises and Fisher distributions.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Geoffrey Hill,<br>
+          Algorithm 571,
+          Statistics for von Mises's and Fisher's Distributions of Directions,
+          I1(x)/I0(x), I1.5(x)/I0.5(x), and Their Inverses,<br>
+          ACM Transactions on Mathematical Software,<br>
+          Volume 7, Number 2, June 1981, pages 233-238.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms571.f">toms571.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms571.sh">toms571.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms571_prb.f">toms571_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms571_prb.sh">toms571_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms571_prb_output.txt">toms571_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>BESRA2</b> returns the Bessel function ratio I1(V) / I0(V).
+        </li>
+        <li>
+          <b>BESRAT</b> returns the Bessel function ratio I1(V) / I0(V).
+        </li>
+        <li>
+          <b>R4_CAPPA3</b> estimates KAPPA from the sample mean, for the Fisher distribution.
+        </li>
+        <li>
+          <b>R4_PRECIS</b> returns the number of matching decimal digits.
+        </li>
+        <li>
+          <b>R4_SPHERR</b> computes the expected sample mean for the Fisher distribution.
+        </li>
+        <li>
+          <b>R8_CAPPA3</b> estimates KAPPA from the sample mean, for the Fisher distribution.
+        </li>
+        <li>
+          <b>R8_PRECIS</b> returns the number of matching decimal digits.
+        </li>
+        <li>
+          <b>R8_SPHERR</b> computes the expected sample mean for the Fisher distribution.
+        </li>
+        <li>
+          <b>TIMESTAMP</b> prints out the current YMDHMS date as a timestamp.
+        </li>
+        <li>
+          <b>VKAPPA</b> estimates KAPPA from the sample mean, for the von Mises distribution.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 07 January 2007.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

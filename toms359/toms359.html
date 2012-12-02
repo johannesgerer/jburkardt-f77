@@ -1,0 +1,142 @@
+<html>
+
+  <head>
+    <title>
+      TOMS359 - Factorial Analysis of Variance
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS359 <br> Factorial Analysis of Variance
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS359</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 359, for the factorial
+      analysis of variance.
+    </p>
+
+    <p>
+      The text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <dl>
+        <dt>
+          <b>call fnova ( y, z, row, msize, ncls, nfctr )</b>
+        </dt>
+        <dd>
+          where <br>
+          <b>Y</b>, the observed vector, of length NCLS,<br>
+          <b>Z</b>, the output interaction vector of length NCLS,<br>
+          <b>ROW</b> is a workspace vector whose length is (at least)
+          the maximum of the entries in MSIZE,<br>
+          <b>MSIZE</b> is a vector of size NFCTR, containing the
+          factor sizes;<br>
+          <b>NCLS</b> is the product of the factors;<br>
+          <b>NFCTR</b> is the number of factors.
+        </dd>
+      </dl>
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          John Howell,<br>
+          Algorithm 359:
+          Factorial Analysis of Variance,<br>
+          Communications of the ACM,<br>
+          Volume 12, Number 11, page 631, November 1969.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms359.f">toms359.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms359.sh">toms359.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms359_prb.f">toms359_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms359_prb.sh">toms359_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms359_prb_output.txt">toms359_prb_output.txt</a>,
+          the output from a run of the sample program.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>FNOVA</b> computes the factorial analysis of variance.
+        </li>
+        <li>
+          <b>AROW</b> computes a row of a contrast matrix.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 07 January 2006.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

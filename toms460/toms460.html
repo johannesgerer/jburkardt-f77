@@ -1,0 +1,146 @@
+<html>
+
+  <head>
+    <title>
+      TOMS460 - ADI Accuracy Parameters
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS460 <br> ADI Accuracy Parameters
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS460</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 460, for determining
+      the relative accuracy obtained in a given number of iterations, or the
+      number of iterations required for a given desired relative
+      accuracy, for an alternating direction implicit iterative linear
+      solution process.
+    </p>
+
+    <p>
+      The text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <dl>
+        <dt>
+          <b>call adip ( a, b, c, d, iopt, n, itns, dmu, omeh,
+            omev, ier )</b>
+        </dt>
+        <dd>
+          where <b>A</b>, <b>B</b>, <b>C</b> and <b>D</b> are lower
+          and upper bounds on the eigenvalues of the two iteration
+          factor matrices; <b>IOPT</b> specifies whether <b>ITNS</b>
+          or <b>DMU</b> is to be computed, <b>N</b> is the dimension of
+          <b>OMEH</b> and <b>OMEV</b>, <b>ITNS</b> is the number of iterations
+          to be performed, <b>DMU</b> is the relative improvement in
+          accuracy, <b>OMEH</b> and <b>OMEV</b> are vectors defining
+          scaling factors to be used to optimize the iteration,
+          and <b>IER</b> is an error flag.
+        </dd>
+      </dl>
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Paul Saylor, James Sebastian,<br>
+          Algorithm 460: Calculation of Optimum Parameters for Alternating
+          Direction Implicit Procedures,<br>
+          Communications of the ACM,<br>
+          October 1973, Volume 16, Number 10, pages 633-635.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms460.f">toms460.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms460.sh">toms460.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms460_prb.f">toms460_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms460_prb.sh">toms460_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms460_prb_output.txt">toms460_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>ADIP</b> determines the relative accuracy obtained in
+          a given number of iterations, or the
+          number of iterations required for a given desired relative
+          accuracy, for an iterative linear solution process.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 03 December 2005.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

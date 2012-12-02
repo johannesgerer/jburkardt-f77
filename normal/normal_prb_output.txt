@@ -1,0 +1,254 @@
+14 March     2008   4:30:01.275 PM      
+ 
+NORMAL_PRB
+  FORTRAN77 version.
+  Test the routines from the NORMAL library
+  for computing pseudorandom sequences
+  of normally distributed numbers.
+ 
+TEST01
+  C4_NORMAL_01 computes pseudorandom
+  complex values normally distributed 
+  in the unit circle.
+ 
+  The initial seed is    123456789
+ 
+         1     1.67904     -0.472768    
+         2   -0.566060     -0.231124    
+         3     1.21293      0.535037    
+         4     1.26938       1.04954    
+         5    -1.66609      -1.86523    
+         6    -2.24246      0.735809    
+         7    0.396752E-01  -1.35074    
+         8    0.673068      0.777484E-02
+         9   -0.275127      0.374940    
+        10     2.16400      0.185600    
+ 
+TEST02
+  C8_NORMAL_01 computes pseudorandom 
+  double precision complex values 
+  normally distributed in the unit circle.
+ 
+  The initial seed is    123456789
+ 
+       1     1.67904     -0.472769    
+       2   -0.566060     -0.231124    
+       3     1.21293      0.535037    
+       4     1.26938       1.04954    
+       5    -1.66609      -1.86523    
+       6    -2.24246      0.735809    
+       7    0.396749E-01  -1.35074    
+       8    0.673068      0.777484E-02
+       9   -0.275127      0.374940    
+      10     2.16400      0.185600    
+ 
+TEST03
+  I4_NORMAL computes integer pseudorandom
+  values in an interval [A,B].
+ 
+  The lower endpoint A =    70.0000    
+  The upper endpoint B =    10.0000    
+  The initial seed is    123456789
+ 
+         1        87
+         2        65
+         3        64
+         4        68
+         5        82
+         6        75
+         7        83
+         8        80
+         9        53
+        10        51
+ 
+SKIPPING TEST04 FOR NOW!
+ 
+TEST05
+  R4_NORMAL computes real pseudorandom values
+  in an interval [A,B].
+ 
+  The lower endpoint A =    5.00000    
+  The upper endpoint B =    10.0000    
+  The initial seed is    123456789
+ 
+       1     21.7904    
+       2    0.272317    
+       3   -0.660597    
+       4     2.68876    
+       5     17.1293    
+       6     10.3504    
+       7     17.6938    
+       8     15.4954    
+       9    -11.6609    
+      10    -13.6523    
+ 
+TEST06
+  R4_NORMAL_01 computes normal pseudorandom
+  values in the interval [0,1].
+ 
+  The initial seed is    123456789
+ 
+       1     1.67904    
+       2   -0.472768    
+       3   -0.566060    
+       4   -0.231124    
+       5     1.21293    
+       6    0.535037    
+       7     1.26938    
+       8     1.04954    
+       9    -1.66609    
+      10    -1.86523    
+ 
+TEST07
+  R8_NORMAL computes pseudonormal values 
+  with mean A and standard deviation B.
+ 
+  The mean A =    10.0000    
+  The standard deviation B =    2.00000    
+  The initial seed is    123456789
+ 
+       1     13.3581    
+       2     9.05446    
+       3     8.86788    
+       4     9.53775    
+       5     12.4259    
+       6     11.0701    
+       7     12.5388    
+       8     12.0991    
+       9     6.66783    
+      10     6.26954    
+ 
+TEST08
+  R8_NORMAL_01 computes pseudonormal values 
+  with mean 0 and standard deviation 1.
+ 
+  The initial seed is    123456789
+ 
+       1     1.67904    
+       2   -0.472769    
+       3   -0.566060    
+       4   -0.231124    
+       5     1.21293    
+       6    0.535037    
+       7     1.26938    
+       8     1.04954    
+       9    -1.66609    
+      10    -1.86523    
+ 
+TEST09
+  R8_NORMAL_01 computes a sequence of 
+  normally distributed pseudorandom numbers.
+ 
+  Initial SEED =        12345
+ 
+  First 10 values:
+ 
+     I         Input        Output    R8_NORMAL_01
+                SEED          SEED
+ 
+     1         12345     207482415     1.08874    
+     2     207482415    1790989824    -1.86779    
+     3    1790989824    2035175616    0.319471    
+     4    2035175616      77048696    0.732642E-01
+     5      77048696      24794531     2.83414    
+     6      24794531     109854999    0.943666    
+     7     109854999    1644515420   -0.628978    
+     8    1644515420    1256127050   -0.371602    
+     9    1256127050    1963079340    0.893188E-01
+    10    1963079340    1683198519   -0.414231    
+ 
+  Now compute       1000 elements.
+ 
+ 
+  Average value =  -0.027474
+  Expecting         0.000000
+ 
+  Variance =        0.991456
+  Expecting         1.000000
+  R8_NORMAL_01 computes pseudonormal values 
+  with mean 0 and standard deviation 1.
+ 
+  Verify that we can change the seed
+  and get the desired results.
+ 
+  The initial seed is    123456789
+ 
+         I    Seed(in)   Seed(out)   R8_NORMAL_01
+ 
+         1     123456789     469049721     1.67904    
+         2     469049721    2053676357   -0.472769    
+         3    2053676357    1781357515   -0.566060    
+         4    1781357515    1206231778   -0.231124    
+         5    1206231778     891865166     1.21293    
+ 
+  Resetting seed to repeat, after an ODD number of steps.
+ 
+         6     123456789     469049721     1.67904    
+         7     469049721    2053676357   -0.472769    
+         8    2053676357    1781357515   -0.566060    
+         9    1781357515    1206231778   -0.231124    
+        10    1206231778     891865166     1.21293    
+ 
+  Resetting seed to repeat, after an EVEN number of steps.
+ 
+        11     123456789     469049721     1.67904    
+        12     469049721    2053676357   -0.472769    
+        13    2053676357    1781357515   -0.566060    
+        14    1781357515    1206231778   -0.231124    
+        15    1206231778     891865166     1.21293    
+ 
+TEST11
+  R8_NORMAL_01 computes pseudorandom normal 
+    values one at a time.
+  R8MAT_NORMAL_01 computes a matrix of values.
+ 
+  For the same initial seed, the results
+  should be identical, but R8MAT_NORMAL_01 
+  might be faster.
+ 
+  The initial seed is    123456789
+ 
+       I       J      A(I,J)        B(I,J)
+                   (R8_NORMAL_01)  (R8MAT_NORMAL_01)
+ 
+         1         1     1.67904         1.67904    
+        10         1    -1.86523        -1.86523    
+        20         2   -0.275993       -0.275993    
+        30         3    0.620309        0.620309    
+        40         4   -0.384676       -0.384676    
+        50         5    -2.86980        -2.86980    
+        60         6    0.971005        0.971005    
+        70         7   -0.287301       -0.287301    
+        80         8    -1.90593        -1.90593    
+        90         9   -0.827487       -0.827487    
+       100        10    -1.10849        -1.10849    
+ 
+TEST12
+  R8_NORMAL_01 computes pseudorandom normal 
+  values one at a time.
+  R8VEC_NORMAL_01 computes a vector of values.
+ 
+  For the same initial seed, the results
+  should be identical, but R8VEC_NORMAL_01
+   might be faster.
+ 
+  The initial seed is    123456789
+ 
+       I      A(I)            B(I)
+           (R8_NORMAL_01)  (R8VEC_NORMAL_01)
+ 
+       1     1.67904         1.67904    
+       2   -0.472769       -0.472769    
+       3   -0.566060       -0.566060    
+       4   -0.231124       -0.231124    
+       5     1.21293         1.21293    
+       6    0.535037        0.535037    
+       7     1.26938         1.26938    
+       8     1.04954         1.04954    
+       9    -1.66609        -1.66609    
+      10    -1.86523        -1.86523    
+ 
+NORMAL_PRB
+  Normal end of execution.
+ 
+14 March     2008   4:30:01.281 PM      

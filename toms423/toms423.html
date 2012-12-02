@@ -1,0 +1,172 @@
+<html>
+
+  <head>
+    <title>
+      TOMS423 - Gaussian Elimination
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS423 <br> Gaussian Elimination
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS423</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 423, for Gaussian elimination
+      to factor a matrix and solve a related linear system.
+    </p>
+
+    <p>
+      While the text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>, most of the early
+      algorithms are not available.  This is one of them.  I typed it
+      in.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <dl>
+        <dt>
+          <b>call decomp(n,ndim,a,ip)</b>
+        </dt>
+        <dd>
+          computes the LU factorization of an <b>N</b> by <b>N</b> matrix
+          <b>A</b>, stored in an array with leading dimension <b>NDIM</b>.  The
+          vector <b>IP</b> returns pivot information.
+        </dd>
+        <dt>
+          <b>call solve(n,ndim,a,b,ip)</b>
+        </dt>
+        <dd>
+          solves a linear system A*X=B, after <b>A</b> has been factored
+          by DECOMP.  <b>B</b> contains the right hand side on input, and
+          the solution on output.
+        </dd>
+      </dl>
+    </p>
+
+    <h3 align = "center">
+      Related Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f77_src/lapack_examples/lapack_examples.html">
+      LAPACK_EXAMPLES</a>,
+      a FORTRAN77 program which
+      demonstrates the use of the LAPACK linear algebra library.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/linpack/linpack.html">
+      LINPACK</a>,
+      a FORTRAN77 library which
+      solves linear systems for a variety of matrix storage schemes,
+      real or complex arithmetic, and single or double precision.
+    </p>
+
+    <h3 align = "center">
+      Author:
+    </h3>
+
+    <p>
+      Cleve Moler
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Cleve Moler,<br>
+          Algorithm 423: Linear Equation Solver,<br>
+          Communications of the ACM,<br>
+          Volume 15, Number 4, April 1972, page 274.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms423.f">toms423.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms423.sh">toms423.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms423_prb.f">toms423_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms423_prb.sh">toms423_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms423_prb_output.txt">toms423_prb_output.txt</a>,
+          the output from a run of the sample program.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>DECOMP</b> decomposes the matrix.
+        </li>
+        <li>
+          <b>SOLVE</b> solves a linear system.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 30 November 2005.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

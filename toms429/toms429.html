@@ -1,0 +1,159 @@
+<html>
+
+  <head>
+    <title>
+      TOMS429 - Localization of the Roots of a Polynomial
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS429 <br> Localization of the Roots of a Polynomial
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS429</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 429, for localization of the
+      roots of a polynomial.
+    </p>
+
+    <p>
+      While the text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>, most of the early
+      algorithms are not available.  This is one of them.  I typed it
+      in.
+    </p>
+
+    <p>
+      This version of the algorithm incorporates corrections and
+      improvements suggested by Driessen and Hunt.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <dl>
+        <dt>
+          <b>call polyan ( c, cm, n )</b>
+        </dt>
+        <dd>
+          where <b>C(1:N)</b> contains the polynomial coefficients, omitting
+          the leading coefficient, which is assumed by normalization to
+          be 1, and starting with the coefficient of X^(N-1); <b>CM(1:N)</b>
+          is a work vector and <b>N</b> is the degree of the polynomial.
+        </dd>
+      </dl>
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          HB Driessen, EW Hunt,<br>
+          Remark on Algorithm 429,<br>
+          Communications of the ACM,<br>
+          September 1973, Volume 16, Number 9, page 579.
+        </li>
+        <li>
+          Paul Saylor, James Sebastian,<br>
+          Algorithm 429: Localization of the Roots of a Polynomial,<br>
+          Communications of the ACM,<br>
+          Volume 15, Number 8, August 1972, pages 776-777.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms429.f">toms429.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms429.sh">toms429.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms429_prb.f">toms429_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms429_prb.sh">toms429_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms429_prb_output.txt">toms429_prb_output.txt</a>,
+          the output from a run of the sample program.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>POLYAN</b> determines localization information about
+          a polynomial;
+        </li>
+        <li>
+          <b>RADIUS</b> bounds the roots inside a ring;
+        </li>
+        <li>
+          <b>BOUND</b> returns an upper limit for the positive
+          real roots;
+        </li>
+        <li>
+          <b>HRWTZR</b> employs a modification of the Routh-Hurwitz
+          criterion to determine wheterh the polynomial has any roots
+          with positive real parts;
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 03 December 2005.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

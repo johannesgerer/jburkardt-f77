@@ -1,0 +1,130 @@
+21 July      2011  10:34:17.382 AM      
+ 
+FLOYD_PRB
+  FORTRAN77 version
+  Test the FLOYD library.
+ 
+TEST01
+  I4MAT_FLOYO uses Floyd's algorithm to find the
+  shortest distance between all pairs of nodes
+  in a directed graph, starting from the initial array
+  of direct node-to-node distances.
+ 
+  In the initial direct distance array, if
+    A(I,J) = -1,
+  this indicates there is NO directed link from
+  node I to node J.  In that case, the value of
+  of A(I,J) is essentially "infinity".
+ 
+  Initial direct distance array:
+ 
+  Col        1       2       3       4       5       6
+  Row
+ 
+    1:       0       2       5      -1      -1      -1
+    2:      -1       0       7       1      -1       8
+    3:      -1      -1       0       4      -1      -1
+    4:      -1      -1      -1       0       3      -1
+    5:      -1      -1       2      -1       0       3
+    6:      -1       5      -1       2       4       0
+ 
+  In the final shortest distance array, if
+    A(I,J) = -1,
+  this indicates there is NO directed path from
+  node I to node J.
+ 
+  Final shortest distance array:
+ 
+  Col        1       2       3       4       5       6
+  Row
+ 
+    1:       0       2       5       3       6       9
+    2:      -1       0       6       1       4       7
+    3:      -1      15       0       4       7      10
+    4:      -1      11       5       0       3       6
+    5:      -1       8       2       5       0       3
+    6:      -1       5       6       2       4       0
+ 
+TEST02
+  R8MAT_FLOYO uses Floyd's algorithm to find the
+  shortest distance between all pairs of nodes
+  in a directed graph, starting from the initial array
+  of direct node-to-node distances.
+ 
+  In the initial direct distance array, if
+    A(I,J) = -1,
+  this indicates there is NO directed link from
+  node I to node J.  In that case, the value of
+  of A(I,J) is essentially "infinity".
+ 
+  Initial direct distance array:
+ 
+  Col         1             2             3             4             5       
+  Row
+ 
+    1:   0.00000       2.00000       5.00000      -1.00000      -1.00000    
+    2:  -1.00000       0.00000       7.00000       1.00000      -1.00000    
+    3:  -1.00000      -1.00000       0.00000       4.00000      -1.00000    
+    4:  -1.00000      -1.00000      -1.00000       0.00000       3.00000    
+    5:  -1.00000      -1.00000       2.00000      -1.00000       0.00000    
+    6:  -1.00000       5.00000      -1.00000       2.00000       4.00000    
+ 
+  Col         6       
+  Row
+ 
+    1:  -1.00000    
+    2:   8.00000    
+    3:  -1.00000    
+    4:  -1.00000    
+    5:   3.00000    
+    6:   0.00000    
+ 
+  In the final shortest distance array, if
+    A(I,J) = -1,
+  this indicates there is NO directed path from
+  node I to node J.
+ 
+  Final shortest distance array:
+ 
+  Col         1             2             3             4             5       
+  Row
+ 
+    1:   0.00000       2.00000       5.00000       3.00000       6.00000    
+    2:  -1.00000       0.00000       6.00000       1.00000       4.00000    
+    3:  -1.00000       15.0000       0.00000       4.00000       7.00000    
+    4:  -1.00000       11.0000       5.00000       0.00000       3.00000    
+    5:  -1.00000       8.00000       2.00000       5.00000       0.00000    
+    6:  -1.00000       5.00000       6.00000       2.00000       4.00000    
+ 
+  Col         6       
+  Row
+ 
+    1:   9.00000    
+    2:   7.00000    
+    3:   10.0000    
+    4:   6.00000    
+    5:   3.00000    
+    6:   0.00000    
+ 
+FLOYD_TEST03
+  Test I4MAT_FLOYD on the MOD(I,J) matrix.
+  The work is roughly N^3.
+ 
+         N   Time (seconds)  Time/N^3
+ 
+         1    0.100000E-05     1.00000    
+         2    0.100000E-05    0.125000    
+         4    0.100000E-05    0.156250E-01
+         8    0.400000E-05    0.781250E-02
+        16    0.270000E-04    0.659180E-02
+        32    0.212000E-03    0.646973E-02
+        64    0.167900E-02    0.640488E-02
+       128    0.132570E-01    0.632143E-02
+       256    0.104564        0.623250E-02
+       512    0.833486        0.620995E-02
+      1024     6.60629        0.615259E-02
+ 
+FLOYD_PRB
+  Normal end of execution.
+ 
+21 July      2011  10:34:24.951 AM      

@@ -1,0 +1,290 @@
+<html>
+
+  <head>
+    <title>
+      XERROR - Error Message Handler.
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      XERROR <br> Error Message Handler
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>XERROR</b>
+      is a FORTRAN77 library which
+      collects information about errors that
+      occur during a program's execution, and takes the appropriate
+      action, which may include printing a message, diverting to
+      a user routine, or aborting execution of the program.
+    </p>
+
+    <p>
+      Most users never encounter <b>XERROR</b> directly.  However,
+      they may receive warnings and other error messages produced
+      by <b>XERROR</b>, if the software they are calling has encountered
+      an error condition and uses <b>XERROR</b> to report and
+      handle the problem.
+    </p>
+
+    <p>
+      An experienced user or software developer may wish to incorporate
+      <b>XERROR</b> into software being developed, or to modify the
+      behavior of <b>XERROR</b> in software they are using.  The package
+      includes many routines to customize its behavior, to reduce
+      the level of output, to make multiple copies of the error output,
+      to control the number of times a particular error message is printed,
+      or to halt execution of the program if certain kinds of error occur.
+    </p>
+
+    <h3 align = "center">
+      Languages:
+    </h3>
+
+    <p>
+      <b>XERROR</b> is available in
+      <a href = "../../f77_src/xerror/xerror.html">a FORTRAN77 version</a> and
+      <a href = "../../f_src/xerror/xerror.html">a FORTRAN90 version</a>.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/dqed/dqed.html">
+      DQED</a>,
+      a FORTRAN90 library which
+      carries out constrained minimization, and
+      which includes
+      a version of the <b>XERROR</b> library.
+    </p>
+
+    <p>
+      <a href = "../../f_src/dlap/dlap.html">
+      DLAP</a>,
+      a FORTRAN90 library which
+      implements iterative linear equation solvers
+      and includes
+      a version of the <b>XERROR</b> library.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/machine/machine.html">
+      MACHINE</a>,
+      a FORTRAN77 library which
+      tabulate the values
+      of certain machine-specific arithmetic quantities.  The
+      <b>XERROR</b> library calls it for some simple information.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/nms/nms.html">
+      NMS</a>,
+      a FORTRAN77 library which includes
+      a version of the <b>XERROR</b> library.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/quadpack/quadpack.html">
+      QUADPACK</a>,
+      a FORTRAN77 library which
+      estimates integrals, and which calls the <b>XERROR</b> library.
+    </p>
+
+    <p>
+      <a href = "../../f_src/slatec/slatec.html">
+      SLATEC</a>,
+      a FORTRAN90 library which
+      includes a version of
+      the <b>XERROR</b> library.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/starpac/starpac.html">
+      STARPAC</a>,
+      a FORTRAN77 library which
+      includes a version of the <b>XERROR</b> library.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Phyllis Fox, Andrew Hall, Norman Schryer,<br>
+          Algorithm 528:<br>
+          Framework for a Portable Library,<br>
+          ACM Transactions on Mathematical Software,<br>
+          Volume 4, Number 2, June 1978, page 176-188.
+        </li>
+        <li>
+          Ron Jones, David Kahaner,<br>
+          XERROR, The SLATEC Error Handling Package,<br>
+          Software: Practice and Experience,<br>
+          Volume 13, Number 3, 1983, pages 251-257.
+        </li>
+        <li>
+          Ron Jones, David Kahaner,<br>
+          XERROR, The SLATEC Error Handling Package,<br>
+          Technical Report SAND82-0800,<br>
+          Sandia National Laboratories, 1982.
+        </li>
+        <li>
+          David Kahaner, Cleve Moler, Steven Nash,<br>
+          Numerical Methods and Software,<br>
+          Prentice Hall, 1989,<br>
+          ISBN: 0-13-627258-4,<br>
+          LC: TA345.K34.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "xerror.f">xerror.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "xerror.sh">xerror.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "xerror_prb.f">xerror_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "xerror_prb.sh">xerror_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "xerror_prb_output.txt">xerror_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>FDUMP</b> produces a symbolic dump.
+        </li>
+        <li>
+          <b>I1MACH</b> returns integer machine dependent constants.
+        </li>
+        <li>
+          <b>J4SAVE</b> saves and recalls global variables.
+        </li>
+        <li>
+          <b>NUMXER</b> returns the most recent error number.
+        </li>
+        <li>
+          <b>TIMESTAMP</b> prints out the current YMDHMS date as a timestamp.
+        </li>
+        <li>
+          <b>XERABT</b> aborts program execution.
+        </li>
+        <li>
+          <b>XERBLA</b> is an error handler for the Level 2 and Level 3 BLAS routines.
+        </li>
+        <li>
+          <b>XERCLR</b> resets the most recent error number to 0.
+        </li>
+        <li>
+          <b>XERCNT</b> allows user control over the handling of errors.
+        </li>
+        <li>
+          <b>XERCTL</b> allows the user control over individual errors.
+        </li>
+        <li>
+          <b>XERDMP</b> prints the error tables and then clears them.
+        </li>
+        <li>
+          <b>XERHLT</b> aborts program execution.
+        </li>
+        <li>
+          <b>XERMAX</b> sets the maximum number of times an error message is printed.
+        </li>
+        <li>
+          <b>XERMSG</b> processes error messages.
+        </li>
+        <li>
+          <b>XERPRN</b> prints error messages processed by XERMSG.
+        </li>
+        <li>
+          <b>XERPRT</b> prints a message on each file receiving error messages.
+        </li>
+        <li>
+          <b>XERROR</b> processes a diagnostic error message.
+        </li>
+        <li>
+          <b>XERRWV</b> processes a diagnostic error message.
+        </li>
+        <li>
+          <b>XERSAV</b> records that a particular error has occurred.
+        </li>
+        <li>
+          <b>XERSVE</b> records that an error has occurred.
+        </li>
+        <li>
+          <b>XGETF</b> returns the error control flag.
+        </li>
+        <li>
+          <b>XGETUA</b> reports the unit numbers of the files receiving error messages.
+        </li>
+        <li>
+          <b>XGETUN</b> reports the first unit number of the files receiving error messages.
+        </li>
+        <li>
+          <b>XSETF</b> sets the error control flag.
+        </li>
+        <li>
+          <b>XSETUA</b> sets the unit numbers of the files receiving error messages.
+        </li>
+        <li>
+          <b>XSETUN</b> sets the unit number of the main error output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last modified on 09 April 2007.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

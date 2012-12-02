@@ -1,0 +1,299 @@
+<html>
+
+  <head>
+    <title>
+      TOMS757 - Uncommon Special Functions
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS757 <br> Uncommon Special Functions
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS757</b>
+      is a FORTRAN77 library which
+      evaluates a number of
+      uncommon special functions, by Allan McLeod.
+    </p>
+
+    <p>
+      <b>TOMS757</b> is a FORTRAN90 version of ACM TOMS algorithm 757.
+    </p>
+
+    <p>
+      The special functions include:
+      <ul>
+        <li>
+          the Abramowitz function of several orders;
+        </li>
+        <li>
+          integrals of the Airy functions Ai(x) and Bi(x);
+        </li>
+        <li>
+          Clausen's integral;
+        </li>
+        <li>
+          Debye integrals of several orders;
+        </li>
+        <li>
+          integrals of the Bessel functions I0, J0, K0 and Y0;
+        </li>
+        <li>
+          Struve functions;
+        </li>
+        <li>
+          the synchrotron radiation integral;
+        </li>
+        <li>
+          the transport integral of several orders;
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      The original, true, correct version of ACM TOMS Algorithm 757
+      is available through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>
+    </p>
+
+    <p>
+      The version displayed here has been converted to FORTRAN90,
+      and other internal changes have been made to suit me.
+    </p>
+
+    <h3 align = "center">
+      Languages:
+    </h3>
+
+    <p>
+      <b>TOMS757</b> is available in
+      <a href = "../../f77_src/toms757/toms757.html">a FORTRAN77 version</a> and
+      <a href = "../../f_src/toms757/toms757.html">a FORTRAN90 version</a>.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f77_src/test_values/test_values.html">
+      TEST_VALUES</a>,
+      a FORTRAN77 library which
+      contains routines which store selected values of various
+      special functions.
+    </p>
+
+    <h3 align = "center">
+      Author:
+    </h3>
+
+    <p>
+      Allan McLeod,<br>
+      Department of Mathematics and Statistics,<br>
+      Paisley University, Scotland.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Allan Mcleod,<br>
+          Algorithm 757, MISCFUN: A software package to compute uncommon
+          special functions,<br>
+          ACM Transactions on Mathematical Software,<br>
+          Volume 22, Number 3, September 1996, pages 288-301.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms757.f">toms757.f</a>, the source code;
+        </li>
+        <li>
+          <a href = "toms757.sh">toms757.sh</a>,
+          commands to compile the source code;
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms757_prb.f">toms757_prb.f</a>,
+          the sample test code;
+        </li>
+        <li>
+          <a href = "toms757_prb.sh">toms757_prb.sh</a>,
+          commands to compile the test code;
+        </li>
+        <li>
+          <a href = "toms757_prb_output.txt">toms757_prb_output.txt</a>,
+          output from a run of the test code;
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>ABRAM0</b> evaluates the Abramowitz function of order 0.
+        </li>
+        <li>
+          <b>ABRAM1</b> evaluates the Abramowitz function of order 1.
+        </li>
+        <li>
+          <b>ABRAM2</b> evaluates the Abramowitz function of order 2.
+        </li>
+        <li>
+          <b>AIRINT</b> calculates the integral of the Airy function Ai.
+        </li>
+        <li>
+          <b>AIRYGI</b> computes the modified Airy function Gi(x).
+        </li>
+        <li>
+          <b>AIRYHI</b> computes the modified Airy function Hi(x).
+        </li>
+        <li>
+          <b>ATNINT</b> calculates the inverse tangent integral.
+        </li>
+        <li>
+          <b>BIRINT</b> calculates the integral of the Airy function Bi.
+        </li>
+        <li>
+          <b>CLAUSN</b> calculates Clausen's integral.
+        </li>
+        <li>
+          <b>DEBYE1</b> calculates the Debye function of order 1.
+        </li>
+        <li>
+          <b>DEBYE2</b> calculates the Debye function of order 2.
+        </li>
+        <li>
+          <b>DEBYE3</b> calculates the Debye function of order 3.
+        </li>
+        <li>
+          <b>DEBYE4</b> calculates the Debye function of order 4.
+        </li>
+        <li>
+          <b>EXP3</b> calculates the integral of exp(-t^3).
+        </li>
+        <li>
+          <b>GOODST</b> calculates the integral of exp(-t^2/(t+x)).
+        </li>
+        <li>
+          <b>I0INT</b> computes the integral of the modified Bessel function I0(X).
+        </li>
+        <li>
+          <b>I0ML0</b> calculates the difference between the Bessel I0 and Struve L0 functions.
+        </li>
+        <li>
+          <b>I1ML1</b> calculates the difference between the Bessel I1 and Struve L1 functions.
+        </li>
+        <li>
+          <b>J0INT</b> calculates the integral of the Bessel function J0.
+        </li>
+        <li>
+          <b>K0INT</b> calculates the integral of the modified Bessel function K0(X).
+        </li>
+        <li>
+          <b>LOBACH</b> calculates the Lobachevsky function.
+        </li>
+        <li>
+          <b>STROM</b> calculates Stromgen's integral.
+        </li>
+        <li>
+          <b>STRVH0</b> calculates the Struve function of order 0.
+        </li>
+        <li>
+          <b>STRVH1</b> calculates the Struve function of order 1.
+        </li>
+        <li>
+          <b>STRVL0</b> calculates the modified Struve function of order 0.
+        </li>
+        <li>
+          <b>STRVL1</b> calculates the modified Struve function of order 1.
+        </li>
+        <li>
+          <b>SYNCH1</b> calculates the synchrotron radiation function.
+        </li>
+        <li>
+          <b>SYNCH2</b> calculates the synchrotron radiation function.
+        </li>
+        <li>
+          <b>TRAN02</b> calculates the transport integral of order 2.
+        </li>
+        <li>
+          <b>TRAN03</b> calculates the transport integral of order 3.
+        </li>
+        <li>
+          <b>TRAN04</b> calculates the transport integral of order 4.
+        </li>
+        <li>
+          <b>TRAN05</b> calculates the transport integral of order 5.
+        </li>
+        <li>
+          <b>TRAN06</b> calculates the transport integral of order 6.
+        </li>
+        <li>
+          <b>TRAN07</b> calculates the transport integral of order 7.
+        </li>
+        <li>
+          <b>TRAN08</b> calculates the transport integral of order 8.
+        </li>
+        <li>
+          <b>TRAN09</b> calculates the transport integral of order 9.
+        </li>
+        <li>
+          <b>BESSEL_Y0_INT</b> calculates the integral of the Bessel function Y0.
+        </li>
+        <li>
+          <b>CHEVAL</b> evaluates a Chebyshev series.
+        </li>
+        <li>
+          <b>ERRPRN</b> prints an error message.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN770 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 29 June 2012.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+</html>

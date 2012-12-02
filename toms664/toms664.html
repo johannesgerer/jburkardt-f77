@@ -1,0 +1,139 @@
+<html>
+
+  <head>
+    <title>
+      TOMS664 - (GBSOL) - Gauss Elimination of Large Banded Matrices Using Disk Storage
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS664 <br> (GBSOL) - Gauss Elimination of Large Banded Matrices Using Disk Storage
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS664</b>
+      is a FORTRAN77 library which
+      uses Gauss elimination to solve linear systems involving large
+      banded matrices.  Disk storage is used when there is not enough memory
+      for the working data.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f77_src/lapack_examples/lapack_examples.html">
+      LAPACK_EXAMPLES</a>,
+      a FORTRAN77 program which
+      demonstrates the use of the LAPACK linear algebra library.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/linpack/linpack.html">
+      LINPACK</a>,
+      a FORTRAN77 library which
+      factors and solves systems of linear equations in a variety of
+      formats and arithmetic types.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Geza Schrauf,<br>
+          Algorithm 664:
+          A Gauss Algorithm to Solve Systems with Large, Banded
+          Matrices Using Random Access Disk Storage,<br>
+          ACM Transactions on Mathematical Software,<br>
+          Volume 14, Number 3, September 1988, pages 257-260,
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms664.f">toms664.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms664.sh">toms664.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms664_prb.f">toms664_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms664_prb.sh">toms664_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms664_prb_output.txt">toms664_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>GBSOL</b> Gauss eliminates a (large) banded matrix using disk storage.
+        </li>
+        <li>
+          <b>GOPEN</b> opens a file for direct-access.
+        </li>
+        <li>
+          <b>GCLOSE</b> closes the file opened by GOPEN.
+        </li>
+        <li>
+          <b>GRWRAN</b> reads from or writes to a direct access file.
+        </li>
+        <li>
+          <b>TIMESTAMP</b> prints the current YMDHMS date as a timestamp.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 18 May 2008.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

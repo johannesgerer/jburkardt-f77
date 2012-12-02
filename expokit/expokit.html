@@ -1,0 +1,496 @@
+<html>
+
+  <head>
+    <title>
+      EXPOKIT - Software for Computing the Matrix Exponential.
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      EXPOKIT <br> Software for Computing the Matrix Exponential.
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>EXPOKIT</b>
+      is a FORTRAN77 library which
+      handles various forms of the matrix exponential problem,
+      by Roger Sidje.
+    </p>
+
+    <p>
+      Formally, for a square matrix A and scalar t, the matrix exponential
+      exp(A*t) can be defined as the sum:
+      <blockquote>
+        exp(A*t) = sum ( 0 <= i < oo ) A^i t^i / i!
+      </blockquote>
+    </p>
+
+    <p>
+      The simplest form of the matrix exponential problem asks for the
+      value when t = 1.  Even for this simple case, and for a matrix
+      of small order, it can be quite difficult to compute the matrix
+      exponential accurately.
+    </p>
+
+    <p>
+      <b>EXPOKIT</b> provides a set of routines aimed at the accurate
+      computation of the matrix exponential itself, or of computing the
+      product of the matrix exponential with a given vector, or the solution
+      of a system of linear ODE's of the form w' = A*w(t) + B*u(t).
+    </p>
+
+    <p>
+      The software can handle real or complex matrices, and has special
+      interfaces for symmetric or Hermitian matrices.
+    </p>
+
+    <p>
+      The version of EXPOKIT exhibited here has been modified from the original.
+      Persons interested in using EXPOKIT are urged to consult the original
+      source, available at
+      <a href = "http://www.maths.uq.edu.au/expokit">
+                "http://www.maths.uq.edu.au/expokit" </a>
+    </p>
+
+    <h3 align = "center">
+      Licensing:
+    </h3>
+
+    <p>
+      Permission to use, copy, modify, and distribute EXPOKIT and its
+      supporting documentation for non-commercial purposes, is hereby
+      granted without fee, provided that this permission message and
+      copyright notice appear in all copies. Approval must be sought for
+      commercial purposes.
+    </p>
+
+    <p>
+      Neither the Institution (University of Queensland) nor the Authors
+      make any representations about the suitability of this software for
+      any purpose.  This software is provided ``as is'' without express or
+      implied warranty.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/arpack/arpack.html">
+      ARPACK</a>,
+      a FORTRAN90 library which
+      computes eigenvalues for large matrices;
+    </p>
+
+    <p>
+      <a href = "../../data/dlap/dlap.html">
+      DLAP</a>,
+      a data directory which
+      contains examples of DLAP files,
+      a sparse matrix file format used by DLAP;
+    </p>
+
+    <p>
+      <a href = "../../data/dsp/dsp.html">
+      DSP</a>,
+      a data directory which
+      contains examples of DSP files,
+      a sparse matrix file format, storing just
+      (I,J,A(I,J)), and using one-based indexing.
+    </p>
+
+    <p>
+      <a href = "../../data/hb/hb.html">
+      HB</a>,
+      a data directory which
+      contains examples of HB files,
+      the Harwell Boeing sparse matrix file format;
+    </p>
+
+    <p>
+      <a href = "../../datasets/hbsmc/hbsmc.html">
+      HBSMC</a>,
+      a dataset directory which
+      contains the Harwell Boeing Sparse Matrix Collection;
+    </p>
+
+    <p>
+      <a href = "../../data/mm/mm.html">
+      MM</a>,
+      a data directory which
+      contains examples of MM files,
+      the Matrix Market Sparse Matrix File Format;
+    </p>
+
+    <p>
+      <a href = "../../data/sparse_cc/sparse_cc.html">
+      SPARSE_CC</a>,
+      a data directory which
+      contains examples of SPARSE CC files,
+      a three-file format for the sparse compressed column
+      matrix format;
+    </p>
+
+    <p>
+      <a href = "../../data/sparse_cr/sparse_cr.html">
+      SPARSE_CR</a>,
+      a data directory which
+      contains examples of SPARSE CR files,
+      a three-file format for the sparse compressed row
+      matrix format;
+    </p>
+
+    <p>
+      <a href = "../../data/st/st.html">
+      ST</a>,
+      a data directory which
+      contains examples of ST files,
+      the Sparse Triplet format, a sparse matrix file format,
+      storing just (I,J,A(I,J)), and using zero-based indexing.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/test_mat/test_mat.html">
+      TEST_MAT</a>,
+      a FORTRAN77 library which
+      defines test matrices.
+    </p>
+
+    <h3 align = "center">
+      Author:
+    </h3>
+
+    <p>
+      Roger Sidje,<br>
+      Department of Mathematics,<br>
+      University of Queensland,<br>
+      Brisbane, Australia.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Cleve Moler, Charles VanLoan,<br>
+          Nineteen Dubious Ways to Compute the Exponential of a Matrix,
+          SIAM Review,<br>
+          Volume 20, Number 4, October 1978, pages 801-836.
+        </li>
+        <li>
+          Cleve Moler, Charles VanLoan,<br>
+          Nineteen Dubious Ways to Compute the Exponential of a Matrix,
+          Twenty-Five Years Later,<br>
+          SIAM Review,<br>
+          Volume 45, Number 1, March 2003, pages 3-49.
+        </li>
+        <li>
+          Roger Sidje,<br>
+          EXPOKIT: Software Package for Computing Matrix Exponentials,<br>
+          ACM Transactions on Mathematical Software,<br>
+          Volume 24, Number 1, March 1998, pages 130-156.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "expokit.f">expokit.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "expokit.sh">expokit.sh</a>,
+          BASH commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "expokit_prb.f">expokit_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "expokit_prb.sh">expokit_prb.sh</a>,
+          BASH commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "expokit_prb_output.txt">expokit_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>CLOCK</b> returns a reading from the real time clock.
+        </li>
+        <li>
+          <b>DASUM</b> sums the absolute value of the entries of a vector.
+        </li>
+        <li>
+          <b>DAXPY</b> adds a multiple of one vector to another.
+        </li>
+        <li>
+          <b>DCABS1</b> computes the L1 norm of a complex number.
+        </li>
+        <li>
+          <b>DCMPAC</b> compacts the array IX and sorts IXX and XX.
+        </li>
+        <li>
+          <b>DCOPY</b> copies a vector.
+        </li>
+        <li>
+          <b>DDOT</b> computes the dot product of two vectors.
+        </li>
+        <li>
+          <b>DGCCSV</b> computes y = A * x for A in compressed column storage (CCS).
+        </li>
+        <li>
+          <b>DGCHBV</b> computes y=exp(t*H)*y, general matrix H, using rational Chebyshev.
+        </li>
+        <li>
+          <b>DGCNVR</b> converts between sparse matrix storage formats.
+        </li>
+        <li>
+          <b>DGCOOV</b> computes y = A * x, with A stored in "COO" format.
+        </li>
+        <li>
+          <b>DGCRSV</b> computes y = A * x, for A stored in Compressed Row Storage (CRS) format.
+        </li>
+        <li>
+          <b>DGEFA</b> factors a double precision matrix by gaussian elimination.
+        </li>
+        <li>
+          <b>DGEMM</b> performs matrix-matrix operations of the form C=alpha*A*B+beta*C.
+        </li>
+        <li>
+          <b>DGEMV</b> performs a matrix-vector operation of the form y=alpha*A*x+beta*y.
+        </li>
+        <li>
+          <b>DGESL</b> solves a factored linear system of the form A*x=b.
+        </li>
+        <li>
+          <b>DGESV</b> solves multiple general linear systems of the form A*X=B.
+        </li>
+        <li>
+          <b>DGEXPV</b> computes w=exp(t*A)*v for a general matrix A.
+        </li>
+        <li>
+          <b>DGPADM</b> computes exp(t*H) using an irreducible rational Pade approximation.
+        </li>
+        <li>
+          <b>DGPHIV</b> computes the solution of the ODE w'=A*w+u, w(0)=v.
+        </li>
+        <li>
+          <b>DLARAN</b> returns a random real number uniformly selected from (0,1).
+        </li>
+        <li>
+          <b>DMEXPV</b> computes w = exp(t*A)*v, customized for Markov chains.
+        </li>
+        <li>
+          <b>DNCHBV</b> computes y = exp(t*H)*y using a partial fraction expansion.
+        </li>
+        <li>
+          <b>DNRM2</b> computes the Euclidean norm of a vector.
+        </li>
+        <li>
+          <b>DSCAL</b> scales a vector by a constant.
+        </li>
+        <li>
+          <b>DSCHBV</b> computes y = exp(t*H)*y using a partial fraction expansion.
+        </li>
+        <li>
+          <b>DSEXPV</b> computes w = exp(t*A)*v, for a symmetric matrix A.
+        </li>
+        <li>
+          <b>DSIFA</b> factors a symmetric matrix.
+        </li>
+        <li>
+          <b>DSISL</b> solves a factored symmetric linear system.
+        </li>
+        <li>
+          <b>DSPADM</b> computes exp(t*H), the matrix exponential of a symmetric matrix.
+        </li>
+        <li>
+          <b>DSPHIV</b> solves the ODE w' = Aw + u, w(0) = v, for A symmetric.
+        </li>
+        <li>
+          <b>DSWAP</b> interchanges two vectors.
+        </li>
+        <li>
+          <b>DSYSV</b> solves multiple symmetric linear systems of the form A*X=B.
+        </li>
+        <li>
+          <b>DZNRM2</b> computes the unitary norm of a complex vector.
+        </li>
+        <li>
+          <b>GETPAT</b> loads a Harwell-Boeing pattern.
+        </li>
+        <li>
+          <b>IDAMAX</b> indexes the vector entry of maximum absolute value.
+        </li>
+        <li>
+          <b>IDSRT1</b> is an indirect sort; sorts IX and carries XX along.
+        </li>
+        <li>
+          <b>IDSRT2</b> is an indirect sort: sorts IX and carries IXX and XX along.
+        </li>
+        <li>
+          <b>IZAMAX</b> indexes the complex vector entry of maximum magnitude.
+        </li>
+        <li>
+          <b>IZSRT1</b> is an indirect sort; sorts IX and carries XX along.
+        </li>
+        <li>
+          <b>IZSRT2</b> is an indirect sort: sorts IX and carries IXX and XX along.
+        </li>
+        <li>
+          <b>LOADHB</b> loads a Harwell-Boeing sparse matrix from a file.
+        </li>
+        <li>
+          <b>LSAME</b> compares two characters for identity.
+        </li>
+        <li>
+          <b>TIMESTAMP</b> prints out the current YMDHMS date as a timestamp.
+        </li>
+        <li>
+          <b>TNSPOS</b> transposes a CRS matrix.
+        </li>
+        <li>
+          <b>XERBLA</b> is an error handler for the level 2 BLAS routines.
+        </li>
+        <li>
+          <b>ZAXPY</b> adds a multiple of one vector to another.
+        </li>
+        <li>
+          <b>ZCMPAC</b> compacts the array IX and sorts IXX and XX.
+        </li>
+        <li>
+          <b>ZCOPY</b> copies a vector.
+        </li>
+        <li>
+          <b>ZDOTC</b> computes the conjugated dot product of complex vectors.
+        </li>
+        <li>
+          <b>ZDOTU</b> computes the unconjugated dot product of complex vectors.
+        </li>
+        <li>
+          <b>ZDSCAL</b> scales a complex vector by a real constant.
+        </li>
+        <li>
+          <b>ZGCCSV</b> computes y = A * x, for A in compressed column storage (CCS).
+        </li>
+        <li>
+          <b>ZGCHBV</b> computes y = exp(t*H)*y using a partial fraction expansion.
+        </li>
+        <li>
+          <b>ZGCNVR</b> transforms a sparse storage format into another sparse storage format.
+        </li>
+        <li>
+          <b>ZGCOOV</b> computes y = A * x, with A stored in COO storage format.
+        </li>
+        <li>
+          <b>ZGCRSV</b> computes y = A * x, with A stored in compressed row storage (CRS).
+        </li>
+        <li>
+          <b>ZGEFA</b> factors a complex general linear system.c
+        </li>
+        <li>
+          <b>ZGEMM</b> performs a matrix-matrix operation of the form C=alpha*A*B+beta*C.
+        </li>
+        <li>
+          <b>ZGEMV</b> performs a matrix-vector operation of the form y=alpha*A*x+beta*y.
+        </li>
+        <li>
+          <b>ZGESL</b> solves a factored complex general linear system.
+        </li>
+        <li>
+          <b>ZGESV</b> solves multiple general linear systems of the form A*X=B.
+        </li>
+        <li>
+          <b>ZGEXPV</b> computes w = exp(t*A)*v.
+        </li>
+        <li>
+          <b>ZGPADM</b> computes exp(t*H), the matrix exponential of a general complex matrix.
+        </li>
+        <li>
+          <b>ZGPHIV</b> solves the ODE w' = Aw + u, w(0) = v.
+        </li>
+        <li>
+          <b>ZHESV</b> solves multiple hermitian linear systems of the form A*X=B.
+        </li>
+        <li>
+          <b>ZHEXPV</b> computes w = exp(t*A)*v for a Hermitian matrix A.
+        </li>
+        <li>
+          <b>ZHIFA</b> factors a complex Hermitian linear system.
+        </li>
+        <li>
+          <b>ZHISL</b> solves a factored complex Hermitian linear system.
+        </li>
+        <li>
+          <b>ZHPADM</b> computes exp(t*H), the matrix exponential of a Hermitian matrix.
+        </li>
+        <li>
+          <b>ZHPHIV</b> solves the linear ODE w' = Aw + u, w(0) = v for A hermitian.
+        </li>
+        <li>
+          <b>ZNCHBV</b> computes y = exp(t*H)*y using a partial fraction expansion.
+        </li>
+        <li>
+          <b>ZSCAL</b> scales a vector by a constant.
+        </li>
+        <li>
+          <b>ZSIFA</b> factors a complex symmetric matrix.
+        </li>
+        <li>
+          <b>ZSISL</b> solves a factored complex symmetric linear system.
+        </li>
+        <li>
+          <b>ZSWAP</b> interchanges two vectors.
+        </li>
+        <li>
+          <b>ZSYSV</b> solves multiple symmetric linear systems of the form A*X=B.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 05 December 2010.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

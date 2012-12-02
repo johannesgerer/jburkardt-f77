@@ -1,0 +1,575 @@
+<html>
+
+  <head>
+    <title>
+      ODEPACK - Ordinary Differential Equation Solvers
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      ODEPACK <br> Ordinary Differential Equation Solvers
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>ODEPACK</b>
+      is a FORTRAN77 library which
+      implements a variety of solvers for ordinary differential equations,
+      by Alan Hindmarsh.
+    </p>
+
+    <p>
+      The library includes routines commonly referred to as
+      <ul>
+        <li>
+          LSODE solves nonstiff or stiff systems y' = f(y,t);
+        </li>
+        <li>
+          LSODES is like LSODE, but in the stiff case the Jacobian matrix
+          is assumed to be sparse, and treated with sparse routines;
+        </li>
+        <li>
+          LSODA automatically switches between nonstiff and stiff solvers
+          depending on the behavior of the problem;
+        </li>
+        <li>
+          LSODAR is like LSODE, but includes the ability to detect and solve
+          for solutions of a related set of algebraic equations;
+        </li>
+        <li>
+          LSODPK is like LSODE, but uses preconditioned Krylov space
+          iterative methods for the linear equation solvers;
+        </li>
+        <li>
+          LSODKR includes the rootfinding ability of LSODA, and the
+          Krylov solvers of LSODPK.
+        </li>
+        <li>
+          LSODI solves the implicit system A(y,t)*y'(t) = g(y,t).
+        </li>
+        <li>
+          LSOIBT is like LSODI, but assumes the matrix A is block tridiagonal.
+        </li>
+        <li>
+          LSODIS is like LSODI, but assumes the matrix A is sparse.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      ODEPACK is a collection of Fortran solvers for the initial value
+      problem for ordinary differential equation systems.  It consists of nine
+      solvers, namely a basic solver called LSODE and eight variants of it --
+      LSODES, LSODA, LSODAR, LSODPK, LSODKR, LSODI, LSOIBT, and LSODIS.
+      The collection is suitable for both stiff and nonstiff systems.  It
+      includes solvers for systems given in explicit form, dy/dt = f(t,y),
+      and also solvers for systems given in linearly implicit form,
+      A(t,y) dy/dt = g(t,y).  Two of the solvers use general sparse matrix
+      solvers for the linear systems that arise.  Two others use iterative
+      (preconditioned Krylov) methods instead of direct methods for these
+      linear systems.  The most recent addition is LSODIS, which solves
+      implicit problems with general sparse treatment of all matrices involved.
+    </p>
+
+    <p>
+      The ODEPACK solvers are written in standard Fortran 77, with a few
+      exceptions, and with minimal machine dependencies.  There are separate
+      double and single precision versions of ODEPACK.  The actual solver
+      names are those given above with a prefix of D- or S- for the double
+      or single precision version, respectively, i.e. DLSODE/SLSODE, etc.
+      Each solver consists of a main driver subroutine having the same name
+      as the solver and some number of subordinate routines.  For each
+      solver, there is also a demonstration program, which solves one or two
+      simple problems in a somewhat self-checking manner.
+    </p>
+
+    <p>
+      Recently, the ODEPACK solvers were upgraded to improve their
+      portability in numerous ways.  Among the improvements are (a) renaming
+      of routines and Common blocks to distinguish double and single
+      precision versions, (b) use of generic intrinsic function names, (c)
+      elimination of the Block Data subprogram, (d) use of a portable
+      routine to set the unit roundoff, and (e) passing of quoted strings to
+      the error message handler.  In addition, the prologue and internal
+      comments were reformatted, and use mixed upper/lower case.  Numerous
+      minor corrections and improvements were also made.
+    </p>
+
+    <p>
+      The above upgrade operations were applied to LSODE earlier than they
+      were to the rest of ODEPACK, and the two upgrades were done somewhat
+      independently.  As a result, some differences will be apparent in the
+      source files of LSODE and the other solvers -- primarily in the
+      formatting of the comment line prologue of the main driver routine.
+      In Subroutines DLSODE/SLSODE and their subordinate routines, the
+      prologue was written in "SLATEC format", while for the other solvers a
+      more relaxed style was used.  The differences are entirely cosmetic,
+      however, and do not affect performance.
+    </p>
+
+    <p>
+      Documentation on the usage of each solver is provided in the
+      initial block of comment lines in the source file, which (in most
+      cases) includes a simple example.
+    </p>
+
+    <h3 align = "center">
+      Solvers for explicit systems:
+    </h3>
+
+    <p>
+      For each of the following solvers, it is assumed that the ODEs are
+      given explicitly, so that the system can be written in the form
+      dy/dt = f(t,y), where y is the vector of dependent variables, and t is
+      the independent variable.
+    </p>
+
+    <p>
+      <b>LSODE</b> (Livermore Solver for Ordinary Differential Equations) is the
+      basic solver of the collection.  It solves stiff and nonstiff systems
+      of the form dy/dt = f.  In the stiff case, it treats the Jacobian
+      matrix df/dy as either a dense (full) or a banded matrix, and as either
+      user-supplied or internally approximated by difference quotients.
+      It uses Adams methods (predictor-corrector) in the nonstiff case,
+      and Backward Differentiation Formula (BDF) methods (the Gear methods)
+      in the stiff case.  The linear systems that arise are solved by direct
+      methods (LU factor/solve).  LSODE supersedes the older GEAR and GEARB
+      packages, and reflects a complete redesign of the user interface
+      and internal organization, with some algorithmic improvements.
+    </p>
+
+    <p>
+      <b>LSODES</b>, written jointly with A. H. Sherman, solves systems dy/dt = f
+      and in the stiff case treats the Jacobian matrix in general sparse
+      form.  It determines the sparsity structure on its own, or optionally
+      accepts this information from the user.  It then uses parts of the
+      Yale Sparse Matrix Package (YSMP) to solve the linear systems that
+      arise, by a sparse (direct) LU factorization/backsolve method.
+      LSODES supersedes, and improves upon, the older GEARS package.
+    </p>
+
+    <p>
+      <b>LSODA</b>, written jointly with L. R. Petzold, solves systems dy/dt = f
+      with a dense or banded Jacobian when the problem is stiff, but it
+      automatically selects between nonstiff (Adams) and stiff (BDF)
+      methods.  It uses the nonstiff method initially, and dynamically
+      monitors data in order to decide which method to use.
+    </p>
+
+    <p>
+      <b>LSODAR</b>, also written jointly with L. R. Petzold, is a variant of
+      LSODA with a rootfinding capability added.  Thus it solves problems
+      dy/dt = f with dense or banded Jacobian and automatic method
+      selection, and at the same time, it finds the roots of any of a
+      set of given functions of the form g(t,y).  This is often useful
+      for finding stop conditions, or for finding points at which a switch
+      is to be made in the function f.
+    </p>
+
+    <p>
+      <b>LSODPK</b>, written jointly with Peter N. Brown, is a variant of LSODE
+      in which the direct solvers for the linear systems have been replaced
+      by a selection of four preconditioned Krylov (iterative) solvers.
+      The user must supply a pair of routine to evaluate, preprocess, and
+      solve the (left and/or right) preconditioner matrices.  LSODPK also
+      includes an option for a user-supplied linear system solver to be used
+      without Krylov iteration.
+    </p>
+
+    <p>
+      <b>LSODKR</b> is a variant of LSODPK with the addition of the same
+      rootfinding capability as in LSODAR, and also of automatic switching
+      between functional and Newton iteration.  The nonlinear iteration
+      method-switching differs from the method-switching in LSODA and LSODAR,
+      but provides similar savings by using the cheaper method in the non-stiff
+      regions of the problem.  LSODKR also improves on the Krylov methods in
+      LSODPK by offering the option to save and reuse the approximate Jacobian
+      data underlying the preconditioner.
+    </p>
+
+    <h3 align = "center">
+      Solvers for linearly implicit systems:
+    </h3>
+
+    <p>
+      The following solvers treat systems in the linearly implicit form
+      A(t,y) dy/dt = g(t,y), A = a square matrix, i.e. with the derivative
+      dy/dt implicit, but linearly so.  These solvers allow A to be
+      singular, in which case the system is a differential-algebraic
+      equation (DAE) system.  In that case, the user must be very careful
+      to supply a well-posed problem with consistent initial conditions.
+    </p>
+
+    <p>
+      <b>LSODI</b>, written jointly with J. F. Painter, solves linearly implicit
+      systems in which the matrices involved (A, dg/dy, and d(A dy/dt)/dy)
+      are all assumed to be either dense or banded.  LSODI supersedes the
+      older GEARIB solver and improves upon it in numerous ways.
+    </p>
+
+    <p>
+      <b>LSOIBT</b>, written jointly with C. S. Kenney, solves linearly implicit
+      systems in which the matrices involved are all assumed to be
+      block-tridiagonal.  Linear systems are solved by the LU method.
+    </p>
+
+    <p>
+      <b>LSODIS</b>, written jointly with S. Balsdon, solves linearly implicit
+      systems in which the matrices involved are all assumed to be sparse.
+      Like LSODES, LSODIS either determines the sparsity structure or
+      accepts it from the user, and uses parts of the Yale Sparse Matrix
+      Package to solve the linear systems that arise, by a direct method.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f77_src/driv/driv.html">
+      CWG_ODE</a>,
+      a FORTRAN77 library which
+      implements three ODE solvers by C William Gear.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/driv/driv.html">
+      DRIV</a>,
+      a FORTRAN77 library which
+      solves real or complex systems of ordinary differential equations;
+    </p>
+
+    <p>
+      <a href = "../../f77_src/machine/machine.html">
+      MACHINE</a>,
+      a FORTRAN77 library which
+      returns machine constants.
+    </p>
+
+    <p>
+      <a href = "../../f_src/nms/nms.html">
+      NMS</a>,
+      a FORTRAN90 library which
+      includes the <b>DDRIV</b> package of ODE solvers.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/ode/ode.html">
+      ODE</a>,
+      a FORTRAN77 library which
+      implements the Shampine and Gordon ODE solver.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/rk4/rk4.html">
+      RK4</a>,
+      a FORTRAN77 library which
+      applies the fourth order Runge-Kutta algorithm to estimate the
+      solution of an ordinary differential equation at the next time step.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/rkf45/rkf45.html">
+      RKF45</a>,
+      a FORTRAN77 library which
+      contains a Runge-Kutta-Fehlberg ODE solver.
+    </p>
+
+    <p>
+      <a href = "../../f_src/test_ode/test_ode.html">
+      TEST_ODE</a>,
+      a FORTRAN90 library which
+      defines some test problems for ODE solvers.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/xerror/xerror.html">
+      XERROR</a>,
+      a FORTRAN77 library which
+      handles error messages.
+    </p>
+
+    <h3 align = "center">
+      Author:
+    </h3>
+
+    <p>
+      Alan Hindmarsh
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Alan Hindmarsh,<br>
+          ODEPACK, a Systematized Collection of ODE Solvers,<br>
+          in Scientific Computing,<br>
+          edited by Robert Stepleman,<br>
+          Elsevier, 1983,<br>
+          ISBN13: 978-0444866073,<br>
+          LC: Q172.S35.
+        </li>
+        <li>
+          K Radhakrishnan, Alan Hindmarsh,<br>
+          Description and Use of LSODE,
+          the Livermore Solver for Ordinary Differential Equations,<br>
+          Technical report UCRL-ID-113855,<br>
+          Lawrence Livermore National Laboratory, December 1993.
+        </li>
+        <li>
+          Peter Brown, Alan Hindmarsh,<br>
+          Reduced Storage Matrix Methods in Stiff ODE Systems,<br>
+          Journal of Applied Mathematics and Computing,<br>
+          Volume 31, 1989, pages 40-91.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "odepack.f">odepack.f</a>, the main source code.
+        </li>
+        <li>
+          <a href = "odepack_sub1.f">odepack_sub1.f</a>, auxilliary subroutines.
+        </li>
+        <li>
+          <a href = "odepack_sub2.f">odepack_sub2.f</a>, auxilliary subroutines.
+        </li>
+        <li>
+          <a href = "odepack.sh">odepack.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <b>ODEPACK_PRB1</b> is a test problem for DLSODE.
+      <ul>
+        <li>
+          <a href = "odepack_prb1.f">odepack_prb1.f</a>,
+          the sample calling program.
+        </li>
+        <li>
+          <a href = "odepack_prb1.sh">odepack_prb1.sh</a>,
+          commands to compile, link, load and run the example.
+        </li>
+        <li>
+          <a href = "odepack_prb1_output.txt">odepack_prb1_output.txt</a>,
+          the output file.
+        </li>
+        <li>
+          <a href = "odepack_prb1_output_good.txt">odepack_prb1_output_good.txt</a>,
+          a reference version of the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>ODEPACK_PRB2</b> is a test problem for DLSODES.
+      <ul>
+        <li>
+          <a href = "odepack_prb2.f">odepack_prb2.f</a>,
+          the sample calling program.
+        </li>
+        <li>
+          <a href = "odepack_prb2.sh">odepack_prb2.sh</a>,
+          commands to compile, link, load and run the example.
+        </li>
+        <li>
+          <a href = "odepack_prb2_output.txt">odepack_prb2_output.txt</a>,
+          the output file.
+        </li>
+        <li>
+          <a href = "odepack_prb2_output_good.txt">odepack_prb2_output_good.txt</a>,
+          a reference version of the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>ODEPACK_PRB3</b> is a test problem for DLSODA.
+      <ul>
+        <li>
+          <a href = "odepack_prb3.f">odepack_prb3.f</a>,
+          the sample calling program.
+        </li>
+        <li>
+          <a href = "odepack_prb3.sh">odepack_prb3.sh</a>,
+          commands to compile, link, load and run the example.
+        </li>
+        <li>
+          <a href = "odepack_prb3_output.txt">odepack_prb3_output.txt</a>,
+          the output file.
+        </li>
+        <li>
+          <a href = "odepack_prb3_output_good.txt">odepack_prb3_output_good.txt</a>,
+          a reference version of the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>ODEPACK_PRB4</b> is a test problem for DLSODAR.
+      <ul>
+        <li>
+          <a href = "odepack_prb4.f">odepack_prb4.f</a>,
+          the sample calling program.
+        </li>
+        <li>
+          <a href = "odepack_prb4.sh">odepack_prb4.sh</a>,
+          commands to compile, link, load and run the example.
+        </li>
+        <li>
+          <a href = "odepack_prb4_output.txt">odepack_prb4_output.txt</a>,
+          the output file.
+        </li>
+        <li>
+          <a href = "odepack_prb4_output_good.txt">odepack_prb4_output_good.txt</a>,
+          a reference version of the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>ODEPACK_PRB5</b> is a test problem for DLSODPK.
+      <ul>
+        <li>
+          <a href = "odepack_prb5.f">odepack_prb5.f</a>,
+          the sample calling program.
+        </li>
+        <li>
+          <a href = "odepack_prb5.sh">odepack_prb5.sh</a>,
+          commands to compile, link, load and run the example.
+        </li>
+        <li>
+          <a href = "odepack_prb5_output.txt">odepack_prb5_output.txt</a>,
+          the output file.
+        </li>
+        <li>
+          <a href = "odepack_prb5_output_good.txt">odepack_prb5_output_good.txt</a>,
+          a reference version of the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>ODEPACK_PRB6</b> is a test problem for DLSODKR.
+      <ul>
+        <li>
+          <a href = "odepack_prb6.f">odepack_prb6.f</a>,
+          the sample calling program.
+        </li>
+        <li>
+          <a href = "odepack_prb6.sh">odepack_prb6.sh</a>,
+          commands to compile, link, load and run the example.
+        </li>
+        <li>
+          <a href = "odepack_prb6_output.txt">odepack_prb6_output.txt</a>,
+          the output file.
+        </li>
+        <li>
+          <a href = "odepack_prb6_output_good.txt">odepack_prb6_output_good.txt</a>,
+          a reference version of the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>ODEPACK_PRB7</b> is a test problem for DLSODI.
+      <ul>
+        <li>
+          <a href = "odepack_prb7.f">odepack_prb7.f</a>,
+          the sample calling program.
+        </li>
+        <li>
+          <a href = "odepack_prb7.sh">odepack_prb7.sh</a>,
+          commands to compile, link, load and run the example.
+        </li>
+        <li>
+          <a href = "odepack_prb7_output.txt">odepack_prb7_output.txt</a>,
+          the output file.
+        </li>
+        <li>
+          <a href = "odepack_prb7_output_good.txt">odepack_prb7_output_good.txt</a>,
+          a reference version of the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>ODEPACK_PRB8</b> is a test problem for DLSOIBT.
+      <ul>
+        <li>
+          <a href = "odepack_prb8.f">odepack_prb8.f</a>,
+          the sample calling program.
+        </li>
+        <li>
+          <a href = "odepack_prb8.sh">odepack_prb8.sh</a>,
+          commands to compile, link, load and run the example.
+        </li>
+        <li>
+          <a href = "odepack_prb8_output.txt">odepack_prb8_output.txt</a>,
+          the output file.
+        </li>
+        <li>
+          <a href = "odepack_prb8_output_good.txt">odepack_prb8_output_good.txt</a>,
+          a reference version of the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>ODEPACK_PRB9</b> is a test problem for DLSODIS.
+      <ul>
+        <li>
+          <a href = "odepack_prb9.f">odepack_prb9.f</a>,
+          the sample calling program.
+        </li>
+        <li>
+          <a href = "odepack_prb9.sh">odepack_prb9.sh</a>,
+          commands to compile, link, load and run the example.
+        </li>
+        <li>
+          <a href = "odepack_prb9_output.txt">odepack_prb9_output.txt</a>,
+          the output file.
+        </li>
+        <li>
+          <a href = "odepack_prb9_output_good.txt">odepack_prb9_output_good.txt</a>,
+          a reference version of the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 13 February 2008.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

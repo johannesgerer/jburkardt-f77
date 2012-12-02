@@ -1,0 +1,107 @@
+20 November  2007   8:51:28.351 AM      
+ 
+COMPUTE_PI
+  FORTRAN77 version
+ 
+  Estimate PI by summing a series.
+ 
+  This program includes Open MP directives
+  to run the program in parallel.
+ 
+  The number of processors available:
+  OMP_GET_NUM_PROCS () =        1
+ 
+  Call OMP_SET_NUM_THREADS, and request        4 threads.
+  This is process   0
+ 
+  Calling OMP_GET_NUM_THREADS inside a 
+  parallel region, we get the number of
+  threads is        1
+ 
+ 
+R4_TEST:
+  Estimate the value of PI,
+  using single precision arithmetic.
+ 
+  N = number of terms computed and added;
+ 
+  MODE = SEQ for sequential code;
+  MODE = OMP for Open MP enabled code;
+  (performance depends on if Open MP is used,
+  and how many processes are availablec)
+ 
+  ESTIMATE = the computed estimate of PI;
+ 
+  ERROR = ( the computed estimate - PI );
+ 
+  TIME = elapsed wall clock time;
+ 
+  You can't increase N forever, because:
+  A) ROUNDOFF starts to be a problem, and
+  B) maximum integer size is a problem.
+ 
+           N Mode    Estimate        Error           Time
+ 
+           1  SEQ    3.2000000477    0.584073E-01     0.00000    
+           1  OMP    3.2000000477    0.584073E-01     0.00000    
+          10  SEQ    3.1424260139    0.833273E-03     0.00000    
+          10  OMP    3.1424260139    0.833273E-03     0.00000    
+         100  SEQ    3.1416008472    0.810623E-05     0.00000    
+         100  OMP    3.1416008472    0.810623E-05     0.00000    
+        1000  SEQ    3.1415929794    0.238419E-06     0.00000    
+        1000  OMP    3.1415929794    0.238419E-06     0.00000    
+       10000  SEQ    3.1415905952    0.214577E-05    0.100000E-02
+       10000  OMP    3.1415905952    0.214577E-05     0.00000    
+      100000  SEQ    3.1415328979    0.598431E-04    0.600000E-02
+      100000  OMP    3.1415328979    0.598431E-04    0.600000E-02
+     1000000  SEQ    3.1413483620    0.244379E-03    0.580000E-01
+     1000000  OMP    3.1413483620    0.244379E-03    0.580000E-01
+ 
+R8_TEST:
+  Estimate the value of PI,
+  using double precision arithmetic.
+ 
+  N = number of terms computed and added;
+ 
+  MODE = SEQ for sequential code;
+  MODE = OMP for Open MP enabled code;
+  (performance depends on if Open MP is used,
+  and how many processes are availablec)
+ 
+  ESTIMATE = the computed estimate of PI;
+ 
+  ERROR = ( the computed estimate - PI );
+ 
+  TIME = elapsed wall clock time;
+ 
+  You can't increase N forever, because:
+  A) ROUNDOFF starts to be a problem, and
+  B) maximum integer size is a problem.
+ 
+             N Mode    Estimate        Error           Time
+ 
+             1  SEQ    3.2000000000    0.584073E-01     0.00000    
+             1  OMP    3.2000000000    0.584073E-01     0.00000    
+            10  SEQ    3.1424259850    0.833331E-03     0.00000    
+            10  OMP    3.1424259850    0.833331E-03     0.00000    
+           100  SEQ    3.1416009869    0.833333E-05     0.00000    
+           100  OMP    3.1416009869    0.833333E-05     0.00000    
+          1000  SEQ    3.1415927369    0.833333E-07     0.00000    
+          1000  OMP    3.1415927369    0.833333E-07     0.00000    
+         10000  SEQ    3.1415926544    0.833341E-09    0.100000E-02
+         10000  OMP    3.1415926544    0.833341E-09    0.100000E-02
+        100000  SEQ    3.1415926536    0.836842E-11    0.700000E-02
+        100000  OMP    3.1415926536    0.836842E-11    0.700000E-02
+       1000000  SEQ    3.1415926536    0.284217E-13    0.710000E-01
+       1000000  OMP    3.1415926536    0.284217E-13    0.710000E-01
+      10000000  SEQ    3.1415926536    0.621725E-13    0.715000    
+      10000000  OMP    3.1415926536    0.621725E-13    0.713000    
+     100000000  SEQ    3.1415926536    0.633271E-12     7.15200    
+     100000000  OMP    3.1415926536    0.633271E-12     7.13000    
+    1000000000  SEQ    3.1415926536    0.177636E-12     71.5750    
+    1000000000  OMP    3.1415926536    0.177636E-12     71.3210    
+ 
+COMPUTE_PI
+  Normal end of execution.
+ 
+20 November  2007   8:54:07.248 AM      

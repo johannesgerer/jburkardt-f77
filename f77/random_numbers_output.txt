@@ -1,0 +1,119 @@
+ 4 April     2008  12:01:46.654 PM      
+ 
+RANDOM_NUMBERS
+  FORTRAN77 version
+  Generate some random numbers.
+ 
+TEST01
+  R8_UNIFORM_01 computes pseudorandom values 
+  in the interval [0,1].
+ 
+  The initial seed is    123456789
+ 
+         1    0.218418    
+         2    0.956318    
+         3    0.829509    
+         4    0.561695    
+         5    0.415307    
+         6    0.661187E-01
+         7    0.257578    
+         8    0.109957    
+         9    0.438290E-01
+        10    0.633966    
+ 
+TEST02
+  R8_UNIFORM_01 computes a sequence of 
+  uniformly distributed pseudorandom numbers.
+ 
+  Initial SEED =        12345
+ 
+  First 10 values:
+ 
+     I         Input        Output    R8_UNIFORM_01
+                SEED          SEED
+ 
+       1         12345     207482415    0.966165E-01
+       2     207482415    1790989824    0.833995    
+       3    1790989824    2035175616    0.947702    
+       4    2035175616      77048696    0.358786E-01
+       5      77048696      24794531    0.115459E-01
+       6      24794531     109854999    0.511552E-01
+       7     109854999    1644515420    0.765787    
+       8    1644515420    1256127050    0.584930    
+       9    1256127050    1963079340    0.914130    
+      10    1963079340    1683198519    0.783800    
+ 
+  Now compute       1000 elements.
+ 
+ 
+  Average value =   0.493632
+  Expecting         0.500000
+ 
+  Variance =        0.081622
+  Expecting         0.083333
+ 
+TEST03
+  R8_UNIFORM_01 computes a sequence of 
+  pseudorandom numbers but all computations
+   depend on the seed value.
+  In this test, we show how a sequence of 
+  "random" values can be manipulated by 
+  accessing the seed.
+ 
+  Initial SEED is         1066
+ 
+  Call R8_UNIFORM_01 10 times, and watch SEED.
+ 
+     I         Input        Output    R8_UNIFORM_01
+                SEED          SEED
+ 
+       1          1066      17916262    0.834291E-02
+       2      17916262     470904854    0.219282    
+       3     470904854    1020641983    0.475273    
+       4    1020641983    1977919692    0.921041    
+       5    1977919692    1996891531    0.929875    
+       6    1996891531     881526201    0.410493    
+       7     881526201     321179554    0.149561    
+       8     321179554    1438359167    0.669788    
+       9    1438359167     279105490    0.129969    
+      10     279105490     821685382    0.382627    
+ 
+  Reset SEED to its value at step 5, =   1977919692
+ 
+  Now call R8_UNIFORM_01 10 times, and watch
+  how SEED and R8_UNIFORM_01 restart themselves.
+ 
+     I         Input        Output    R8_UNIFORM_01
+                SEED          SEED
+ 
+       1    1977919692    1996891531    0.929875    
+       2    1996891531     881526201    0.410493    
+       3     881526201     321179554    0.149561    
+       4     321179554    1438359167    0.669788    
+       5    1438359167     279105490    0.129969    
+       6     279105490     821685382    0.382627    
+       7     821685382    1746365064    0.813215    
+       8    1746365064    1498627099    0.697853    
+       9    1498627099    1737440877    0.809059    
+      10    1737440877    1833671480    0.853870    
+ 
+  What happens with a negative SEED?
+ 
+     I         Input        Output    R8_UNIFORM_01
+                SEED          SEED
+ 
+       1     -12345678     812103613    0.378165    
+       2     812103613    1766847006    0.822752    
+       3    1766847006    2141242773    0.997094    
+       4    2141242773     336329385    0.156616    
+       5     336329385     511014791    0.237960    
+       6     511014791     838487984    0.390451    
+       7     838487984     679855474    0.316582    
+       8     679855474    1717949478    0.799983    
+       9    1717949478     659242831    0.306984    
+      10     659242831    1026125744    0.477827    
+ 
+RANDOM_NUMBERS
+  Normal end of execution.
+ 
+ 4 April     2008  12:01:46.657 PM      

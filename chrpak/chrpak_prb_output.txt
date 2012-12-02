@@ -1,0 +1,133 @@
+ 4 February  2012   9:41:02.119 PM      
+ 
+CHRPAK_PRB:
+  FORTRAN77 version
+  Test the CHRPAK library.
+ 
+TEST001
+  A_TO_I4: Alphabetic character => I
+  I4_TO_A: I => Alphabetic character
+ 
+  1:26 = A:Z
+  27:52 = a:z
+ 
+   I  ==>  A  ==>  I
+ 
+       0                  0
+       3     C            3
+       6     F            6
+       9     I            9
+      12     L           12
+      15     O           15
+      18     R           18
+      21     U           21
+      24     X           24
+      27     a           27
+      30     d           30
+      33     g           33
+      36     j           36
+      39     m           39
+      42     p           42
+      45     s           45
+      48     v           48
+      51     y           51
+      54                  0
+ 
+TEST021
+  CH_TO_DIGIT: character -> decimal digit
+  DIGIT_TO_C: decimal digit -> character.
+ 
+      -2     *    -1
+      -1     *    -1
+       0     0     0
+       1     1     1
+       2     2     2
+       3     3     3
+       4     4     4
+       5     5     5
+       6     6     6
+       7     7     7
+       8     8     8
+       9     9     9
+      10     *    -1
+      11     *    -1
+ 
+TEST029
+  CH_UNIFORM returns a random character.
+ 
+ 
+   I  A  Count
+ 
+   1  A      0
+   2  B      0
+   3  C      0
+   4  D   5069
+   5  E   4973
+   6  F   4897
+   7  G   4959
+   8  H   5024
+   9  I   5161
+  10  J   4981
+  11  K   5019
+  12  L   4974
+  13  M   5002
+  14  N   5034
+  15  O   5174
+  16  P   4955
+  17  Q   5045
+  18  R   4926
+  19  S   4938
+  20  T   5020
+  21  U   4990
+  22  V   5056
+  23  W   4803
+  24  X      0
+  25  Y      0
+  26  Z      0
+ 
+TEST0325
+  FILE_NAME_INC can "increment" the numeric
+  part of a file name.
+ 
+  Starting string: "data01.txt"
+ 
+  Incremented forms:
+ 
+    "data02.txt"
+    "data03.txt"
+    "data04.txt"
+    "data05.txt"
+    "data06.txt"
+ 
+  Starting string: "mat09lab98.txt"
+ 
+  Incremented forms:
+ 
+    "mat09lab99.txt"
+    "mat10lab00.txt"
+    "mat10lab01.txt"
+    "mat10lab02.txt"
+    "mat10lab03.txt"
+ 
+TEST108
+  S_INDEXI reports the first occurrence of a
+    substring, case and trailing space
+    insensitive.
+  S_INDEX_LAST reports the LAST occurrence
+    of a substring.
+  INDEX is a case and trailing space sensitive
+    routine which reports the first occurrence
+    of a substring.
+ 
+  String =     "Bob is debobbing the bobber!"
+  Substring is "bob"
+ 
+  INDEX =                     0
+  INDEX (restricted) =       10
+  INDEXI =                    1
+  S_INDEX_LAST =             22
+ 
+CHRPAK_PRB:
+  Normal end of execution.
+ 
+ 4 February  2012   9:41:02.124 PM      

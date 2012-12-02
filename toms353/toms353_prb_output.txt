@@ -1,0 +1,33 @@
+20060117  074211.000
+ 
+TOMS353_PRB:
+  Test ACM algorithm 353, which uses
+  Filon quadrature to approximate integrals
+  of functions of the form F(X)*COS(M*PI*X)
+  or F(X)*SIN(M*PI*X).
+ 
+TEST01
+  Use FSER1 to estimate the integrals of
+  the form F(X) * COS ( M * PI * X )
+ 
+  Use integrand factors:
+  F(X) = 1, X, X*X.
+ 
+               M  Approximate         Exact
+ 
+    1:         1   -0.428771E-07   -0.278275E-07
+    X:         1   -0.202642       -0.202642    
+  X*X:         1   -0.202642       -0.202642    
+ 
+    1:         2    0.255680E-08    0.278275E-07
+    X:         2    0.136169E-07    0.271765E-07
+  X*X:         2    0.506606E-01    0.506606E-01
+ 
+    1:         3   -0.215751E-08   -0.253054E-08
+    X:         3   -0.225158E-01   -0.225158E-01
+  X*X:         3   -0.225158E-01   -0.225158E-01
+ 
+TOMS353_PRB
+  Normal end of execution.
+ 
+20060117  074211.000

@@ -1,0 +1,352 @@
+<html>
+
+  <head>
+    <title>
+      HCELL_STEADY - Steady Fluid Flow in an H-shaped Region
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      HCELL_STEADY <br> Steady Fluid Flow in an H-shaped Region
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>HCELL_STEADY</b>
+      is a FORTRAN77 program which
+      solves the time-independent
+      or "steady" Navier Stokes equations in a
+      two-dimensional region called the "H Cell",
+      by Hyung-Chun Lee.
+    </p>
+
+    <p>
+      The "H-Cell" region is an H-shaped region.
+      <pre>
+
+          +----------------------------+
+          |              :     :       |
+    row 3 |   (3,1)      :(3,2): (3,3) |
+          |              :     :       |
+          +--------------+.....+-------+
+                         |     |
+    row 2     empty      |(2,2)|  empty
+                         |     |
+          +--------------+.....+-------+
+          |              :     :       |
+    row 1 |   (1,1)      :(1,2): (1,3) |
+          |              :     :       |
+          +----------------------------+
+
+              col 1       col 2  col 3
+      </pre>
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <dl>
+        <dt>
+          hcell_steady
+        </dt>
+        <dd>
+          runs the program, reading the file "up000.txt" for
+          the initial values of the horizontal and vertical
+          velocities, and the pressure, at each node.  Output files
+          include the series "up001.txt", "up002.txt" and so on,
+          containing flow quantities at successive time steps.
+        </dd>
+      </dl>
+    </p>
+
+    <h3 align = "center">
+      Licensing:
+    </h3>
+
+    <p>
+      The computer code and data files described and made available on this web page
+      are distributed under
+      <a href = "../../txt/gnu_lgpl.txt">the GNU LGPL license.</a>
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/bump/bump.html">
+      BUMP</a>,
+      a FORTRAN90 program which
+      solves a fluid flow problem
+      in a channel including a bump which obstructs and redirects the flow.
+    </p>
+
+    <p>
+      <a href = "../../f_src/cvt_basis_flow/cvt_basis_flow.html">
+      CVT_BASIS_FLOW</a>,
+      a FORTRAN90 program which
+      extracts dominant solution modes from a set of flow solutions
+      using CVT methods.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/hcell/hcell.html">
+      HCELL</a>,
+      a FORTRAN77 program which
+      solves the time-dependent
+      Navier Stokes equations in an H-cell region.
+    </p>
+
+    <p>
+      <a href = "../../m_src/hcell_flow_display/hcell_flow_display.html">
+      HCELL_FLOW_DISPLAY</a>,
+      a MATLAB program which
+      can plot the data produced by <b>HCELL</b>.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/inout/inout.html">
+      INOUT</a>,
+      a FORTRAN77 program which
+      solves the Navier Stokes equations in the "In-Out" region.
+    </p>
+
+    <p>
+      <a href = "../../f_src/mhd_control/mhd_control.html">
+      MHD_CONTROL</a>,
+      a FORTRAN90 program which
+      tries to control the evolution of an MHD system so that a particular
+      state is achieved.
+    </p>
+
+    <p>
+      <a href = "../../f_src/mhd_flow/mhd_flow.html">
+      MHD_FLOW</a>,
+      a FORTRAN90 program which
+      models the evolution of an MHD system.
+    </p>
+
+    <p>
+      <a href = "../../cpp_src/nast2d/nast2d.html">
+      NAST2D</a>,
+      a C++ program which
+      computes the pressure
+      and velocity for a Navier Stokes flow.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/tcell/tcell.html">
+      TCELL</a>,
+      a FORTRAN77 program which
+      solves the Navier Stokes equations in the T-Cell region.
+    </p>
+
+    <p>
+      <a href = "../../f_src/pod_basis_flow/pod_basis_flow.html">
+      POD_BASIS_FLOW</a>,
+      a FORTRAN90 program which
+      extracts dominant solution modes from a set of flow solutions
+      using POD methods.
+    </p>
+
+    <h3 align = "center">
+      Author:
+    </h3>
+
+    <p>
+      Hyun-Chun Lee, <br>
+      Ajou University, Korea,<br>
+      in collaboration
+      with Max Gunzburger, Janet Peterson, and John Burkardt.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Max Gunzburger,<br>
+          Finite Element Methods for Viscous Incompressible Flows,<br>
+          A Guide to Theory, Practice, and Algorithms,<br>
+          Academic Press, 1989,<br>
+          ISBN: 0-12-307350-2,<br>
+          LC: TA357.G86.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "hcell_steady.f">hcell_steady.f</a>,
+          the source code.
+        </li>
+        <li>
+          <a href = "hcell_steady.sh">hcell_steady.sh</a>,
+          commands to compile, link and load the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "nodes3.txt">nodes3.txt</a>,
+          the coordinates of the nodes associated with linear elements;
+        </li>
+        <li>
+          <a href = "nodes6.txt">nodes6.txt</a>,
+          the coordinates of the nodes associated with quadratic elements;
+        </li>
+        <li>
+          <a href = "datar6.txt">datar6.txt</a>,
+          a text file containing node numbers, coordinates, and velocities.
+        </li>
+        <li>
+          <a href = "uvr6001.tec">uvr6001.tec</a>,
+          a data file suitable for viewing with TECPLOT;
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>MAIN</b> is the main program for HCELL_STEADY.
+        </li>
+        <li>
+          <b>CH_IS_DIGIT</b> returns .TRUE. if a character is a decimal digit.
+        </li>
+        <li>
+          <b>CH_TO_DIGIT</b> returns the integer value of a base 10 digit.
+        </li>
+        <li>
+          <b>DAXPY</b> adds a multiple of one vector to another.
+        </li>
+        <li>
+          <b>DDOT</b> forms the dot product of two vectors.
+        </li>
+        <li>
+          <b>DGBFA</b> factors a double precision band matrix by elimination.
+        </li>
+        <li>
+          <b>DGBSL</b> solves a double precision band linear system.
+        </li>
+        <li>
+          <b>DIGIT_INC</b> increments a decimal digit.
+        </li>
+        <li>
+          <b>DIGIT_TO_CH</b> returns the character representation of a decimal digit.
+        </li>
+        <li>
+          <b>DSCAL</b> scales a vector by a constant.
+        </li>
+        <li>
+          <b>ELEMENT_NODE_BANDWIDTH</b> determines the bandwidth associated with the grid.
+        </li>
+        <li>
+          <b>ELEMENT_NODE_WRITE</b> writes the element node list to a file.
+        </li>
+        <li>
+          <b>FILE_NAME_INC</b> generates the next file name in a series.
+        </li>
+        <li>
+          <b>HCELL_DOF_COUNT</b> determines the number of degrees of freedom in the region.
+        </li>
+        <li>
+          <b>HCELL_DOF_SET</b> assigns degrees of freedom to each node.
+        </li>
+        <li>
+          <b>HCELL_ELEMENT_COUNT</b> determines the number of elements in the region.
+        </li>
+        <li>
+          <b>HCELL_ELEMENT_NODE</b> determines the nodes that make up each element.
+        </li>
+        <li>
+          <b>HCELL_NODE_NUM</b> determines the number of nodes in the region.
+        </li>
+        <li>
+          <b>HCELL_NODE_XY</b> assigns coordinates to each node.
+        </li>
+        <li>
+          <b>IDAMAX</b> finds the vector element of largest magnitude.
+        </li>
+        <li>
+          <b>NODE_EPS</b> creates an EPS file containing an image of the nodes.
+        </li>
+        <li>
+          <b>NSTOKE</b> solves the Navier-Stokes equations using Taylor-Hood elements.
+        </li>
+        <li>
+          <b>QUAD_A_SET</b> sets quadrature information for the assembly routine.
+        </li>
+        <li>
+          <b>R8_HUGE</b> returns a huge R8.
+        </li>
+        <li>
+          <b>REFBSP</b> evaluates a linear basis functions on the reference triangle.
+        </li>
+        <li>
+          <b>REFQBF</b> evaluates quadratic basis functions on the reference triangle.
+        </li>
+        <li>
+          <b>SETGRD</b> sets up the grid for the problem.
+        </li>
+        <li>
+          <b>TRANS</b> transforms data between the reference and physical elements.
+        </li>
+        <li>
+          <b>UBDRY</b> evaluates boundary conditions at a node.
+        </li>
+        <li>
+          <b>UV_WRITE</b> writes the velocity values for a given timestep to a file.
+        </li>
+        <li>
+          <b>UV_WRITE_TEC</b> writes velocity information to a TECPLOT file.
+        </li>
+        <li>
+          <b>XY3_WRITE</b> writes the coordinates of nodes of 3-node triangles to a file.
+        </li>
+        <li>
+          <b>XY6_WRITE</b> writes the coordinates of nodes of 6-node triangles to a file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 15 November 2006.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

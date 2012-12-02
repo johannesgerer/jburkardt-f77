@@ -1,0 +1,60 @@
+19 October   2011   3:01:51.234 PM      
+ 
+MULTITASK_OPENMP:
+  FORTRAN77/OpenMP version
+  Demonstrate how OpenMP can "multitask" by using the
+  SECTIONS directive to carry out several tasks in parallel.
+ 
+  Number of primes computed was  20000
+  Last prime was       224737
+  Number of sines computed was  20000
+  Last sine computed was    12731.8    
+ 
+  Elapsed time =    16.2563    
+  Task 1 time =    7.78743    
+  Task 2 time =    8.46882    
+ 
+MULTITASK_OPENMP:
+  Normal end of execution.
+ 
+19 October   2011   3:02:07.491 PM      
+19 October   2011   3:02:07.494 PM      
+ 
+MULTITASK_OPENMP:
+  FORTRAN77/OpenMP version
+  Demonstrate how OpenMP can "multitask" by using the
+  SECTIONS directive to carry out several tasks in parallel.
+ 
+  Number of primes computed was  20000
+  Last prime was       224737
+  Number of sines computed was  20000
+  Last sine computed was    12731.8    
+ 
+  Elapsed time =    8.75448    
+  Task 1 time =    8.06254    
+  Task 2 time =    8.75427    
+ 
+MULTITASK_OPENMP:
+  Normal end of execution.
+ 
+19 October   2011   3:02:16.249 PM      
+19 October   2011   3:02:16.251 PM      
+ 
+MULTITASK_OPENMP:
+  FORTRAN77/OpenMP version
+  Demonstrate how OpenMP can "multitask" by using the
+  SECTIONS directive to carry out several tasks in parallel.
+ 
+  Number of primes computed was  20000
+  Last prime was       224737
+  Number of sines computed was  20000
+  Last sine computed was    12731.8    
+ 
+  Elapsed time =    8.75375    
+  Task 1 time =    8.06167    
+  Task 2 time =    8.75331    
+ 
+MULTITASK_OPENMP:
+  Normal end of execution.
+ 
+19 October   2011   3:02:25.006 PM      

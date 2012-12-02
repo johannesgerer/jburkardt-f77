@@ -1,0 +1,178 @@
+<html>
+
+  <head>
+    <title>
+      TOMS435 - Modified Incomplete Gamma Function
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS435 <br> Modified Incomplete Gamma Function
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS435</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 435, which evaluates the
+      modified incomplete Gamma function.
+    </p>
+
+    <p>
+      The text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f77_src/asa032/asa032.html">
+      ASA032</a>,
+      a FORTRAN77 library which
+      evaluates the incomplete Gamma function.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/asa147/asa147.html">
+      ASA147</a>,
+      a FORTRAN77 library which
+      evaluates the incomplete Gamma function.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/asa239/asa239.html">
+      ASA239</a>,
+      a FORTRAN77 library which
+      evaluates the incomplete Gamma function.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/test_values/test_values.html">
+      TEST_VALUES</a>,
+      a FORTRAN77 library which
+      contains routines which return sample values of various functions,
+      including the modified beta function, and the logarithm of the
+      gamma function.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <dl>
+        <dt>
+          value = <b>gaminc ( a, x1, x2, gam )</b>
+        </dt>
+        <dd>
+          computes the exponential of <b>X1</b> times the integral from
+          <b>X1</b> to <b>X2</b> of |y|^(<b>A</b>-1) * exp(-y) dy, returning
+          the value as <b>GAMINC</b>.  The user must supply in
+          <b>GAM</b> the value of the Gamma function of <b>A</b>.
+        </dd>
+      </dl>
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Wayne Fullerton,<br>
+          Algorithm 435:
+          Modified Incomplete Gamma Function,<br>
+          Communications of the ACM,<br>
+          Volume 15, Number 11, November 1972, pages 993-995.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms435.f">toms435.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms435.sh">toms435.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms435_prb.f">toms435_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms435_prb.sh">toms435_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms435_prb_output.txt">toms435_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>GAMINC</b> evaluates the modified incomplete Gamma function.
+        </li>
+        <li>
+          <b>GAMMA_INC_VALUES</b> returns some values of the incomplete Gamma function.
+        </li>
+        <li>
+          <b>GAMMA</b> evaluates the Gamma function.
+        </li>
+        <li>
+          <b>TIMESTAMP</b> prints out the current YMDHMS date as a timestamp.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 19 January 2008.
+
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

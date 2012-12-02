@@ -1,0 +1,8 @@
+C
+C   Output produced on a SUN SPARC station 1.
+C
+C       RESULT=   11.181284417019
+C       ERROR =    4.7009048669038D-06
+C       NEVAL =  185
+C       IFAIL =  0
+C    

@@ -1,0 +1,70 @@
+ 9 April     2007   5:15:30.000 AM      
+ 
+XERROR_PRB
+  FORTRAN77 version
+  Test the routines in the XERROR library.
+ 
+TEST01
+  XERROR can be called when an error occurs.
+ 
+      X        Sqrt ( X ) 
+ 
+ 
+Warning in...
+TEST01 - Illegal argument to SQRT
+  Error number =          1
+    0.912635    0.955319
+    0.659019    0.811800
+    0.123391    0.351270
+ 
+Warning in...
+TEST01 - Illegal argument to SQRT
+  Error number =          1
+ 
+Warning in...
+TEST01 - Illegal argument to SQRT
+  Error number =          1
+ 
+Warning in...
+TEST01 - Illegal argument to SQRT
+  Error number =          1
+ 
+Warning in...
+TEST01 - Illegal argument to SQRT
+  Error number =          1
+ 
+Warning in...
+TEST01 - Illegal argument to SQRT
+  Error number =          1
+    0.267931    0.517621
+ 
+TEST02
+  XGETF gets the error control flag.
+  XSETF sets the error control flag.
+  XERDMP prints an error message summary.
+ 
+  By setting the error control flag KONTRL
+  to 0, we may reduce the number of error
+  messages printed out.
+ 
+  Current value of KONTRL was        2
+  Resetting KONTRL to                0
+ 
+      X        Sqrt ( X ) 
+ 
+    0.912635    0.955319
+    0.659019    0.811800
+    0.123391    0.351270
+    0.267931    0.517621
+ 
+  Call XERDMP to see what we missed.
+ 
+         Error message summary
+Message start             NERR     Level     Count
+TEST01 - Illegal arg         1         0        12
+ 
+ 
+XERROR_PRB
+  Normal end of execution.
+ 
+ 9 April     2007   5:15:30.000 AM      

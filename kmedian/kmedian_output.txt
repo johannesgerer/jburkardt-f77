@@ -1,0 +1,63 @@
+November 11 2002   7:30:34.607 AM
+ 
+KMEDIAN
+  Lagrangian relaxation method for
+  the K-median problem with weights.
+ 
+  Algorithm of Cornuejols, Fisher and Nemhauser.
+ 
+  Enter the filename of your input.
+ 
+  The number of cities is      4
+ 
+DIST_READ:
+  Number of lines read was      6
+ 
+Distance matrix:
+ 
+    0.0000   11.0000    6.0000    9.0000
+    7.0000    0.0000    8.0000    2.0000
+    7.0000    3.0000    0.0000    3.0000
+   10.0000    9.0000    4.0000    0.0000
+ 
+WEIGHT_READ:
+  Number of lines read was      3
+ 
+Weights
+ 
+    1.0000
+    1.0000
+    1.0000
+    1.0000
+ 
+Weighted distance matrix:
+ 
+    0.0000   11.0000    6.0000    9.0000
+    7.0000    0.0000    8.0000    2.0000
+    7.0000    3.0000    0.0000    3.0000
+   10.0000    9.0000    4.0000    0.0000
+
+  Enter the number of facilities:
+  This must be between 1 and      4
+ 11.,  8.,  7.,  10.
+ 
+GREEDY
+  Maximum possible total is    36.0000    
+  COLTO =    0.00000    
+ 
+  Adding city index      4
+  COLTO =    22.0000    
+ 
+  Adding city index      1
+  COLTO =    31.0000    
+ 
+  Adding city index      3
+  COLTO =    34.0000    
+ 
+  Adding city index      2
+  COLTO =    36.0000    
+ 
+GREEDY
+  COLTO =    36.0000    
+  RWARD =    0.00000    
+   RWARD =  0.E+0

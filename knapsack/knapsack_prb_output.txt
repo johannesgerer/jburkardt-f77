@@ -1,0 +1,238 @@
+11 December  2009   8:46:39.908 AM      
+ 
+KNAPSACK_PRB
+  FORTRAN77 version
+ 
+  Test the routines in the KNAPSACK library.
+ 
+TEST01
+  MT1 solves the 0/1 knapsack problem.
+ 
+  Knapsack capacity is    104
+ 
+  Object  Profit    Mass
+ 
+       1     350      25
+       2     400      35
+       3     450      45
+       4      20       5
+       5      70      25
+       6       8       3
+       7       5       2
+       8       5       2
+ 
+  Contents of Knapsack
+ 
+  Object  Profit    Mass
+ 
+       1     350      25
+       3     450      45
+       4      20       5
+       5      70      25
+       7       5       2
+       8       5       2
+ 
+             900     104
+ 
+TEST02
+  MT2 solves the 0/1 knapsack problem.
+ 
+  Knapsack capacity is    104
+ 
+  Object  Profit    Mass
+ 
+       1     350      25
+       2     400      35
+       3     450      45
+       4      20       5
+       5      70      25
+       6       8       3
+       7       5       2
+       8       5       2
+ 
+  Contents of Knapsack
+ 
+  Object  Profit    Mass
+ 
+       1     350      25
+       3     450      45
+       4      20       5
+       5      70      25
+       7       5       2
+       8       5       2
+ 
+             900     104
+ 
+TEST03
+  MTC2 solves the change making problem.
+ 
+  Amount to make change for     29
+ 
+    Coin   Value
+ 
+       1       1
+       2       4
+       3       5
+       4       8
+       5      11
+ 
+    Coin   Value  Number
+ 
+       1       1       0
+       2       4       0
+       3       5       2
+       4       8       1
+       5      11       1
+ 
+              29       4
+ 
+TEST04
+  MTG solves the generalized assignment problem.
+ 
+  Knapsack capacities:
+ 
+       1      11
+       2      22
+ 
+  Weight Matrix
+ 
+       4       1       2       1       4       3       8
+       9       9       8       1       3       8       7
+ 
+  Profit Matrix
+ 
+       6       9       4       2      10       3       6
+       4       8       9       1       7       5       4
+ 
+  Knapsack      1
+  Object  Profit    Mass
+       1       6       4
+       2       9       1
+       4       2       1
+       6       3       3
+  Total                9
+  Limit               11
+ 
+  Knapsack      2
+  Object  Profit    Mass
+       3       9       8
+       5       7       3
+       7       4       7
+  Total               18
+  Limit               22
+ 
+  Total profit =     40
+ 
+TEST05
+  MTM solves the 0/1 multiple knapsack problem.
+ 
+  Knapsack capacities:
+ 
+       1      70
+       2     127
+ 
+  Object  Profit    Mass
+ 
+       1      92      23
+       2      57      31
+       3      49      29
+       4      68      44
+       5      60      53
+       6      43      38
+       7      67      63
+       8      84      85
+       9      87      89
+      10      72      82
+ 
+  Knapsack      1
+  Object  Profit    Mass
+       1      92      23
+       4      68      44
+  Total               67
+  Limit               70
+ 
+  Knapsack      2
+  Object  Profit    Mass
+       2      57      31
+       3      49      29
+       7      67      63
+  Total              123
+  Limit              127
+ 
+  Total profit =    333
+ 
+TEST06
+  MTP solves the bin packing problem.
+ 
+  Bin capacity is    100
+ 
+  Object  Mass
+ 
+       1      70
+       2      60
+       3      50
+       4      33
+       5      33
+       6      33
+       7      11
+       8       7
+       9       3
+ 
+  Number of bins required is      4
+ 
+  Assignment of objects to bins:
+ 
+  Object     Bin
+ 
+       1       1
+       2       2
+       3       3
+       4       2
+       5       3
+       6       4
+       7       1
+       8       1
+       9       1
+ 
+     Bin    Mass
+ 
+       1      91
+       2      93
+       3      83
+       4      33
+ 
+TEST07
+  MTSL solves the subset sum problem.
+ 
+  Desired subset sum is     50
+ 
+  Object    Mass
+ 
+       1      41
+       2      34
+       3      21
+       4      20
+       5       8
+       6       7
+       7       7
+       8       4
+       9       3
+      10       3
+ 
+  Selected subset:
+ 
+  Object    Mass
+ 
+       3      21
+       5       8
+       6       7
+       7       7
+       8       4
+      10       3
+ 
+   Total      50
+ 
+KNAPSACK_PRB
+  Normal end of execution.
+ 
+11 December  2009   8:46:39.913 AM      

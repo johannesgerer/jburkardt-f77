@@ -1,0 +1,261 @@
+<html>
+
+  <head>
+    <title>
+      TOMS431 - A Computer Routine for Quadratic and Linear Programming Problems
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS431 <br>
+      A Computer Routine for Quadratic and Linear Programming Problems
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS431</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 431, for solving linear and
+      quadratic programming problems.
+    </p>
+
+    <p>
+      The program is set up to solve a complementary problem, and it
+      is the user's responsibility to rearrange the data for the
+      linear or quadratic programming problem into a form suitable for
+      the complementary problem.
+    </p>
+
+    <p>
+      The linear programming problem is
+      <pre>
+        Find an <b>N</b> vector <b>x</b> solving the problem:
+        <b>
+          Minimize Z = c' * x
+          subject to
+            b &lt;= A * x,
+            0 &lt; x.
+        </b>
+        where <b>A</b> is a given <b>M</b> x <b>N</b> matrix and
+        <b>b</b> is a given <b>M</b> vector.
+      </pre>
+    </p>
+
+    <p>
+      The quadratic programming problem is
+      <pre>
+        Find an <b>N</b> vector <b>x</b> solving the problem:
+        <b>
+          Minimize Z = c' * x + x' * Q * x
+          subject to
+            b &lt;= A * x,
+            0 &lt; x.
+        </b>
+        where <b>A</b> is a given <b>M</b> x <b>N</b> matrix, <b>c</b>
+        is a given <b>N</b> vector, <b>Q</b> is a given <b>N</b> by <b>N</b> matrix,
+        and <b>b</b> is a given <b>M</b> vector.
+      </pre>
+    </p>
+
+    <p>
+      The complementary problem is
+      <pre>
+        Find nonnegative <b>N</b> vectors <b>w</b> and <b>z</b> so that
+        <b>
+          w = M * z + q
+          w' * z = 0
+        </b>
+        where <b>M</b> is a given <b>N</b> x <b>N</b> matrix and <b>q</b> is a
+        given <b>N</b> vector.
+      </pre>
+    </p>
+
+    <p>
+      An optimal solution to the quadratic programming problem
+      may be obtained by solving a complementary problem of the form
+      <pre><b>
+        ( v ) = ( Q + Q'   -A' ) ( x ) + (  c )
+        ( u )   (   A       0  ) ( y )   ( -b )
+      </b></pre>
+      with nonegative <b>u</b>, <b>v</b>, <b>x</b>, and <b>y</b> and
+      requiring <b>(v,u)' * (x,y)</b> = 0, where <b>u</b> denotes the
+      slack variables of the quadratic program and <b>(y,v)</b>
+      denotes the variables of the dual problem.
+    </p>
+
+    <p>
+      That is, the data for the quadratic programming problem can
+      be rearranged for the complementary problem by setting
+      <pre><b>
+        w = ( v, u )'
+
+        z = ( x, y )'
+
+        M = ( Q + Q'  -A' )
+            (   A      0  )
+
+        q = ( c, -b )'
+      </b></pre>
+    </p>
+
+    <p>
+      The data for the linear programming problem can
+      be rearranged for the complementary problem by setting
+      <pre><b>
+        w = ( v, u )'
+
+        z = ( x, y )'
+
+        M = (   0     -A' )
+            (   A      0  )
+
+        q = ( c, -b )'
+      </b></pre>
+    </p>
+
+    <p>
+      While the text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>, most of the early
+      algorithms are not available.  This is one of them.  I typed it
+      in.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <dl>
+        <dt>
+          <b>toms431</b> &lt; <i>input_file</i>
+        </dt>
+        <dd>
+          where <i>input_file</i> contains the following records:
+          <pre>
+            XX   <- IP, the number of problems to solve, in I2 format.
+            XX   <- N1, the order of the matrix for problem #1, in I2 format.
+            AAAA.aaaaaBBBB.bbbbbCCCC.cccccDDDD.dddddEEEE.eeeeeFFFF.fffffGGGG.ggggg
+                 <-- the first COLUMN of the matrix, using 7F10.5 format.
+                     (if N1 is more than 7, use as many more
+                     input lines as necessary.)
+                 <-- followed by COLUMNS 2 through N1.
+            AAAA.aaaaaBBBB.bbbbbCCCC.cccccDDDD.dddddEEEE.eeeeeFFFF.fffffGGGG.ggggg
+                 <-- the N1 entries of the Q vector.  (For a linear programming
+                 problem, set all entries of Q to 0.)
+            XX   <-  N2, the order of the matrix for problem #2, in I2 format.
+                 More data for problem 2, 3, and so on.
+          </pre>
+        </dd>
+      </dl>
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Arunachalam Ravindran,<br>
+          Algorithm 431:
+          A Computer Routine for Quadratic and Linear Programming Problems,<br>
+          Communications of the ACM,<br>
+          Volume 15, Number 9, September 1972, pages 818-820.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms431.f">toms431.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms431.sh">toms431.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms431_prb.inp">toms431_prb.inp</a>,
+          a sample input file.
+        </li>
+        <li>
+          <a href = "toms431_prb.sh">toms431_prb.sh</a>,
+          commands to run the program with the sample input.
+        </li>
+        <li>
+          <a href = "toms431_prb_output.txt">toms431_prb_output.txt</a>,
+          the output from a run of the sample program.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>MAIN</b> controls the computation.
+        </li>
+        <li>
+          <b>MATRIX</b> initializes data and reads in the matrix.
+        </li>
+        <li>
+          <b>INITIA</b> finds an initial almost-complementary solution.
+        </li>
+        <li>
+          <b>NEWBAS</b> chooses a new basis column to enter the basis.
+        </li>
+        <li>
+          <b>SORT</b> chooses the pivot row.
+        </li>
+        <li>
+          <b>PIVOT</b> performs the pivot operation.
+        </li>
+        <li>
+          <b>PPRINT</b> prints the current solution.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 23 January 2006.
+
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

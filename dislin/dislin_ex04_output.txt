@@ -1,0 +1,16 @@
+
+ <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ <<                END OF DISLIN / VERSION 10.1                  <<
+ <<  Date    : 10.04.2011  Time    : 07:55:59  Pageformat: USAP  <<
+ <<  Vectors : 1269        Warnings: 0         Fileformat:  PNG  <<
+ <<  Metafile: dislin_ex04.png                                   <<
+ <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+ 
+DISLIN_EX04:
+  FORTRAN77 version
+  Demonstrate the various interpolation
+  methods available for (X,Y) data.
+ 
+DISLIN_EX04:
+  Normal end of execution.

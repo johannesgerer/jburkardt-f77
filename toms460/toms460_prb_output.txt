@@ -1,0 +1,27 @@
+ 
+TOMS460_PRB
+  Test TOMS algorithm 460, optimal
+  ADI parameters.
+ 
+ 
+  Given ITNS, compute DMU:
+ 
+       1    0.775958E-01       0
+       2    0.150983E-02       0
+       3    0.293334E-04       0
+       4    0.569896E-06       0
+       5    0.110721E-07       0
+ 
+  Given DMU, compute ITNS:
+ 
+    0.100000           1       0
+    0.100000E-01       2       0
+    0.100000E-02       3       0
+    0.100000E-03       3       0
+    0.100000E-04       4       0
+    0.100000E-05       4       0
+    0.100000E-06       5       0
+    0.100000E-07       6       0
+ 
+TOMS460_PRB
+  Normal end of execution.

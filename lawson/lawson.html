@@ -1,0 +1,357 @@
+<html>
+
+  <head>
+    <title>
+      LAWSON - Least Squares Routines
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      LAWSON <br> Least Squares Routines
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>LAWSON</b>
+      is a FORTRAN77 library which
+      can solve least squares
+      problems.
+    </p>
+
+    <p>
+      The most common least squares problems considers an overdetermined
+      M by N linear system A*X=B.  A least squares solution X is sought
+      which has the property that, although it generally is not a solution
+      of the system, it is the best approximation to a solution, in the
+      sense that it minimizes the L2 norm of the residual R=A*X-B.
+    </p>
+
+    <p>
+      In some cases, a unique solution to the system A*X=B will exist,
+      and in that case the least squares solution will coincide with
+      what is ordinarily meant by a solution.
+    </p>
+
+    <p>
+      In underdetermined cases, where multiple solutions exist,
+      the least squares solution is usually taken to be that solution X
+      which has minimum L2 norm, that is, which minimizes ||X||.
+    </p>
+
+    <p>
+      The original FORTRAN77 source code is available through NETLIB at<br>
+      <a href = "http://www.netlib.org/lawson-hanson/index.html">
+                 http://www.netlib.org/lawson-hanson/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Languages:
+    </h3>
+
+    <p>
+      <b>LAWSON</b> is available in
+      <a href = "../../f77_src/lawson/lawson.html">a FORTRAN77 version</a> and
+      <a href = "../../f_src/lawson/lawson.html">a FORTRAN90 version</a>.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f77_src/brent/brent.html">
+      BRENT</a>,
+      a FORTRAN77 library which
+      contains Richard Brent's routines for finding the zero, local minimizer,
+      or global minimizer of a scalar function of a scalar argument, without
+      the use of derivative information.
+    </p>
+
+    <p>
+      <a href = "../../f_src/bvls/bvls.html">
+      BVLS</a>,
+      a FORTRAN90 library which
+      applies least squares methods to solve a linear system for which
+      lower and upper constraints may have been placed on every variable.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/dqed/dqed.html">
+      DQED</a>,
+      a FORTRAN77 library which
+      solves constrained least squares problems.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/nl2sol/nl2sol.html">
+      NL2SOL</a>,
+      a FORTRAN77 library which
+      implements an adaptive nonlinear least-squares algorithm.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/praxis/praxis.html">
+      PRAXIS</a>,
+      a FORTRAN77 library which
+      minimizes a scalar function of several variables.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/qr_solve/qr_solve.html">
+      QR_SOLVE</a>,
+      a FORTRAN77 library which
+      computes the least squares solution of a linear system A*x=b.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/test_ls/test_ls.html">
+      TEST_LS</a>,
+      a FORTRAN77 library which
+      implements linear least squares test problems of the form A*x=b.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/toms581/toms581.html">
+      TOMS581</a>,
+      a FORTRAN77 library which
+      implements an improved algorithm for computing the singular value decomposition (SVD)
+      of a rectangular matrix;
+      this is ACM TOMS algorithm 571, by Tony Chan.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/toms611/toms611.html">
+      TOMS611</a>,
+      a FORTRAN77 library which
+      seeks the minimizer of a scalar functional
+      of multiple variables.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Gene Golub, Christian Reinsch,<br>
+          Singular Value Decomposition and Least Squares Solutions,<br>
+          Numerische Mathematik,<br>
+          Volume 14, Number 5, April 1970, pages 403-420.
+        </li>
+        <li>
+          Charles Lawson, Richard Hanson,<br>
+          Solving Least Squares Problems,<br>
+          Revised edition, <br>
+          SIAM, 1995,<br>
+          ISBN: 0898713560,<br>
+          LC: QA275.L38.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "lawson.f">lawson.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "lawson.sh">lawson.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <b>LAWSON_PRB1</b> demonstrates algorithms HFTI and HS1 for solving
+      least squares problems, and algorithm COV for computing the associated
+      covariance matrix.
+      <ul>
+        <li>
+          <a href = "lawson_prb1.f">lawson_prb1.f</a>, a sample problem.
+        </li>
+        <li>
+          <a href = "lawson_prb1.sh">lawson_prb1.sh</a>,
+          commands to compile, link and run the sample problem.
+        </li>
+        <li>
+          <a href = "lawson_prb1_output.txt">lawson_prb1_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>LAWSON_PRB2</b> demonstrates algorithms HFTI for solving
+      least squares problems, and algorithm COV for computing the associated
+      unscaled covariance matrix.
+      <ul>
+        <li>
+          <a href = "lawson_prb2.f">lawson_prb2.f</a>, a sample problem.
+        </li>
+        <li>
+          <a href = "lawson_prb2.sh">lawson_prb2.sh</a>,
+          commands to compile, link and run the sample problem.
+        </li>
+        <li>
+          <a href = "lawson_prb2_output.txt">lawson_prb2_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>LAWSON_PRB3</b> demonstrates the use of routine SVDRS to compute the
+      singular value decomposition of a matrix, and to solve a related
+      least squares linear system.
+      <ul>
+        <li>
+          <a href = "lawson_prb3.f">lawson_prb3.f</a>, a sample problem.
+        </li>
+        <li>
+          <a href = "lawson_prb3.sh">lawson_prb3.sh</a>,
+          commands to compile, link and run the sample problem.
+        </li>
+        <li>
+          <a href = "lawson_prb3_output.txt">lawson_prb3_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+
+    <p>
+      <b>LAWSON_PRB4</b> demonstrates singular value analysis with SVA.
+      <ul>
+        <li>
+          <a href = "lawson_prb4.f">lawson_prb4.f</a>, a sample problem.
+        </li>
+        <li>
+          <a href = "lawson_prb4.sh">lawson_prb4.sh</a>,
+          commands to compile, link and run the sample problem.
+        </li>
+        <li>
+          <a href = "lawson_prb4_input.txt">lawson_prb4_input.txt</a>,
+          the input file.
+        </li>
+        <li>
+          <a href = "lawson_prb4_output.txt">lawson_prb4_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>LAWSON_PRB5</b> demonstrates the BNDACC and BNDSOL routines to
+      handle least squares problems with a banded matrix.
+      <ul>
+        <li>
+          <a href = "lawson_prb5.f">lawson_prb5.f</a>, a sample problem.
+        </li>
+        <li>
+          <a href = "lawson_prb5.sh">lawson_prb5.sh</a>,
+          commands to compile, link and run the sample problem.
+        </li>
+        <li>
+          <a href = "lawson_prb5_output.txt">lawson_prb5_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>LAWSON_PRB6</b> demonstrates the LDP routine.
+      <ul>
+        <li>
+          <a href = "lawson_prb6.f">lawson_prb6.f</a>, a sample problem.
+        </li>
+        <li>
+          <a href = "lawson_prb6.sh">lawson_prb6.sh</a>,
+          commands to compile, link and run the sample problem.
+        </li>
+        <li>
+          <a href = "lawson_prb6_output.txt">lawson_prb6_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>BNDACC</b> accumulates information for a banded least squares problem.
+        </li>
+        <li>
+          <b>BNDSOL</b> solves a banded least squares problem accumulated by BNDACC.
+        </li>
+        <li>
+          <b>DIFF</b> is used in tests that depend on machine precision.
+        </li>
+        <li>
+          <b>G1</b> computes an orthogonal rotation matrix.
+        </li>
+        <li>
+          <b>G2</b> applies a rotation matrix to a vector (X,Y).
+        </li>
+        <li>
+          <b>GEN</b> generates numbers for construction of test cases.
+        </li>
+        <li>
+          <b>H12</b> constructs or applies a Householder transformation.
+        </li>
+        <li>
+          <b>HFTI</b> Householder forward triangulation with column interchanges.
+        </li>
+        <li>
+          <b>LDP</b> implements least distance programming
+        </li>
+        <li>
+          <b>MFEOUT</b> labeled matrix output for use with singular value analysis.
+        </li>
+        <li>
+          <b>NNLS</b> implements the nonnegative least squares algorithm.
+        </li>
+        <li>
+          <b>QRBD</b> uses the QR algorithm for the singular values of a bidiagonal matrix.
+        </li>
+        <li>
+          <b>SVA</b> carries out a singular value analysis.
+        </li>
+        <li>
+          <b>SVDRS</b> singular value decomposition also treating right side vector.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 20 October 2008.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+</html>
+

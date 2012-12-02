@@ -1,0 +1,188 @@
+<html>
+
+  <head>
+    <title>
+      TOMS436 - Product Type Trapezoidal Integration
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS436 <br> Product Type Trapezoidal Integration
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS436</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 436, which carries out a
+      product type trapezoidal integration to estimate the integral
+      from A to B of F(X) * G(X).
+    </p>
+
+    <p>
+      While the text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>, most of the early
+      algorithms are not available.  This is one of them.  I typed it
+      in.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      <dl>
+        <dt>
+          <b>call ptrap ( a, b, n, fn, gn, vint )</b>
+        </dt>
+        <dd>
+          where <b>A</b> and <b>B</b> are the left and right endpoints
+          of the interval, <b>N</b> is the number of times the
+          rule is to be compounded, <b>FN</b> and <b>GN</b> are external
+          functions for evaluating the integrand factors, and <b>VINT</b>
+          is returned as the estimated value of the integral of
+          <b>FN(X)</b> * <b>GN(X)</b> from <b>A</b> to <b>B</b>.
+        </dd>
+      </dl>
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f_src/intlib/intlib.html">
+      INTLIB</a>,
+      a FORTRAN90 library which
+      estimates integrals.
+    </p>
+
+    <p>
+      <a href = "../../f_src/quadrule/quadrule.html">
+      QUADRULE</a>,
+      a FORTRAN90 library which 
+      can define various quadrature
+      rules to estimate integrals.
+    </p>
+
+    <p>
+      <a href = "../../f_src/test_int/test_int.html">
+      TEST_INT</a>,
+      a FORTRAN90 library which
+      contains routines defining a number of scalar functions of
+      to test routines that estimate integrals.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/toms437/toms437.html">
+      TOMS437</a>,
+      a FORTRAN77 library which
+      carries out product type Simpson's integration.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/toms438/toms438.html">
+      TOMS438</a>,
+      a FORTRAN77 library which
+      carries out product type two-point Gauss-Legendre-Simpson's
+      integration.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/toms439/toms439.html">
+      TOMS439</a>,
+      a FORTRAN77 library which
+      carries out product type three-point Gauss-Legendre-Simpson's
+      integration.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Robert Boland,<br>
+          Algorithm 436: Product Type Trapezoidal Integration,<br>
+          Communications of the ACM,<br>
+          Volume 15, Number 12, December 1972, page 1070.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms436.f">toms436.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms436.sh">toms436.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms436_prb.f">toms436_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms436_prb.sh">toms436_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms436_prb_output.txt">toms436_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>PTRAP</b> carries out a product type trapezoidal integration.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 05 December 2005.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

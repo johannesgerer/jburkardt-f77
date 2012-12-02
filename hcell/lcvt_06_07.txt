@@ -1,0 +1,18 @@
+#  lcvt_06_00007.txt
+#  created at 04 June 2004 10:26:28 AM
+#
+#  Spatial dimension M = 6
+#  Number of points N = 7
+#
+#  This data was created by the C++ LATINIZE program.
+#  The data was read from cvt_06_00007.txt by RTABLE_DATA_READ.CC
+#  The data was latinized by RTABLE_LATINIZE.CC.
+#  The data was written to lcvt_06_00007.txt by RTABLE_DATA_WRITE.CC.
+#
+  0.642857    0.928571         0.5    0.785714   0.0714286    0.357143  
+  0.928571    0.214286    0.214286    0.357143    0.357143         0.5  
+       0.5    0.642857    0.928571   0.0714286    0.642857   0.0714286  
+  0.214286   0.0714286    0.785714    0.928571    0.214286    0.642857  
+  0.357143    0.357143   0.0714286    0.642857    0.785714    0.214286  
+  0.785714         0.5    0.642857         0.5    0.928571    0.928571  
+ 0.0714286    0.785714    0.357143    0.214286         0.5    0.785714  

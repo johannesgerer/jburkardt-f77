@@ -1,0 +1,127 @@
+1CLEAN77 - V2.23 (GENL)  *PRESET*                                      PAGE   1
+
+
+
+
+ PRESENT COMMAND STATUS:
+
+     ADD CONTINUE STMTS...........ADDCONT =  ENABLED
+     BRACKET COMMENTS.............BRACKET =  ENABLED
+     COLLECT FORMATS..............COLLECT = DISABLED
+     COPY ROUTINE INTACT.............COPY = DISABLED
+     EXEMPT COMMENTS..............EXEMPTC = DISABLED
+     EXEMPT FORMATS...............EXEMPTF = DISABLED
+     EXEMPT NONEXECUTABLE.........EXEMPTN = DISABLED
+     EXEMPT STATEMENT CHAR........EXEMPTS = DISABLED
+     FORMAT LABEL BASE............FORMATB = DISABLED
+     FORMAT LABEL INCREMENT.......FORMATI = DISABLED
+     HFIELD CONVERSION.............HFIELD =  ENABLED
+     INDENT COMMENTS..............INDENTC = DISABLED
+     INDENTATION INCREMENT........INDENTI =        3
+     INDENT STATEMENTS............INDENTS =  ENABLED
+     ISSUE COMMENTS................ISSUEC =  ENABLED
+     LABEL BASE....................LABELB =       10
+     LABEL INCREMENT...............LABELI =       10
+     LEFT JUSTIFY LABELS............LEFTJ = DISABLED
+     NEW FILE LINE LENGTH.........LINELEN =       72
+     LIST OLD FILE CARD IDS.......LISTIDS = DISABLED
+     LIST NEW FILE................LISTNEW =  ENABLED
+     LIST OLD FILE................LISTOLD =  ENABLED
+     OLD FILE LINE LENGTH..........OLDLEN =       72
+     PAGE LENGTH..................PAGELEN =       60
+     PROPAGATE COMMANDS..............PROP = DISABLED
+     QUOTE MARK CONVERSION CHAR...QUOTECH =        '
+     RETURN LABEL PREFIX..........RETPRFX =        *
+     RIGHT JUSTIFY LABELS..........RIGHTJ =  ENABLED
+     SPEC STMT SIZE DEFS..........SIZEDEF = DISABLED
+     SPLIT NUMBERS AND VARS.......SPLITNV = DISABLED
+     SPLIT STRINGS................SPLITST = DISABLED
+     STATUS REPORT.................STATUS =  ENABLED
+     UNCONDITIONAL FLOW CHANGE.....UNCOND = DISABLED
+     VARS USE EXTENDED CHAR SET...VARUECS = DISABLED
+
+
+
+1CLEAN77 - V2.23 (GENL)  *SOURCE*                                      PAGE   2
+
+       C+FORMATB=1000                                                          
+    1.       PROGRAM X(OUTPUT,TAPE6=OUTPUT)                                    
+       C                                                                       
+       C  THIS IS A COMMENT WHICH IS (OR WAS, ANYWAY) MOSTLY IN LOWER CASE.    
+       C                                                                       
+    2.       CALL Y(I,J)                                                       
+    3. 5     IF(I.GT.7)GOTO 2                                                  
+    4.       I=I+1                                                             
+    5.       CALL Z(J)                                                         
+    6.       GOTO 5                                                            
+       C                                                                       
+    7.   2   WRITE(6,999)J                                                     
+    8.   999 FORMAT(1X,'THE VALUE OF J IS',I10)                                
+    9.       STOP                                                              
+   10.       END                                                               
+ 
+ 
+    OLD    NEW      OLD    NEW      OLD    NEW                                  
+   -----  -----    -----  -----    -----  -----                                 
+       2     20        5     10      999   1000                                 
+1CLEAN77 - V2.23 (GENL)  *RESULT*  PROG/X                              PAGE   3
+
+    1.       PROGRAM X (OUTPUT,TAPE6=OUTPUT)
+       C
+       C  THIS IS A COMMENT WHICH IS (OR WAS, ANYWAY) MOSTLY IN LOWER CASE.
+       C
+    2.       CALL Y (I,J)
+    3.    10 IF (I.GT.7) GO TO 20
+    4.       I = I+1
+    5.       CALL Z (J)
+    6.       GO TO 10
+       C
+    7.    20 WRITE (6,1000) J
+    8.  1000 FORMAT (1X,'THE VALUE OF J IS',I10)
+    9.       STOP
+   10.       END
+1CLEAN77 - V2.23 (GENL)  *SOURCE*                                      PAGE   4
+
+       C+LABELB=100                                                            
+       C+INDENTI=4                                                             
+       C+EXEMPTN                                                               
+    1.       SUBROUTINE   Y   (I,J)                                            
+    2.       I=10.0*RANDOM(1.5)                                                
+    3.       DO 1 K=1,I                                                        
+    4.       J=7.5*RANDOM(0.5)                                                 
+    5.       IF(J.GT.5)GOTO 2                                                  
+    6.       IF(J.LE.2)GOTO 1                                                  
+    7.       CALL Z(J)                                                         
+    8. 1     CONTINUE                                                          
+    9.    2  CALL Z(J)                                                         
+   10.       RETURN                                                            
+   11.       END                                                               
+ 
+ 
+    OLD    NEW      OLD    NEW                                                  
+   -----  -----    -----  -----                                                 
+       1    100        2    110                                                 
+1CLEAN77 - V2.23 (GENL)  *RESULT*  SUBR/Y                              PAGE   5
+
+    1.       SUBROUTINE   Y   (I,J)
+    2.       I = 10.0*RANDOM(1.5)
+    3.       DO 100 K = 1, I
+    4.           J = 7.5*RANDOM(0.5)
+    5.           IF (J.GT.5) GO TO 110
+    6.           IF (J.LE.2) GO TO 100
+    7.           CALL Z (J)
+    8.   100 CONTINUE
+    9.   110 CALL Z (J)
+   10.       RETURN
+   11.       END
+
+
+
+
+
+     FINAL CLEAN77 TOTALS:
+
+                29 LINES READ.          
+                21 STATEMENTS PROCESSED.
+                 2 ROUTINES DETECTED.   
+                25 LINES WRITTEN.       

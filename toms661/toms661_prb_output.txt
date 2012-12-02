@@ -1,0 +1,12 @@
+
+
+
+ MAXIMUM ABSOLUTE ERRORS IN THE INTERPOLANT Q AND PARTIAL
+ DERIVATIVES (QX,QY,QZ) RELATIVE TO MACHINE PRECISION EPS
+
+           FUNCTION   MAX ERROR   MAX ERROR/EPS
+
+              Q       0.238E-06       2.00
+              QX      0.174E-05
+              QY      0.238E-05
+              QZ      0.298E-05

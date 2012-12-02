@@ -1,0 +1,38 @@
+ 
+TOMS423_PRB
+  DECOMP factors a general matrix;
+  SOLVE solves a factored linear system;
+ 
+  The matrix dimension NDIM =      4
+  The number of equations is N =      3
+ 
+  The matrix A:
+ 
+     1.00000       2.00000       3.00000    
+     4.00000       5.00000       6.00000    
+     7.00000       8.00000       0.00000    
+ 
+  The right hand side B is 
+ 
+     14.0000    
+     32.0000    
+     23.0000    
+ 
+  Factor the matrix
+  7.  8.  0.
+ -0.571428597  0.857142806  3.
+ -0.142857149 -0.499999791  4.50000048
+ 
+  Matrix determinant =    27.0000    
+ 
+  Solve the linear system.
+ 
+  SOLVE returns the solution:
+  (Should be (1,2,3))
+ 
+     1.00000    
+     2.00000    
+     3.00000    
+ 
+TOMS423_PRB
+  Normal end of execution.

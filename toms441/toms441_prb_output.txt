@@ -1,0 +1,35 @@
+ 
+TOMS441_PRB
+  Test TOMS algorithm 441, generating
+  random deviates from the dipole 
+  distribution.
+ 
+ A =    1.00000    
+ B =    0.00000    
+ 
+  Sample size =       1000
+  Sample mean =       0.365594E-02
+  Sample variance =   0.996543    
+  Sample maximum =     7.78188    
+  Sample minimum =    -8.35221    
+ 
+ A =   0.353553    
+ B =   0.353553    
+ 
+  Sample size =       1000
+  Sample mean =       0.110592    
+  Sample variance =    298.053    
+  Sample maximum =     257.363    
+  Sample minimum =    -291.002    
+ 
+ A =    0.00000    
+ B =    0.00000    
+ 
+  Sample size =       1000
+  Sample mean =        1.61698    
+  Sample variance =    1352.47    
+  Sample maximum =     759.231    
+  Sample minimum =    -347.037    
+ 
+TOMS441_PRB
+  Normal end of execution.

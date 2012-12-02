@@ -1,0 +1,170 @@
+<html>
+
+  <head>
+    <title>
+      TOMS699 - A New Representation of Patterson's Quadrature Formula
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS699 <br> A New Representation of Patterson's Quadrature Formula
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS699</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS Algorithm 699, which is an implementation of
+      Patterson's adapative quadrature formulas.
+    </p>
+
+    <p>
+      <b>TOMS699</b> is ACM TOMS Algorithm 699.  The text of the
+      original FORTRAN77 version is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f77_src/kronrod/kronrod.html">
+      KRONROD</a>,
+      a FORTRAN77 library which
+      can compute a Gauss and Gauss-Kronrod pair of quadrature rules
+      of arbitrary order,
+      by Robert Piessens, Maria Branders.
+    </p>
+
+    <p>
+      <a href = "../../f_src/patterson_rule/patterson_rule.html">
+      PATTERSON_RULE</a>,
+      a FORTRAN90 program which
+      computes a 1D Gauss-Patterson quadrature rule.
+    </p>
+
+    <p>
+      <a href = "../../datasets/quadrature_rules_patterson/quadrature_rules_patterson.html">
+      QUADRATURE_RULES_PATTERSON</a>,
+      a dataset directory which
+      contains Gauss-Patterson quadrature rules for the interval [-1,+1].
+    </p>
+
+    <p>
+      <a href = "../../f_src/sandia_rules/sandia_rules.html">
+      SANDIA_RULES</a>,
+      a FORTRAN90 library which
+      produces 1D quadrature rules of
+      Chebyshev, Clenshaw Curtis, Fejer 2, Gegenbauer, generalized Hermite,
+      generalized Laguerre, Hermite, Jacobi, Laguerre, Legendre and Patterson types.
+    </p>
+
+    <h3 align = "center">
+      Author:
+    </h3>
+
+    <p>
+      Fred Krogh, Van Snyder
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Fred Krogh, Van Snyder,<br>
+          Algorithm 699: a new representation of Patterson's quadrature formula,<br>
+          ACM Transactions on Mathematical Software,<br>
+          Volume 17, Number 4, December 1991, pages 457-461.
+        </li>
+        <li>
+          Thomas Patterson,<br>
+          Algorithm 468:
+          Algorithm for Automatic Numerical Integration
+          Over a Finite Interval,<br>
+          Communications of the ACM,<br>
+          Volume 16, Number 11, November 1973, pages 694-699.
+        </li>
+        <li>
+          Thomas Patterson,<br>
+          An algorithm for generating interpolatory quadrature rules of the highest degree
+          of precision with preassigned nodes for general weight functions,<br>
+          Transactions on Mathematical Software,<br>
+          Volume 15, Number 2, June 1989, pages 123-136.
+        </li>
+        <li>
+          Thomas Patterson,<br>
+          Algorithm 672:
+          EXTEND: generation of interpolatory quadrature rules of the highest degree
+          of precision with preassigned nodes for general weight functions,<br>
+          Transactions on Mathematical Software,<br>
+          Volume 15, Number 2, June 1989, pages 137-143.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms699.f">toms699.f</a>,
+          the source code;
+        </li>
+        <li>
+          <a href = "toms699.sh">toms699.sh</a>,
+          commands to compile the source code;
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms699_prb.f">toms699_prb.f</a>,
+          a sample calling program;
+        </li>
+        <li>
+          <a href = "toms699_prb.sh">toms699_prb.sh</a>,
+          commands to compile, link and run the test program;
+        </li>
+        <li>
+          <a href = "toms699_prb_output.txt">toms699_prb_output.txt</a>,
+          the output file;
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 17 December 2009.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+</html>

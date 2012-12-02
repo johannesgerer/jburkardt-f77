@@ -1,0 +1,48 @@
+20110202  191512.299
+ 
+TOMS452_PRB
+  FORTRAN77 version
+  Test the TOMS452 library.
+ 
+  Let N = 10
+  and M =  3
+  Generate  5 combinations.
+ 
+  Initial combination:
+ 
+  1110000000
+ 
+  1010000001
+  1010000010
+  1010000100
+  1010001000
+  1010010000
+ 
+  Let N =  5
+  and M =  2
+  Generate 15 combinations.
+ 
+  Initial combination:
+ 
+  11000
+ 
+  10100
+  10010
+  10001
+  00011
+  00110
+  00101
+  01100
+  01010
+  01001
+  11000
+  10100
+  10010
+  10001
+  00011
+  00110
+ 
+TOMS452_PRB
+  Normal end of execution.
+ 
+20110202  191512.299

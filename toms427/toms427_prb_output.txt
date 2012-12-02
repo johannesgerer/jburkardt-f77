@@ -1,0 +1,28 @@
+ 
+TOMS427_PRB
+  Test TOMS algorithm 427,
+  Fourier Cosine Integrals.
+ 
+ 
+TEST01:
+  f(x) = 1/(X*X+1),
+  Look at effect of upper limit T.
+ 
+       W                T             VALUE           EXACT
+ 
+     1.00000         5.00000        0.571638        0.577864    
+     1.00000         20.0000        0.577773        0.577864    
+     1.00000         80.0000        0.577895        0.577864    
+ 
+TEST02:
+  f(x) = exp(-x),
+  Look at effect of upper limit T.
+ 
+       W                T             VALUE           EXACT
+ 
+     1.00000         5.00000        0.499066        0.500000    
+     1.00000         20.0000        0.500000        0.500000    
+     1.00000         80.0000        0.500000        0.500000    
+ 
+TOMS427_PRB
+  Normal end of execution.

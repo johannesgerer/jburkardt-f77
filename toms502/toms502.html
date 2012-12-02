@@ -1,0 +1,185 @@
+<html>
+
+  <head>
+    <title>
+      TOMS502 - Dependence of Solution of Nonlinear Systems on a Parameter
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS502 <br> Dependence of Solution of Nonlinear Systems on a Parameter
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS502</b>
+      is a FORTRAN77 library which
+      investigates the dependence of the solution X of a nonlinear system
+      of equations F(X,ALPHA)=0 on the parameter ALPHA.
+    </p>
+
+    <p>
+      The program is an example of the use of the "continuation method".
+      Under reasonable assumptions on the function F, the set of solutions
+      (X,ALPHA) forms a curve, or perhaps a curve with bifurcations.
+    </p>
+
+    <p>
+      If one point on the curve is known, or can be found, than further
+      points can be determined by using simple curve-following ideas.
+      One approach is to differentiate the equations with respect to ALPHA,
+      and then apply an ODE solver.  However, this approach will fail if
+      the curve has limit points with respect to ALPHA.
+    </p>
+
+    <p>
+      Kubicek's approach is to work with a variable that approximates the
+      arc-length of the curve, and to adapt this choice as necessary when
+      the curve changes its direction.
+    </p>
+
+    <p>
+      <b>TOMS502</b> is ACM TOMS Algorithm 502.
+    </p>
+
+    <p>
+      The text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f77_src/pitcon66/pitcon66.html">
+      PITCON66</a>,
+      a FORTRAN77 library which
+      seeks to produce a sequence of points that satisfy a set of nonlinear
+      equations with one degree of freedom;
+      this is version 6.6 of ACM TOMS algorithm 596.
+    </p>
+
+    <p>
+      <a href = "../../f_src/pitcon7/pitcon7.html">
+      PITCON7</a>,
+      a FORTRAN90 library which
+      seeks to produce a sequence of points that satisfy a set of nonlinear
+      equations with one degree of freedom;
+      this is version 7.0 of ACM TOMS algorithm 596.
+    </p>
+
+    <p>
+      <a href = "../../f_src/test_con/test_con.html">
+      TEST_CON</a>,
+      a FORTRAN90 library which
+      implements test problems for numerical continuation.
+    </p>
+
+    <p>
+      <a href = "../../f77_src/toms596/toms596.html">
+      TOMS596</a>,
+      a FORTRAN77 library which
+      seeks to produce a sequence of points that satisfy a set of nonlinear
+      equations with one degree of freedom;
+      this library is commonly called <b>PITCON</b>;<br>
+      this is ACM TOMS algorithm 596.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Milan Kubicek,<br>
+          Algorithm 502:
+          Dependence of solution of nonlinear systems on a parameter,<br>
+          ACM Transactions on Mathematical Software,<br>
+          Volume 2, Number 1, March 1976, pages 98-107.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms502.f">toms502.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms502.sh">toms502.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms502_prb.f">toms502_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms502_prb.sh">toms502_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms502_prb_output.txt">toms502_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>DERPAR</b> carries out Kubicek's continuation algorithm.
+        </li>
+        <li>
+          <b>ADAMS</b> applies Adams-Bashforth methods to an ODE.
+        </li>
+        <li>
+          <b>GAUSE</b> solves a linear system of N equations in N+1 unknowns.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 02 September 2008.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

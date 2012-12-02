@@ -1,0 +1,313 @@
+<html>
+
+  <head>
+    <title>
+      TOMS352 - Characteristic Values and Associated Solutions of
+      Matthieu's Differential Equation
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align = "center">
+      TOMS352 <br> Characteristic Values and Associated Solutions of
+      Matthieu's Differential Equation
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>TOMS352</b>
+      is a FORTRAN77 library which
+      implements ACM TOMS algorithm 352, for determining characteristic
+      values and associated solutions of Matthieu's differential equation.
+    </p>
+
+    <p>
+      The text of many ACM TOMS algorithms is available online
+      through ACM:
+              <a href = "http://www.acm.org/pubs/calgo/">
+                         http://www.acm.org/pubs/calgo</a>
+      or NETLIB:
+      <a href = "http://www.netlib.org/toms/index.html">
+      http://www.netlib.org/toms/index.html</a>.
+    </p>
+
+    <h3 align = "center">
+      Usage:
+    </h3>
+
+    <p>
+      The routine <b>MFCVAL</b> computes characteristic values of
+      Mathieu's differential equation:
+      <blockquote><b>
+        call mfcval ( n, r, qq, cv, j )
+      </b></blockquote>
+      where
+      <dl>
+        <dt>
+          input, integer <b>N</b>
+        </dt>
+        <dd>
+          the number of characteristic values desired.
+        </dd>
+        <dt>
+          input, integer <b>R</b>
+        </dt>
+        <dd>
+          given as <b>N-1</b> or <b>N</b> according as the
+          characteristic values are to be associated with
+          the even or odd solutions, respectively.
+        </dd>
+        <dt>
+          input, double precision <b>QQ</b>
+        </dt>
+        <dd>
+          the nonnegative parameter.
+        </dd>
+        <dt>
+          output, double precision <b>CV(6,N)</b>
+        </dt>
+        <dd>
+          the computed array of characteristic
+          values and bounds.
+        </dd>
+        <dt>
+          output, integer <b>J</b>
+        </dt>
+        <dd>
+          the number of characteristic values successfully computed.
+          If <b>J</b> is not equal to <b>N</b> then an error occurred
+          while trying to compute value <b>J+1</b>.
+        </dd>
+        </dd>
+      </dl>
+    </p>
+
+    <p>
+      The routine <b>MATH</b> computes solutions and their derivatives
+      of either Mathieu's differential equation or Mathieu's modified
+      equation, associated with the characteristic values.
+      the Mathieu equation:
+      <blockquote><b>
+        call math ( xx, qq, r, cv, sol, fnc, norm, f, k, m )
+      </b></blockquote>
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../f77_src/test_values/test_values.html">
+      TEST_VALUES</a>,
+      a FORTRAN77 library which
+      contains routines which return sample values of various functions,
+      including the Bessel functions used by this package.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Milton Abramowitz, Irene Stegun,<br>
+          Handbook of Mathematical Functions,<br>
+          National Bureau of Standards, 1964,<br>
+          ISBN: 0-486-61272-4,<br>
+          LC: QA47.A34.
+        </li>
+        <li>
+          Gertrude Blanch,<br>
+          Numerical evaluation of continued fractions,<br>
+          SIAM Review,<br>
+          Volume 6, Number 4, 1964, pages 383-421.
+        </li>
+        <li>
+          Gertrude Blanch,<br>
+          Numerical aspects of Mathieu eigenvalues,<br>
+          Rendiconti Circolo Matematico di Palermo,<br>
+          Volume 2, Number 15, 1966, pages 51-97.
+        </li>
+        <li>
+          Gertrude Blanch, Donald Clemm,<br>
+          Tables Relating to the Radial Mathieu Functions,
+          Volume 1: Functions of the First Kind,<br>
+          US Government Printing Office, 1962.
+        </li>
+        <li>
+          Gertrude Blanch, Donald Clemm,<br>
+          Tables Relating to the Radial Mathieu Functions,
+          Volume 2: Functions of the Second Kind,<br>
+          US Government Printing Office, 1962.
+        </li>
+        <li>
+          Donald Clemm,<br>
+          Algorithm 352: Characteristic Values and Associated
+          Solutions of Matthieu's Differential Equation,<br>
+          Communications of the ACM,<br>
+          Volume 12, Number 7, pages 399-407, June 1969.
+        </li>
+        <li>
+          Edward Ince,<br>
+          Tables of the Elliptic Cylinder Functions,<br>
+          Proceedings of the Royal Society of Edinburgh,<br>
+          Volume 52, 1932, pages 355-423.
+        </li>
+        <li>
+          Julius Stratton, Philip Morse, Lan Jen Chu, Reina Hutner,<br>
+          Elliptic Cylinder and Spheroidal Wave Functions,<br>
+          Wiley, 1941.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Source Code:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms352.f">toms352.f</a>, the source code.
+        </li>
+        <li>
+          <a href = "toms352.sh">toms352.sh</a>,
+          commands to compile the source code.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "toms352_prb.f">toms352_prb.f</a>,
+          a sample calling program.
+        </li>
+        <li>
+          <a href = "toms352_prb.sh">toms352_prb.sh</a>,
+          commands to compile and run the sample program.
+        </li>
+        <li>
+          <a href = "toms352_prb_output.txt">toms352_prb_output.txt</a>,
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <h3 align = "center">
+      List of Routines:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <b>MFCVAL</b> computes the first N characteristic values.
+        </li>
+        <li>
+          <b>MATH</b> computes solutions of Mathieu's differential
+          equation.
+        </li>
+        <li>
+          <b>BOUNDS</b> gets crude upper and lower bounds for the
+          characteristic values.
+        </li>
+        <li>
+          <b>MFITR8</b> improves estimated characteristic values.
+        </li>
+        <li>
+          <b>TMOFA</b> determines the accuracy of the solution.
+        </li>
+        <li>
+          <b>COEF</b> computes the neutral coefficients.
+        </li>
+        <li>
+          <b>SUM_SERIES</b> does series evaluation.
+        </li>
+        <li>
+          <b>BESSEL</b> evaluates Bessel functions of first or second kind.
+        </li>
+        <li>
+          <b>J0J1</b> computes J0(X) and J1(X) for X < 8.
+        </li>
+        <li>
+          <b>Y0Y1</b> computes Y0(X) and Y1(X) for X < 8.
+        </li>
+        <li>
+          <b>LUKE</b> evaluates Bessel functions of order 0 or 1, of the
+          first or second kind, for 8 <= X.
+        </li>
+        <li>
+          <b>JNS</b> evaluates Bessel functions of the first kind, given
+          J0(X) and J1(X).
+        </li>
+        <li>
+          <b>DS</b> evaluates one term of the radial solution for B(Q).
+        </li>
+        <li>
+          <b>DC</b> evaluates one term of the radial solution for A(Q).
+        </li>
+        <li>
+          <b>DDS</b> evaluates one term of the derivative of the
+          radial solution for B(Q).
+        </li>
+        <li>
+          <b>DDC</b> evaluates one term of the derivative of the
+          radial solution for A(Q).
+        </li>
+        <li>
+          <b>PS</b> evaluates one term of the odd periodic solution.
+        </li>
+        <li>
+          <b>PC</b> evaluates one term of the even periodic solution.
+        </li>
+        <li>
+          <b>DPS</b> evaluates one term of the derivative of the
+          odd periodic solution.
+        </li>
+        <li>
+          <b>DPC</b> evaluates one term of the derivative of the
+          even periodic solution.
+        </li>
+        <li>
+          <b>FJ</b> produces Bessel functions of the first kind.
+        </li>
+        <li>
+          <b>FY</b> produces Bessel functions of the second kind.
+        </li>
+        <li>
+          <b>DJ</b> produces derivatives of Bessel functions of the
+          first kind.
+        </li>
+        <li>
+          <b>DY</b> produces derivatives of Bessel functions of the
+          second kind.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../f77_src.html">
+      the FORTRAN77 source codes</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 09 October 2006.
+
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+  <!-- Initial HTML skeleton created by HTMLINDEX. -->
+
+</html>

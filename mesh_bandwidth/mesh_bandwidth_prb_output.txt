@@ -1,0 +1,500 @@
+ 2 September 2012   4:47:40.567 PM      
+ 
+MESH_BANDWIDTH
+  FORTRAN90 version
+  Read a mesh file which defines
+  a "triangulation" of a region in the plane,
+  or a "tetrahedronization" of a region in space,
+  or any division of a regino in ND space into elements,
+  using a mesh of elements of uniform order.
+ 
+  Determine the geometric mesh bandwidth.
+ 
+    M = ML + 1 + MU.
+ 
+  which is the bandwidth of the vertex connectivity
+  matrix.
+ 
+  Note that a matrix associated with variables defined
+  at the  nodes could have a greater bandwidth than M,
+  since you might have multiple variables at a vertex,
+  or the variable might be a vector quantity,
+  or physical effects might link two variables that are
+  not associated with vertices that are connected.
+ 
+  Read the header of "sphere_q4_elements.txt".
+ 
+  Element order ELEMENT_ORDER =        4
+  Element number ELEMENT_NUM  =       64
+ 
+  Read the data in "sphere_q4_elements.txt".
+ 
+  First 5 elements:
+ 
+  Row        1       2       3       4
+  Col
+ 
+    1:       1       1       3       2
+    2:       1       1       4       3
+    3:       1       1       5       4
+    4:       1       1       6       5
+    5:       1       1       7       6
+ 
+  Lower bandwidth ML =       15
+  Upper bandwidth MU =       15
+  Total bandwidth M  =       31
+ 
+MESH_BANDWIDTH
+  Normal end of execution.
+ 
+ 2 September 2012   4:47:40.569 PM      
+ 2 September 2012   4:47:40.573 PM      
+ 
+MESH_BANDWIDTH
+  FORTRAN90 version
+  Read a mesh file which defines
+  a "triangulation" of a region in the plane,
+  or a "tetrahedronization" of a region in space,
+  or any division of a regino in ND space into elements,
+  using a mesh of elements of uniform order.
+ 
+  Determine the geometric mesh bandwidth.
+ 
+    M = ML + 1 + MU.
+ 
+  which is the bandwidth of the vertex connectivity
+  matrix.
+ 
+  Note that a matrix associated with variables defined
+  at the  nodes could have a greater bandwidth than M,
+  since you might have multiple variables at a vertex,
+  or the variable might be a vector quantity,
+  or physical effects might link two variables that are
+  not associated with vertices that are connected.
+ 
+  Read the header of "sphere_t3_elements.txt".
+ 
+  Element order ELEMENT_ORDER =        3
+  Element number ELEMENT_NUM  =      112
+ 
+  Read the data in "sphere_t3_elements.txt".
+ 
+  First 5 elements:
+ 
+  Row        1       2       3
+  Col
+ 
+    1:       3       2       1
+    2:       4       3       1
+    3:       5       4       1
+    4:       6       5       1
+    5:       7       6       1
+ 
+  Lower bandwidth ML =       15
+  Upper bandwidth MU =       15
+  Total bandwidth M  =       31
+ 
+MESH_BANDWIDTH
+  Normal end of execution.
+ 
+ 2 September 2012   4:47:40.574 PM      
+ 2 September 2012   4:47:40.578 PM      
+ 
+MESH_BANDWIDTH
+  FORTRAN90 version
+  Read a mesh file which defines
+  a "triangulation" of a region in the plane,
+  or a "tetrahedronization" of a region in space,
+  or any division of a regino in ND space into elements,
+  using a mesh of elements of uniform order.
+ 
+  Determine the geometric mesh bandwidth.
+ 
+    M = ML + 1 + MU.
+ 
+  which is the bandwidth of the vertex connectivity
+  matrix.
+ 
+  Note that a matrix associated with variables defined
+  at the  nodes could have a greater bandwidth than M,
+  since you might have multiple variables at a vertex,
+  or the variable might be a vector quantity,
+  or physical effects might link two variables that are
+  not associated with vertices that are connected.
+ 
+  Read the header of "cube_elements.txt".
+ 
+  Element order ELEMENT_ORDER =        4
+  Element number ELEMENT_NUM  =        6
+ 
+  Read the data in "cube_elements.txt".
+ 
+  First 5 elements:
+ 
+  Row        1       2       3       4
+  Col
+ 
+    1:       4       3       5       1
+    2:       4       2       5       1
+    3:       4       7       3       5
+    4:       4       7       8       5
+    5:       4       6       2       5
+ 
+  Lower bandwidth ML =        4
+  Upper bandwidth MU =        4
+  Total bandwidth M  =        9
+ 
+MESH_BANDWIDTH
+  Normal end of execution.
+ 
+ 2 September 2012   4:47:40.579 PM      
+ 2 September 2012   4:47:40.583 PM      
+ 
+MESH_BANDWIDTH
+  FORTRAN90 version
+  Read a mesh file which defines
+  a "triangulation" of a region in the plane,
+  or a "tetrahedronization" of a region in space,
+  or any division of a regino in ND space into elements,
+  using a mesh of elements of uniform order.
+ 
+  Determine the geometric mesh bandwidth.
+ 
+    M = ML + 1 + MU.
+ 
+  which is the bandwidth of the vertex connectivity
+  matrix.
+ 
+  Note that a matrix associated with variables defined
+  at the  nodes could have a greater bandwidth than M,
+  since you might have multiple variables at a vertex,
+  or the variable might be a vector quantity,
+  or physical effects might link two variables that are
+  not associated with vertices that are connected.
+ 
+  Read the header of "cube_order10_elements.txt".
+ 
+  Element order ELEMENT_ORDER =       10
+  Element number ELEMENT_NUM  =        6
+ 
+  Read the data in "cube_order10_elements.txt".
+ 
+  First 5 elements:
+ 
+  Row        1       2       3       4       5       6       7       8       9      10
+  Col
+ 
+    1:       4       3       5       1      16      19      17      11      10      12
+    2:       4       2       5       1      13      19      14      11       9      12
+    3:       4       7       3       5      21      16      18      19      24      17
+    4:       4       7       8       5      21      22      27      19      24      25
+    5:       4       6       2       5      20      13      15      19      23      14
+ 
+  Lower bandwidth ML =       23
+  Upper bandwidth MU =       23
+  Total bandwidth M  =       47
+ 
+MESH_BANDWIDTH
+  Normal end of execution.
+ 
+ 2 September 2012   4:47:40.584 PM      
+ 2 September 2012   4:47:40.588 PM      
+ 
+MESH_BANDWIDTH
+  FORTRAN90 version
+  Read a mesh file which defines
+  a "triangulation" of a region in the plane,
+  or a "tetrahedronization" of a region in space,
+  or any division of a regino in ND space into elements,
+  using a mesh of elements of uniform order.
+ 
+  Determine the geometric mesh bandwidth.
+ 
+    M = ML + 1 + MU.
+ 
+  which is the bandwidth of the vertex connectivity
+  matrix.
+ 
+  Note that a matrix associated with variables defined
+  at the  nodes could have a greater bandwidth than M,
+  since you might have multiple variables at a vertex,
+  or the variable might be a vector quantity,
+  or physical effects might link two variables that are
+  not associated with vertices that are connected.
+ 
+  Read the header of "oneoneeight_order10_elements.txt".
+ 
+  Element order ELEMENT_ORDER =       10
+  Element number ELEMENT_NUM  =       70
+ 
+  Read the data in "oneoneeight_order10_elements.txt".
+ 
+  First 5 elements:
+ 
+  Row        1       2       3       4       5       6       7       8       9      10
+  Col
+ 
+    1:      12       4      14       2      49      99      33      51      29      35
+    2:      12      19      14       2     103      99      33     110      36      35
+    3:       8      19      14       2      80      78      31     110      36      35
+    4:       8      12      19      14      77      80      78     103      99     110
+    5:      13      12       4       2      98      50      34      49      33      29
+ 
+  Lower bandwidth ML =      116
+  Upper bandwidth MU =      116
+  Total bandwidth M  =      233
+ 
+MESH_BANDWIDTH
+  Normal end of execution.
+ 
+ 2 September 2012   4:47:40.590 PM      
+ 2 September 2012   4:47:40.593 PM      
+ 
+MESH_BANDWIDTH
+  FORTRAN90 version
+  Read a mesh file which defines
+  a "triangulation" of a region in the plane,
+  or a "tetrahedronization" of a region in space,
+  or any division of a regino in ND space into elements,
+  using a mesh of elements of uniform order.
+ 
+  Determine the geometric mesh bandwidth.
+ 
+    M = ML + 1 + MU.
+ 
+  which is the bandwidth of the vertex connectivity
+  matrix.
+ 
+  Note that a matrix associated with variables defined
+  at the  nodes could have a greater bandwidth than M,
+  since you might have multiple variables at a vertex,
+  or the variable might be a vector quantity,
+  or physical effects might link two variables that are
+  not associated with vertices that are connected.
+ 
+  Read the header of "ell3_elements.txt".
+ 
+  Element order ELEMENT_ORDER =        3
+  Element number ELEMENT_NUM  =       24
+ 
+  Read the data in "ell3_elements.txt".
+ 
+  First 5 elements:
+ 
+  Row        1       2       3
+  Col
+ 
+    1:       1       2       6
+    2:       7       6       2
+    3:       2       3       7
+    4:       8       7       3
+    5:       3       4       8
+ 
+  Lower bandwidth ML =        5
+  Upper bandwidth MU =        5
+  Total bandwidth M  =       11
+ 
+MESH_BANDWIDTH
+  Normal end of execution.
+ 
+ 2 September 2012   4:47:40.594 PM      
+ 2 September 2012   4:47:40.612 PM      
+ 
+MESH_BANDWIDTH
+  FORTRAN90 version
+  Read a mesh file which defines
+  a "triangulation" of a region in the plane,
+  or a "tetrahedronization" of a region in space,
+  or any division of a regino in ND space into elements,
+  using a mesh of elements of uniform order.
+ 
+  Determine the geometric mesh bandwidth.
+ 
+    M = ML + 1 + MU.
+ 
+  which is the bandwidth of the vertex connectivity
+  matrix.
+ 
+  Note that a matrix associated with variables defined
+  at the  nodes could have a greater bandwidth than M,
+  since you might have multiple variables at a vertex,
+  or the variable might be a vector quantity,
+  or physical effects might link two variables that are
+  not associated with vertices that are connected.
+ 
+  Read the header of "hex_holes3_elements.txt".
+ 
+  Element order ELEMENT_ORDER =        3
+  Element number ELEMENT_NUM  =      236
+ 
+  Read the data in "hex_holes3_elements.txt".
+ 
+  First 5 elements:
+ 
+  Row        1       2       3
+  Col
+ 
+    1:      46      45      81
+    2:       1       2     102
+    3:     110      62     111
+    4:      81      45      82
+    5:     120     138      85
+ 
+  Lower bandwidth ML =      131
+  Upper bandwidth MU =      131
+  Total bandwidth M  =      263
+ 
+MESH_BANDWIDTH
+  Normal end of execution.
+ 
+ 2 September 2012   4:47:40.615 PM      
+ 2 September 2012   4:47:40.619 PM      
+ 
+MESH_BANDWIDTH
+  FORTRAN90 version
+  Read a mesh file which defines
+  a "triangulation" of a region in the plane,
+  or a "tetrahedronization" of a region in space,
+  or any division of a regino in ND space into elements,
+  using a mesh of elements of uniform order.
+ 
+  Determine the geometric mesh bandwidth.
+ 
+    M = ML + 1 + MU.
+ 
+  which is the bandwidth of the vertex connectivity
+  matrix.
+ 
+  Note that a matrix associated with variables defined
+  at the  nodes could have a greater bandwidth than M,
+  since you might have multiple variables at a vertex,
+  or the variable might be a vector quantity,
+  or physical effects might link two variables that are
+  not associated with vertices that are connected.
+ 
+  Read the header of "hot_pipe3_elements.txt".
+ 
+  Element order ELEMENT_ORDER =        3
+  Element number ELEMENT_NUM  =      288
+ 
+  Read the data in "hot_pipe3_elements.txt".
+ 
+  First 5 elements:
+ 
+  Row        1       2       3
+  Col
+ 
+    1:       1       2      15
+    2:      15      14       1
+    3:       2       3      16
+    4:      16      15       2
+    5:       3       4      17
+ 
+  Lower bandwidth ML =       14
+  Upper bandwidth MU =       14
+  Total bandwidth M  =       29
+ 
+MESH_BANDWIDTH
+  Normal end of execution.
+ 
+ 2 September 2012   4:47:40.621 PM      
+ 2 September 2012   4:47:40.626 PM      
+ 
+MESH_BANDWIDTH
+  FORTRAN90 version
+  Read a mesh file which defines
+  a "triangulation" of a region in the plane,
+  or a "tetrahedronization" of a region in space,
+  or any division of a regino in ND space into elements,
+  using a mesh of elements of uniform order.
+ 
+  Determine the geometric mesh bandwidth.
+ 
+    M = ML + 1 + MU.
+ 
+  which is the bandwidth of the vertex connectivity
+  matrix.
+ 
+  Note that a matrix associated with variables defined
+  at the  nodes could have a greater bandwidth than M,
+  since you might have multiple variables at a vertex,
+  or the variable might be a vector quantity,
+  or physical effects might link two variables that are
+  not associated with vertices that are connected.
+ 
+  Read the header of "ell6_elements.txt".
+ 
+  Element order ELEMENT_ORDER =        6
+  Element number ELEMENT_NUM  =        6
+ 
+  Read the data in "ell6_elements.txt".
+ 
+  First 5 elements:
+ 
+  Row        1       2       3       4       5       6
+  Col
+ 
+    1:       1       3      11       2       7       6
+    2:      13      11       3      12       7       8
+    3:       3       5      13       4       9       8
+    4:      15      13       5      14       9      10
+    5:      11      13      19      12      17      16
+ 
+  Lower bandwidth ML =       10
+  Upper bandwidth MU =       10
+  Total bandwidth M  =       21
+ 
+MESH_BANDWIDTH
+  Normal end of execution.
+ 
+ 2 September 2012   4:47:40.627 PM      
+ 2 September 2012   4:47:40.631 PM      
+ 
+MESH_BANDWIDTH
+  FORTRAN90 version
+  Read a mesh file which defines
+  a "triangulation" of a region in the plane,
+  or a "tetrahedronization" of a region in space,
+  or any division of a regino in ND space into elements,
+  using a mesh of elements of uniform order.
+ 
+  Determine the geometric mesh bandwidth.
+ 
+    M = ML + 1 + MU.
+ 
+  which is the bandwidth of the vertex connectivity
+  matrix.
+ 
+  Note that a matrix associated with variables defined
+  at the  nodes could have a greater bandwidth than M,
+  since you might have multiple variables at a vertex,
+  or the variable might be a vector quantity,
+  or physical effects might link two variables that are
+  not associated with vertices that are connected.
+ 
+  Read the header of "hex_holes6_elements.txt".
+ 
+  Element order ELEMENT_ORDER =        6
+  Element number ELEMENT_NUM  =      232
+ 
+  Read the data in "hex_holes6_elements.txt".
+ 
+  First 5 elements:
+ 
+  Row        1       2       3       4       5       6
+  Col
+ 
+    1:     294     373     354     325     352     323
+    2:      60      95      86      73      81      71
+    3:     373     374     428     410     412     411
+    4:      95      96     136     114     116     115
+    5:     239     294     242     268     269     248
+ 
+  Lower bandwidth ML =       83
+  Upper bandwidth MU =       83
+  Total bandwidth M  =      167
+ 
+MESH_BANDWIDTH
+  Normal end of execution.
+ 
+ 2 September 2012   4:47:40.634 PM      

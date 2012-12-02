@@ -1,0 +1,14 @@
+
+
+ Conjugate Gradient Minimization Routine
+
+
+ n      =     2
+ method   =     3
+ irest    =     1
+
+
+
+ f(x*) =  2.47204159D-16
+ It took 1.406000D-03 CPU seconds
+

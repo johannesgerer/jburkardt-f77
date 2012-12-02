@@ -1,0 +1,13434 @@
+      program main
+
+c*********************************************************************72
+c
+cc MAIN is the driver for the STARPAC test routines.
+c
+c  Modified:
+c
+c    25 April 2006
+c
+      implicit none
+
+      integer ldstak
+      parameter ( ldstak = 3000 )
+
+      integer ierr
+      double precision dstak(ldstak)
+
+      common /cstak/ dstak   
+      common /errchk/ ierr
+
+      call timestamp
+
+      write ( *, '(a)' ) ' '
+      write ( *, '(a)' ) 'STARPAC_PRB:'
+      write ( *, '(a)' ) '  FORTRAN77 version'
+      write ( *, '(a)' ) '  Test the routines in the STARPAC library.'
+
+      call xacf ( ldstak )
+      call xaimd ( ldstak )
+      call xaimt ( ldstak )
+      call xaov1 ( ldstak )
+      call xbfs ( ldstak )
+      call xccf ( ldstak )
+      call xcorr ( ldstak )
+      call xdckld ( ldstak )
+      call xdckle ( ldstak )
+      call xdcklt ( ldstak )
+      call xdemod ( ldstak )
+      call xdflt ( ldstak )
+      call xhist ( ldstak )
+      call xlls ( ldstak )
+      call xnlsd ( ldstak )
+      call xnlse ( ldstak )
+      call xnlst ( ldstak )
+      call xnrand ( ldstak )
+      call xpgm ( ldstak )
+      call xpp ( ldstak )
+      call xstat ( ldstak )
+      call xstpld ( ldstak )
+      call xstple ( ldstak )
+      call xstplt ( ldstak )
+      call xuas ( ldstak )
+      call xufs ( ldstak )
+      call xvp ( ldstak )
+      call xxch1 ( ldstak )
+      call xxch2 ( ldstak )
+      call xxch3 ( ldstak )
+      call xxch4 ( ldstak )
+      call xxch5 ( ldstak )
+      call xxch6 ( ldstak )
+      call xxch7 ( ldstak )
+      call xxch8 ( ldstak )
+      call xxch9 ( ldstak )
+      call xxch10 ( ldstak )
+      call xxch11 ( ldstak )
+      call xxch12 ( ldstak )
+      call xxch13 ( ldstak )
+
+      write ( *, '(a)' ) ' '
+      write ( *, '(a)' ) 'STARPAC_PRB:'
+      write ( *, '(a)' ) '  Normal end of execution.'
+
+      write ( *, '(a)' ) ' '
+      call timestamp
+
+      stop
+      end 
+      subroutine xacf ( lds )
+
+c*********************************************************************72
+c
+cc XACF tests the time series correlation routine.
+C
+C     SERIES Y IS LISTED AS SERIES X1 ON PAGE 362 IN JENKINS AND WATTS.
+C
+C     SERIES YD IS LISTED AS SERIES G ON PAGE 531 OF BOX AND JENKINS.
+C
+c  Modified:
+c
+c    25 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDS
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      REAL
+     +   AMISS,YMISS
+      INTEGER
+     +   I,IAR,IPRT,ITEST,LACOV,LAGMAX,LDSTAK,LYFFT,N,NFAC,NPRT,NYD
+C
+C  LOCAL ARRAYS
+      REAL
+     +   ACOV(21),PHI(21),Y(100),YD(150),YFFT(150)
+      INTEGER
+     +   IOD(2),ND(2),NLPPA(21)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL ACF,ACFD,ACFF,ACFFS,ACFM,ACFMS,ACFS,IPRINT
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     REAL ACOV(21)
+C        THE AUTOCOVARIANCE VECTOR.
+C     REAL AMISS
+C        THE MISSING VALUE CODE FOR THE RETURNED ACVF ESTIMATES
+C        (VECTOR ACOV).
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     INTEGER I
+C        AN INDEXING VARIABLE.
+C     INTEGER IAR
+C        THE ORDER OF THE AUTOREGRESSIVE PROCESS CHOSEN.
+C     INTEGER IERR
+C        THE INTEGER VALUE RETURNED BY THIS ROUTINE DESIGNATING
+C        WHETHER ANY ERRORS WERE DETECTED IN THE PARAMETER LIST
+C        IF IERR .EQ. 0, NO ERRORS WERE DETECTED
+C     INTEGER IOD(2)
+C        THE ORDER OF EACH OF THE DIFFERENCE FACTORS.
+C     INTEGER IPRT
+C        THE UNIT NUMBER FOR PRINTED OUTPUT.
+C     INTEGER ITEST
+C        THE NUMBER OF THE TEST BEING RUN
+C     INTEGER LACOV
+C        THE LENGTH OF THE ACVF RELATED VECTORS.
+C     INTEGER LAGMAX
+C        THE MAXIMUM LAG VALUE REQUESTED.
+C     INTEGER LDSTAK
+C        THE LENGTH OF THE ARRAY DSTAK.
+C     INTEGER LYFFT
+C        THE LENGTH OF THE ARRAYS USED WHEN THE COMPUTATIONS ARE
+C        PERFORMED BY THE FFT.
+C     INTEGER N
+C        THE INTEGER NUMBER OF OBSERVATIONS IN EACH SERIES
+C     INTEGER ND(2)
+C        THE ARRAY CONTAINING THE NUMBER OF TIMES THE DIFFERENCE
+C        FACTORS ARE TO BE APPLIED.
+C     INTEGER NFAC
+C        THE NUMBER OF DIFFERENCE FACTORS.
+C     INTEGER NLPPA(21)
+C        THE ARRAY CONTAINING THE NUMBER OF LAGGED PRODUCT PAIRS
+C        USED TO COMPUTE EACH ACVF ESTIMATE.
+C     INTEGER NPRT
+C        THE INDICATOR VARIABLE USED TO SPECIFY WHETHER OR NOT
+C        PRINTED OUTPUT IS TO BE GIVEN, WHERE IF THE VALUE OF
+C        NPRT IS ZERO, NO OUTPUT IS MADE.
+C     INTEGER NYD
+C        THE NUMBER OF OBSERVATIONS IN THE SERIES TO BE DIFFERENCED.
+C     REAL PHI(21)
+C        THE ARRAY OF AUTOREGRESSIVE COEFFICIENTS FOR THE SELECTED
+C        ORDER.
+C     REAL Y(100), YD(150)
+C        THE VECTOR CONTAINING THE OBSERVED TIME SERIES
+C     REAL YFFT(150)
+C        THE VECTORS USED FOR STORING THE SERIES FOR THE ROUTINES
+C        USING THE FFT.
+C     REAL YMISS
+C        THE MISSING VALUE CODES FOR SERIES Y AND YM.
+C
+      DATA    Y(  1),   Y(  2),   Y(  3),   Y(  4),   Y(  5),   Y(  6)
+     +    / -2.07E0, -1.15E0,  0.69E0, -0.46E0, -1.49E0, -0.70E0/
+      DATA    Y(  7),   Y(  8),   Y(  9),   Y( 10),   Y( 11),   Y( 12)
+     +    / -1.07E0, -0.69E0, -0.68E0,  1.27E0, -1.05E0, -0.05E0/
+      DATA    Y( 13),   Y( 14),   Y( 15),   Y( 16),   Y( 17),   Y( 18)
+     +    / -0.84E0, -0.62E0, -0.49E0, -1.29E0, -0.49E0, -1.06E0/
+      DATA    Y( 19),   Y( 20),   Y( 21),   Y( 22),   Y( 23),   Y( 24)
+     +    / -0.38E0, -0.52E0, -0.13E0,  1.30E0, -1.51E0, -0.43E0/
+      DATA    Y( 25),   Y( 26),   Y( 27),   Y( 28),   Y( 29),   Y( 30)
+     +    / -1.33E0, -0.78E0,  0.31E0, -0.95E0, -0.90E0, -0.30E0/
+      DATA    Y( 31),   Y( 32),   Y( 33),   Y( 34),   Y( 35),   Y( 36)
+     +    / -1.02E0, -0.53E0,  0.15E0,  1.40E0,  1.22E0,  0.59E0/
+      DATA    Y( 37),   Y( 38),   Y( 39),   Y( 40),   Y( 41),   Y( 42)
+     +    /  0.70E0,  1.70E0,  2.78E0,  1.98E0,  1.39E0,  1.85E0/
+      DATA    Y( 43),   Y( 44),   Y( 45),   Y( 46),   Y( 47),   Y( 48)
+     +    /  2.60E0,  0.51E0,  2.77E0,  1.16E0,  1.07E0, -0.48E0/
+      DATA    Y( 49),   Y( 50),   Y( 51),   Y( 52),   Y( 53),   Y( 54)
+     +    / -0.52E0,  0.37E0,  0.00E0, -1.99E0, -1.75E0,  0.70E0/
+      DATA    Y( 55),   Y( 56),   Y( 57),   Y( 58),   Y( 59),   Y( 60)
+     +    /  0.73E0,  1.16E0,  0.06E0, -0.02E0,  1.10E0, -0.35E0/
+      DATA    Y( 61),   Y( 62),   Y( 63),   Y( 64),   Y( 65),   Y( 66)
+     +    / -1.67E0, -1.57E0,  1.16E0,  1.84E0,  3.35E0,  0.40E0/
+      DATA    Y( 67),   Y( 68),   Y( 69),   Y( 70),   Y( 71),   Y( 72)
+     +    /  0.45E0,  1.30E0,  0.93E0,  1.17E0, -1.74E0, -1.28E0/
+      DATA    Y( 73),   Y( 74),   Y( 75),   Y( 76),   Y( 77),   Y( 78)
+     +    / -0.07E0,  1.50E0,  0.53E0,  0.20E0, -0.42E0,  1.18E0/
+      DATA    Y( 79),   Y( 80),   Y( 81),   Y( 82),   Y( 83),   Y( 84)
+     +    /  0.82E0,  1.50E0,  2.92E0,  1.18E0,  1.23E0,  3.16E0/
+      DATA    Y( 85),   Y( 86),   Y( 87),   Y( 88),   Y( 89),   Y( 90)
+     +    /  0.79E0,  0.68E0,  1.14E0,  1.02E0,  1.02E0, -0.71E0/
+      DATA    Y( 91),   Y( 92),   Y( 93),   Y( 94),   Y( 95),   Y( 96)
+     +    / -0.17E0, -1.50E0, -0.26E0, -0.38E0,  0.93E0, -0.33E0/
+      DATA    Y( 97),   Y( 98),   Y( 99),   Y(100)
+     +    / -1.12E0, -2.95E0, -2.09E0, -1.11E0                    /
+C
+      DATA   YD(  1),  YD(  2),  YD(  3),  YD(  4),  YD(  5),  YD(  6)
+     +    /  112.0E0, 118.0E0, 132.0E0, 129.0E0, 121.0E0, 135.0E0/
+      DATA   YD(  7),  YD(  8),  YD(  9),  YD( 10),  YD( 11),  YD( 12)
+     +    /  148.0E0, 148.0E0, 136.0E0, 119.0E0, 104.0E0, 118.0E0/
+      DATA   YD( 13),  YD( 14),  YD( 15),  YD( 16),  YD( 17),  YD( 18)
+     +    /  115.0E0, 126.0E0, 141.0E0, 135.0E0, 125.0E0, 149.0E0/
+      DATA   YD( 19),  YD( 20),  YD( 21),  YD( 22),  YD( 23),  YD( 24)
+     +    /  170.0E0, 170.0E0, 158.0E0, 133.0E0, 114.0E0, 140.0E0/
+      DATA   YD( 25),  YD( 26),  YD( 27),  YD( 28),  YD( 29),  YD( 30)
+     +    /  145.0E0, 150.0E0, 178.0E0, 163.0E0, 172.0E0, 178.0E0/
+      DATA   YD( 31),  YD( 32),  YD( 33),  YD( 34),  YD( 35),  YD( 36)
+     +    /  199.0E0, 199.0E0, 184.0E0, 162.0E0, 146.0E0, 166.0E0/
+      DATA   YD( 37),  YD( 38),  YD( 39),  YD( 40),  YD( 41),  YD( 42)
+     +    /  171.0E0, 180.0E0, 193.0E0, 181.0E0, 183.0E0, 218.0E0/
+      DATA   YD( 43),  YD( 44),  YD( 45),  YD( 46),  YD( 47),  YD( 48)
+     +    /  230.0E0, 242.0E0, 209.0E0, 191.0E0, 172.0E0, 194.0E0/
+      DATA   YD( 49),  YD( 50),  YD( 51),  YD( 52),  YD( 53),  YD( 54)
+     +    /  196.0E0, 196.0E0, 236.0E0, 235.0E0, 229.0E0, 243.0E0/
+      DATA   YD( 55),  YD( 56),  YD( 57),  YD( 58),  YD( 59),  YD( 60)
+     +    /  264.0E0, 272.0E0, 237.0E0, 211.0E0, 180.0E0, 201.0E0/
+      DATA   YD( 61),  YD( 62),  YD( 63),  YD( 64),  YD( 65),  YD( 66)
+     +    /  204.0E0, 188.0E0, 235.0E0, 227.0E0, 234.0E0, 264.0E0/
+      DATA   YD( 67),  YD( 68),  YD( 69),  YD( 70),  YD( 71),  YD( 72)
+     +    /  302.0E0, 293.0E0, 259.0E0, 229.0E0, 203.0E0, 229.0E0/
+      DATA   YD( 73),  YD( 74),  YD( 75),  YD( 76),  YD( 77),  YD( 78)
+     +    /  242.0E0, 233.0E0, 267.0E0, 269.0E0, 270.0E0, 315.0E0/
+      DATA   YD( 79),  YD( 80),  YD( 81),  YD( 82),  YD( 83),  YD( 84)
+     +    /  364.0E0, 347.0E0, 312.0E0, 274.0E0, 237.0E0, 278.0E0/
+      DATA   YD( 85),  YD( 86),  YD( 87),  YD( 88),  YD( 89),  YD( 90)
+     +    /  284.0E0, 277.0E0, 317.0E0, 313.0E0, 318.0E0, 374.0E0/
+      DATA   YD( 91),  YD( 92),  YD( 93),  YD( 94),  YD( 95),  YD( 96)
+     +    /  413.0E0, 405.0E0, 355.0E0, 306.0E0, 271.0E0, 306.0E0/
+      DATA   YD( 97),  YD( 98),  YD( 99),  YD(100),  YD(101),  YD(102)
+     +    /  315.0E0, 301.0E0, 356.0E0, 348.0E0, 355.0E0, 422.0E0/
+      DATA   YD(103),  YD(104),  YD(105),  YD(106),  YD(107),  YD(108)
+     +    /  465.0E0, 467.0E0, 404.0E0, 347.0E0, 305.0E0, 336.0E0/
+      DATA   YD(109),  YD(110),  YD(111),  YD(112),  YD(113),  YD(114)
+     +    /  340.0E0, 318.0E0, 362.0E0, 348.0E0, 363.0E0, 435.0E0/
+      DATA   YD(115),  YD(116),  YD(117),  YD(118),  YD(119),  YD(120)
+     +    /  491.0E0, 505.0E0, 404.0E0, 359.0E0, 310.0E0, 337.0E0/
+      DATA   YD(121),  YD(122),  YD(123),  YD(124),  YD(125),  YD(126)
+     +    /  360.0E0, 342.0E0, 406.0E0, 396.0E0, 420.0E0, 472.0E0/
+      DATA   YD(127),  YD(128),  YD(129),  YD(130),  YD(131),  YD(132)
+     +    /  548.0E0, 559.0E0, 463.0E0, 407.0E0, 362.0E0, 405.0E0/
+      DATA   YD(133),  YD(134),  YD(135),  YD(136),  YD(137),  YD(138)
+     +    /  417.0E0, 391.0E0, 419.0E0, 461.0E0, 472.0E0, 535.0E0/
+      DATA   YD(139),  YD(140),  YD(141),  YD(142),  YD(143),  YD(144)
+     +    /  622.0E0, 606.0E0, 508.0E0, 461.0E0, 390.0E0, 432.0E0/
+
+      CALL IPRINT(IPRT)
+      ITEST = 1
+      LDSTAK = LDS
+
+      N = 100
+      LAGMAX = 20
+      NPRT = 1
+      LYFFT = 150
+      LACOV = 21
+      NYD = 144
+      NFAC = 2
+      ND(1) = 1
+      ND(2) = 1
+      IOD(1) = 12
+      IOD(2) = 1
+      YMISS = 1.16E0
+C
+C     TEST OF ACF
+C
+    5 WRITE (IPRT,1000)
+      CALL ACF(Y, N)
+      WRITE (IPRT,1010) IERR
+C
+C     TEST OF ACFS
+C
+      WRITE (IPRT,1020)
+      CALL ACFS(Y, N, LAGMAX, LACOV, ACOV, IAR, PHI, NPRT, LDSTAK)
+      WRITE (IPRT,1010) IERR
+C
+C     PRINT STORAGE FROM ACFS
+C
+      IF (IERR.EQ.0) THEN
+        WRITE (IPRT,1030) (ACOV(I),I=1,LAGMAX+1)
+        WRITE (IPRT,1030) (PHI(I),I=1,IAR)
+      END IF
+C
+C     TEST OF ACFD
+C
+      WRITE (IPRT,1040)
+      CALL ACFD(YD, NYD, LAGMAX, NFAC, ND, IOD, LDSTAK)
+      WRITE (IPRT,1010) IERR
+C
+C     TEST OF ACFM
+C
+      WRITE (IPRT,1050)
+      CALL ACFM(Y, YMISS, N)
+      WRITE (IPRT,1010) IERR
+C
+C     TEST OF ACFMS
+C
+      WRITE (IPRT,1120)
+      CALL ACFMS(Y, YMISS, N, LAGMAX, LACOV, ACOV, AMISS, NLPPA, NPRT,
+     +   LDSTAK)
+      WRITE (IPRT,1010) IERR
+C
+C     PRINT STORAGE FROM ACFMS
+C
+      IF (IERR.EQ.0) THEN
+        WRITE (IPRT,1030) (ACOV(I),I=1,LAGMAX+1)
+        WRITE (IPRT,1140) (NLPPA(I),I=1,LAGMAX+1)
+      END IF
+C
+C     COPY DATA INTO YFFT FOR ACFF
+C
+      DO I=1,N
+         YFFT(I) = Y(I)
+      end do
+C
+C     TEST OF ACFF
+C
+      WRITE (IPRT,1090)
+      CALL ACFF(YFFT, N, LYFFT, LDSTAK)
+      WRITE (IPRT,1010) IERR
+C
+C     COPY DATA INTO YFFT FOR ACFFS
+C
+      DO 20 I=1,N
+         YFFT(I) = Y(I)
+   20 CONTINUE
+C
+C     TEST OF ACFFS
+C
+      WRITE (IPRT,1130)
+      CALL ACFFS(YFFT, N, LYFFT, LDSTAK, LAGMAX, LACOV, ACOV, IAR, PHI,
+     +   NPRT)
+      WRITE (IPRT,1010) IERR
+C
+C     PRINT STORAGE FROM ACFFS
+C
+      IF (IERR.EQ.0) THEN
+        WRITE (IPRT,1030) (ACOV(I),I=1,LAGMAX+1)
+        WRITE (IPRT,1030) (PHI(I),I=1,IAR)
+      END IF
+C
+      GO TO (100, 200, 300, 400), ITEST
+C
+C     TEST MINIMUM PROBLEM SIZE
+C
+  100 ITEST = ITEST + 1
+      N = 13
+      LAGMAX = 1
+      NFAC = 1
+      ND(1) = 1
+      IOD(1) = 1
+      GO TO 5
+C
+C     CHECK ERROR HANDLING
+C
+  200 ITEST = ITEST + 1
+      N = 0
+      LAGMAX = 20
+      LYFFT = 0
+      LACOV = 0
+      NYD = 0
+      NFAC = 1
+      ND(1) = 0
+      IOD(1) = 0
+      GO TO 5
+C
+C     CHECK ERROR HANDLING
+C
+  300 ITEST = ITEST + 1
+      N = 100
+      LAGMAX = 0
+      LYFFT = 0
+      LACOV = 0
+      NYD = 144
+      NFAC = 0
+      LDSTAK = 0
+      GO TO 5
+
+  400 RETURN
+
+ 1000 FORMAT ('1TEST OF ACF')
+ 1010 FORMAT (8H IERR IS, I5)
+ 1020 FORMAT ('1', 12HTEST OF ACFS)
+ 1030 FORMAT (9F10.5)
+ 1040 FORMAT ('1', 12HTEST OF ACFD)
+ 1050 FORMAT ('1', 12HTEST OF ACFM)
+ 1090 FORMAT ('1', 12HTEST OF ACFF)
+ 1120 FORMAT ('1', 13HTEST OF ACFMS)
+ 1130 FORMAT ('1', 13HTEST OF ACFFS)
+ 1140 FORMAT (9I10)
+      END
+      subroutine xaimd ( ldstak )
+
+c*********************************************************************72
+c
+cc XAIMD tests the ARIMA routines.
+C
+c  Modified:
+c
+c    25 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     REAL DELTA
+C        THE MAXIMUM CHANGE ALLOWED IN THE MODEL PARAMETERS AT THE
+C        FIRST ITERATION.
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     REAL FCST(200, 10)
+C        THE FORECASTS.
+C     REAL FCSTSD(200, 10)
+C        THE STANDARD DEVIATIONS OF THE FORECASTS.
+C     INTEGER IERR
+C        THE INTEGER VALUE RETURNED BY THIS ROUTINE DESIGNATING
+C        WHETHER ANY ERRORS WERE DETECTED IN THE PARAMETER LIST.
+C        IF IERR .EQ. 0, NO ERRORS WERE DETECTED.
+C        IF IERR .GE. 1, ERRORS WERE DETECTED.
+C     INTEGER IFCST
+C        THE FIRST DIMENSION OF THE ARRAY FCST.
+C     INTEGER IFCSTO(10)
+C        THE INDICES OF THE ORIGINS FOR THE FORECASTS.
+C     INTEGER IFIXED(10)
+C        THE INDICATOR VALUES USED TO DESIGNATE WHETHER THE
+C        PARAMETERS ARE TO BE OPTIMIZED OR ARE TO BE HELD FIXED.  IF
+C        IFIXED(I).NE.0, THEN PAR(I) WILL BE OPTIMIZED.  IF
+C        IFIXED(I).EQ.0, THEN PAR(I) WILL BE HELD FIXED.
+C        IFIXED(I).LT.0, THEN ALL PAR(I),I=1,NPAR, WILL BE OPTIMIZED..
+C     INTEGER IPRT
+C        THE UNIT NUMBER FOR PRINTED OUTPUT.
+C     INTEGER IVAPRX
+C        AN INDICATOR VALUE USED TO DESIGNATE WHICH OPTION IS TO BE USED
+C        TO COMPUTE THE VARIANCE COVARIANCE MATRIX (VCV), WHERE
+C        IVAPRX LE 0 INDICATES THE THE DEFAULT OPTION WILL BE USED
+C        IVAPRX EQ 1 INDICATES THE VCV IS TO BE COMPUTED BY
+C                       INVERSE(HESSIAN)*TRANSPOSE(JACOBIAN)*JACOBIAN
+C                          *INVERSE(HESSIAN)
+C                    USING BOTH THE MODEL SUBROUTINE THE USER SUPPLIED
+C                    DERIVATIVE SUBROUTINE WHEN IT IS AVAILABLE
+C        IVAPRX EQ 2 INDICATES THE VCV IS TO BE COMPUTED BY
+C                       INVERSE(HESSIAN)
+C                    USING BOTH THE MODEL SUBROUTINE THE USER SUPPLIED
+C                    DERIVATIVE SUBROUTINE WHEN IT IS AVAILABLE
+C        IVAPRX EQ 3 INDICATES THE VCV IS TO BE COMPUTED BY
+C                       INVERSE(TRANSPOSE(JACOBIAN)*JACOBIAN)
+C                    USING BOTH THE MODEL SUBROUTINE THE USER SUPPLIED
+C                    DERIVATIVE SUBROUTINE WHEN IT IS AVAILABLE
+C        IVAPRX EQ 4 INDICATES THE VCV IS TO BE COMPUTED BY
+C                       INVERSE(HESSIAN)*TRANSPOSE(JACOBIAN)*JACOBIAN
+C                          *INVERSE(HESSIAN)
+C                    USING ONLY THE MODEL SUBROUTINE
+C        IVAPRX EQ 5 INDICATES THE VCV IS TO BE COMPUTED BY
+C                       INVERSE(HESSIAN)
+C                    USING ONLY THE MODEL SUBROUTINE
+C        IVAPRX EQ 6 INDICATES THE VCV IS TO BE COMPUTED BY
+C                       INVERSE(TRANSPOSE(JACOBIAN)*JACOBIAN)
+C                    USING ONLY THE MODEL SUBROUTINE
+C        IVAPRX GE 7 INDICATES THE DEFAULT OPTION WILL BE USED
+C     INTEGER IVCV
+C        THE FIRST DIMENSION OF THE VARIANCE COVARIANCE MATRIX VCV.
+C     INTEGER LDSTAK
+C        THE LENGTH OF THE ARRAY DSTAK.
+C     INTEGER MIT
+C        THE MAXIMUM NUMBER OF ITERATIONS ALLOWED.
+C     INTEGER MSPEC(4,10)
+C        THE ARRAY CONTAINING THE VALUES OF P, D, Q, AND S FOR EACH
+C        FACTOR.
+C     INTEGER N
+C        THE NUMBER OF OBSERVATIONS.
+C     INTEGER NFAC
+C        THE NUMBER OF FACTORS IN THE MODEL
+C     INTEGER NFCST
+C        THE NUMBER OF FORECASTS.
+C     INTEGER NFCSTO
+C        THE NUMBER OF THE ORIGINS.
+C     INTEGER NPAR
+C        THE NUMBER OF UNKNOWN PARAMETERS IN THE MODEL.
+C     INTEGER NPARE
+C        THE NUMBER OF PARAMETERS ESTIMATED BY THE ROUTINE.
+C     INTEGER NPRT
+C        THE PARAMETER USED TO INDICATE HOW MUCH PRINTED OUTPUT IS
+C        TO BE PROVIDED.
+C     INTEGER NTEST
+C        THE NUMBER OF THE CURRENT TEST.
+C     REAL PAR(10)
+C        THE ARRAY IN WHICH THE CURRENT ESTIMATES OF THE UNKNOWN
+C        PARAMETERS ARE STORED.
+C     REAL PV(200)
+C        THE PREDICTED VALUE BASED ON THE CURRENT PARAMETER ESTIMATES
+C     REAL RES(200)
+C        THE RESIDUALS FROM THE FIT.
+C     REAL RSD
+C        THE VALUE OF THE RESIDUAL STANDARD DEVIATION AT THE SOLUTION.
+C     REAL SCALE(10)
+C        A VALUE TO INDICATE USE OF THE DEFAULT VALUES OF
+C        THE TYPICAL SIZE OF THE UNKNOWN PARAMETERS.
+C     REAL SDPV(200)
+C        THE STANDARD DEVIATION OF THE PREDICTED VALUE.
+C     REAL SDRES(200)
+C        THE STANDARD DEVIATIONS OF THE RESIDUALS.
+C     REAL STOPP
+C        THE STOPPING CRITERION FOR THE TEST BASED ON THE MAXIMUM SCALED
+C        RELATIVE CHANGE IN THE ELEMENTS OF THE MODEL PARAMETER VECTOR
+C     REAL STOPSS
+C        THE STOPPING CRITERION FOR THE TEST BASED ON THE RATIO OF THE
+C        PREDICTED DECREASE IN THE RESIDUAL SUM OF SQUARES (COMPUTED
+C        BY STARPAC) TO THE CURRENT RESIDUAL SUM OF SQUARES ESTIMATE.
+C     REAL STP(10)
+C        THE RCSTEP SIZE ARRAY.
+C     REAL VCV(10,10)
+C        THE COVARIANCE MATRIX.
+C     REAL Y(200)
+C        THE ARRAY OF THE DEPENDENT VARIABLE.
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      REAL
+     +   DELTA,RSD,STOPP,STOPSS
+      INTEGER
+     +   I,IFCST,IPRT,IVAPRX,IVCV,MIT,MXFAC,MXFC,MXFCO,MXN,MXPAR,N,
+     +   NFAC,NFCST,NFCSTO,NPAR,NPARE,NPRT,NTEST
+C
+C  LOCAL ARRAYS
+      REAL
+     +   FCST(200,10),FCSTSD(200,10),PAR(10),PV(200),RES(200),
+     +   SCALE(10),SDPV(200),SDRES(200),STP(10),VCV(10,10),Y(200)
+      INTEGER
+     +   IFCSTO(10),IFIXED(10),MSPEC(4,10)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL AIME,AIMEC,AIMES,AIMF,AIMFS,AIMX1,FITXSP,IPRINT
+C
+C  INTRINSIC FUNCTIONS
+      INTRINSIC LOG
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     DEFINE CONSTANTS
+C
+      DATA    Y(  1),   Y(  2),   Y(  3),   Y(  4),   Y(  5),   Y(  6)
+     +    / 112.0E0, 118.0E0, 132.0E0, 129.0E0, 121.0E0, 135.0E0/
+      DATA    Y(  7),   Y(  8),   Y(  9),   Y( 10),   Y( 11),   Y( 12)
+     +    / 148.0E0, 148.0E0, 136.0E0, 119.0E0, 104.0E0, 118.0E0/
+      DATA    Y( 13),   Y( 14),   Y( 15),   Y( 16),   Y( 17),   Y( 18)
+     +    / 115.0E0, 126.0E0, 141.0E0, 135.0E0, 125.0E0, 149.0E0/
+      DATA    Y( 19),   Y( 20),   Y( 21),   Y( 22),   Y( 23),   Y( 24)
+     +    / 170.0E0, 170.0E0, 158.0E0, 133.0E0, 114.0E0, 140.0E0/
+      DATA    Y( 25),   Y( 26),   Y( 27),   Y( 28),   Y( 29),   Y( 30)
+     +    / 145.0E0, 150.0E0, 178.0E0, 163.0E0, 172.0E0, 178.0E0/
+      DATA    Y( 31),   Y( 32),   Y( 33),   Y( 34),   Y( 35),   Y( 36)
+     +    / 199.0E0, 199.0E0, 184.0E0, 162.0E0, 146.0E0, 166.0E0/
+      DATA    Y( 37),   Y( 38),   Y( 39),   Y( 40),   Y( 41),   Y( 42)
+     +    / 171.0E0, 180.0E0, 193.0E0, 181.0E0, 183.0E0, 218.0E0/
+      DATA    Y( 43),   Y( 44),   Y( 45),   Y( 46),   Y( 47),   Y( 48)
+     +    / 230.0E0, 242.0E0, 209.0E0, 191.0E0, 172.0E0, 194.0E0/
+      DATA    Y( 49),   Y( 50),   Y( 51),   Y( 52),   Y( 53),   Y( 54)
+     +    / 196.0E0, 196.0E0, 236.0E0, 235.0E0, 229.0E0, 243.0E0/
+      DATA    Y( 55),   Y( 56),   Y( 57),   Y( 58),   Y( 59),   Y( 60)
+     +    / 264.0E0, 272.0E0, 237.0E0, 211.0E0, 180.0E0, 201.0E0/
+      DATA    Y( 61),   Y( 62),   Y( 63),   Y( 64),   Y( 65),   Y( 66)
+     +    / 204.0E0, 188.0E0, 235.0E0, 227.0E0, 234.0E0, 264.0E0/
+      DATA    Y( 67),   Y( 68),   Y( 69),   Y( 70),   Y( 71),   Y( 72)
+     +    / 302.0E0, 293.0E0, 259.0E0, 229.0E0, 203.0E0, 229.0E0/
+      DATA    Y( 73),   Y( 74),   Y( 75),   Y( 76),   Y( 77),   Y( 78)
+     +    / 242.0E0, 233.0E0, 267.0E0, 269.0E0, 270.0E0, 315.0E0/
+      DATA    Y( 79),   Y( 80),   Y( 81),   Y( 82),   Y( 83),   Y( 84)
+     +    / 364.0E0, 347.0E0, 312.0E0, 274.0E0, 237.0E0, 278.0E0/
+      DATA    Y( 85),   Y( 86),   Y( 87),   Y( 88),   Y( 89),   Y( 90)
+     +    / 284.0E0, 277.0E0, 317.0E0, 313.0E0, 318.0E0, 374.0E0/
+      DATA    Y( 91),   Y( 92),   Y( 93),   Y( 94),   Y( 95),   Y( 96)
+     +    / 413.0E0, 405.0E0, 355.0E0, 306.0E0, 271.0E0, 306.0E0/
+      DATA    Y( 97),   Y( 98),   Y( 99),   Y(100),   Y(101),   Y(102)
+     +    / 315.0E0, 301.0E0, 356.0E0, 348.0E0, 355.0E0, 422.0E0/
+      DATA    Y(103),   Y(104),   Y(105),   Y(106),   Y(107),   Y(108)
+     +    / 465.0E0, 467.0E0, 404.0E0, 347.0E0, 305.0E0, 336.0E0/
+      DATA    Y(109),   Y(110),   Y(111),   Y(112),   Y(113),   Y(114)
+     +    / 340.0E0, 318.0E0, 362.0E0, 348.0E0, 363.0E0, 435.0E0/
+      DATA    Y(115),   Y(116),   Y(117),   Y(118),   Y(119),   Y(120)
+     +    / 491.0E0, 505.0E0, 404.0E0, 359.0E0, 310.0E0, 337.0E0/
+      DATA    Y(121),   Y(122),   Y(123),   Y(124),   Y(125),   Y(126)
+     +    / 360.0E0, 342.0E0, 406.0E0, 396.0E0, 420.0E0, 472.0E0/
+      DATA    Y(127),   Y(128),   Y(129),   Y(130),   Y(131),   Y(132)
+     +    / 548.0E0, 559.0E0, 463.0E0, 407.0E0, 362.0E0, 405.0E0/
+      DATA    Y(133),   Y(134),   Y(135),   Y(136),   Y(137),   Y(138)
+     +    / 417.0E0, 391.0E0, 419.0E0, 461.0E0, 472.0E0, 535.0E0/
+      DATA    Y(139),   Y(140),   Y(141),   Y(142),   Y(143),   Y(144)
+     +    / 622.0E0, 606.0E0, 508.0E0, 461.0E0, 390.0E0, 432.0E0/
+
+      CALL IPRINT(IPRT)
+
+      DO I = 1, 144
+        Y(I) = LOG(Y(I))
+      end do
+C
+C     SET DIMENSIONS
+C
+      MXN = 200
+      MXPAR = 10
+      MXFC = 200
+      MXFCO = 10
+      MXFAC = 10
+
+      NTEST = 0
+C
+C  TEST ON NORMAL STATEMENT.
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1130)
+      WRITE (IPRT,1000)
+
+      CALL AIMX1(MXN, MXPAR, MXFC, MXFCO, MXFAC,
+     +   1, N, MSPEC, NFAC, PAR, NPAR, RES,
+     +   IFIXED, STP, MIT, STOPSS, STOPP, SCALE, DELTA, IVAPRX, NPRT,
+     +   NPARE, RSD, PV, SDPV, SDRES, VCV, IVCV,
+     +   NFCST, NFCSTO, IFCSTO, FCST, IFCST, FCSTSD)
+
+      CALL AIME (Y, N, MSPEC, NFAC, PAR, NPAR, RES, LDSTAK)
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV,
+     +   N, NPARE, RSD)
+
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1130)
+      WRITE (IPRT,1010)
+      WRITE (IPRT,1340) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL AIMX1(MXN, MXPAR, MXFC, MXFCO, MXFAC,
+     +   1, N, MSPEC, NFAC, PAR, NPAR, RES,
+     +   IFIXED, STP, MIT, STOPSS, STOPP, SCALE, DELTA, IVAPRX, NPRT,
+     +   NPARE, RSD, PV, SDPV, SDRES, VCV, IVCV,
+     +   NFCST, NFCSTO, IFCSTO, FCST, IFCST, FCSTSD)
+      CALL AIMEC(Y, N, MSPEC, NFAC, PAR, NPAR, RES, LDSTAK,
+     +   IFIXED, STP, MIT, STOPSS, STOPP, SCALE, DELTA, IVAPRX, NPRT)
+      WRITE (IPRT,1350) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV,
+     +   N, NPARE, RSD)
+
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1130)
+      WRITE (IPRT,1020)
+      WRITE (IPRT,1340) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL AIMX1(MXN, MXPAR, MXFC, MXFCO, MXFAC,
+     +   1, N, MSPEC, NFAC, PAR, NPAR, RES,
+     +   IFIXED, STP, MIT, STOPSS, STOPP, SCALE, DELTA, IVAPRX, NPRT,
+     +   NPARE, RSD, PV, SDPV, SDRES, VCV, IVCV,
+     +   NFCST, NFCSTO, IFCSTO, FCST, IFCST, FCSTSD)
+      CALL AIMES(Y, N, MSPEC, NFAC, PAR, NPAR, RES, LDSTAK,
+     +   IFIXED, STP, MIT, STOPSS, STOPP, SCALE, DELTA, IVAPRX, NPRT,
+     +   NPARE, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1350) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV,
+     +   N, NPARE, RSD)
+
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1130)
+      WRITE (IPRT,1030)
+      CALL AIMX1(MXN, MXPAR, MXFC, MXFCO, MXFAC,
+     +   1, N, MSPEC, NFAC, PAR, NPAR, RES,
+     +   IFIXED, STP, MIT, STOPSS, STOPP, SCALE, DELTA, IVAPRX, NPRT,
+     +   NPARE, RSD, PV, SDPV, SDRES, VCV, IVCV,
+     +   NFCST, NFCSTO, IFCSTO, FCST, IFCST, FCSTSD)
+      CALL AIMF (Y, N, MSPEC, NFAC, PAR, NPAR, LDSTAK)
+      WRITE (IPRT,1120) IERR
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1130)
+      WRITE (IPRT,1040)
+      WRITE (IPRT,1340) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL AIMX1(MXN, MXPAR, MXFC, MXFCO, MXFAC,
+     +   1, N, MSPEC, NFAC, PAR, NPAR, RES,
+     +   IFIXED, STP, MIT, STOPSS, STOPP, SCALE, DELTA, IVAPRX, NPRT,
+     +   NPARE, RSD, PV, SDPV, SDRES, VCV, IVCV,
+     +   NFCST, NFCSTO, IFCSTO, FCST, IFCST, FCSTSD)
+      CALL AIMFS(Y, N, MSPEC, NFAC, PAR, NPAR, LDSTAK,
+     +   NFCST, NFCSTO, IFCSTO, NPRT, FCST, IFCST, FCSTSD)
+      WRITE (IPRT,1350) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR, FCST(1,1), FCST(1,2), FCST(1,3), FCSTSD, VCV,
+     +  N, NPAR, IVCV, N, NPARE, RSD)
+
+      RETURN
+
+ 1000 FORMAT (14H TEST OF AIM  )
+ 1010 FORMAT (15H TEST OF AIMC  )
+ 1020 FORMAT (15H TEST OF AIMS  )
+ 1030 FORMAT (14H TEST OF AIMF )
+ 1040 FORMAT (15H TEST OF AIMFS )
+ 1120 FORMAT (/29H ***** RETURNED RESULTS *****, 5X, 15H (-1 INDICATES ,
+     +   39HVALUE NOT CHANGED BY CALLED SUBROUTINE)//9H IERR IS , I3)
+ 1130 FORMAT (15H NORMAL PROBLEM)
+ 1330 FORMAT ('1ARIMA TEST NUMBER', I5)
+ 1340 FORMAT (//24H INPUT   -  IFIXED(1) = , I6, 9X, ', STP(1) = ',
+     +   G15.8, ',    MIT = ',I5, ', STOPSS = ', G15.8, 10H, STOPP = ,
+     +   G15.8/13X, 'SCALE(1) = ', G15.8, ',  DELTA = ', G15.8,
+     +   ', IVAPRX = ', I5, ',   NPRT = ', I5//)
+ 1350 FORMAT (//24H OUTPUT  -  IFIXED(1) = , I6, 9X, ', STP(1) = ',
+     +   G15.8, ',    MIT = ',I5, ', STOPSS = ', G15.8, 10H, STOPP = ,
+     +   G15.8/13X, 'SCALE(1) = ', G15.8, ',  DELTA = ', G15.8,
+     +   ', IVAPRX = ', I5, ',   NPRT = ', I5//)
+      END
+      SUBROUTINE XAIMT(LDSTAK)
+
+c*********************************************************************72
+c
+cc XAIMT tests the time series model estimation routines.
+C
+C     SERIES Y IS THE AIRLINE DATA LISTED ON PAGE 531 OF BOX AND JENKINS
+C
+c  Modified:
+c
+c    25 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      REAL
+     +   DELTA,RSD,STOPP,STOPSS
+      INTEGER
+     +   I,IFCST,IPRT,IVAPRX,IVCV,MIT,NFAC,NPAR,NPARE,NPRT,NY
+C
+C  LOCAL ARRAYS
+      REAL
+     +   FCST(50,5),FCSTSD(50),PAR(50),PV(200),RES(200),SCALE(50),
+     +   SDPV(200),SDRES(200),STP(50),VCV(10,10),Y(200),YLOG(200),
+     +   YT(200)
+      INTEGER
+     +   IFIXED(50),MSPEC(4,50)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL AIME,AIMEC,AIMES,AIMF,AIMFS,IPRINT
+C
+C  INTRINSIC FUNCTIONS
+      INTRINSIC LOG
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     REAL DELTA
+C        THE MAXIMUM CHANGE ALLOWED IN THE MODEL PARAMETERS AT THE
+C        FIRST ITERATION.
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     REAL FCST(50,5)
+C        THE FORECASTS.
+C     REAL FCSTSD(50)
+C        THE STANDARD DEVIATIONS OF THE FORECASTS.
+C     INTEGER I
+C        *
+C     INTEGER IERR
+C        THE INTEGER VALUE RETURNED BY THIS ROUTINE DESIGNATING
+C        WHETHER ANY ERRORS WERE DETECTED IN THE PARAMETER LIST.
+C        IF IERR .EQ. 0, NO ERRORS WERE DETECTED.
+C        IF IERR .GE. 1, ERRORS WERE DETECTED.
+C     INTEGER IFCST
+C        THE FIRST DIMENSION OF THE ARRAY FCST.
+C     INTEGER IFIXED(50)
+C        THE INDICATOR VALUES USED TO DESIGNATE WHETHER THE
+C        PARAMETERS ARE TO BE OPTIMIZED OR ARE TO BE HELD FIXED.  IF
+C        IFIXED(I).NE.0, THEN PAR(I) WILL BE OPTIMIZED.  IF
+C        IFIXED(I).EQ.0, THEN PAR(I) WILL BE HELD FIXED.
+C        IFIXED(I).LT.0, THEN ALL PAR(I),I=1,NPAR, WILL BE OPTIMIZED..
+C     INTEGER IPRT
+C        THE UNIT NUMBER FOR PRINTED OUTPUT.
+C     INTEGER IVAPRX
+C        AN INDICATOR VALUE USED TO DESIGNATE WHICH OPTION IS TO BE USED
+C        TO COMPUTE THE VARIANCE COVARIANCE MATRIX (VCV), WHERE
+C        IVAPRX LE 0 INDICATES THE THE DEFAULT OPTION WILL BE USED
+C        IVAPRX EQ 1 INDICATES THE VCV IS TO BE COMPUTED BY
+C                       INVERSE(HESSIAN)*TRANSPOSE(JACOBIAN)*JACOBIAN
+C                          *INVERSE(HESSIAN)
+C                    USING BOTH THE MODEL SUBROUTINE THE USER SUPPLIED
+C                    DERIVATIVE SUBROUTINE WHEN IT IS AVAILABLE
+C        IVAPRX EQ 2 INDICATES THE VCV IS TO BE COMPUTED BY
+C                       INVERSE(HESSIAN)
+C                    USING BOTH THE MODEL SUBROUTINE THE USER SUPPLIED
+C                    DERIVATIVE SUBROUTINE WHEN IT IS AVAILABLE
+C        IVAPRX EQ 3 INDICATES THE VCV IS TO BE COMPUTED BY
+C                       INVERSE(TRANSPOSE(JACOBIAN)*JACOBIAN)
+C                    USING BOTH THE MODEL SUBROUTINE THE USER SUPPLIED
+C                    DERIVATIVE SUBROUTINE WHEN IT IS AVAILABLE
+C        IVAPRX EQ 4 INDICATES THE VCV IS TO BE COMPUTED BY
+C                       INVERSE(HESSIAN)*TRANSPOSE(JACOBIAN)*JACOBIAN
+C                          *INVERSE(HESSIAN)
+C                    USING ONLY THE MODEL SUBROUTINE
+C        IVAPRX EQ 5 INDICATES THE VCV IS TO BE COMPUTED BY
+C                       INVERSE(HESSIAN)
+C                    USING ONLY THE MODEL SUBROUTINE
+C        IVAPRX EQ 6 INDICATES THE VCV IS TO BE COMPUTED BY
+C                       INVERSE(TRANSPOSE(JACOBIAN)*JACOBIAN)
+C                    USING ONLY THE MODEL SUBROUTINE
+C        IVAPRX GE 7 INDICATES THE DEFAULT OPTION WILL BE USED
+C     INTEGER IVCV
+C        THE FIRST DIMENSION OF THE VARIANCE COVARIANCE MATRIX VCV.
+C     INTEGER LDSTAK
+C        THE LENGTH OF THE ARRAY DSTAK.
+C     INTEGER MIT
+C        THE MAXIMUM NUMBER OF ITERATIONS ALLOWED.
+C     INTEGER MSPEC(4,50)
+C        THE ARRAY CONTAINING THE VALUES OF P, D, Q, AND S FOR EACH
+C        FACTOR.
+C     INTEGER NFAC
+C        THE NUMBER OF FACTORS IN THE MODEL
+C     INTEGER NPAR
+C        THE NUMBER OF UNKNOWN PARAMETERS IN THE MODEL.
+C     INTEGER NPARE
+C        THE NUMBER OF PARAMETERS ESTIMATED BY THE ROUTINE.
+C     INTEGER NPRT
+C        THE PARAMETER USED TO INDICATE HOW MUCH PRINTED OUTPUT IS
+C        TO BE PROVIDED.
+C     INTEGER NY
+C        THE NUMBER OF OBSERVATIONS.
+C     REAL PAR(50)
+C        THE ARRAY IN WHICH THE CURRENT ESTIMATES OF THE UNKNOWN
+C        PARAMETERS ARE STORED.
+C     REAL PV(200)
+C        THE PREDICTED VALUE BASED ON THE CURRENT PARAMETER ESTIMATES
+C     REAL RES(200)
+C        THE RESIDUALS FROM THE FIT.
+C     REAL RSD
+C        THE VALUE OF THE RESIDUAL STANDARD DEVIATION AT THE SOLUTION.
+C     REAL SCALE(50)
+C        A VALUE TO INDICATE USE OF THE DEFAULT VALUES OF
+C        THE TYPICAL SIZE OF THE UNKNOWN PARAMETERS.
+C     REAL SDPV(200)
+C        THE STANDARD DEVIATION OF THE PREDICTED VALUE.
+C     REAL SDRES(200)
+C        THE STANDARD DEVIATIONS OF THE RESIDUALS.
+C     REAL STOPP
+C        THE STOPPING CRITERION FOR THE TEST BASED ON THE MAXIMUM SCALED
+C        RELATIVE CHANGE IN THE ELEMENTS OF THE MODEL PARAMETER VECTOR
+C     REAL STOPSS
+C        THE STOPPING CRITERION FOR THE TEST BASED ON THE RATIO OF THE
+C        PREDICTED DECREASE IN THE RESIDUAL SUM OF SQUARES (COMPUTED
+C        BY STARPAC) TO THE CURRENT RESIDUAL SUM OF SQUARES ESTIMATE.
+C     REAL STP(50)
+C        THE RCSTEP SIZE ARRAY.
+C     REAL VCV(10,10)
+C        THE COVARIANCE MATRIX.
+C     REAL Y(200),YLOG(200),YT(200)
+C        THE ARRAY OF THE DEPENDENT VARIABLE.
+C
+C
+      DATA    Y(  1),   Y(  2),   Y(  3),   Y(  4),   Y(  5),   Y(  6)
+     +    / 112.0E0, 118.0E0, 132.0E0, 129.0E0, 121.0E0, 135.0E0/
+      DATA    Y(  7),   Y(  8),   Y(  9),   Y( 10),   Y( 11),   Y( 12)
+     +    / 148.0E0, 148.0E0, 136.0E0, 119.0E0, 104.0E0, 118.0E0/
+      DATA    Y( 13),   Y( 14),   Y( 15),   Y( 16),   Y( 17),   Y( 18)
+     +    / 115.0E0, 126.0E0, 141.0E0, 135.0E0, 125.0E0, 149.0E0/
+      DATA    Y( 19),   Y( 20),   Y( 21),   Y( 22),   Y( 23),   Y( 24)
+     +    / 170.0E0, 170.0E0, 158.0E0, 133.0E0, 114.0E0, 140.0E0/
+      DATA    Y( 25),   Y( 26),   Y( 27),   Y( 28),   Y( 29),   Y( 30)
+     +    / 145.0E0, 150.0E0, 178.0E0, 163.0E0, 172.0E0, 178.0E0/
+      DATA    Y( 31),   Y( 32),   Y( 33),   Y( 34),   Y( 35),   Y( 36)
+     +    / 199.0E0, 199.0E0, 184.0E0, 162.0E0, 146.0E0, 166.0E0/
+      DATA    Y( 37),   Y( 38),   Y( 39),   Y( 40),   Y( 41),   Y( 42)
+     +    / 171.0E0, 180.0E0, 193.0E0, 181.0E0, 183.0E0, 218.0E0/
+      DATA    Y( 43),   Y( 44),   Y( 45),   Y( 46),   Y( 47),   Y( 48)
+     +    / 230.0E0, 242.0E0, 209.0E0, 191.0E0, 172.0E0, 194.0E0/
+      DATA    Y( 49),   Y( 50),   Y( 51),   Y( 52),   Y( 53),   Y( 54)
+     +    / 196.0E0, 196.0E0, 236.0E0, 235.0E0, 229.0E0, 243.0E0/
+      DATA    Y( 55),   Y( 56),   Y( 57),   Y( 58),   Y( 59),   Y( 60)
+     +    / 264.0E0, 272.0E0, 237.0E0, 211.0E0, 180.0E0, 201.0E0/
+      DATA    Y( 61),   Y( 62),   Y( 63),   Y( 64),   Y( 65),   Y( 66)
+     +    / 204.0E0, 188.0E0, 235.0E0, 227.0E0, 234.0E0, 264.0E0/
+      DATA    Y( 67),   Y( 68),   Y( 69),   Y( 70),   Y( 71),   Y( 72)
+     +    / 302.0E0, 293.0E0, 259.0E0, 229.0E0, 203.0E0, 229.0E0/
+      DATA    Y( 73),   Y( 74),   Y( 75),   Y( 76),   Y( 77),   Y( 78)
+     +    / 242.0E0, 233.0E0, 267.0E0, 269.0E0, 270.0E0, 315.0E0/
+      DATA    Y( 79),   Y( 80),   Y( 81),   Y( 82),   Y( 83),   Y( 84)
+     +    / 364.0E0, 347.0E0, 312.0E0, 274.0E0, 237.0E0, 278.0E0/
+      DATA    Y( 85),   Y( 86),   Y( 87),   Y( 88),   Y( 89),   Y( 90)
+     +    / 284.0E0, 277.0E0, 317.0E0, 313.0E0, 318.0E0, 374.0E0/
+      DATA    Y( 91),   Y( 92),   Y( 93),   Y( 94),   Y( 95),   Y( 96)
+     +    / 413.0E0, 405.0E0, 355.0E0, 306.0E0, 271.0E0, 306.0E0/
+      DATA    Y( 97),   Y( 98),   Y( 99),   Y(100),   Y(101),   Y(102)
+     +    / 315.0E0, 301.0E0, 356.0E0, 348.0E0, 355.0E0, 422.0E0/
+      DATA    Y(103),   Y(104),   Y(105),   Y(106),   Y(107),   Y(108)
+     +    / 465.0E0, 467.0E0, 404.0E0, 347.0E0, 305.0E0, 336.0E0/
+      DATA    Y(109),   Y(110),   Y(111),   Y(112),   Y(113),   Y(114)
+     +    / 340.0E0, 318.0E0, 362.0E0, 348.0E0, 363.0E0, 435.0E0/
+      DATA    Y(115),   Y(116),   Y(117),   Y(118),   Y(119),   Y(120)
+     +    / 491.0E0, 505.0E0, 404.0E0, 359.0E0, 310.0E0, 337.0E0/
+      DATA    Y(121),   Y(122),   Y(123),   Y(124),   Y(125),   Y(126)
+     +    / 360.0E0, 342.0E0, 406.0E0, 396.0E0, 420.0E0, 472.0E0/
+      DATA    Y(127),   Y(128),   Y(129),   Y(130),   Y(131),   Y(132)
+     +    / 548.0E0, 559.0E0, 463.0E0, 407.0E0, 362.0E0, 405.0E0/
+      DATA    Y(133),   Y(134),   Y(135),   Y(136),   Y(137),   Y(138)
+     +    / 417.0E0, 391.0E0, 419.0E0, 461.0E0, 472.0E0, 535.0E0/
+      DATA    Y(139),   Y(140),   Y(141),   Y(142),   Y(143),   Y(144)
+     +    / 622.0E0, 606.0E0, 508.0E0, 461.0E0, 390.0E0, 432.0E0/
+
+      CALL IPRINT(IPRT)
+C
+C     COMMENCE BODY OF ROUTINE
+C
+C     TEST AGAINST PUBLISHED RESULTS
+C
+      NY = 144
+      DO I = 1, NY
+         YLOG(I) = LOG(Y(I))
+      end do
+
+      NFAC = 2
+      MSPEC(1,1) = 0
+      MSPEC(2,1) = 1
+      MSPEC(3,1) = 1
+      MSPEC(4,1) = 1
+
+      MSPEC(1,2) = 0
+      MSPEC(2,2) = 1
+      MSPEC(3,2) = 1
+      MSPEC(4,2) = 12
+
+      NPAR = 3
+      PAR(1) = 0.0E0
+      PAR(2) = 0.40E0
+      PAR(3) = 0.60E0
+
+      IFIXED(1) = 1
+      IFIXED(2) = 0
+      IFIXED(3) = 0
+
+      STOPSS = -1.0E0
+      STOPP = -1.0E0
+      SCALE(1) = -1.0E0
+      SCALE(2) = 1.0E-7
+      SCALE(3) = 1.0E-7
+      STP(1) = -1.0E0
+      STP(2) = 1.0E-7
+      STP(3) = 1.0E-7
+      MIT = 0
+      NPRT = -1
+      DELTA = -1.0E0
+      IVAPRX = -1
+
+      WRITE(IPRT, 1000)
+      CALL AIMEC (YLOG, NY, MSPEC, NFAC,
+     +   PAR, NPAR, RES,LDSTAK, IFIXED,STP, MIT, STOPSS, STOPP,
+     +   SCALE, DELTA, IVAPRX, NPRT)
+
+      WRITE (IPRT, 1005)
+      PAR(1) = 0.0E0
+      PAR(2) = 0.395E0
+      PAR(3) = 0.615E0
+      CALL AIMFS (YLOG, NY, MSPEC, NFAC,
+     +   PAR, NPAR, LDSTAK, NY/10+1, 1, NY, NPRT, FCST, 50, FCSTSD)
+
+      SCALE(1) = 1.0E-7
+      SCALE(2) = 1.0E-7
+      SCALE(3) = 1.0E-7
+
+      NFAC = 2
+      MSPEC(1,1) = 0
+      MSPEC(2,1) = 1
+      MSPEC(3,1) = 1
+      MSPEC(4,1) = 1
+
+      MSPEC(1,2) = 0
+      MSPEC(2,2) = 0
+      MSPEC(3,2) = 1
+      MSPEC(4,2) = 12
+
+      WRITE (IPRT, 1000)
+      CALL AIMEC (YLOG, NY, MSPEC, NFAC,
+     +   PAR, NPAR, RES,LDSTAK, IFIXED,STP, MIT, STOPSS, STOPP,
+     +   SCALE, DELTA, IVAPRX, NPRT)
+      NY = 20
+      WRITE (IPRT, 1000)
+      CALL AIMEC (YLOG, NY, MSPEC, NFAC,
+     +   PAR, NPAR, RES,LDSTAK, IFIXED,STP, MIT, STOPSS, STOPP,
+     +   SCALE, DELTA, IVAPRX, NPRT)
+
+      NFAC = 2
+      MSPEC(1,1) = 0
+      MSPEC(2,1) = 0
+      MSPEC(3,1) = 1
+      MSPEC(4,1) = 1
+
+      MSPEC(1,2) = 0
+      MSPEC(2,2) = 0
+      MSPEC(3,2) = 1
+      MSPEC(4,2) = 12
+
+      NY = 144
+      WRITE (IPRT, 1000)
+      CALL AIMEC (YLOG, NY, MSPEC, NFAC,
+     +   PAR, NPAR, RES,LDSTAK, IFIXED,STP, MIT, STOPSS, STOPP,
+     +   SCALE, DELTA, IVAPRX, NPRT)
+C
+C     EXAMPLE FROM PAGE 212 OF BOX AND JENKINS (1970)
+C     N.B. ADD PRINT STATEMENTS TO MDLTS2 TO CHECK COMPUTATIONS
+C          AT FIRST CALL AGAINST THOSE LISTED ON PAGE 214.
+C
+      WRITE(IPRT, 1000)
+      NY = 10
+      YT(1) = 460.0E0
+      YT(2) = 457.0E0
+      YT(3) = 452.0E0
+      YT(4) = 459.0E0
+      YT(5) = 462.0E0
+      YT(6) = 459.0E0
+      YT(7) = 463.0E0
+      YT(8) = 479.0E0
+      YT(9) = 493.0E0
+      YT(10) = 490.0E0
+
+      NFAC = 1
+      MSPEC(1,1) = 0
+      MSPEC(2,1) = 1
+      MSPEC(3,1) = 1
+      MSPEC(4,1) = 1
+
+      NPAR = 2
+      PAR(1) = 0.0E0
+      PAR(2) = 0.5E0
+
+      IFIXED(1) = 1
+      IFIXED(2) = 0
+
+      CALL AIMEC (YT, NY, MSPEC, NFAC,
+     +   PAR, NPAR, RES,LDSTAK, IFIXED,STP, MIT, STOPSS, STOPP,
+     +   SCALE, DELTA, IVAPRX, NPRT)
+C
+C     EXAMPLE FROM PAGE 216 OF BOX AND JENKINS (1970)
+C     N.B. ADD PRINT STATEMENTS TO MDLTS2 TO CHECK COMPUTATIONS
+C          AT FIRST CALL AGAINST THOSE LISTED ON PAGE 218.
+C
+      WRITE(IPRT, 1000)
+      NY = 12
+      YT(1) = 2.0E0
+      YT(2) = 0.8E0
+      YT(3) = -0.3E0
+      YT(4) = -0.3E0
+      YT(5) = -1.9E0
+      YT(6) = 0.3E0
+      YT(7) = 3.2E0
+      YT(8) = 1.6E0
+      YT(9) = -0.7E0
+      YT(10) = 3.0E0
+      YT(11) = 4.3E0
+      YT(12) = 1.1E0
+
+      NFAC = 1
+      MSPEC(1,1) = 1
+      MSPEC(2,1) = 0
+      MSPEC(3,1) = 1
+      MSPEC(4,1) = 1
+
+      NPAR = 3
+      PAR(1) = 0.3E0
+      PAR(2) = 0.0E0
+      PAR(3) = 0.7E0
+
+      IFIXED(1) = 0
+      IFIXED(2) = 1
+      IFIXED(3) = 0
+
+      CALL AIMEC (YT, NY, MSPEC, NFAC,
+     +   PAR, NPAR, RES, LDSTAK, IFIXED, STP, MIT, STOPSS, STOPP,
+     +   SCALE, DELTA, IVAPRX, NPRT)
+C
+C     TEST ERROR MESSAGES
+C
+      WRITE (IPRT, 1010)
+      NY = 0
+      NFAC = 0
+      CALL AIME (YT, NY, MSPEC, NFAC,
+     +   PAR, NPAR, RES, LDSTAK)
+      CALL AIMEC (YT, NY, MSPEC, NFAC,
+     +   PAR, NPAR, RES, LDSTAK, IFIXED, STP, MIT, STOPSS, STOPP,
+     +   SCALE, DELTA, IVAPRX, NPRT)
+      CALL AIMES (YT, NY, MSPEC, NFAC,
+     +   PAR, NPAR, RES, LDSTAK, IFIXED, STP, MIT, STOPSS, STOPP,
+     +   SCALE, DELTA, IVAPRX, NPRT, NPARE, RSD, PV, SDPV, SDRES, VCV,
+     +   IVCV)
+      CALL AIMF (Y, NY, MSPEC, NFAC, PAR, NPAR, LDSTAK)
+      CALL AIMFS (Y, NY, MSPEC, NFAC,
+     +   PAR, NPAR, LDSTAK, NY/10+1, 1, NY, NPRT, FCST, 50, FCSTSD)
+
+      NY = 144
+      NFAC = 2
+      MSPEC(1,1) = -1
+      CALL AIME (YT, NY, MSPEC, NFAC,
+     +   PAR, NPAR, RES, LDSTAK)
+      CALL AIMEC (YT, NY, MSPEC, NFAC,
+     +   PAR, NPAR, RES, LDSTAK, IFIXED, STP, MIT, STOPSS, STOPP,
+     +   SCALE, DELTA, IVAPRX, NPRT)
+      CALL AIMES (YT, NY, MSPEC, NFAC,
+     +   PAR, NPAR, RES, LDSTAK, IFIXED, STP, MIT, STOPSS, STOPP,
+     +   SCALE, DELTA, IVAPRX, NPRT, NPARE, RSD, PV, SDPV, SDRES, VCV,
+     +   IVCV)
+      CALL AIMF (Y, NY, MSPEC, NFAC, PAR, NPAR, LDSTAK)
+      CALL AIMFS (Y, NY, MSPEC, NFAC,
+     +   PAR, NPAR, LDSTAK, NY/10+1, 1, NY, NPRT, FCST, 50, FCSTSD)
+      NY = 144
+      NFAC = 2
+      MSPEC(1,1) = 0
+      NPAR = 1
+      CALL AIME (YT, NY, MSPEC, NFAC,
+     +   PAR, NPAR, RES, LDSTAK)
+      CALL AIMEC (YT, NY, MSPEC, NFAC,
+     +   PAR, NPAR, RES, LDSTAK, IFIXED, STP, MIT, STOPSS, STOPP,
+     +   SCALE, DELTA, IVAPRX, NPRT)
+      CALL AIMES (YT, NY, MSPEC, NFAC,
+     +   PAR, NPAR, RES, LDSTAK, IFIXED, STP, MIT, STOPSS, STOPP,
+     +   SCALE, DELTA, IVAPRX, NPRT, NPARE, RSD, PV, SDPV, SDRES, VCV,
+     +   IVCV)
+      CALL AIMF (Y, NY, MSPEC, NFAC, PAR, NPAR, LDSTAK)
+      CALL AIMFS (Y, NY, MSPEC, NFAC,
+     +   PAR, NPAR, LDSTAK, NY/10+1, 1, NY, NPRT, FCST, 50, FCSTSD)
+      NY = 144
+      NFAC = 2
+      MSPEC(1,1) = 0
+      NPAR = 3
+      DO 20 I = 1, NPAR
+        IFIXED(I) = 1
+   20 CONTINUE
+      IVCV = 0
+      IFCST = 0
+      CALL AIMEC (YT, NY, MSPEC, NFAC,
+     +   PAR, NPAR, RES, LDSTAK, IFIXED, STP, MIT, STOPSS, STOPP,
+     +   SCALE, DELTA, IVAPRX, NPRT)
+      CALL AIMES (YT, NY, MSPEC, NFAC,
+     +   PAR, NPAR, RES, LDSTAK, IFIXED, STP, MIT, STOPSS, STOPP,
+     +   SCALE, DELTA, IVAPRX, NPRT, NPARE, RSD, PV, SDPV, SDRES, VCV,
+     +   IVCV)
+      CALL AIMFS (Y, NY, MSPEC, NFAC,
+     +   PAR, NPAR, LDSTAK, NY/10+1, 1, NY, NPRT, FCST, IFCST, FCSTSD)
+      DO 30 I = 1, NPAR
+        IFIXED(I) = 1
+   30 CONTINUE
+      IVCV = 0
+      STP(2) = -1.0E0
+      SCALE(2) = -1.0E0
+      CALL AIMEC (YT, NY, MSPEC, NFAC,
+     +   PAR, NPAR, RES, LDSTAK, IFIXED, STP, MIT, STOPSS, STOPP,
+     +   SCALE, DELTA, IVAPRX, NPRT)
+      RETURN
+
+ 1000 FORMAT ('1TEST OF ARIMA ESTIMATION ROUTINES')
+ 1005 FORMAT ('1TEST OF ARIMA FORECASTING ROUTINES')
+ 1010 FORMAT ('1TEST OF ERROR CHECKING FACILITIES')
+      END
+      SUBROUTINE XAOV1(LDSTAK)
+
+c*********************************************************************72
+c
+cc XAOV1 exercises the one-way family routines.
+C
+c  Modified:
+c
+c    25 April 2006
+c
+c  Author:
+c
+c    Linda Mitchell,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      REAL
+     +   FI
+      INTEGER
+     +   I,IGSTAT,IPRT,LDSMIN,N,NG
+C
+C  LOCAL ARRAYS
+      REAL
+     +   GSTAT(10,4),TAG(20),Y(20),Z(10),ZTAG(10)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL AOV1,AOV1S,AOV1XP,IPRINT,LDSCMP,MSGX,SETRV
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (APHABETICALLY)
+C
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     REAL FI
+C        FLOAT OF INDEX I
+C     REAL GSTAT(10,4)
+C        THE GROUP STATISTICS.  COLUMNS CORRESPOND TO THE TAG
+C        VALUE, SAMPLE SIZE, GROUP MEAN, AND GROUP STANDARD DEVIATION.
+C     INTEGER I
+C        INDEX VARIABLE
+C     INTEGER IERR
+C        COMMON FLAG INDICATING WHETHER OR NOT THERE WERE ANY ERRORS
+C     INTEGER IGSTAT
+C        THE FIRST DIMENSION OF GSTAT.
+C     INTEGER IPRT
+C        THE OUTPUT LOGICAL UNIT NUMBER
+C     INTEGER LDSMIN
+C        THE SMALLEST ACCEPTABLE SIZE OF THE COMMON CSTAK
+C     INTEGER LDSTAK
+C        THE SIZE OF THE COMMON CSTAK
+C     INTEGER N
+C        THE NUMBER OF OBSERVATIONS
+C     INTEGER NG
+C        THE NUMBER OF DIFFERENT GROUPS
+C     REAL TAG(20)
+C        THE TAG VALUES FOR EACH OBSERVATION
+C     REAL Y(20)
+C        THE VECTOR OF OBSERVATIONS
+C     REAL Z(10)
+C        TEST VECTOR
+C     REAL ZTAG(10)
+C        TEST TAG VECTOR
+C
+      DATA   Y( 1),   Y( 2),   Y( 3),   Y( 4),   Y( 5)
+     +   /    61.0E0,    61.0E0,    67.0E0,    67.0E0,    64.0E0/
+      DATA   Y( 6),   Y( 7),   Y( 8),   Y( 9),   Y(10)
+     +   /    78.0E0,    71.0E0,    75.0E0,    72.0E0,    74.0E0/
+      DATA   Y(11),   Y(12),   Y(13),   Y(14),   Y(15)
+     +   /    83.0E0,    81.0E0,    76.0E0,    78.0E0,    79.0E0/
+      DATA   Y(16),   Y(17)
+     +   /    72.0E0,   72.0E0/
+C
+      DATA TAG( 1), TAG( 2), TAG( 3), TAG( 4), TAG( 5)
+     +   /    11.5E0,    11.5E0,    11.5E0,    11.5E0,    11.5E0/
+      DATA TAG( 6), TAG( 7), TAG( 8), TAG( 9), TAG(10)
+     +   /    12.0E0,    12.0E0,    12.0E0,    12.0E0,    12.0E0/
+      DATA TAG(11), TAG(12), TAG(13), TAG(14), TAG(15)
+     +   /    11.0E0,    11.0E0,    11.0E0,    11.0E0,    11.0E0/
+      DATA TAG(16), TAG(17)
+     +   /   -11.0E0,   11.0E0/
+C
+      CALL IPRINT(IPRT)
+C
+C     SET VARIOUS DIMENSIONS AND PROGRAM VARIABLES
+C
+      N = 17
+      IGSTAT = 10
+C
+C  TEST WITH CORRECT CALL STATEMENTS.
+C
+      WRITE (IPRT,1060)
+C
+C     TEST AOV1
+C
+      WRITE (IPRT,1000)
+      CALL AOV1(Y, TAG, N, LDSTAK)
+      CALL MSGX(0, IPRT)
+      WRITE (IPRT,1010)
+      WRITE (IPRT,1020) (TAG(I),I=1,N)
+C
+C     TEST OF AOV1S
+C
+C     PRINTOUT NOT SUPRESSED
+C
+      WRITE (IPRT,1040)
+      WRITE (IPRT,1030)
+      CALL AOV1S(Y, TAG, N, LDSTAK, 1, GSTAT, IGSTAT, NG)
+      CALL MSGX(0, IPRT)
+C
+C     PRINT STORAGE AND ZERO VECTORS BEFORE USING AGAIN
+C
+      CALL AOV1XP(GSTAT, IGSTAT, NG)
+C
+C     PRINTOUT SUPRESSED
+C
+      WRITE (IPRT,1050)
+      CALL AOV1S(Y, TAG, N, LDSTAK, 0, GSTAT, IGSTAT, NG)
+      CALL MSGX(0, IPRT)
+C
+C     PRINT STORAGE AND ZERO VECTORS BEFORE USING AGAIN
+C
+      CALL AOV1XP(GSTAT, IGSTAT, NG)
+C
+C  NUMBER OF OBSERVATIONS LESS THAN 2.
+C
+      WRITE (IPRT,1090)
+      CALL AOV1(Y, TAG, 1, LDSTAK)
+      CALL MSGX(1, IPRT)
+      CALL AOV1S(Y, TAG, -14, LDSTAK, 0, GSTAT, IGSTAT, NG)
+      CALL MSGX(1, IPRT)
+C
+C  ALL OBSERVATIONS THE SAME VALUE.
+C
+      WRITE (IPRT,1100)
+      WRITE (IPRT,1000)
+      CALL SETRV(Z, 10, 0.0E0)
+      CALL AOV1(Z, TAG, 10, LDSTAK)
+      CALL MSGX(0, IPRT)
+C
+      CALL SETRV(Z, 10, 2.0E0)
+      WRITE (IPRT,1100)
+      WRITE (IPRT,1030)
+      CALL AOV1S(Z, TAG, 10, LDSTAK, 1, GSTAT, IGSTAT, NG)
+      CALL MSGX(0, IPRT)
+C
+C  TEST WORK AREA SIZE HANDLING.
+C
+      CALL LDSCMP(11, 0, 33, 0, 0, 0, 'S', 40, LDSMIN)
+      WRITE (IPRT,1070)
+      WRITE (IPRT,1000)
+      CALL AOV1(Y, TAG, N, 1)
+      CALL MSGX(1, IPRT)
+      WRITE (IPRT,1070)
+      WRITE (IPRT,1000)
+      CALL AOV1(Y, TAG, N, LDSMIN-1)
+      CALL MSGX(1, IPRT)
+      WRITE (IPRT,1010)
+      WRITE (IPRT,1020) (TAG(I),I=1,N)
+      WRITE (IPRT,1080)
+      WRITE (IPRT,1000)
+      CALL AOV1(Y, TAG, N, LDSMIN)
+      CALL MSGX(0, IPRT)
+C
+      CALL LDSCMP(11, 0, 33, 0, 0, 0, 'S', 28, LDSMIN)
+      WRITE (IPRT,1070)
+      WRITE (IPRT,1030)
+      CALL AOV1S(Y, TAG, N, 1, 0, GSTAT, IGSTAT, NG)
+      CALL MSGX(1, IPRT)
+      WRITE (IPRT,1070)
+      WRITE (IPRT,1030)
+      CALL AOV1S(Y, TAG, N, LDSMIN-1, 0, GSTAT, IGSTAT, NG)
+      CALL MSGX(1, IPRT)
+      WRITE (IPRT,1010)
+      WRITE (IPRT,1020) (TAG(I),I=1,N)
+      WRITE (IPRT,1080)
+      WRITE (IPRT,1030)
+      CALL AOV1S(Y, TAG, N, LDSMIN, 1, GSTAT, IGSTAT, NG)
+      CALL MSGX(0, IPRT)
+C
+C**** SAME NUMBER OF GROUPS AS NON-ZERO TAGS ****
+C
+      WRITE (IPRT,1120)
+      DO 20 I=1,10
+         FI = I
+         ZTAG(I) = FI
+         Z(I) = 13.0E0 - FI
+   20 CONTINUE
+      CALL AOV1(Z, ZTAG, 10, LDSTAK)
+      CALL MSGX(1, IPRT)
+      CALL AOV1S(Z, ZTAG, 10, LDSTAK, 1, GSTAT, IGSTAT, NG)
+      CALL MSGX(1, IPRT)
+C
+C**** LESS THAN 2 DIFFERENT TAG GROUPS ****
+C
+      WRITE (IPRT,1130)
+      CALL SETRV(ZTAG, 10, 1.0E0)
+      CALL AOV1(Z, ZTAG, 10, LDSTAK)
+      CALL MSGX(1, IPRT)
+      CALL AOV1S(Z, ZTAG, 10, LDSTAK, 1, GSTAT, IGSTAT, NG)
+      CALL MSGX(1, IPRT)
+C
+C**** LESS THAN 2 TAGS ****
+C
+      CALL SETRV(ZTAG, 9, 0.0E0)
+      WRITE (IPRT,1140)
+      CALL AOV1(Z, ZTAG, 10, LDSTAK)
+      CALL MSGX(1, IPRT)
+      CALL AOV1S(Z, ZTAG, 10, LDSTAK, 1, GSTAT, IGSTAT, NG)
+      CALL MSGX(1, IPRT)
+C
+C**** INCORRECT DIMENSION OF GSTAT ****
+C
+      WRITE (IPRT,1150)
+      CALL AOV1S(Y, TAG, N, LDSTAK, 1, GSTAT, 2, NG)
+      CALL MSGX(1, IPRT)
+C
+C**** ALL OBSERVATIONS WITHIN A GROUP SAME VALUE ****
+C
+      Z(1) = 53.0E0
+      ZTAG(1) = 1.0E0
+      Z(2) = 62.0E0
+      ZTAG(2) = 3.0E0
+      Z(3) = 53.0E0
+      ZTAG(3) = 1.0E0
+      Z(4) = 71.0E0
+      ZTAG(4) = 4.0E0
+      Z(5) = 89.0E0
+      ZTAG(5) = 2.0E0
+      Z(6) = 71.0E0
+      ZTAG(6) = 4.0E0
+      Z(7) = 89.0E0
+      ZTAG(7) = 2.0E0
+      Z(8) = 62.0E0
+      ZTAG(8) = 3.0E0
+      Z(9) = 71.0E0
+      ZTAG(9) = 4.0E0
+      Z(10) = 62.0E0
+      ZTAG(10) = 3.0E0
+      WRITE (IPRT,1160)
+      CALL AOV1(Z, ZTAG, 10, LDSTAK)
+      CALL MSGX(0, IPRT)
+C
+C**** 2 TAGS ****
+C
+      WRITE (IPRT,1170)
+      CALL AOV1(Z, ZTAG, 3, LDSTAK)
+      CALL MSGX(0, IPRT)
+C
+C**** ALL GROUPS(EXCEPT FOR 1) WITH 1 OBSERVATION ****
+C
+      WRITE (IPRT,1180)
+      CALL AOV1(Z, ZTAG, 5, LDSTAK)
+      CALL MSGX(0, IPRT)
+C
+      RETURN
+C
+C     FORMAT STATEMENTS
+C
+ 1000 FORMAT(' TEST OF AOV1 ')
+ 1010 FORMAT(' CHECK TO SEE IF TAGS HAVE BEEN CHANGED')
+ 1020 FORMAT(4F12.6)
+ 1030 FORMAT(' TEST OF AOV1S ')
+ 1040 FORMAT('1PRINTOUT NOT SUPRESSED.')
+ 1050 FORMAT(' PRINTOUT SUPRESSED.')
+ 1060 FORMAT('1****TEST ROUTINES WITH CORRECT CALL****')
+ 1070 FORMAT('1****TEST WITH INSUFFICIENT WORK AREA****')
+ 1080 FORMAT('1****TEST WITH EXACTLY THE RIGHT AMOUNT OF WORK AREA****')
+ 1090 FORMAT('1****NUMBER OF OBSERVATIONS LESS THAN 2****')
+ 1100 FORMAT('1****ALL OBSERVATIONS WITH SAME VALUE****')
+ 1120 FORMAT('1****SAME NUMBER OF GROUPS AS NON-ZERO TAGS****')
+ 1130 FORMAT(' ****LESS THAN 2 DIFFERENT TAG GROUPS****')
+ 1140 FORMAT(' ****LESS THAN 2 TAGS****')
+ 1150 FORMAT('1****INCORRECT DIMENSION OF GSTAT****')
+ 1160 FORMAT('1****ALL OBSERVATIONS WITHIN A GROUP SAME VALUE****')
+ 1170 FORMAT('1****TEST WITH 2 TAGS****')
+ 1180 FORMAT('1****ALL GROUPS EXCEPT FOR 1 WITH 1 OBSERVATION ****')
+      END
+      SUBROUTINE XBFS(LDS)
+
+c*********************************************************************72
+c
+cc XBFS tests the Fourier spectrum analysis routines.
+C
+C     SERIES Y1 AND Y2 ARE LISTED AS SERIES X1 AND X2 ON PAGE OF 361 OF
+C     JENKINS AND WATTS.
+C
+c  Modified:
+c
+c    25 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDS
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      REAL
+     +   CMISS,FMAX,FMIN,YMISS,YMISS1,YMISS2
+      INTEGER
+     +   I,ICCOV,ICSPC2,INDEX1,INDEX2,INLPPC,IPHAS,IPRT,ISPCF,J,
+     +   JCCOV,JNLPPC,LACOV,LAGMAX,LDSTAK,LYFFT,N,NF,NPRT,NW
+C
+C  LOCAL ARRAYS
+      REAL
+     +   CCOV(101,2,2),CSPC2(300,2),FREQ(300),PHAS(300,2),Y1(150),
+     +   Y2(150),YFFT1(400),YFFT2(400),YM(150,2),YMMISS(4)
+      INTEGER
+     +   LAGS(4),NLPPC(101,2,2)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL BFS,BFSF,BFSFS,BFSM,BFSMS,BFSMV,BFSMVS,BFSS,BFSV,BFSVS,
+     +   CCFMS,CCFS,IPRINT,NRAND,SCOPY,SETIV,SETRV
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C  EQUIVALENCES
+      EQUIVALENCE (YM(1,1),Y1(1))
+      EQUIVALENCE (YM(1,2),Y2(1))
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     REAL CMISS
+C         THE MISSING VALUE CODE FOR THE RETURNED CCVF ESTIMATES.
+C     REAL CCOV(101,2,2)
+C        THE COVARIANCES.
+C     REAL CSPC2(300,2)
+C        THE SQUARED COHERENCY COMPONENT OF THE SPECTRUM.
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     REAL FMAX, FMIN
+C        THE MAXIMUM AND MINIMUM FREQUENCIES AT WHICH THE
+C        SPECTRUM IS TO BE COMPUTED.
+C     REAL FREQ(300)
+C        THE VECTOR OF FREQUENCIES AT WHICH THE SPECTRUM IS COMPUTED.
+C     INTEGER I
+C        AN INDEX VARIABLE
+C     INTEGER ICCOV
+C        THE FIRST DIMENSION OF THE ARRAY CCOV.
+C     INTEGER ICSPC2
+C        THE FIRST DIMENSION OF THE ARRAY CSPC2.
+C     INTEGER IERR
+C        THE INTEGER VALUE RETURNED BY THIS ROUTINE DESIGNATING
+C        WHETHER ANY ERRORS WERE DETECTED IN THE PARAMETER LIST
+C        IF IERR .EQ. 0, NO ERRORS WERE DETECTED
+C        IF IERR .EQ. 1, ERRORS HAVE BEEN DETECTED
+C     INTEGER IPHAS
+C        THE FIRST DIMENSION OF THE ARRAY PHAS.
+C     INTEGER IPRT
+C        THE LOGICAL UNIT USED FOR PRINTED OUTPUT.
+C     INTEGER ISPCF
+C         THE ACTUAL DIMENSION FOR THE SPECTRUM ARRAYS.
+C     INTEGER J
+C        INDEX VARIABLE.
+C     INTEGER LACOV
+C        THE LENGTH OF THE VECTOR ACOV.
+C     INTEGER LAGMAX
+C        THE INDEXING VARIABLE INDICATING THE LAG VALUE OF THE
+C        AUTOCOVARIANCE BEING COMPUTED AND THE MAXIMUM LAG TO BE USED,
+C        RESPECTIVELY.
+C     INTEGER LAGS(4)
+C        THE ARRAY USED TO STORE THE LAG WINDOW TRUCCATION
+C        POINTS USED FOR EACH SET OF SPECTRUM VALUES.
+C     INTEGER LDS, LDSTAK
+C        THE LENGTH OF THE VECTOR DSTAK IN COMMON CSTAK.
+C     INTEGER LYFFT
+C        THE LENGTH OF THE VECTORS YFFT AND ZFFT, RESPECTIVELY..
+C     INTEGER NF
+C        THE NUMBER OF FREQUENCIES AT WHICH THE SPECTRUM IS
+C        TO BE COMPUTED.
+C     INTEGER NLPPC(101,2,2)
+C        THE NUMBERS OF LAGGED PRODUCT PAIRS USED FOR EACH ACVF.
+C     INTEGER NPRT
+C        A CODE USED TO SPECIFY THE TYPE OF PLOT.
+C        IF NPRT < 0 THE PLOT IS DECIBLES/LINEAR
+C        IF NPRT = 0 THE PLOT IS SUPPRESSED.
+C        IF NPRT > 0 THE PLOT IS LOG/LINEAR
+C     INTEGER NW
+C        THE NUMBER OF DIFFERENT LAG WINDOW TRUNCATION POINTS SPECIFIED,
+C        AND THEREFORE, THE NUMBER OF PLOTS.
+C     INTEGER N
+C        THE NUMBER OF OBSERVATIONS IN THE SERIES Y.
+C     REAL PHAS(300,2)
+C        THE PHASE COMPONENT OF THE SPECTRUM.
+C     REAL YFFT1(400), YFFT2(400)
+C        THE VECTORS OF THE OBSERVED TIME SERIES TO BE ANALYZED USING
+C        THE FFT.
+C     REAL YMISS, YMISS1, YMISS2, YMMISS(4)
+C        THE USER SUPPLIED CODE WHICH IS USED TO DETERMINE WHETHER OR
+C        NOT AN OBSERVATION IN THE SERIES IS MISSING.  IF Y(I) = YMISS,
+C        THE VALUE IS ASSUMED MISSING, OTHERWISE IT IS NOT.
+C     REAL YM(150,2)
+C        THE MULTIVARIATE REPRESENTATION OF THE DATA
+C     REAL Y1(150), Y2(150)
+C         THE VECTORS CONTAINING THE TIME SERIES FROM JENKINS AND WATTS.
+C
+      DATA   Y1(  1),  Y1(  2),  Y1(  3),  Y1(  4),  Y1(  5),  Y1(  6)
+     +    /-0.88E0, -0.16E0, -1.87E0, -1.12E0,  1.38E0,  2.13E0/
+      DATA   Y1(  7),  Y1(  8),  Y1(  9),  Y1( 10),  Y1( 11),  Y1( 12)
+     +    / 2.76E0,  0.56E0, -0.69E0, -1.79E0, -3.82E0, -2.38E0/
+      DATA   Y1( 13),  Y1( 14),  Y1( 15),  Y1( 16),  Y1( 17),  Y1( 18)
+     +    / 1.00E0,  0.70E0, -0.15E0,  0.98E0,  0.11E0, -0.35E0/
+      DATA   Y1( 19),  Y1( 20),  Y1( 21),  Y1( 22),  Y1( 23),  Y1( 24)
+     +    /-0.73E0,  0.89E0, -1.63E0, -0.44E0, -1.37E0, -1.71E0/
+      DATA   Y1( 25),  Y1( 26),  Y1( 27),  Y1( 28),  Y1( 29),  Y1( 30)
+     +    /-1.22E0, -2.00E0, -0.22E0,  0.38E0,  1.31E0,  0.71E0/
+      DATA   Y1( 31),  Y1( 32),  Y1( 33),  Y1( 34),  Y1( 35),  Y1( 36)
+     +    / 0.32E0,  0.48E0, -1.88E0, -0.94E0, -1.54E0, -0.13E0/
+      DATA   Y1( 37),  Y1( 38),  Y1( 39),  Y1( 40),  Y1( 41),  Y1( 42)
+     +    / 1.02E0,  0.02E0, -0.77E0,  0.11E0, -0.60E0, -0.52E0/
+      DATA   Y1( 43),  Y1( 44),  Y1( 45),  Y1( 46),  Y1( 47),  Y1( 48)
+     +    /-0.09E0,  1.23E0,  1.46E0,  0.61E0,  0.42E0,  2.16E0/
+      DATA   Y1( 49),  Y1( 50),  Y1( 51),  Y1( 52),  Y1( 53),  Y1( 54)
+     +    / 3.18E0,  2.10E0,  0.37E0, -0.24E0,  0.57E0, -0.53E0/
+      DATA   Y1( 55),  Y1( 56),  Y1( 57),  Y1( 58),  Y1( 59),  Y1( 60)
+     +    / 2.44E0,  1.02E0, -0.53E0, -2.49E0, -2.12E0, -1.04E0/
+      DATA   Y1( 61),  Y1( 62),  Y1( 63),  Y1( 64),  Y1( 65),  Y1( 66)
+     +    /-0.12E0, -1.88E0, -1.50E0,  1.54E0,  3.33E0,  3.08E0/
+      DATA   Y1( 67),  Y1( 68),  Y1( 69),  Y1( 70),  Y1( 71),  Y1( 72)
+     +    / 1.71E0,  0.79E0,  1.55E0,  0.89E0, -0.89E0, -1.18E0/
+      DATA   Y1( 73),  Y1( 74),  Y1( 75),  Y1( 76),  Y1( 77),  Y1( 78)
+     +    / 0.89E0,  1.71E0,  3.05E0,  0.15E0, -1.04E0,  0.12E0/
+      DATA   Y1( 79),  Y1( 80),  Y1( 81),  Y1( 82),  Y1( 83),  Y1( 84)
+     +    / 0.08E0,  0.11E0, -2.62E0, -1.28E0,  1.07E0,  3.20E0/
+      DATA   Y1( 85),  Y1( 86),  Y1( 87),  Y1( 88),  Y1( 89),  Y1( 90)
+     +    / 1.92E0,  0.53E0, -1.08E0,  0.49E0, -0.58E0,  0.17E0/
+      DATA   Y1( 91),  Y1( 92),  Y1( 93),  Y1( 94),  Y1( 95),  Y1( 96)
+     +    / 1.15E0, -0.97E0, -1.63E0,  1.14E0, -0.67E0, -0.88E0/
+      DATA   Y1( 97),  Y1( 98),  Y1( 99),  Y1(100)
+     +    /-0.07E0,  0.24E0,  0.55E0, -2.16E0/
+      DATA   Y2(  1),  Y2(  2),  Y2(  3),  Y2(  4),  Y2(  5),  Y2(  6)
+     +    / 0.79E0,  1.12E0, -1.10E0, -2.39E0, -1.75E0, -0.82E0/
+      DATA   Y2(  7),  Y2(  8),  Y2(  9),  Y2( 10),  Y2( 11),  Y2( 12)
+     +    /-0.36E0,  1.27E0,  1.75E0,  2.44E0,  0.36E0, -2.10E0/
+      DATA   Y2( 13),  Y2( 14),  Y2( 15),  Y2( 16),  Y2( 17),  Y2( 18)
+     +    /-1.93E0, -1.30E0, -1.75E0, -0.34E0,  0.74E0,  0.49E0/
+      DATA   Y2( 19),  Y2( 20),  Y2( 21),  Y2( 22),  Y2( 23),  Y2( 24)
+     +    / 0.70E0,  0.71E0,  0.09E0,  0.59E0,  1.54E0,  0.14E0/
+      DATA   Y2( 25),  Y2( 26),  Y2( 27),  Y2( 28),  Y2( 29),  Y2( 30)
+     +    / 0.55E0, -1.40E0, -2.55E0, -1.66E0, -0.43E0,  0.58E0/
+      DATA   Y2( 31),  Y2( 32),  Y2( 33),  Y2( 34),  Y2( 35),  Y2( 36)
+     +    / 2.18E0, -0.24E0,  0.58E0, -0.18E0, -1.55E0, -0.64E0/
+      DATA   Y2( 37),  Y2( 38),  Y2( 39),  Y2( 40),  Y2( 41),  Y2( 42)
+     +    /-1.09E0,  0.90E0, -0.66E0, -0.35E0,  0.48E0,  0.50E0/
+      DATA   Y2( 43),  Y2( 44),  Y2( 45),  Y2( 46),  Y2( 47),  Y2( 48)
+     +    / 0.05E0, -0.68E0,  0.24E0,  0.58E0, -1.26E0, -0.25E0/
+      DATA   Y2( 49),  Y2( 50),  Y2( 51),  Y2( 52),  Y2( 53),  Y2( 54)
+     +    / 0.25E0,  2.18E0,  2.96E0,  1.56E0, -0.36E0, -0.59E0/
+      DATA   Y2( 55),  Y2( 56),  Y2( 57),  Y2( 58),  Y2( 59),  Y2( 60)
+     +    /-0.12E0,  3.03E0,  2.11E0,  0.78E0,  0.89E0, -1.45E0/
+      DATA   Y2( 61),  Y2( 62),  Y2( 63),  Y2( 64),  Y2( 65),  Y2( 66)
+     +    /-0.36E0, -0.37E0, -1.39E0, -4.19E0, -0.73E0, -0.98E0/
+      DATA   Y2( 67),  Y2( 68),  Y2( 69),  Y2( 70),  Y2( 71),  Y2( 72)
+     +    / 0.36E0,  0.06E0, -1.94E0, -0.08E0,  0.17E0,  1.00E0/
+      DATA   Y2( 73),  Y2( 74),  Y2( 75),  Y2( 76),  Y2( 77),  Y2( 78)
+     +    /-0.05E0,  0.43E0,  0.15E0,  2.69E0,  0.57E0,  0.29E0/
+      DATA   Y2( 79),  Y2( 80),  Y2( 81),  Y2( 82),  Y2( 83),  Y2( 84)
+     +    / 1.10E0,  0.48E0, -1.06E0, -2.28E0, -2.03E0, -0.75E0/
+      DATA   Y2( 85),  Y2( 86),  Y2( 87),  Y2( 88),  Y2( 89),  Y2( 90)
+     +    / 1.00E0,  1.71E0,  0.58E0,  1.97E0,  0.99E0,  1.94E0/
+      DATA   Y2( 91),  Y2( 92),  Y2( 93),  Y2( 94),  Y2( 95),  Y2( 96)
+     +    / 2.18E0,  3.14E0,  0.60E0,  0.51E0,  1.35E0,  0.56E0/
+      DATA   Y2( 97),  Y2( 98),  Y2( 99),  Y2(100)
+     +    / 0.11E0,  0.00E0,  2.34E0,  1.88E0/
+C
+C
+      CALL IPRINT(IPRT)
+      CALL SETRV(YMMISS, 4, 0.89E0)
+C
+C     CHECK ERROR HANDLING
+C
+C        TEST 1  -  MISCELANEOUS ERROR CHECKING
+C
+      WRITE (IPRT, 2000)
+      LAGMAX = -1
+      N = -10
+      INDEX1 = 0
+      INDEX2 = 0
+      ICCOV = 0
+      JCCOV = 0
+      INLPPC = 0
+      JNLPPC = 0
+      ICSPC2 = -10
+      IPHAS = -10
+      LACOV = -11
+      LYFFT = -11
+      NW = -1
+      NF = -5
+      FMIN = 0.5E0
+      FMAX = 0.0E0
+      NPRT = -1
+      ISPCF = -20
+      LDSTAK = 0
+      YMISS1 = 0.89E0
+      YMISS2 = 0.89E0
+
+      WRITE(IPRT, 1001)
+      CALL BFS (Y1, Y2, N)
+      WRITE (IPRT, 1002) IERR
+
+      WRITE(IPRT, 1003)
+      CALL BFSS(Y1, Y2, N, NW, LAGS, NF, FMIN, FMAX, NPRT,
+     +   CSPC2, ICSPC2, PHAS, IPHAS, FREQ, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+
+      WRITE(IPRT, 1019)
+      CALL BFSF (YFFT1, YFFT2, N, LYFFT, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+
+      WRITE(IPRT, 1020)
+      CALL BFSFS(YFFT1, YFFT2, N, LYFFT, LDSTAK, NW, LAGS, NF, FMIN,
+     +   FMAX, NPRT, CSPC2, ICSPC2, PHAS, IPHAS, FREQ)
+      WRITE (IPRT, 1002) IERR
+
+      WRITE(IPRT, 1005)
+      CALL BFSM (Y1, YMISS1, Y2, YMISS2, N)
+      WRITE (IPRT, 1002) IERR
+
+      WRITE(IPRT, 1006)
+      CALL BFSMS(Y1, YMISS1, Y2, YMISS2, N, NW, LAGS, NF, FMIN,
+     +   FMAX, NPRT, CSPC2, ICSPC2, PHAS, IPHAS, FREQ, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+
+      WRITE (IPRT, 1007)
+      CALL BFSV(CCOV, INDEX1, INDEX2, N, LAGMAX, ICCOV, JCCOV)
+      WRITE (IPRT, 1002) IERR
+
+      WRITE (IPRT, 1008)
+      CALL BFSVS (CCOV, INDEX1, INDEX2, N, ICCOV, JCCOV,
+     +   NW, LAGS, NF, FMIN, FMAX, NPRT, CSPC2, ICSPC2, PHAS, IPHAS,
+     +   FREQ, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+C
+      WRITE (IPRT, 1021)
+      CALL BFSMV(CCOV, NLPPC, INDEX1, INDEX2, N, LAGMAX, ICCOV, JCCOV,
+     +   INLPPC, JNLPPC)
+      WRITE (IPRT, 1002) IERR
+
+      WRITE (IPRT, 1022)
+      CALL BFSMVS (CCOV, NLPPC, INDEX1, INDEX2, N, ICCOV, JCCOV,
+     +   INLPPC, JNLPPC, NW, LAGS, NF, FMIN, FMAX, NPRT, CSPC2, ICSPC2,
+     +   PHAS, IPHAS, FREQ, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+C
+C        TEST 2  -  MISCELANEOUS ERROR CHECKING (CONTINUED)
+C
+      WRITE (IPRT, 2010)
+      N = 100
+      LAGMAX = 40
+      INDEX1 = 0
+      INDEX2 = 0
+      ICCOV = 0
+      JCCOV = 0
+      INLPPC = 0
+      JNLPPC = 0
+      ICSPC2 = 300
+      IPHAS = 300
+      LACOV = 101
+      LYFFT = -11
+      NW = 2
+      LAGS(1) = 0
+      LAGS(2) = 100
+      NF = 202
+      FMIN = 0.0E0
+      FMAX = 0.5E0
+      NPRT = 3
+      ISPCF = 101
+      LDSTAK = 0
+
+      WRITE(IPRT, 1003)
+      CALL BFSS(Y1, Y2, N, NW, LAGS, NF, FMIN, FMAX, NPRT,
+     +   CSPC2, ICSPC2, PHAS, IPHAS, FREQ, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+
+      WRITE(IPRT, 1019)
+      CALL BFSF (YFFT1, YFFT2, N, LYFFT, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+
+      WRITE(IPRT, 1020)
+      CALL BFSFS(YFFT1, YFFT2, N, LYFFT, LDSTAK, NW, LAGS, NF, FMIN,
+     +   FMAX, NPRT, CSPC2, ICSPC2, PHAS, IPHAS, FREQ)
+      WRITE (IPRT, 1002) IERR
+
+      WRITE(IPRT, 1006)
+      CALL BFSMS(Y1, YMISS1, Y2, YMISS2, N, NW, LAGS, NF, FMIN,
+     +   FMAX, NPRT, CSPC2, ICSPC2, PHAS, IPHAS, FREQ, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+
+      WRITE (IPRT, 1008)
+      CALL BFSVS (CCOV, INDEX1, INDEX2, N, ICCOV, JCCOV,
+     +   NW, LAGS, NF, FMIN, FMAX, NPRT, CSPC2, ICSPC2, PHAS, IPHAS,
+     +   FREQ, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+C
+      WRITE (IPRT, 1022)
+      CALL BFSMVS (CCOV, NLPPC, INDEX1, INDEX2, N, ICCOV, JCCOV,
+     +   INLPPC, JNLPPC, NW, LAGS, NF, FMIN, FMAX, NPRT, CSPC2, ICSPC2,
+     +   PHAS, IPHAS, FREQ, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+C
+C        TEST 3  -  LDSTAK TOO SMALL
+C
+      WRITE (IPRT, 2030)
+      N = 100
+      INDEX1 = 2
+      INDEX2 = 1
+      ICCOV = 101
+      JCCOV = 2
+      INLPPC = 101
+      JNLPPC = 2
+      ICSPC2 = 300
+      IPHAS = 300
+      LAGMAX = 99
+      LACOV = 101
+      LYFFT = 400
+      NW = 2
+      LAGS(1) = 8
+      LAGS(2) = 16
+      NF = 26
+      FMIN = 0.0E0
+      FMAX = 0.5E0
+      NPRT = 1
+      ISPCF = 101
+      LDSTAK = 0
+
+      WRITE(IPRT, 1003)
+      CALL BFSS(Y1, Y2, N, NW, LAGS, NF, FMIN, FMAX, NPRT,
+     +   CSPC2, ICSPC2, PHAS, IPHAS, FREQ, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+
+      WRITE(IPRT, 1019)
+      CALL BFSF (YFFT1, YFFT2, N, LYFFT, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+
+      WRITE(IPRT, 1020)
+      CALL BFSFS(YFFT1, YFFT2, N, LYFFT, LDSTAK, NW, LAGS, NF, FMIN,
+     +   FMAX, NPRT, CSPC2, ICSPC2, PHAS, IPHAS, FREQ)
+      WRITE (IPRT, 1002) IERR
+
+      WRITE(IPRT, 1006)
+      CALL BFSMS(Y1, YMISS1, Y2, YMISS2, N, NW, LAGS, NF, FMIN,
+     +   FMAX, NPRT, CSPC2, ICSPC2, PHAS, IPHAS, FREQ, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+
+      WRITE (IPRT, 1008)
+      CALL BFSVS (CCOV, INDEX1, INDEX2, N, ICCOV, JCCOV,
+     +   NW, LAGS, NF, FMIN, FMAX, NPRT, CSPC2, ICSPC2, PHAS, IPHAS,
+     +   FREQ, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+
+      WRITE (IPRT, 1022)
+      CALL BFSMVS (CCOV, NLPPC, INDEX1, INDEX2, N, ICCOV, JCCOV,
+     +   INLPPC, JNLPPC, NW, LAGS, NF, FMIN, FMAX, NPRT, CSPC2, ICSPC2,
+     +   PHAS, IPHAS, FREQ, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+C
+C        TEST 4  -  ALL DATA AND COVARIANCES MISSING
+C
+      WRITE (IPRT, 2040)
+      N = 100
+      LAGMAX = 99
+      ICSPC2 = 300
+      IPHAS = 300
+      LACOV = 101
+      LYFFT = 400
+      NW = 2
+      LAGS(1) = 8
+      LAGS(2) = 16
+      NF = 26
+      FMIN = 0.0E0
+      FMAX = 0.5E0
+      NPRT = 1
+      ISPCF = 101
+      LDSTAK = LDS
+      CALL SETRV(YFFT1, N, YMISS1)
+      CALL SETRV(YFFT2, N, YMISS2)
+      CALL SETRV(CCOV, 404, 0.0E0)
+      CALL SETIV(NLPPC, 404, 0)
+
+      WRITE(IPRT, 1005)
+      CALL BFSM (YFFT1, YMISS1, YFFT2, YMISS2, N)
+      WRITE (IPRT, 1002) IERR
+
+      WRITE(IPRT, 1006)
+      CALL BFSMS(YFFT1, YMISS1, YFFT2, YMISS2, N, NW, LAGS, NF, FMIN,
+     +   FMAX, NPRT, CSPC2, ICSPC2, PHAS, IPHAS, FREQ, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+
+      WRITE (IPRT, 1021)
+      CALL BFSMV(CCOV, NLPPC, INDEX1, INDEX2, N, LAGMAX, ICCOV, JCCOV,
+     +   INLPPC, JNLPPC)
+      WRITE (IPRT, 1002) IERR
+
+      WRITE (IPRT, 1022)
+      CALL BFSMVS (CCOV, NLPPC, INDEX1, INDEX2, N, ICCOV, JCCOV,
+     +   INLPPC, JNLPPC, NW, LAGS, NF, FMIN, FMAX, NPRT, CSPC2, ICSPC2,
+     +   PHAS, IPHAS, FREQ, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+C
+C  TEST 5  -  EVERY OTHER VALUE MISSING
+C
+      WRITE (IPRT, 2050)
+      N = 100
+      LAGMAX = 99
+      ICSPC2 = 300
+      IPHAS = 300
+      LACOV = 101
+      LYFFT = 400
+      NW = 2
+      LAGS(1) = 8
+      LAGS(2) = 16
+      NF = 26
+      FMIN = 0.0E0
+      FMAX = 0.5E0
+      NPRT = 1
+      ISPCF = 101
+      LDSTAK = LDS
+      CALL SETRV(YFFT1, N, YMISS1)
+      CALL SETRV(YFFT2, N, YMISS2)
+      DO 10 I = 1, N, 2
+         YFFT1(I) = Y1(I)
+         YFFT2(I) = Y2(I)
+   10 CONTINUE
+
+      WRITE(IPRT, 1005)
+      CALL BFSM (YFFT1, YMISS1, YFFT2, YMISS2, N)
+      WRITE (IPRT, 1002) IERR
+
+      WRITE(IPRT, 1006)
+      CALL BFSMS(YFFT1, YMISS1, YFFT2, YMISS2, N, NW, LAGS, NF, FMIN,
+     +   FMAX, NPRT, CSPC2, ICSPC2, PHAS, IPHAS, FREQ, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+C
+C  CHECK RESULTS FROM VALID CALL
+C
+      WRITE(IPRT, 2020)
+      YMISS = 1.16E0
+      N = 100
+      LAGMAX = 99
+      ICSPC2 = 300
+      IPHAS = 300
+      LACOV = 101
+      LYFFT = 400
+      NW = 2
+      LAGS(1) = 8
+      LAGS(2) = 16
+      NF = 26
+      FMIN = 0.0E0
+      FMAX = 0.5E0
+      NPRT = 1
+      ISPCF = 101
+      LDSTAK = LDS
+C
+C     TEST OF BFS
+C
+      WRITE(IPRT, 1001)
+      CALL BFS (Y1, Y2, N)
+      WRITE (IPRT, 1002) IERR
+C
+C     TEST OF BFSS
+C
+      WRITE(IPRT, 2020)
+      WRITE(IPRT, 1003)
+      CALL BFSS(Y1, Y2, N, NW, LAGS, NF, FMIN,
+     +   FMAX, NPRT, CSPC2, ICSPC2, PHAS, IPHAS, FREQ, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VALUES FROM BFSS
+C
+      WRITE (IPRT, 1004) (FREQ(I), (CSPC2(I,J), PHAS(I,J),J=1,NW),
+     +   I=1,NF)
+C
+C     TEST OF BFSF
+C
+      WRITE(IPRT, 2020)
+      WRITE(IPRT, 1019)
+      CALL SCOPY(N, Y1, 1, YFFT1, 1)
+      CALL SCOPY(N, Y2, 1, YFFT2, 1)
+      CALL BFSF (YFFT1, YFFT2, N, LYFFT, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+C
+C     TEST OF BFSFS
+C
+      WRITE(IPRT, 2020)
+      WRITE(IPRT, 1020)
+      CALL SCOPY(N, Y1, 1, YFFT1, 1)
+      CALL SCOPY(N, Y2, 1, YFFT2, 1)
+      CALL BFSFS(YFFT1, YFFT2, N, LYFFT, LDSTAK, NW, LAGS, NF, FMIN,
+     +   FMAX, NPRT, CSPC2, ICSPC2, PHAS, IPHAS, FREQ)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VALUES FROM BFSFS
+C
+      WRITE (IPRT, 1004) (FREQ(I), (CSPC2(I,J), PHAS(I,J),J=1,NW),
+     +   I=1,NF)
+C
+C     TEST OF BFSM
+C
+      WRITE(IPRT, 2020)
+      WRITE(IPRT, 1005)
+      CALL BFSM (Y1, YMISS1, Y2, YMISS2, N)
+      WRITE (IPRT, 1002) IERR
+C
+C     TEST OF BFSMS
+C
+      WRITE(IPRT, 2020)
+      WRITE(IPRT, 1006)
+      CALL BFSMS(Y1, YMISS1, Y2, YMISS2, N, NW, LAGS, NF, FMIN,
+     +   FMAX, NPRT, CSPC2, ICSPC2, PHAS, IPHAS, FREQ, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VALUES FROM BFSMS
+C
+      WRITE (IPRT, 1004) (FREQ(I), (CSPC2(I,J), PHAS(I,J),J=1,NW),
+     +   I=1,NF)
+C
+C     TEST OF BFSV
+C
+      WRITE(IPRT, 2020)
+      CALL CCFS (YM, N, 2, 150, LAGMAX, CCOV, ICCOV, JCCOV, 0,
+     +   LDSTAK)
+      WRITE (IPRT, 1007)
+      CALL BFSV(CCOV, INDEX1, INDEX2, N, LAGMAX, ICCOV, JCCOV)
+      WRITE (IPRT, 1002) IERR
+C
+C     TEST OF BFSVS
+C
+      WRITE(IPRT, 2020)
+      WRITE (IPRT, 1008)
+      CALL BFSVS(CCOV, INDEX1, INDEX2, N, ICCOV, JCCOV, NW, LAGS, NF,
+     +   FMIN, FMAX, NPRT, CSPC2, ICSPC2, PHAS, IPHAS, FREQ, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VALUES FROM BFSVS
+C
+      WRITE (IPRT, 1004) (FREQ(I), (CSPC2(I,J), PHAS(I,J),J=1,NW),
+     +   I=1,NF)
+C
+C     TEST OF BFSMV
+C
+      WRITE(IPRT, 2020)
+      CALL CCFMS (YM, YMMISS, N, 2, 150, LAGMAX, CCOV, CMISS, ICCOV,
+     +  JCCOV, NLPPC, INLPPC, JNLPPC, 0, LDSTAK)
+      WRITE (IPRT, 1021)
+      CALL BFSMV(CCOV, NLPPC, INDEX1, INDEX2, N, LAGMAX, ICCOV,
+     +  JCCOV, INLPPC, JNLPPC)
+      WRITE (IPRT, 1002) IERR
+C
+C     TEST OF BFSMVS
+C
+      WRITE(IPRT, 2020)
+      WRITE (IPRT, 1022)
+      CALL BFSMVS(CCOV, NLPPC, INDEX1, INDEX2, N, ICCOV,
+     +  JCCOV, INLPPC, JNLPPC, NW, LAGS, NF, FMIN, FMAX, NPRT,
+     +  CSPC2, ICSPC2, PHAS, IPHAS, FREQ, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VALUES FROM BFSMVS
+C
+      WRITE (IPRT, 1004) (FREQ(I), (CSPC2(I,J), PHAS(I,J),J=1,NW),
+     +   I=1,NF)
+C
+C     MINIMUM PROBLEM SIZE
+C
+      YMISS = 1.16E0
+      N = 17
+      LAGMAX = 1
+      ICSPC2 = 1
+      IPHAS = 1
+      LACOV = 101
+      LYFFT = 400
+      NW = 1
+      LAGS(1) = 1
+      LAGS(2) = 16
+      NF = 1
+      FMIN = 0.0E0
+      FMAX = 0.5E0
+      NPRT = 1
+      ISPCF = 101
+      LDSTAK = LDS
+C
+C     TEST OF BFS
+C
+      WRITE(IPRT, 2060)
+      WRITE(IPRT, 1001)
+      CALL BFS(Y1, Y2, N)
+      WRITE (IPRT, 1002) IERR
+C
+C     TEST OF BFSS
+C
+      WRITE(IPRT, 2060)
+      WRITE(IPRT, 1003)
+      CALL BFSS(Y1, Y2, N, NW, LAGS, NF, FMIN,
+     +   FMAX, NPRT, CSPC2, ICSPC2, PHAS, IPHAS, FREQ, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VALUES FROM BFSS
+C
+      WRITE (IPRT, 1004) (FREQ(I), (CSPC2(I,J), PHAS(I,J),J=1,NW),
+     +   I=1,NF)
+C
+C     CHECK HANDLING OF FMIN AND FMAX
+C
+      YMISS = 1.16E0
+      N = 100
+      LAGMAX = 99
+      ICSPC2 = 300
+      IPHAS = 300
+      LACOV = 101
+      LYFFT = 400
+      NW = 2
+      LAGS(1) = 8
+      LAGS(2) = 16
+      NF = 26
+      FMIN = 0.45E0
+      FMAX = 0.5E0
+      NPRT = 1
+      ISPCF = 101
+      LDSTAK = LDS
+C
+C     TEST OF BFSS
+C
+      WRITE(IPRT, 2070)
+      WRITE(IPRT, 1003)
+      CALL BFSS(Y1, Y2, N, NW, LAGS, NF, FMIN,
+     +   FMAX, NPRT, CSPC2, ICSPC2, PHAS, IPHAS, FREQ, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VALUES FROM BFSS
+C
+      WRITE (IPRT, 1004) (FREQ(I), (CSPC2(I,J), PHAS(I,J),J=1,NW),
+     +   I=1,NF)
+C
+C     CHECK RESULTS FOR WHITE NOISE SPECTRUM
+C
+      YMISS = 1.16E0
+      CALL NRAND(YFFT1, N, 12343)
+      CALL NRAND(YFFT2, N, 34523)
+      N = 100
+      LAGMAX = 99
+      ICSPC2 = 300
+      IPHAS = 300
+      LACOV = 101
+      LYFFT = 400
+      NW = 2
+      LAGS(1) = 8
+      LAGS(2) = 16
+      NF = 26
+      FMIN = 0.0E0
+      FMAX = 0.5E0
+      NPRT = 1
+      ISPCF = 101
+      LDSTAK = LDS
+C
+C     TEST OF BFSFS
+C
+      WRITE(IPRT, 2080)
+      WRITE(IPRT, 1003)
+      CALL BFSFS(YFFT1, YFFT2, N, LYFFT, LDSTAK, NW, LAGS, NF, FMIN,
+     +   FMAX, NPRT, CSPC2, ICSPC2, PHAS, IPHAS, FREQ)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VALUES FROM BFSS
+C
+      WRITE (IPRT, 1004) (FREQ(I), (CSPC2(I,J), PHAS(I,J),J=1,NW),
+     +   I=1,NF)
+
+      RETURN
+
+ 1001 FORMAT (12H TEST OF BFS)
+ 1002 FORMAT (8H IERR IS, I5/)
+ 1003 FORMAT (13H TEST OF BFSS)
+ 1004 FORMAT (5(1X, E15.7))
+ 1005 FORMAT (13H TEST OF BFSM)
+ 1006 FORMAT (14H TEST OF BFSMS)
+ 1007 FORMAT (13H TEST OF BFSV)
+ 1008 FORMAT (14H TEST OF BFSVS)
+ 1019 FORMAT (13H TEST OF BFSF)
+ 1020 FORMAT (14H TEST OF BFSFS)
+ 1021 FORMAT (14H TEST OF BFSMV)
+ 1022 FORMAT (15H TEST OF BFSMVS)
+ 2000 FORMAT (32H1CHECK ERROR HANDLING  -  TEST 1)
+ 2010 FORMAT (32H1CHECK ERROR HANDLING  -  TEST 2)
+ 2020 FORMAT (14H1VALID PROBLEM)
+ 2030 FORMAT (14H1LDS TOO SMALL)
+ 2040 FORMAT (33H1ALL DATA AND COVARIANCES MISSING)
+ 2050 FORMAT (31H1EVERY OTHER DATA VALUE MISSING)
+ 2060 FORMAT (21H1MINIMUM PROBLEM SIZE)
+ 2070 FORMAT (32H1CHECK HANDLING OF FMIN AND FMAX)
+ 2080 FORMAT (21H1WHITE NOISE SPECTRUM)
+      END
+      SUBROUTINE XCCF(LDS)
+
+c*********************************************************************72
+c
+cc XCCF tests the time series correlation routines.
+C
+C     SERIES Y1 AND Y2 ARE LISTED AS SERIES X1 AND X2 ON PAGE OF 361 OF
+C     JENKINS AND WATTS.  CCF FOR SERIES Y1 AND Y2 ARE PLOTTED ON PAGE 3
+C     AND LISTED ON PAGE 420.
+C
+c  Modified:
+c
+c    25 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDS
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      REAL
+     +   CMISS,Y1MISS,Y2MISS,YMISS0
+      INTEGER
+     +   ICCOV,INLPPC,IPRT,ITEST,IYM,IYMFFT,JCCOV,JNLPPC,LAGMAX,
+     +   LDSTAK,LYFFT,M,N,NLAG,NPRT,NYD
+C
+C  LOCAL ARRAYS
+      REAL
+     +   CCOV(30,5,5),Y1(100),Y2(100),YFFT1(150),YFFT2(150),YM(150,5),
+     +   YMFFT(150,5),YMMISS(5)
+      INTEGER
+     +   NLPPC(30,5,5)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL CCF,CCFF,CCFFS,CCFM,CCFMS,CCFS,CCFXP,IPRINT,SCOPY,SETRA,
+     +   SETRV
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     REAL CCOV(30,5,5)
+C        THE CROSS COVARIANCE ARRAY.
+C     REAL CMISS
+C        THE MISSING VALUE CODE FOR THE RETURNED CCVF ESTIMATES
+C        (VECTOR CCOV).
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     INTEGER ICCOV
+C        THE FIRST DIMENSION OF THE ARRAY CCOV.
+C     INTEGER IERR
+C        THE INTEGER VALUE RETURNED BY THIS ROUTINE DESIGNATING
+C        WHETHER ANY ERRORS WERE DETECTED IN THE PARAMETER LIST
+C        IF IERR .EQ. 0, NO ERRORS WERE DETECTED
+C     INTEGER INLPPC
+C        THE FIRST DIMENSION OF THE ARRAY NLPPC.
+C     INTEGER IPRT
+C        THE UNIT NUMBER FOR PRINTED OUTPUT.
+C     INTEGER ITEST
+C        THE NUMBER OF THE TEST BEING PERFORMED
+C     INTEGER IYM, IYMFFT
+C        THE FIRST DIMENSION OF THE ARRAYS YM AND YMFFT, RESPECTIVELY.
+C     INTEGER JCCOV, JNLPPC
+C        THE SECOND DIMENSIONS OF THE ARRAYS CCOV AND NLPPC,
+C        RESPECTIVELY.
+C     INTEGER LAGMAX
+C        THE MAXIMUM LAG VALUE REQUESTED.
+C     INTEGER LDS, LDSTAK
+C        THE LENGTH OF THE ARRAY DSTAK.
+C     INTEGER LYFFT
+C        THE LENGTH OF THE ARRAYS USED WHEN THE COMPUTATIONS ARE
+C        PERFORMED BY THE FFT.
+C     INTEGER M
+C        THE NUMBER OF SERIES IN THE MULTIVARIATE TIME SERIES YM.
+C     INTEGER N
+C        THE INTEGER NUMBER OF OBSERVATIONS IN EACH SERIES
+C     INTEGER NLAG
+C        THE NUMBER OF LAGS AT WHICH THE ACVF WAS COMPUTED.
+C     INTEGER NLPPC(30,5,5)
+C        THE ARRAY CONTAINING THE NUMBER OF LAGGED PRODUCT PAIRS
+C        USED TO COMPUTE EACH ACVF ESTIMATE.
+C     INTEGER NPRT
+C        THE INDICATOR VARIABLE USED TO SPECIFY WHETHER OR NOT
+C        PRINTED OUTPUT IS TO BE GIVEN, WHERE IF THE VALUE OF
+C        NPRT IS ZERO, NO OUTPUT IS MADE.
+C     INTEGER NYD
+C        THE NUMBER OF OBSERVATIONS IN THE SERIES TO BE DIFFERENCED.
+C     REAL YFFT1(150), YFFT2(150)
+C        THE VECTORS USED FOR STORING THE SERIES FOR THE ROUTINES
+C        USING THE FFT.
+C     REAL YM(150,5), YMFFT(150,5)
+C        THE ARRAYS USED FOR MULTIVARIATE TIME SERIES.
+C     REAL YMISS0, YMMISS(5)
+C        THE MISSING VALUE CODES FOR SERIES Y AND YM.
+C     REAL Y1(100), Y1MISS
+C        THE FIRST SERIES, AND ITS MISSING VALUE CODE.
+C     REAL Y2(100), Y2MISS
+C        THE SECOND SERIES, AND ITS MISSING VALUE CODE.
+C
+C
+      DATA   Y1(  1),  Y1(  2),  Y1(  3),  Y1(  4),  Y1(  5),  Y1(  6)
+     +    /-0.88E0, -0.16E0, -1.87E0, -1.12E0,  1.38E0,  2.13E0/
+      DATA   Y1(  7),  Y1(  8),  Y1(  9),  Y1( 10),  Y1( 11),  Y1( 12)
+     +    / 2.76E0,  0.56E0, -0.69E0, -1.79E0, -3.82E0, -2.38E0/
+      DATA   Y1( 13),  Y1( 14),  Y1( 15),  Y1( 16),  Y1( 17),  Y1( 18)
+     +    / 1.00E0,  0.70E0, -0.15E0,  0.98E0,  0.11E0, -0.35E0/
+      DATA   Y1( 19),  Y1( 20),  Y1( 21),  Y1( 22),  Y1( 23),  Y1( 24)
+     +    /-0.73E0,  0.89E0, -1.63E0, -0.44E0, -1.37E0, -1.71E0/
+      DATA   Y1( 25),  Y1( 26),  Y1( 27),  Y1( 28),  Y1( 29),  Y1( 30)
+     +    /-1.22E0, -2.00E0, -0.22E0,  0.38E0,  1.31E0,  0.71E0/
+      DATA   Y1( 31),  Y1( 32),  Y1( 33),  Y1( 34),  Y1( 35),  Y1( 36)
+     +    / 0.32E0,  0.48E0, -1.88E0, -0.94E0, -1.54E0, -0.13E0/
+      DATA   Y1( 37),  Y1( 38),  Y1( 39),  Y1( 40),  Y1( 41),  Y1( 42)
+     +    / 1.02E0,  0.02E0, -0.77E0,  0.11E0, -0.60E0, -0.52E0/
+      DATA   Y1( 43),  Y1( 44),  Y1( 45),  Y1( 46),  Y1( 47),  Y1( 48)
+     +    /-0.09E0,  1.23E0,  1.46E0,  0.61E0,  0.42E0,  2.16E0/
+      DATA   Y1( 49),  Y1( 50),  Y1( 51),  Y1( 52),  Y1( 53),  Y1( 54)
+     +    / 3.18E0,  2.10E0,  0.37E0, -0.24E0,  0.57E0, -0.53E0/
+      DATA   Y1( 55),  Y1( 56),  Y1( 57),  Y1( 58),  Y1( 59),  Y1( 60)
+     +    / 2.44E0,  1.02E0, -0.53E0, -2.49E0, -2.12E0, -1.04E0/
+      DATA   Y1( 61),  Y1( 62),  Y1( 63),  Y1( 64),  Y1( 65),  Y1( 66)
+     +    /-0.12E0, -1.88E0, -1.50E0,  1.54E0,  3.33E0,  3.08E0/
+      DATA   Y1( 67),  Y1( 68),  Y1( 69),  Y1( 70),  Y1( 71),  Y1( 72)
+     +    / 1.71E0,  0.79E0,  1.55E0,  0.89E0, -0.89E0, -1.18E0/
+      DATA   Y1( 73),  Y1( 74),  Y1( 75),  Y1( 76),  Y1( 77),  Y1( 78)
+     +    / 0.89E0,  1.71E0,  3.05E0,  0.15E0, -1.04E0,  0.12E0/
+      DATA   Y1( 79),  Y1( 80),  Y1( 81),  Y1( 82),  Y1( 83),  Y1( 84)
+     +    / 0.08E0,  0.11E0, -2.62E0, -1.28E0,  1.07E0,  3.20E0/
+      DATA   Y1( 85),  Y1( 86),  Y1( 87),  Y1( 88),  Y1( 89),  Y1( 90)
+     +    / 1.92E0,  0.53E0, -1.08E0,  0.49E0, -0.58E0,  0.17E0/
+      DATA   Y1( 91),  Y1( 92),  Y1( 93),  Y1( 94),  Y1( 95),  Y1( 96)
+     +    / 1.15E0, -0.97E0, -1.63E0,  1.14E0, -0.67E0, -0.88E0/
+      DATA   Y1( 97),  Y1( 98),  Y1( 99),  Y1(100)
+     +    /-0.07E0,  0.24E0,  0.55E0, -2.16E0/
+      DATA   Y2(  1),  Y2(  2),  Y2(  3),  Y2(  4),  Y2(  5),  Y2(  6)
+     +    / 0.79E0,  1.12E0, -1.10E0, -2.39E0, -1.75E0, -0.82E0/
+      DATA   Y2(  7),  Y2(  8),  Y2(  9),  Y2( 10),  Y2( 11),  Y2( 12)
+     +    /-0.36E0,  1.27E0,  1.75E0,  2.44E0,  0.36E0, -2.10E0/
+      DATA   Y2( 13),  Y2( 14),  Y2( 15),  Y2( 16),  Y2( 17),  Y2( 18)
+     +    /-1.93E0, -1.30E0, -1.75E0, -0.34E0,  0.74E0,  0.49E0/
+      DATA   Y2( 19),  Y2( 20),  Y2( 21),  Y2( 22),  Y2( 23),  Y2( 24)
+     +    / 0.70E0,  0.71E0,  0.09E0,  0.59E0,  1.54E0,  0.14E0/
+      DATA   Y2( 25),  Y2( 26),  Y2( 27),  Y2( 28),  Y2( 29),  Y2( 30)
+     +    / 0.55E0, -1.40E0, -2.55E0, -1.66E0, -0.43E0,  0.58E0/
+      DATA   Y2( 31),  Y2( 32),  Y2( 33),  Y2( 34),  Y2( 35),  Y2( 36)
+     +    / 2.18E0, -0.24E0,  0.58E0, -0.18E0, -1.55E0, -0.64E0/
+      DATA   Y2( 37),  Y2( 38),  Y2( 39),  Y2( 40),  Y2( 41),  Y2( 42)
+     +    /-1.09E0,  0.90E0, -0.66E0, -0.35E0,  0.48E0,  0.50E0/
+      DATA   Y2( 43),  Y2( 44),  Y2( 45),  Y2( 46),  Y2( 47),  Y2( 48)
+     +    / 0.05E0, -0.68E0,  0.24E0,  0.58E0, -1.26E0, -0.25E0/
+      DATA   Y2( 49),  Y2( 50),  Y2( 51),  Y2( 52),  Y2( 53),  Y2( 54)
+     +    / 0.25E0,  2.18E0,  2.96E0,  1.56E0, -0.36E0, -0.59E0/
+      DATA   Y2( 55),  Y2( 56),  Y2( 57),  Y2( 58),  Y2( 59),  Y2( 60)
+     +    /-0.12E0,  3.03E0,  2.11E0,  0.78E0,  0.89E0, -1.45E0/
+      DATA   Y2( 61),  Y2( 62),  Y2( 63),  Y2( 64),  Y2( 65),  Y2( 66)
+     +    /-0.36E0, -0.37E0, -1.39E0, -4.19E0, -0.73E0, -0.98E0/
+      DATA   Y2( 67),  Y2( 68),  Y2( 69),  Y2( 70),  Y2( 71),  Y2( 72)
+     +    / 0.36E0,  0.06E0, -1.94E0, -0.08E0,  0.17E0,  1.00E0/
+      DATA   Y2( 73),  Y2( 74),  Y2( 75),  Y2( 76),  Y2( 77),  Y2( 78)
+     +    /-0.05E0,  0.43E0,  0.15E0,  2.69E0,  0.57E0,  0.29E0/
+      DATA   Y2( 79),  Y2( 80),  Y2( 81),  Y2( 82),  Y2( 83),  Y2( 84)
+     +    / 1.10E0,  0.48E0, -1.06E0, -2.28E0, -2.03E0, -0.75E0/
+      DATA   Y2( 85),  Y2( 86),  Y2( 87),  Y2( 88),  Y2( 89),  Y2( 90)
+     +    / 1.00E0,  1.71E0,  0.58E0,  1.97E0,  0.99E0,  1.94E0/
+      DATA   Y2( 91),  Y2( 92),  Y2( 93),  Y2( 94),  Y2( 95),  Y2( 96)
+     +    / 2.18E0,  3.14E0,  0.60E0,  0.51E0,  1.35E0,  0.56E0/
+      DATA   Y2( 97),  Y2( 98),  Y2( 99),  Y2(100)
+     +    / 0.11E0,  0.00E0,  2.34E0,  1.88E0/
+C
+      CALL IPRINT(IPRT)
+      ITEST = 1
+      LDSTAK = LDS
+C
+      N = 100
+      LAGMAX = 20
+      NLAG = 30
+      NPRT = 1
+      LYFFT = 150
+      ICCOV = 30
+      JCCOV = 5
+      IYM = 150
+      M = 4
+      IYMFFT = 150
+      INLPPC = 30
+      JNLPPC = 5
+      NYD = 144
+      YMISS0 = 1.16E0
+      Y1MISS = 0.89E0
+      Y2MISS = 0.89E0
+C
+C     COPY DATA INTO YM FOR CCFS AND CCFMS
+C
+      CALL SCOPY(N, Y1, 1, YM(1,1), 1)
+      CALL SCOPY(N, Y2, 1, YM(1,2), 1)
+      CALL SCOPY(N, Y1, 1, YM(1,3), 1)
+      CALL SCOPY(N, Y2, 1, YM(1,4), 1)
+      CALL SETRV(YMMISS, 4, YMISS0)
+C
+C     TEST OF CCF
+C
+      WRITE (IPRT,1060)
+      CALL CCF(Y1, Y2, N)
+C
+C     PRINT RETURNED RESULTS
+C
+      CALL CCFXP (.FALSE., LAGMAX, M, CCOV, ICCOV, JCCOV, .FALSE.,
+     +   NLPPC,  INLPPC, JNLPPC, CMISS)
+C
+C     TEST OF CCFS
+C
+      WRITE (IPRT,1080)
+      CALL CCFS(YM, N, M, IYM, LAGMAX, CCOV, ICCOV, JCCOV, NPRT,
+     +   LDSTAK)
+C
+C     PRINT RETURNED RESULTS
+C
+      CALL CCFXP (.TRUE., LAGMAX, M, CCOV, ICCOV, JCCOV, .FALSE.,
+     +   NLPPC,  INLPPC, JNLPPC, CMISS)
+C
+C     TEST OF CCFM WITHOUT MISSING VALUES
+C
+      WRITE (IPRT,1070)
+      WRITE (IPRT, 1050)
+      CALL CCFM(Y1, YMISS0, Y2, YMISS0, N)
+C
+C     PRINT RETURNED RESULTS
+C
+      CALL CCFXP (.FALSE., LAGMAX, M, CCOV, ICCOV, JCCOV, .TRUE.,
+     +   NLPPC,  INLPPC, JNLPPC, CMISS)
+C
+C     TEST OF CCFMS WITHOUT MISSING VALUES
+C
+      WRITE (IPRT,1140)
+      WRITE (IPRT, 1050)
+      CALL CCFMS(YM, YMMISS, N, M, IYM, LAGMAX, CCOV, CMISS,
+     +   ICCOV, JCCOV, NLPPC, INLPPC, JNLPPC, NPRT, LDSTAK)
+C
+C     PRINT RETURNED RESULTS
+C
+      CALL CCFXP (.TRUE., LAGMAX, M, CCOV, ICCOV, JCCOV, .TRUE.,
+     +   NLPPC,  INLPPC, JNLPPC, CMISS)
+C
+C     COPY DATA INTO YFFT1, YFFT2 AND YMFFT FOR CCFF AND CCFFS
+C
+      CALL SCOPY(N, Y1, 1, YFFT1, 1)
+      CALL SCOPY(N, Y2, 1, YFFT2, 1)
+      CALL SCOPY(N, Y1, 1, YMFFT(1,1), 1)
+      CALL SCOPY(N, Y2, 1, YMFFT(1,2), 1)
+      CALL SCOPY(N, Y1, 1, YMFFT(1,3), 1)
+      CALL SCOPY(N, Y2, 1, YMFFT(1,4), 1)
+C
+C     TEST OF CCFF
+C
+      WRITE (IPRT,1100)
+      CALL CCFF(YFFT1, YFFT2, N, LYFFT, LDSTAK)
+C
+C     PRINT RETURNED RESULTS
+C
+      CALL CCFXP (.FALSE., LAGMAX, M, CCOV, ICCOV, JCCOV, .FALSE.,
+     +   NLPPC,  INLPPC, JNLPPC, CMISS)
+C
+C     TEST OF CCFFS
+C
+      WRITE (IPRT,1150)
+      CALL CCFFS(YMFFT, N, M, IYMFFT, LAGMAX, CCOV,
+     +   ICCOV, JCCOV, NPRT, LDSTAK)
+C
+C     PRINT RETURNED RESULTS
+C
+      CALL CCFXP (.TRUE., LAGMAX, M, CCOV, ICCOV, JCCOV, .FALSE.,
+     +   NLPPC,  INLPPC, JNLPPC, CMISS)
+C
+C     RESET YMMISS
+C
+      YMMISS(1) = Y1MISS
+      YMMISS(2) = Y2MISS
+      YMMISS(3) = Y1MISS
+      YMMISS(4) = Y2MISS
+C
+C     TEST OF CCFM WITH MISSING VALUES
+C
+      WRITE (IPRT,1070)
+      WRITE (IPRT, 1040)
+      CALL CCFM(Y1, Y1MISS, Y2, Y2MISS, N)
+C
+C     PRINT RETURNED RESULTS
+C
+      CALL CCFXP (.FALSE., LAGMAX, M, CCOV, ICCOV, JCCOV, .TRUE.,
+     +   NLPPC,  INLPPC, JNLPPC, CMISS)
+C
+C     TEST OF CCFMS WITH MISSING VALUES
+C
+      WRITE (IPRT,1140)
+      WRITE (IPRT, 1040)
+      CALL CCFMS(YM, YMMISS, N, M, IYM, LAGMAX, CCOV, CMISS,
+     +   ICCOV, JCCOV, NLPPC, INLPPC, JNLPPC, NPRT, LDSTAK)
+C
+C     PRINT RETURNED RESULTS
+C
+      CALL CCFXP (.TRUE., LAGMAX, M, CCOV, ICCOV, JCCOV, .TRUE.,
+     +   NLPPC,  INLPPC, JNLPPC, CMISS)
+C
+C     TEST PRINT CONTROL
+C
+      NPRT = 0
+C
+C     TEST OF CCFS
+C
+      WRITE (IPRT,1080)
+      WRITE (IPRT, 1020)
+      CALL CCFS(YM, N, M, LAGMAX, IYM, CCOV, ICCOV, JCCOV, NPRT,
+     +   LDSTAK)
+C
+C     PRINT RETURNED RESULTS
+C
+      CALL CCFXP (.TRUE., LAGMAX, M, CCOV, ICCOV, JCCOV, .FALSE.,
+     +   NLPPC,  INLPPC, JNLPPC, CMISS)
+C
+C     TEST OF CCFMS WITH MISSING VALUES
+C
+      WRITE (IPRT,1140)
+      WRITE (IPRT, 1040)
+      WRITE (IPRT, 1020)
+      CALL CCFMS(YM, YMMISS, N, M, IYM, LAGMAX, CCOV, CMISS,
+     +   ICCOV, JCCOV, NLPPC, INLPPC, JNLPPC, NPRT, LDSTAK)
+C
+C     PRINT RETURNED RESULTS
+C
+      CALL CCFXP (.TRUE., LAGMAX, M, CCOV, ICCOV, JCCOV, .TRUE.,
+     +   NLPPC,  INLPPC, JNLPPC, CMISS)
+C
+C     COPY DATA INTO YMFFT FOR CCFFS
+C
+      CALL SCOPY(N, Y1, 1, YMFFT(1,1), 1)
+      CALL SCOPY(N, Y2, 1, YMFFT(1,2), 1)
+      CALL SCOPY(N, Y1, 1, YMFFT(1,3), 1)
+      CALL SCOPY(N, Y2, 1, YMFFT(1,4), 1)
+C
+C     TEST OF CCFFS
+C
+      WRITE (IPRT,1150)
+      WRITE (IPRT, 1020)
+      CALL CCFFS(YMFFT, N, M, IYMFFT, LAGMAX, CCOV,
+     +   ICCOV, JCCOV, NPRT, LDSTAK)
+C
+C     PRINT RETURNED RESULTS
+C
+      CALL CCFXP (.TRUE., LAGMAX, M, CCOV, ICCOV, JCCOV, .FALSE.,
+     +   NLPPC,  INLPPC, JNLPPC, CMISS)
+C
+C     TEST LEAD/LAG MESSAGE
+C
+      NPRT = 1
+C
+      CALL SETRA(YMFFT, IYMFFT, M, N, 0.0E0)
+      YMFFT(5,1) = 1.0E0
+      YMFFT(15,2) = 1.0E0
+      YMFFT(5,3) = YMFFT(5,1)
+      YMFFT(15,4) = YMFFT(15,2)
+C
+C     TEST OF CCFFS
+C
+      WRITE (IPRT,1150)
+      WRITE (IPRT, 1020)
+      CALL CCFFS(YMFFT, N, M, IYMFFT, LAGMAX, CCOV,
+     +   ICCOV, JCCOV, NPRT, LDSTAK)
+C
+C     PRINT RETURNED RESULTS
+C
+      CALL CCFXP (.TRUE., LAGMAX, M, CCOV, ICCOV, JCCOV, .FALSE.,
+     +   NLPPC,  INLPPC, JNLPPC, CMISS)
+
+      GO TO (100, 200, 300, 400), ITEST
+C
+C     TEST MINIMUM PROBLEM SIZE
+C
+  100 ITEST = ITEST + 1
+      N = 3
+      LAGMAX = 1
+      LYFFT = 150
+      ICCOV = 30
+      JCCOV = 5
+      IYM = 150
+      M = 1
+      IYMFFT = 150
+      INLPPC = 30
+      JNLPPC = 5
+      NYD = 144
+      YMISS0 = 1.16E0
+      Y1MISS = 0.89E0
+      Y2MISS = 0.89E0
+C
+C     TEST ERROR HANDLING
+C
+  200 ITEST = ITEST + 1
+      N = 0
+      LAGMAX = 1
+      LYFFT = 0
+      ICCOV = 0
+      JCCOV = 0
+      IYM = 0
+      M = 0
+      IYMFFT = 0
+      INLPPC = 0
+      JNLPPC = 0
+      NYD = 0
+C
+C     TEST ERROR HANDLING
+C
+  300 ITEST = ITEST + 1
+      N = 100
+      LAGMAX = 100
+      LYFFT = 0
+      ICCOV = 0
+      JCCOV = 0
+      IYM = 0
+      M = 0
+      IYMFFT = 0
+      INLPPC = 0
+      JNLPPC = 0
+      NYD = 144
+      LDSTAK = 0
+
+  400 RETURN
+
+ 1020 FORMAT (18H OUTPUT SUPPRESSED)
+ 1040 FORMAT (20H WITH MISSING VALUES)
+ 1050 FORMAT (23H WITHOUT MISSING VALUES)
+ 1060 FORMAT ('1', 11HTEST OF CCF)
+ 1070 FORMAT ('1', 12HTEST OF CCFM)
+ 1080 FORMAT ('1', 12HTEST OF CCFS)
+ 1100 FORMAT ('1', 12HTEST OF CCFF)
+ 1140 FORMAT ('1', 13HTEST OF CCFMS)
+ 1150 FORMAT ('1', 13HTEST OF CCFFS)
+      END
+      SUBROUTINE XCORR(LDSTAK)
+
+c*********************************************************************72
+c
+cc XCORR exercises the correlation family routines.
+C
+c  Modified:
+c
+c    25 April 2006
+c
+c  Author:
+c
+c    Linda Mitchell,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      INTEGER
+     +   I,IPRT,IVCV,IYM,J,LDSMIN,M,N
+C
+C  LOCAL ARRAYS
+      REAL
+     +   VCV(4,4),YM(10,4),Z(10,4)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL CORR,CORRS,CORRXP,GENR,IPRINT,LDSCMP,MSGX,SETRA
+C
+C  INTRINSIC FUNCTIONS
+      INTRINSIC MAX
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     INTEGER I
+C         AN INDEX VARIABLE.
+C     INTEGER IERR
+C        COMMON FLAG INDICATING IF ANY ERRORS WERE DETECTED
+C        IF IERR = 0, THEN NO ERRORS WERE FOUND
+C     INTEGER IPRT
+C        THE OUTPUT LOGICAL UNIT NUMBER
+C     INTEGER IVCV
+C        THE ROW DIMENSION OF VCV
+C     INTEGER IYM
+C        THE ROW DIMENSION OF YM
+C     INTEGER J
+C        AN INDEX VARIABLE.
+C     INTEGER LDSMIN
+C        THE SMALLEST ACCEPTABLE SIZE OF COMMON AREA CSTAK
+C     INTEGER LDSTAK
+C        THE SIZE OF THE COMMON AREA CSTAK
+C     INTEGER M
+C        THE NUMBER OF VARIABLES
+C     INTEGER N
+C        THE NUMBER OF OBSERVATIONS
+C     REAL VCV(4,4)
+C        THE VARIANCE COVARIANCE MATRIX
+C     REAL YM(10,4)
+C        GENERAL DATA SET, FROM DRAPER AND SMITH
+C     REAL Z(10,4)
+C        TEST OBSERVATION MATRIX
+C
+C     THIS DATA SET TAKEN FROM
+C        APPLIED REGRESSION ANALYSIS
+C        DRAPER AND SMITH
+C        PAGE 216
+C
+      DATA     YM(1,1),   YM(1,2),   YM(1,3),   YM(1,4)
+     +    /      42.2E0,  11.2E0,  31.9E0, 167.1E0/
+      DATA     YM(2,1),   YM(2,2),   YM(2,3),   YM(2,4)
+     +    /      48.6E0,  10.6E0,  13.2E0, 174.4E0/
+      DATA     YM(3,1),   YM(3,2),   YM(3,3),   YM(3,4)
+     +    /      42.6E0,  10.6E0,  28.7E0, 160.8E0/
+      DATA     YM(4,1),   YM(4,2),   YM(4,3),   YM(4,4)
+     +    /      39.0E0,  10.4E0,  26.1E0, 162.0E0/
+      DATA     YM(5,1),   YM(5,2),   YM(5,3),   YM(5,4)
+     +    /      34.7E0,   9.3E0,  30.1E0, 140.8E0/
+      DATA     YM(6,1),   YM(6,2),   YM(6,3),   YM(6,4)
+     +    /      44.5E0,  10.8E0,   8.5E0, 174.6E0/
+      DATA     YM(7,1),   YM(7,2),   YM(7,3),   YM(7,4)
+     +    /      39.1E0,  10.7E0,  24.3E0, 163.7E0/
+      DATA     YM(8,1),   YM(8,2),   YM(8,3),   YM(8,4)
+     +    /      40.1E0,  10.0E0,  18.6E0, 174.5E0/
+      DATA     YM(9,1),   YM(9,2),   YM(9,3),   YM(9,4)
+     +    /      45.9E0,  12.0E0,  20.4E0, 185.7E0/
+C
+C     DETERMINE OUTPUT UNIT
+C
+      CALL IPRINT(IPRT)
+C
+      IVCV = 4
+      IYM = 10
+      M = 4
+      N = 9
+      IERR = 0
+C
+C**** TEST ROUTINES WITH CORRECT CALL STATEMENT *****
+C
+      WRITE (IPRT,1000)
+      WRITE (IPRT,1010)
+C
+C     TEST CORR
+C
+      WRITE (IPRT,1020)
+      WRITE (IPRT,1060)
+      CALL CORR(YM, N, M, IYM, LDSTAK)
+      CALL MSGX(0, IPRT)
+C
+C     TEST CORRS
+C
+C     PRINTOUT SUPPRESSED
+C
+      WRITE (IPRT,1030)
+      WRITE (IPRT,1040)
+      WRITE (IPRT,1060)
+      CALL CORRS(YM, N, M, IYM, LDSTAK, 0, VCV, IVCV)
+      CALL MSGX(0, IPRT)
+C
+C     PRINT STORED OUTPUT AND ZERO ARRAYS
+C
+      CALL CORRXP(M, VCV, IVCV, IPRT)
+C
+C     WITH PRINTOUT
+C
+      WRITE (IPRT,1050)
+      WRITE (IPRT,1060)
+      CALL CORRS(YM, N, M, IYM, LDSTAK, 1, VCV, IVCV)
+      CALL MSGX(0, IPRT)
+C
+C     PRINT STORED OUTPUT
+C
+      CALL CORRXP(M, VCV, IVCV, IPRT)
+C
+C**** SPECIAL 2 COLUMN MATRIX ****
+C
+      WRITE (IPRT,1070)
+      WRITE (IPRT,1060)
+      CALL CORR(YM, N, 2, IYM, LDSTAK)
+      CALL MSGX(0, IPRT)
+C
+C**** TEST WORK AREA REQUIREMENTS ****
+C
+C     TEST CORR
+C
+      CALL LDSCMP(12, 0, MAX(N,M), 0, 0, 0, 'S',
+     +   M*M + (MAX(N,M)+M+N*(M+3)+6*M*M), LDSMIN)
+      WRITE (IPRT,1090)
+      CALL CORR(YM, N, M, IYM, LDSMIN-1)
+      CALL MSGX(1, IPRT)
+      WRITE (IPRT,1100)
+      CALL CORR(YM, N, M, IYM, LDSMIN)
+      CALL MSGX(0, IPRT)
+C
+C     TEST CORRS WITH PRINTOUT
+C
+      CALL LDSCMP(12, 0, MAX(N,M), 0, 0, 0, 'S',
+     +   MAX(N,M)+M+N*(M+3)+6*M*M, LDSMIN)
+      WRITE (IPRT,1090)
+      CALL CORRS(YM, N, M, IYM, LDSMIN-1, 1, VCV, IVCV)
+      CALL MSGX(1, IPRT)
+      WRITE (IPRT,1100)
+      CALL CORRS(YM, N, M, IYM, LDSMIN, 1, VCV, IVCV)
+      CALL CORRXP(M, VCV, IVCV, IPRT)
+      CALL MSGX(0, IPRT)
+C
+C     TEST CORRS WITHOUT PRINTOUT
+C
+      CALL LDSCMP(12, 0, 0, 0, 0, 0, 'S', 0, LDSMIN)
+      WRITE (IPRT,1090)
+      CALL CORRS(YM, N, M, IYM, LDSMIN-1, 0, VCV, IVCV)
+      CALL MSGX(1, IPRT)
+      WRITE (IPRT,1100)
+      CALL CORRS(YM, N, M, IYM, LDSMIN, 0, VCV, IVCV)
+      CALL CORRXP(M, VCV, IVCV, IPRT)
+      CALL MSGX(0, IPRT)
+C
+C**** NUMBER OF VARIABLES LESS THAN 2 ****
+C
+      WRITE (IPRT,1110)
+C
+C     TEST CORR
+C
+      CALL CORR(YM, N, 1, IYM, LDSTAK)
+      CALL MSGX(1, IPRT)
+C
+C     TEST CORRS
+C
+      CALL CORRS(YM, N, 1, IYM, LDSTAK, 1, VCV, IVCV)
+      CALL MSGX(1, IPRT)
+C
+C**** NUMBER OF OBSERVATIONS LESS THAN 3 ****
+C
+      WRITE (IPRT,1120)
+C
+C     TEST CORR
+C
+      CALL CORR(YM, 2, 4, IYM, LDSTAK)
+      CALL MSGX(1, IPRT)
+C
+C     TEST CORRS
+C
+      CALL CORRS(YM, 2, 4, IYM, LDSTAK, 1, VCV, IVCV)
+      CALL MSGX(1, IPRT)
+C
+C**** OBSERVATION MATRIX DIMENSIONED LESS THAN N ****
+C
+      WRITE (IPRT,1150)
+C
+C     TEST CORR
+C
+      CALL CORR(YM, N, M, 8, LDSTAK)
+      CALL MSGX(1, IPRT)
+C
+C     TEST CORRS
+C
+      CALL CORRS(YM, N, M, 8, LDSTAK, 1, VCV, IVCV)
+      CALL MSGX(1, IPRT)
+C
+C**** VCV MATRIX DIMENSIONED LESS THAN M ****
+C
+      WRITE (IPRT,1130)
+      CALL CORRS(YM, N, M, IYM, LDSTAK, 1, VCV, 2)
+      CALL MSGX(1, IPRT)
+C
+C**** ALL OBSERVATIONS ON A SINGLE VARIABLE EQUAL TO ZERO ****
+C
+      WRITE (IPRT,1140)
+      CALL SETRA(Z, 10, 4, 10, 0.0E0)
+      CALL CORR(Z, 9, 4, 10, LDSTAK)
+      CALL MSGX(1, IPRT)
+      CALL CORRS(Z, 9, 4, 10, LDSTAK, 1, VCV, IVCV)
+      CALL CORRXP(M, VCV, IVCV, IPRT)
+      CALL MSGX(1, IPRT)
+C
+      DO 10 I=1,10
+         Z(I,1) = I
+         Z(I,2) = 0.0E0
+   10 CONTINUE
+      CALL CORR(Z, 10, 4, 10, LDSTAK)
+      CALL MSGX(1, IPRT)
+C
+C**** ARRAY FILLED WITH A SINGLE VALUE ****
+C
+      WRITE (IPRT,1160)
+      CALL SETRA(Z, 10, 4, 10, 4.0E0)
+      CALL CORR(Z, 4, 10, 4, LDSTAK)
+      CALL MSGX(1, IPRT)
+C
+C**** 2 COLUMNS THE SAME ****
+C
+      DO 20 I=1,3
+         CALL GENR(Z(1,I), 5, 5.0E0*I, 5.0E0*I)
+   20 CONTINUE
+      DO 30 I=1,5
+         Z(I,4) = Z(I,3)
+   30 CONTINUE
+      WRITE (IPRT,1170)
+      CALL CORR(Z, 5, 4, 10, LDSTAK)
+      CALL MSGX(1, IPRT)
+C
+C**** 2 COLUMNS INVERSELY RELATED ****
+C
+      J = 5
+      DO 40 I=1,5
+         J = J - 1
+         Z(J,4) = Z(I,3)
+   40 CONTINUE
+      WRITE (IPRT,1170)
+      CALL CORR(Z, 5, 4, 10, LDSTAK)
+      CALL MSGX(1, IPRT)
+
+      RETURN
+
+ 1000 FORMAT('1')
+ 1010 FORMAT(' ****TEST ROUTINES WITH CORRECT CALL****')
+ 1020 FORMAT(' TEST OF CORR')
+ 1030 FORMAT('1TEST OF CORRS')
+ 1040 FORMAT(' PRINTOUT SUPRESSED.')
+ 1050 FORMAT('1PRINTOUT NOT SUPRESSED.')
+ 1060 FORMAT(' DRAPER AND SMITH DATA SET (PAGE 216).')
+ 1070 FORMAT('1****SPECIAL CASE 2 COLUMN MATRIX****')
+ 1090 FORMAT('1****TEST WITH INSUFFICIENT WORK AREA****')
+ 1100 FORMAT('1****TEST WITH EXACTLY THE RIGHT AMOUNT OF WORK AREA****')
+ 1110 FORMAT('1****NUMBER OF VARIABLES LESS THAN 2****')
+ 1120 FORMAT(' ****NUMBER OF OBSERVATIONS LESS THAN 3****')
+ 1130 FORMAT(' ****INADEQUATE SPACE IN STORAGE ARRAYS****')
+ 1140 FORMAT('1****ALL OBSERVATIONS ON A VARIABLE EQUAL TO ZERO****')
+ 1150 FORMAT(' ****OBSERVATION MATRIX DIMENSIONED LESS THAN NUMBER',
+     +       ' OF OBSERVATIONS DESIGNATED****')
+ 1160 FORMAT('1****ARRAY CONTAINING A SINGLE VALUE****')
+ 1170 FORMAT('1****2 COLUMNS RELATED****')
+      END
+      SUBROUTINE XDCKLD(LDSTAK)
+
+c*********************************************************************72
+c
+cc XDCKLD tests the derivative checking routines.
+C
+c  Modified:
+c
+c    25 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      REAL
+     +   DELTA
+      INTEGER
+     +   I,IPRT,IXM,LDSMIN,M,N,NETA,NPAR,NPRT,NROW,NTAU,NTEST
+C
+C  LOCAL ARRAYS
+      REAL
+     +   PAR(10),SCALE(10),XM(200,2)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL DCKLS,DCKLS1,DCKLSC,DRV4A,IPRINT,LDSCMP,MDL4
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     REAL DELTA
+C        *
+C     EXTERNAL DRV4A
+C        THE NAME OF THE USER SUPPLIED SUBROUTINE WHICH COMPUTES THE
+C        ANALYTIC DERIVATIVES (JACOBIAN MATRIX) OF THE MODEL.
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     INTEGER I
+C        AN INDEX VARIABLE.
+C     INTEGER IERR
+C        THE INTEGER VALUE RETURNED BY THIS ROUTINE DESIGNATING
+C        WHETHER ANY ERRORS WERE DETECTED IN THE PARAMETER LIST.
+C        IF IERR .EQ. 0, NO ERRORS WERE DETECTED.
+C        IF IERR .EQ. 1, ERRORS WERE DETECTED.
+C     INTEGER IPRT
+C        THE UNIT NUMBER FOR PRINTED OUTPUT.
+C     INTEGER IXM
+C        THE FIRST DIMENSION OF THE INDEPENDENT VARIABLE ARRAY XM.
+C     INTEGER LDSMIN
+C        THE MINIMUM LENGTH OF THE ARRAY DSTAK ALLOWED.
+C     INTEGER LDSTAK
+C        THE LENGTH OF THE ARRAY DSTAK.
+C     INTEGER M
+C        THE NUMBER OF INDEPENDENT VARIABLES.
+C     EXTERNAL MDL4
+C        THE NAME OF THE USER SUPPLIED SUBROUTINE WHICH COMPUTES THE
+C        PREDICTED VALUES BASED ON THE CURRENT PARAMETER ESTIMATES.
+C     INTEGER N
+C        THE NUMBER OF OBSERVATIONS OF DATA.
+C     INTEGER NETA
+C        THE NUMBER OF RELIABLE DIGITS IN THE MODEL.
+C     INTEGER NPAR
+C        THE NUMBER OF UNKNOWN PARAMETERS IN THE MODEL.
+C     INTEGER NPRT
+C        THE INDICATOR VARIABLE USED TO SPECIFY WHETHER OR NOT
+C        PRINTED OUTPUT IS TO BE PROVIDED, WHERE IF THE VALUE OF
+C        NPRT IS ZERO, NO PRINTED OUTPUT IS GIVEN.
+C     INTEGER NROW
+C        THE NUMBER OF THE ROW OF THE INDEPENDENT VARIABLE ARRAY AT
+C        WHICH THE DERIVATIVE IS TO BE CHECKED.
+C     INTEGER NTAU
+C        THE NUMBER OF DIGITS OF AGREEMENT REQUIRED BETWEEN THE
+C        NUMERICAL DERIVATIVES AND THE USER SUPPLIED DERIVATIVES.
+C     INTEGER NTEST
+C        THE NUMBER OF THE CURRENT TEST.
+C     REAL PAR(10)
+C        THE ARRAY IN WHICH THE CURRENT ESTIMATES OF THE UNKNOWN
+C        PARAMETERS ARE STORED.
+C     REAL SCALE(10)
+C        A DUMMY ARRAY, INDICATING USE OF DEFAULT VALUES FOR
+C        THE TYPICAL SIZE OF THE PARAMETERS.
+C     REAL XM(200,2)
+C        THE ARRAY IN WHICH ONE ROW OF THE INDEPENDENT VARIABLE ARRAY
+C        IS STORED.
+C
+      CALL IPRINT(IPRT)
+C
+C     SET PARAMETER VALUES
+C
+      CALL DCKLS1(N, M, IXM, PAR, NPAR, NETA, NTAU, NROW, SCALE, NPRT)
+      CALL LDSCMP(5, 0, 2*NPAR+1, 0, 0, 0, 'S',
+     +            N*NPAR+NPAR+N, LDSMIN)
+C
+      IF (LDSMIN.GT.LDSTAK) THEN
+         WRITE (IPRT, 1020) LDSMIN
+         RETURN
+      END IF
+C
+C     CREATE INDEPENDENT VARIABLE
+C
+      DELTA = 0.0625E0
+      XM(1,1) = 0.0E0
+      DO 10 I=2,N
+         XM(I,1) = XM(I-1,1) + DELTA
+   10 CONTINUE
+C
+      NTEST = 0
+C
+C
+C
+C     CHECK RESULTS FROM VALID CALLS
+C
+C     SIMPLE EXAMPLE
+C
+C     CHECK RESULT FOR CORRECTLY COMPUTED DERIVATIVE
+C
+      CALL DCKLS1(N, M, IXM, PAR, NPAR, NETA, NTAU, NROW, SCALE, NPRT)
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1130) NTEST
+      WRITE (IPRT,1100)
+      WRITE (IPRT,1040)
+      WRITE (IPRT,1000)
+      IERR = -1
+      CALL DCKLS(XM, N, M, IXM, MDL4, DRV4A, PAR, NPAR, LDSMIN)
+      WRITE (IPRT,1050) IERR
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1130) NTEST
+      WRITE (IPRT,1100)
+      WRITE (IPRT,1040)
+      WRITE (IPRT,1060) NETA, NTAU, SCALE(1), NROW, NPRT
+      WRITE (IPRT,1010)
+      IERR = -1
+      CALL DCKLSC(XM, N, M, IXM, MDL4, DRV4A, PAR, NPAR, LDSMIN, NETA,
+     +   NTAU, SCALE, NROW, NPRT)
+      WRITE (IPRT,1050) IERR
+      WRITE (IPRT,1140) NETA, NTAU, SCALE(1), NROW, NPRT
+
+      RETURN
+
+ 1000 FORMAT (15H TEST OF DCKLS )
+ 1010 FORMAT (15H TEST OF DCKLSC)
+ 1020 FORMAT (45H1 *** LDSTAK MUST BE GREATER THAN OR EQUAL TO , I6)
+ 1040 FORMAT (15H SIMPLE EXAMPLE)
+ 1050 FORMAT (29H ***** RETURNED RESULTS *****, 5X, 15H (-1 INDICATES ,
+     +   39HVALUE NOT CHANGED BY CALLED SUBROUTINE)//9H IERR IS , I3)
+ 1060 FORMAT (19H INPUT   -  NETA = , I5, 9H, NTAU = , I5,
+     +   13H, SCALE(1) = , G15.8, 9H, NROW = , I5, 9H, NPRT = , I5)
+ 1100 FORMAT (27H CORRECTLY CODED DERIVATIVE)
+ 1130 FORMAT (43H1DERIVATIVE CHECKING SUBROUTINE TEST NUMBER, I5/)
+ 1140 FORMAT (19H OUTPUT  -  NETA = , I5, 9H, NTAU = , I5,
+     +   13H, SCALE(1) = , G15.8, 9H, NROW = , I5, 9H, NPRT = , I5//)
+      END
+      SUBROUTINE XDCKLE(LDSTAK)
+
+c*********************************************************************72
+c
+cc XDCKLE tests the derivative checking routines.
+C
+c  Modified:
+c
+c    25 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      REAL
+     +   DELTA
+      INTEGER
+     +   I,IPRT,IXM,LDSMIN,M,N,NETA,NPAR,NPRT,NROW,NTAU,NTEST
+C
+C  LOCAL ARRAYS
+      REAL
+     +   PAR(10),SCALE(10),XM(200,2)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL DCKLS,DCKLS1,DCKLSC,DRV4A,DRV4B,IPRINT,LDSCMP,MDL4
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     REAL DELTA
+C        *
+C     EXTERNAL DRV4A, DRV4B
+C        THE NAME OF THE USER SUPPLIED SUBROUTINE WHICH COMPUTES THE
+C        ANALYTIC DERIVATIVES (JACOBIAN MATRIX) OF THE MODEL.
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     INTEGER I
+C        AN INDEX VARIABLE.
+C     INTEGER IERR
+C        THE INTEGER VALUE RETURNED BY THIS ROUTINE DESIGNATING
+C        WHETHER ANY ERRORS WERE DETECTED IN THE PARAMETER LIST.
+C        IF IERR .EQ. 0, NO ERRORS WERE DETECTED.
+C        IF IERR .EQ. 1, ERRORS WERE DETECTED.
+C     INTEGER IPRT
+C        THE UNIT NUMBER FOR PRINTED OUTPUT.
+C     INTEGER IXM
+C        THE FIRST DIMENSION OF THE INDEPENDENT VARIABLE ARRAY XM.
+C     INTEGER LDSMIN
+C        THE MINIMUM LENGTH OF THE ARRAY DSTAK ALLOWED.
+C     INTEGER LDSTAK
+C        THE LENGTH OF THE ARRAY DSTAK.
+C     INTEGER M
+C        THE NUMBER OF INDEPENDENT VARIABLES.
+C     EXTERNAL MDL4
+C        THE NAME OF THE USER SUPPLIED SUBROUTINE WHICH COMPUTES THE
+C        PREDICTED VALUES BASED ON THE CURRENT PARAMETER ESTIMATES.
+C     INTEGER N
+C        THE NUMBER OF OBSERVATIONS OF DATA.
+C     INTEGER NETA
+C        THE NUMBER OF RELIABLE DIGITS IN THE MODEL.
+C     INTEGER NPAR
+C        THE NUMBER OF UNKNOWN PARAMETERS IN THE MODEL.
+C     INTEGER NPRT
+C        THE INDICATOR VARIABLE USED TO SPECIFY WHETHER OR NOT
+C        PRINTED OUTPUT IS TO BE PROVIDED, WHERE IF THE VALUE OF
+C        NPRT IS ZERO, NO PRINTED OUTPUT IS GIVEN.
+C     INTEGER NROW
+C        THE NUMBER OF THE ROW OF THE INDEPENDENT VARIABLE ARRAY AT
+C        WHICH THE DERIVATIVE IS TO BE CHECKED.
+C     INTEGER NTAU
+C        THE NUMBER OF DIGITS OF AGREEMENT REQUIRED BETWEEN THE
+C        NUMERICAL DERIVATIVES AND THE USER SUPPLIED DERIVATIVES.
+C     INTEGER NTEST
+C        THE NUMBER OF THE CURRENT TEST.
+C     REAL PAR(10)
+C        THE ARRAY IN WHICH THE CURRENT ESTIMATES OF THE UNKNOWN
+C        PARAMETERS ARE STORED.
+C     REAL SCALE(10)
+C        A DUMMY ARRAY, INDICATING USE OF DEFAULT VALUES FOR
+C        THE TYPICAL SIZE OF THE PARAMETERS.
+C     REAL XM(200,2)
+C        THE ARRAY IN WHICH ONE ROW OF THE INDEPENDENT VARIABLE ARRAY
+C        IS STORED.
+C
+      CALL IPRINT(IPRT)
+C
+C     SET PARAMETER VALUES
+C
+      CALL DCKLS1(N, M, IXM, PAR, NPAR, NETA, NTAU, NROW, SCALE, NPRT)
+      CALL LDSCMP(5, 0, 2*NPAR+1, 0, 0, 0, 'S',
+     +            N*NPAR+NPAR+N, LDSMIN)
+
+      IF (LDSMIN.LE.LDSTAK) GO TO 5
+
+      WRITE (IPRT, 1040) LDSMIN
+      RETURN
+
+    5 CONTINUE
+C
+C     CREATE INDEPENDENT VARIABLE
+C
+      DELTA = 0.0625E0
+      XM(1,1) = 0.0E0
+      DO 10 I=2,N
+         XM(I,1) = XM(I-1,1) + DELTA
+   10 CONTINUE
+
+      NTEST = 0
+C
+C     CHECK ERROR HANDLING
+C
+C        TEST 1  -  MISCELANEOUS ERROR CHECKING
+C
+      N = -5
+      M = -5
+      IXM = -10
+      NPAR = -10
+
+      NTEST = NTEST + 1
+      WRITE (IPRT,1130) NTEST
+      WRITE (IPRT,1020)
+      WRITE (IPRT,1000)
+      IERR = -1
+      CALL DCKLS(XM, N, M, IXM, MDL4, DRV4A, PAR, NPAR, LDSTAK)
+      WRITE (IPRT,1050) IERR
+      WRITE (IPRT,1010)
+      IERR = -1
+      CALL DCKLSC(XM, N, M, IXM, MDL4, DRV4A, PAR, NPAR, LDSTAK, NETA,
+     +   NTAU, SCALE, NROW, NPRT)
+      WRITE (IPRT,1050) IERR
+C
+C        TEST 2  -  MISCELANEOUS ERROR CHECKING (CONTINUED)
+C
+      CALL DCKLS1(N, M, IXM, PAR, NPAR, NETA, NTAU, NROW, SCALE, NPRT)
+      SCALE(2) = 0.0E0
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1130) NTEST
+      WRITE (IPRT,1030)
+      WRITE (IPRT,1000)
+      IERR = -1
+      CALL DCKLS(XM, N, M, IXM, MDL4, DRV4A, PAR, NPAR, LDSMIN-1)
+      WRITE (IPRT,1050) IERR
+      WRITE (IPRT,1010)
+      IERR = -1
+      CALL DCKLSC(XM, N, M, IXM, MDL4, DRV4A, PAR, NPAR, LDSMIN-1,
+     +   NETA, NTAU, SCALE, NROW, NPRT)
+      WRITE (IPRT,1050) IERR
+
+      RETURN
+
+ 1000 FORMAT (15H TEST OF DCKLS )
+ 1010 FORMAT (15H TEST OF DCKLSC)
+ 1020 FORMAT (32H CHECK ERROR HANDLING  -  TEST 1)
+ 1030 FORMAT (32H CHECK ERROR HANDLING  -  TEST 2)
+ 1040 FORMAT (45H1 *** LDSTAK MUST BE GREATER THAN OR EQUAL TO , I6)
+ 1050 FORMAT (29H ***** RETURNED RESULTS *****, 5X, 15H (-1 INDICATES ,
+     +   39HVALUE NOT CHANGED BY CALLED SUBROUTINE)//9H IERR IS , I3)
+ 1130 FORMAT (43H1DERIVATIVE CHECKING SUBROUTINE TEST NUMBER, I5)
+      END
+      SUBROUTINE XDCKLT(LDSTAK)
+
+c*********************************************************************72
+c
+cc XDCKLT tests derivative checking routines.
+C
+c  Modified:
+c
+c    25 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      REAL
+     +   DELTA
+      INTEGER
+     +   I,IPRT,IXM,J,JSTOP,LDSMIN,M,N,NETA,NPAR,NPRT,NROW,NTAU,
+     +   NTEST
+C
+C  LOCAL ARRAYS
+      REAL
+     +   PAR(10),SCALE(10),XM(200,2)
+      INTEGER
+     +   NETTST(6),NROTST(5),NTATST(6)
+C
+C  EXTERNAL FUNCTIONS
+      REAL
+     +   R1MACH
+      EXTERNAL R1MACH
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL DCKLS,DCKLS1,DCKLSC,DRV4A,DRV4B,IPRINT,LDSCMP,MDL4,SETRV
+C
+C  INTRINSIC FUNCTIONS
+      INTRINSIC LOG10
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     REAL DELTA
+C        *
+C     EXTERNAL DRV4A, DRV4B
+C        THE NAME OF THE USER SUPPLIED SUBROUTINE WHICH COMPUTES THE
+C        ANALYTIC DERIVATIVES (JACOBIAN MATRIX) OF THE MODEL.
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     INTEGER I
+C        AN INDEX VARIABLE.
+C     INTEGER IERR
+C        THE INTEGER VALUE RETURNED BY THIS ROUTINE DESIGNATING
+C        WHETHER ANY ERRORS WERE DETECTED IN THE PARAMETER LIST.
+C        IF IERR .EQ. 0, NO ERRORS WERE DETECTED.
+C        IF IERR .EQ. 1, ERRORS WERE DETECTED.
+C     INTEGER IPRT
+C        THE UNIT NUMBER FOR PRINTED OUTPUT.
+C     INTEGER IXM
+C        THE FIRST DIMENSION OF THE INDEPENDENT VARIABLE ARRAY XM.
+C     INTEGER J, JSTOP
+C        *
+C     INTEGER LDSMIN
+C        THE MINIMUM LENGTH OF THE ARRAY DSTAK ALLOWED.
+C     INTEGER LDSTAK
+C        THE LENGTH OF THE ARRAY DSTAK.
+C     INTEGER M
+C        THE NUMBER OF INDEPENDENT VARIABLES.
+C     EXTERNAL MDL4
+C        THE NAME OF THE USER SUPPLIED SUBROUTINE WHICH COMPUTES THE
+C        PREDICTED VALUES BASED ON THE CURRENT PARAMETER ESTIMATES.
+C     INTEGER N
+C        THE NUMBER OF OBSERVATIONS OF DATA.
+C     INTEGER NETA
+C        THE NUMBER OF RELIABLE DIGITS IN THE MODEL.
+C     INTEGER NETTST(6)
+C        VARIOUS TEST VALUES FOR NETA.
+C     INTEGER NPAR
+C        THE NUMBER OF UNKNOWN PARAMETERS IN THE MODEL.
+C     INTEGER NPRT
+C        THE INDICATOR VARIABLE USED TO SPECIFY WHETHER OR NOT
+C        PRINTED OUTPUT IS TO BE PROVIDED, WHERE IF THE VALUE OF
+C        NPRT IS ZERO, NO PRINTED OUTPUT IS GIVEN.
+C     INTEGER NROTST(5)
+C        VARIOUS TEST VALUES FOR NROW.
+C     INTEGER NROW
+C        THE NUMBER OF THE ROW OF THE INDEPENDENT VARIABLE ARRAY AT
+C        WHICH THE DERIVATIVE IS TO BE CHECKED.
+C     INTEGER NTATST(6)
+C         VARIOUS TEST VALUES FOR NTAU.
+C     INTEGER NTAU
+C        THE NUMBER OF DIGITS OF AGREEMENT REQUIRED BETWEEN THE
+C        NUMERICAL DERIVATIVES AND THE USER SUPPLIED DERIVATIVES.
+C     INTEGER NTEST
+C        THE NUMBER OF THE CURRENT TEST.
+C     REAL PAR(10)
+C        THE ARRAY IN WHICH THE CURRENT ESTIMATES OF THE UNKNOWN
+C        PARAMETERS ARE STORED.
+C     REAL SCALE(10)
+C        A DUMMY ARRAY, INDICATING USE OF DEFAULT VALUES FOR
+C        THE TYPICAL SIZE OF THE PARAMETERS.
+C     REAL XM(200,2)
+C        THE ARRAY IN WHICH ONE ROW OF THE INDEPENDENT VARIABLE ARRAY
+C        IS STORED.
+C
+      CALL IPRINT(IPRT)
+C
+C     SET PARAMETER VALUES
+C
+      CALL DCKLS1(N, M, IXM, PAR, NPAR, NETA, NTAU, NROW, SCALE, NPRT)
+      CALL LDSCMP(5, 0, 2*NPAR+1, 0, 0, 0, 'S',
+     +            N*NPAR+NPAR+N, LDSMIN)
+
+      IF (LDSMIN.LE.LDSTAK) GO TO 5
+
+      WRITE (IPRT, 1020) LDSMIN
+      RETURN
+
+    5 CONTINUE
+C
+C     CREATE INDEPENDENT VARIABLE
+C
+      DELTA = 0.0625E0
+      XM(1,1) = 0.0E0
+      DO 10 I=2,N
+         XM(I,1) = XM(I-1,1) + DELTA
+   10 CONTINUE
+
+      NTEST = 0
+C
+C
+C     TEST VARIOUS VALUES OF NETA AND NTAU
+C
+      SCALE(1) = 0.0E0
+C
+      NETTST(1) = -1
+      NETTST(2) = 0
+      NETTST(3) = 1
+      NETTST(4) = 2
+
+      NETTST(5) = -LOG10(R1MACH(4))
+      NETTST(6) = NETTST(5) + 1
+
+      NTATST(1) = -1
+      NTATST(2) = 0
+      NTATST(3) = 1
+
+      JSTOP = 3
+
+      DO 30 I=1,6
+
+         NTATST(4) = NETTST(I)/4
+         IF (I.LE.5) THEN
+            NTATST(5) = (NETTST(I)-1)/2
+            NTATST(6) = NTATST(5) + 1
+         END IF
+
+         IF (I.EQ.5) JSTOP = 6
+
+         DO 20 J=1,JSTOP
+
+            NTEST = NTEST + 1
+            WRITE (IPRT,1130) NTEST
+            WRITE (IPRT,1100)
+            WRITE (IPRT,1040)
+            WRITE (IPRT,1060) NETTST(I), NTATST(J), SCALE(1), NROW, NPRT
+            WRITE (IPRT,1000)
+            IERR = -1
+            CALL DCKLSC(XM, N, M, IXM, MDL4, DRV4A, PAR, NPAR, LDSTAK,
+     +         NETTST(I), NTATST(J), SCALE, NROW, NPRT)
+            WRITE (IPRT,1050) IERR
+            WRITE (IPRT,1140) NETTST(I), NTATST(J), SCALE(1), NROW, NPRT
+
+   20    CONTINUE
+
+   30 CONTINUE
+C
+C     SUPPRESS OUTPUT
+C
+      NPRT = 0
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1130) NTEST
+      WRITE (IPRT,1100)
+      WRITE (IPRT,1040)
+      WRITE (IPRT,1060) NETA, NTAU, SCALE(1), NROW, NPRT
+      WRITE (IPRT,1010)
+      IERR = -1
+      CALL DCKLSC(XM, N, M, IXM, MDL4, DRV4A, PAR, NPAR, LDSTAK, NETA,
+     +   NTAU, SCALE, NROW, NPRT)
+      WRITE (IPRT,1050) IERR
+      WRITE (IPRT,1140) NETA, NTAU, SCALE(1), NROW, NPRT
+C
+C     LARGE CALCULATION ERROR PROBLEM
+C
+      CALL DCKLS1(N, M, IXM, PAR, NPAR, NETA, NTAU, NROW, SCALE, NPRT)
+      PAR(3) = 10.0E0**NTATST(5)
+      SCALE(1) = 0.0E0
+      NROW = 51
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1130) NTEST
+      WRITE (IPRT,1100)
+      WRITE (IPRT,1070)
+      WRITE (IPRT,1080)
+      WRITE (IPRT,1060) NETA, NTAU, SCALE(1), NROW, NPRT
+      WRITE (IPRT,1010)
+      IERR = -1
+      CALL DCKLSC(XM, N, M, IXM, MDL4, DRV4A, PAR, NPAR, LDSTAK, NETA,
+     +   NTAU, SCALE, NROW, NPRT)
+      WRITE (IPRT,1050) IERR
+      WRITE (IPRT,1140) NETA, NTAU, SCALE(1), NROW, NPRT
+C
+C     NEARLY ZERO DERIVATIVE
+C
+      NROW = 50
+
+      NTEST = NTEST + 1
+      WRITE (IPRT,1130) NTEST
+      WRITE (IPRT,1100)
+      WRITE (IPRT,1070)
+      WRITE (IPRT,1090)
+      WRITE (IPRT,1060) NETA, NTAU, SCALE(1), NROW, NPRT
+      WRITE (IPRT,1010)
+      IERR = -1
+      CALL DCKLSC(XM, N, M, IXM, MDL4, DRV4A, PAR, NPAR, LDSTAK, NETA,
+     +   NTAU, SCALE, NROW, NPRT)
+      WRITE (IPRT,1050) IERR
+      WRITE (IPRT,1140) NETA, NTAU, SCALE(1), NROW, NPRT
+C
+C     INCORRECTLY CODED DERIVATIVE
+C
+C     SIMPLE EXAMPLE
+C
+C     SET PARAMETER VALUES
+C
+      CALL DCKLS1(N, M, IXM, PAR, NPAR, NETA, NTAU, NROW, SCALE, NPRT)
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1130) NTEST
+      WRITE (IPRT,1110)
+      WRITE (IPRT,1040)
+      WRITE (IPRT,1000)
+      IERR = -1
+      CALL DCKLS(XM, N, M, IXM, MDL4, DRV4B, PAR, NPAR, LDSTAK)
+      WRITE (IPRT,1050) IERR
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1130) NTEST
+      WRITE (IPRT,1110)
+      WRITE (IPRT,1040)
+      WRITE (IPRT,1060) NETA, NTAU, SCALE(1), NROW, NPRT
+      WRITE (IPRT,1010)
+      IERR = -1
+      CALL DCKLSC(XM, N, M, IXM, MDL4, DRV4B, PAR, NPAR, LDSTAK, NETA,
+     +   NTAU, SCALE, NROW, NPRT)
+      WRITE (IPRT,1050) IERR
+      WRITE (IPRT,1140) NETA, NTAU, SCALE(1), NROW, NPRT
+C
+C     SUPPRESS OUTPUT
+C
+      NPRT = 0
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1130) NTEST
+      WRITE (IPRT,1110)
+      WRITE (IPRT,1040)
+      WRITE (IPRT,1060) NETA, NTAU, SCALE(1), NROW, NPRT
+      WRITE (IPRT,1010)
+      IERR = -1
+      CALL DCKLSC(XM, N, M, IXM, MDL4, DRV4B, PAR, NPAR, LDSTAK, NETA,
+     +   NTAU, SCALE, NROW, NPRT)
+      WRITE (IPRT,1050) IERR
+      WRITE (IPRT,1140) NETA, NTAU, SCALE(1), NROW, NPRT
+C
+C     LARGE CALCULATION ERROR PROBLEM
+C
+      CALL DCKLS1(N, M, IXM, PAR, NPAR, NETA, NTAU, NROW, SCALE, NPRT)
+
+      PAR(3) = 10.0E0**NTATST(5)
+      NROW = 26
+
+      NTEST = NTEST + 1
+      WRITE (IPRT,1130) NTEST
+      WRITE (IPRT,1110)
+      WRITE (IPRT,1070)
+      WRITE (IPRT,1060) NETA, NTAU, SCALE(1), NROW, NPRT
+      WRITE (IPRT,1010)
+      IERR = -1
+      CALL DCKLSC(XM, N, M, IXM, MDL4, DRV4B, PAR, NPAR, LDSTAK, NETA,
+     +   NTAU, SCALE, NROW, NPRT)
+      WRITE (IPRT,1050) IERR
+      WRITE (IPRT,1140) NETA, NTAU, SCALE(1), NROW, NPRT
+
+      PAR(4) = 0.75E0
+      NROW = 1
+
+      NTEST = NTEST + 1
+      WRITE (IPRT,1130) NTEST
+      WRITE (IPRT,1110)
+      WRITE (IPRT,1070)
+      WRITE (IPRT,1060) NETA, NTAU, SCALE(1), NROW, NPRT
+      WRITE (IPRT,1010)
+      IERR = -1
+      CALL DCKLSC(XM, N, M, IXM, MDL4, DRV4B, PAR, NPAR, LDSTAK, NETA,
+     +   NTAU, SCALE, NROW, NPRT)
+      WRITE (IPRT,1050) IERR
+      WRITE (IPRT,1140) NETA, NTAU, SCALE(1), NROW, NPRT
+C
+C     CHECK VARIOUS VALUES OF NROW
+C
+      CALL DCKLS1(N, M, IXM, PAR, NPAR, NETA, NTAU, NROW, SCALE, NPRT)
+
+      CALL SETRV(XM(1,1), N, 0.0E0)
+      NROTST(1) = -1
+      NROTST(2) = 0
+      NROTST(3) = 1
+      NROTST(4) = N
+      NROTST(5) = N + 1
+
+      DO 40 I=1,5
+
+         NTEST = NTEST + 1
+         WRITE (IPRT,1130) NTEST
+         WRITE (IPRT,1110)
+         WRITE (IPRT,1120)
+         WRITE (IPRT,1060) NETA, NTAU, SCALE(1), NROTST(I), NPRT
+         WRITE (IPRT,1010)
+         IERR = -1
+         CALL DCKLSC(XM, N, M, IXM, MDL4, DRV4B, PAR, NPAR, LDSTAK,
+     +      NETA, NTAU, SCALE, NROTST(I), NPRT)
+         WRITE (IPRT,1050) IERR
+         WRITE (IPRT,1140) NETA, NTAU, SCALE(1), NROTST(I), NPRT
+
+   40 CONTINUE
+
+      RETURN
+
+ 1000 FORMAT (15H TEST OF DCKLS )
+ 1010 FORMAT (15H TEST OF DCKLSC)
+ 1020 FORMAT (45H1 *** LDSTAK MUST BE GREATER THAN OR EQUAL TO , I6)
+ 1040 FORMAT (15H SIMPLE EXAMPLE)
+ 1050 FORMAT (29H ***** RETURNED RESULTS *****, 5X, 15H (-1 INDICATES ,
+     +   39HVALUE NOT CHANGED BY CALLED SUBROUTINE)//9H IERR IS , I3)
+ 1060 FORMAT (19H INPUT   -  NETA = , I5, 9H, NTAU = , I5,
+     +   13H, SCALE(1) = , G15.8, 9H, NROW = , I5, 9H, NPRT = , I5)
+ 1070 FORMAT (32H LARGE CALCULATION ERROR PROBLEM)
+ 1080 FORMAT (16H ZERO DERIVATIVE)
+ 1090 FORMAT (23H NEARLY ZERO DERIVATIVE)
+ 1100 FORMAT (27H CORRECTLY CODED DERIVATIVE)
+ 1110 FORMAT (' INCORRECTLY CODED DERIVATIVE FOR PARAMETERS 1, 2 AND 4')
+ 1120 FORMAT (' ALL INDEPENDENT VARIABLES EQUAL TO ZERO')
+ 1130 FORMAT (43H1DERIVATIVE CHECKING SUBROUTINE TEST NUMBER, I5)
+ 1140 FORMAT (19H OUTPUT  -  NETA = , I5, 9H, NTAU = , I5,
+     +   13H, SCALE(1) = , G15.8, 9H, NROW = , I5, 9H, NPRT = , I5//)
+      END
+      SUBROUTINE XDEMOD(LDS)
+
+c*********************************************************************72
+c
+cc XDEMOD tests the time series complex demodulation routines.
+C
+C     SERIES Y IS THE WOLF SUNSPOT DATA FROM 1700 TO 1960 AS
+C     TABULATED BY WALDMEIER
+C
+c  Modified:
+c
+c    25 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDS
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      REAL
+     +   FC,FD
+      INTEGER
+     +   I,IPRT,ITEST,K,LDSTAK,N,NDEM,NPRT
+C
+C  LOCAL ARRAYS
+      REAL
+     +   AMPL(300),PHAS(300),Y(300)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL DEMOD,DEMODS,IPRINT
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     REAL AMPL(300)
+C        THE ARRAY IN WHICH THE AMPLITUDES ARE STORED.
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     REAL FC
+C        THE CUTOFF FREQUENCY USED FOR THE LOW PASS FILTER.
+C     REAL FD
+C        THE DEMODULATION FREQUENCY.
+C     INTEGER I
+C        AN INDEXING VARIABLE.
+C     INTEGER IERR
+C        THE INTEGER VALUE RETURNED BY THIS ROUTINE DESIGNATING
+C        WHETHER ANY ERRORS WERE DETECTED IN THE PARAMETER LIST.
+C        IF IERR .EQ. 0, NO ERRORS WERE DETECTED.
+C        IF IERR .EQ. 1, ERRORS HAVE BEEN DETECTED.
+C     INTEGER IPRT
+C        THE UNIT NUMBER USED FOR OUTPUT.
+C     INTEGER ITEST
+C        THE NUMBER OF THE TEST BEING RUN
+C     INTEGER K
+C        THE NUMBER OF TERMS IN THE SYMETRIC LINEAR FILTER.
+C     INTEGER LDS, LDSTAK
+C        THE LENGTH OF THE ARRAY DSTAK.
+C     INTEGER N
+C        THE NUMBER OF OBSERVATIONS IN THE INPUT SERIES.
+C     INTEGER NDEM
+C        THE NUMBER OF VALUES IN THE DEMODULATED SERIES, I. E., IT
+C        IS THE NUMBER OF VALUES IN THE AMPLITUDE AND PHASE ARRAYS.
+C     INTEGER NPRT
+C        A CODE USED TO SPECIFY THE TYPE OF PLOT, WHERE IF
+C        NPRT .EQ. 0 THE PLOT IS SUPPRESSED
+C        NPRT .NE. 1 THE PLOT IS PROVIDED
+C     REAL PHAS(300)
+C        THE ARRAY IN WHICH THE PRIMARY PHASE ESTIMATES ARE RETURNED.
+C     REAL Y(300)
+C        THE VECTOR CONTAINING THE OBSERVED TIME SERIES.
+C
+      DATA   Y(  1),  Y(  2),  Y(  3),  Y(  4),  Y(  5),  Y(  6)
+     +    /     5.0E0, 11.0E0, 16.0E0, 23.0E0, 36.0E0, 58.0E0/
+      DATA   Y(  7),  Y(  8),  Y(  9),  Y( 10),  Y( 11),  Y( 12)
+     +    /    29.0E0, 20.0E0, 10.0E0,  8.0E0,  3.0E0,  0.0E0/
+      DATA   Y( 13),  Y( 14),  Y( 15),  Y( 16),  Y( 17),  Y( 18)
+     +    /     0.0E0, 2.0E0, 11.0E0, 27.0E0, 47.0E0, 63.0E0/
+      DATA   Y( 19),  Y( 20),  Y( 21),  Y( 22),  Y( 23),  Y( 24)
+     +    /    60.0E0, 39.0E0, 28.0E0, 26.0E0, 22.0E0, 11.0E0/
+      DATA   Y( 25),  Y( 26),  Y( 27),  Y( 28),  Y( 29),  Y( 30)
+     +    /    21.0E0, 40.0E0, 78.0E0,122.0E0,103.0E0, 73.0E0/
+      DATA   Y( 31),  Y( 32),  Y( 33),  Y( 34),  Y( 35),  Y( 36)
+     +    /    47.0E0, 35.0E0, 11.0E0,  5.0E0, 16.0E0, 34.0E0/
+      DATA   Y( 37),  Y( 38),  Y( 39),  Y( 40),  Y( 41),  Y( 42)
+     +    /    70.0E0, 81.0E0,111.0E0,101.0E0, 73.0E0, 40.0E0/
+      DATA   Y( 43),  Y( 44),  Y( 45),  Y( 46),  Y( 47),  Y( 48)
+     +    /    20.0E0, 16.0E0,  5.0E0, 11.0E0, 22.0E0, 40.0E0/
+      DATA   Y( 49),  Y( 50),  Y( 51),  Y( 52),  Y( 53),  Y( 54)
+     +    /    60.0E0, 80.9E0, 83.4E0, 47.7E0, 47.8E0, 30.7E0/
+      DATA   Y( 55),  Y( 56),  Y( 57),  Y( 58),  Y( 59),  Y( 60)
+     +    /    12.2E0,  9.6E0, 10.2E0, 32.4E0, 47.6E0, 54.0E0/
+      DATA   Y( 61),  Y( 62),  Y( 63),  Y( 64),  Y( 65),  Y( 66)
+     +    /    62.9E0, 85.9E0, 61.2E0, 45.1E0, 36.4E0, 20.9E0/
+      DATA   Y( 67),  Y( 68),  Y( 69),  Y( 70),  Y( 71),  Y( 72)
+     +    /    11.4E0, 37.8E0, 69.8E0,106.1E0,100.8E0, 81.6E0/
+      DATA   Y( 73),  Y( 74),  Y( 75),  Y( 76),  Y( 77),  Y( 78)
+     +    /    66.5E0, 34.8E0, 30.6E0,  7.0E0, 19.8E0, 92.5E0/
+      DATA   Y( 79),  Y( 80),  Y( 81),  Y( 82),  Y( 83),  Y( 84)
+     +    /   154.4E0,125.9E0, 84.8E0, 68.1E0, 38.5E0, 22.8E0/
+      DATA   Y( 85),  Y( 86),  Y( 87),  Y( 88),  Y( 89),  Y( 90)
+     +    /    10.2E0, 24.1E0, 82.9E0,132.0E0,130.9E0,118.1E0/
+      DATA   Y( 91),  Y( 92),  Y( 93),  Y( 94),  Y( 95),  Y( 96)
+     +    /    89.9E0, 66.6E0, 60.0E0, 46.9E0, 41.0E0, 21.3E0/
+      DATA   Y( 97),  Y( 98),  Y( 99),  Y(100),  Y(101),  Y(102)
+     +    /    16.0E0,  6.4E0,  4.1E0,  6.8E0, 14.5E0, 34.0E0/
+      DATA   Y(103),  Y(104),  Y(105),  Y(106),  Y(107),  Y(108)
+     +    /    45.0E0, 43.1E0, 47.5E0, 42.2E0, 28.1E0, 10.1E0/
+      DATA   Y(109),  Y(110),  Y(111),  Y(112),  Y(113),  Y(114)
+     +    /     8.1E0,  2.5E0,  0.0E0,  1.4E0,  5.0E0, 12.2E0/
+      DATA   Y(115),  Y(116),  Y(117),  Y(118),  Y(119),  Y(120)
+     +    /    13.9E0, 35.4E0, 45.8E0, 41.1E0, 30.1E0, 23.9E0/
+      DATA   Y(121),  Y(122),  Y(123),  Y(124),  Y(125),  Y(126)
+     +    /    15.6E0,  6.6E0,  4.0E0,  1.8E0,  8.5E0, 16.6E0/
+      DATA   Y(127),  Y(128),  Y(129),  Y(130),  Y(131),  Y(132)
+     +    /    36.3E0, 49.6E0, 64.2E0, 67.0E0, 70.9E0, 47.8E0/
+      DATA   Y(133),  Y(134),  Y(135),  Y(136),  Y(137),  Y(138)
+     +    /    27.5E0,  8.5E0, 13.2E0, 56.9E0,121.5E0,138.3E0/
+      DATA   Y(139),  Y(140),  Y(141),  Y(142),  Y(143),  Y(144)
+     +    /   103.2E0, 85.7E0, 64.6E0, 36.7E0, 24.2E0, 10.7E0/
+      DATA   Y(145),  Y(146),  Y(147),  Y(148),  Y(149),  Y(150)
+     +    /    15.0E0, 40.1E0, 61.5E0, 98.5E0,124.7E0, 96.3E0/
+      DATA   Y(151),  Y(152),  Y(153),  Y(154),  Y(155),  Y(156)
+     +    /    66.6E0, 64.5E0, 54.1E0, 39.0E0, 20.6E0,  6.7E0/
+      DATA   Y(157),  Y(158),  Y(159),  Y(160),  Y(161),  Y(162)
+     +    /     4.3E0, 22.7E0, 54.8E0, 93.8E0, 95.8E0, 77.2E0/
+      DATA   Y(163),  Y(164),  Y(165),  Y(166),  Y(167),  Y(168)
+     +    /    59.1E0, 44.0E0, 47.0E0, 30.5E0, 16.3E0,  7.3E0/
+      DATA   Y(169),  Y(170),  Y(171),  Y(172),  Y(173),  Y(174)
+     +    /    37.6E0, 74.0E0,139.0E0,111.2E0,101.6E0, 66.2E0/
+      DATA   Y(175),  Y(176),  Y(177),  Y(178),  Y(179),  Y(180)
+     +    /    44.7E0, 17.0E0, 11.3E0, 12.4E0,  3.4E0,  6.0E0/
+      DATA   Y(181),  Y(182),  Y(183),  Y(184),  Y(185),  Y(186)
+     +    /    32.3E0, 54.3E0, 59.7E0, 63.7E0, 63.5E0, 52.2E0/
+      DATA   Y(187),  Y(188),  Y(189),  Y(190),  Y(191),  Y(192)
+     +    /    25.4E0, 13.1E0,  6.8E0,  6.3E0,  7.1E0, 35.6E0/
+      DATA   Y(193),  Y(194),  Y(195),  Y(196),  Y(197),  Y(198)
+     +    /    73.0E0, 85.1E0, 78.0E0, 64.0E0, 41.8E0, 26.2E0/
+      DATA   Y(199),  Y(200),  Y(201),  Y(202),  Y(203),  Y(204)
+     +    /    26.7E0, 12.1E0,  9.5E0,  2.7E0,  5.0E0, 24.4E0/
+      DATA   Y(205),  Y(206),  Y(207),  Y(208),  Y(209),  Y(210)
+     +    /    42.0E0, 63.5E0, 53.8E0, 62.0E0, 48.5E0, 43.9E0/
+      DATA   Y(211),  Y(212),  Y(213),  Y(214),  Y(215),  Y(216)
+     +    /    18.6E0,  5.7E0,  3.6E0,  1.4E0,  9.6E0, 47.4E0/
+      DATA   Y(217),  Y(218),  Y(219),  Y(220),  Y(221),  Y(222)
+     +    /    57.1E0,103.9E0, 80.6E0, 63.6E0, 37.6E0, 26.1E0/
+      DATA   Y(223),  Y(224),  Y(225),  Y(226),  Y(227),  Y(228)
+     +    /    14.2E0,  5.8E0, 16.7E0, 44.3E0, 63.9E0, 69.0E0/
+      DATA   Y(229),  Y(230),  Y(231),  Y(232),  Y(233),  Y(234)
+     +    /    77.8E0, 64.9E0, 35.7E0, 21.2E0, 11.1E0,  5.7E0/
+      DATA   Y(235),  Y(236),  Y(237),  Y(238),  Y(239),  Y(240)
+     +    /     8.7E0, 36.1E0, 79.7E0,114.4E0,109.6E0, 88.8E0/
+      DATA   Y(241),  Y(242),  Y(243),  Y(244),  Y(245),  Y(246)
+     +    /    67.8E0, 47.5E0, 30.6E0, 16.3E0,  9.6E0, 33.2E0/
+      DATA   Y(247),  Y(248),  Y(249),  Y(250),  Y(251),  Y(252)
+     +    /    92.6E0,151.6E0,136.3E0,134.7E0, 83.9E0, 69.4E0/
+      DATA   Y(253),  Y(254),  Y(255),  Y(256),  Y(257),  Y(258)
+     +    /    31.5E0, 13.9E0,  4.4E0, 38.0E0,141.7E0,190.2E0/
+      DATA   Y(259),  Y(260),  Y(261)
+     +    /   184.8E0,159.0E0,112.3E0/
+
+      CALL IPRINT(IPRT)
+      ITEST = 1
+      LDSTAK = LDS
+
+      N = 261
+      NPRT = 1
+      FD = 1.0E0/11.0E0
+      FC = 1.0E0/22.0E0
+      K = 41
+C
+C     TEST OF DEMOD
+C
+    5 WRITE (IPRT, 1016)
+      CALL DEMOD (Y, N, FD, FC, K, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+C
+C     TEST OF DEMODS
+C
+      WRITE (IPRT, 1017)
+      CALL DEMODS (Y, N, FD, FC, K, AMPL, PHAS, NDEM, NPRT, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT STORAGE FROM DEMODS
+C
+      IF (IERR.EQ.0) THEN
+        WRITE (IPRT, 1004) (AMPL(I), I = 1, NDEM)
+        WRITE (IPRT, 1004) (PHAS(I), I = 1, NDEM)
+      END IF
+C
+      GO TO (100, 200, 300), ITEST
+C
+C     TEST MINIMUM PROBLEM SPECIFICATIONS
+C
+  100 ITEST = ITEST + 1
+      N = 17
+      K = 15
+      NPRT = -1
+      GO TO 5
+C
+C     TEST ERROR CONDITIONS
+C
+  200 ITEST = ITEST + 1
+      N = 0
+      FD = 0.5E0
+      FC = 0.3E0
+      K = 1
+      GO TO 5
+C
+  300 RETURN
+
+ 1002 FORMAT (8H IERR IS, I5)
+ 1004 FORMAT (10F10.5)
+ 1016 FORMAT ('1', 13HTEST OF DEMOD)
+ 1017 FORMAT ('1', 14HTEST OF DEMODS)
+
+      END
+      SUBROUTINE XDFLT(LDS)
+
+c*********************************************************************72
+c
+cc XDFLT tests the time series digital filtering and complex demodulation routines.
+C
+C     SERIES Y IS THE WOLF SUNSPOT DATA FROM 1700 TO 1960 AS
+C     TABULATED BY WALDMEIER
+C
+c  Modified:
+c
+c    25 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDS
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      REAL
+     +   FC,FMAX,FMIN,YFMISS,YMISS
+      INTEGER
+     +   I,IAR,IPRT,ITEST,K,LDSTAK,LPHI,N,NF,NFAC,NPRT,NYF,NYS
+C
+C  LOCAL ARRAYS
+      REAL
+     +   FREQ(101),GAIN(101),HHP(50),HLP(50),PHAS(300),PHI(50),Y(300),
+     +   YF(300),YS(300)
+      INTEGER
+     +   IOD(10),ND(10)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL ARFLT,DIF,DIFC,DIFM,DIFMC,GFARF,GFARFS,GFSLF,GFSLFS,
+     +   HIPASS,HPCOEF,IPRINT,LOPASS,LPCOEF,MAFLT,SAMPLE,SLFLT
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     REAL FC
+C        THE CUTOFF FREQUENCY USED FOR THE LOW PASS FILTER.
+C     REAL FMAX, FMIN
+C        THE MINIMUM AND MAXIMUM FREQUENCY FOR WHICH THE GAIN
+C        FUNCTION IS TO BE ESTIMATED.
+C     REAL FREQ(101)
+C        THE VECTOR OF FREQUENCIES AT WHICH THE GAIN FUNCTION
+C        HAS BEEN ESTIMATED.
+C     REAL GAIN(101)
+C        THE VECTOR IN WHICH THE GAIN FUNCTION ESTIMATES ARE
+C        STORED.
+C     REAL HHP(50)
+C        THE ARRAY IN WHICH THE -IDEAL- HIGH PASS FILTER COEFFICIENTS
+C        WILL BE RETURNED.
+C     REAL HLP(50)
+C        THE ARRAY IN WHICH THE INPUT LOW PASS FILTER COEFFICIENTS
+C        ARE STORED.
+C     INTEGER I
+C        AN INDEXING VARIABLE.
+C     INTEGER IAR
+C        THE NUMBER OF FILTER COEFFICIENTS.
+C     INTEGER IERR
+C        THE INTEGER VALUE RETURNED BY THIS ROUTINE DESIGNATING
+C        WHETHER ANY ERRORS WERE DETECTED IN THE PARAMETER LIST.
+C        IF IERR .EQ. 0, NO ERRORS WERE DETECTED.
+C        IF IERR .EQ. 1, ERRORS HAVE BEEN DETECTED.
+C     INTEGER IOD(10)
+C        THE ORDER OF EACH OF THE DIFFERENCE FACTORS.
+C     INTEGER IPRT
+C        THE UNIT NUMBER USED FOR OUTPUT.
+C     INTEGER ITEST
+C        THE NUMBER OF THE TEST BEING PERFORMED
+C     INTEGER K
+C        THE NUMBER OF TERMS IN THE SYMETRIC LINEAR FILTER.
+C     INTEGER LDS, LDSTAK
+C        THE LENGTH OF THE ARRAY DSTAK.
+C     INTEGER LPHI
+C        THE LENGTH OF THE VECTOR PHI.
+C     INTEGER N
+C        THE NUMBER OF OBSERVATIONS IN THE INPUT SERIES.
+C     INTEGER ND(10)
+C        THE ARRAY CONTAINING THE NUMBER OF TIMES THE DIFFERENCE
+C        FACTORS ARE TO BE APPLIED.
+C     INTEGER NFAC
+C        THE NUMBER OF DIFFERENCE FACTORS.
+C     INTEGER NF
+C        THE NUMBER OF FREQUENCIES AT WHICH THE GAIN FUNCTION
+C        IS TO BE ESTIMATED.
+C     INTEGER NPRT
+C        A CODE USED TO SPECIFY THE TYPE OF PLOT, WHERE IF
+C        NPRT = 0 THE PLOT IS SUPPRESSED
+C        NPRT = 1 THE PLOT IS DECIBELS/LINEAR
+C        NPRT = 2 THE PLOT IS LOG/LINEAR
+C     INTEGER NYF
+C        THE NUMBER OF VALUES IN THE FILTERED SERIES.
+C     INTEGER NYS
+C        THE NUMBER OF VALUES IN THE SAMPLED SERIES.
+C     REAL PHAS(300)
+C        THE ARRAY IN WHICH THE PRIMARY PHASE ESTIMATES ARE RETURNED.
+C     REAL PHI(50)
+C        THE VECTOR CONTAINING THE FILTER COEFFICIENTS.
+C     REAL Y(300)
+C        THE VECTOR CONTAINING THE OBSERVED TIME SERIES.
+C     REAL YF(300)
+C        THE VECTOR IN WHICH THE FILTERED SERIES IS RETURNED.
+C     REAL YFMISS
+C        THE MISSING VALUE CODE USED IN THE FILTERED SERIES.
+C     REAL YMISS
+C        THE MISSING VALUE CODE USED IN THE INPUT TIME SERIES.
+C     REAL YS(300)
+C        THE ARRAY CONTAINING THE SAMPLED SERIES.
+C
+      DATA   Y(  1),  Y(  2),  Y(  3),  Y(  4),  Y(  5),  Y(  6)
+     +    /     5.0E0, 11.0E0, 16.0E0, 23.0E0, 36.0E0, 58.0E0/
+      DATA   Y(  7),  Y(  8),  Y(  9),  Y( 10),  Y( 11),  Y( 12)
+     +    /    29.0E0, 20.0E0, 10.0E0,  8.0E0,  3.0E0,  0.0E0/
+      DATA   Y( 13),  Y( 14),  Y( 15),  Y( 16),  Y( 17),  Y( 18)
+     +    /     0.0E0, 2.0E0, 11.0E0, 27.0E0, 47.0E0, 63.0E0/
+      DATA   Y( 19),  Y( 20),  Y( 21),  Y( 22),  Y( 23),  Y( 24)
+     +    /    60.0E0, 39.0E0, 28.0E0, 26.0E0, 22.0E0, 11.0E0/
+      DATA   Y( 25),  Y( 26),  Y( 27),  Y( 28),  Y( 29),  Y( 30)
+     +    /    21.0E0, 40.0E0, 78.0E0,122.0E0,103.0E0, 73.0E0/
+      DATA   Y( 31),  Y( 32),  Y( 33),  Y( 34),  Y( 35),  Y( 36)
+     +    /    47.0E0, 35.0E0, 11.0E0,  5.0E0, 16.0E0, 34.0E0/
+      DATA   Y( 37),  Y( 38),  Y( 39),  Y( 40),  Y( 41),  Y( 42)
+     +    /    70.0E0, 81.0E0,111.0E0,101.0E0, 73.0E0, 40.0E0/
+      DATA   Y( 43),  Y( 44),  Y( 45),  Y( 46),  Y( 47),  Y( 48)
+     +    /    20.0E0, 16.0E0,  5.0E0, 11.0E0, 22.0E0, 40.0E0/
+      DATA   Y( 49),  Y( 50),  Y( 51),  Y( 52),  Y( 53),  Y( 54)
+     +    /    60.0E0, 80.9E0, 83.4E0, 47.7E0, 47.8E0, 30.7E0/
+      DATA   Y( 55),  Y( 56),  Y( 57),  Y( 58),  Y( 59),  Y( 60)
+     +    /    12.2E0,  9.6E0, 10.2E0, 32.4E0, 47.6E0, 54.0E0/
+      DATA   Y( 61),  Y( 62),  Y( 63),  Y( 64),  Y( 65),  Y( 66)
+     +    /    62.9E0, 85.9E0, 61.2E0, 45.1E0, 36.4E0, 20.9E0/
+      DATA   Y( 67),  Y( 68),  Y( 69),  Y( 70),  Y( 71),  Y( 72)
+     +    /    11.4E0, 37.8E0, 69.8E0,106.1E0,100.8E0, 81.6E0/
+      DATA   Y( 73),  Y( 74),  Y( 75),  Y( 76),  Y( 77),  Y( 78)
+     +    /    66.5E0, 34.8E0, 30.6E0,  7.0E0, 19.8E0, 92.5E0/
+      DATA   Y( 79),  Y( 80),  Y( 81),  Y( 82),  Y( 83),  Y( 84)
+     +    /   154.4E0,125.9E0, 84.8E0, 68.1E0, 38.5E0, 22.8E0/
+      DATA   Y( 85),  Y( 86),  Y( 87),  Y( 88),  Y( 89),  Y( 90)
+     +    /    10.2E0, 24.1E0, 82.9E0,132.0E0,130.9E0,118.1E0/
+      DATA   Y( 91),  Y( 92),  Y( 93),  Y( 94),  Y( 95),  Y( 96)
+     +    /    89.9E0, 66.6E0, 60.0E0, 46.9E0, 41.0E0, 21.3E0/
+      DATA   Y( 97),  Y( 98),  Y( 99),  Y(100),  Y(101),  Y(102)
+     +    /    16.0E0,  6.4E0,  4.1E0,  6.8E0, 14.5E0, 34.0E0/
+      DATA   Y(103),  Y(104),  Y(105),  Y(106),  Y(107),  Y(108)
+     +    /    45.0E0, 43.1E0, 47.5E0, 42.2E0, 28.1E0, 10.1E0/
+      DATA   Y(109),  Y(110),  Y(111),  Y(112),  Y(113),  Y(114)
+     +    /     8.1E0,  2.5E0,  0.0E0,  1.4E0,  5.0E0, 12.2E0/
+      DATA   Y(115),  Y(116),  Y(117),  Y(118),  Y(119),  Y(120)
+     +    /    13.9E0, 35.4E0, 45.8E0, 41.1E0, 30.1E0, 23.9E0/
+      DATA   Y(121),  Y(122),  Y(123),  Y(124),  Y(125),  Y(126)
+     +    /    15.6E0,  6.6E0,  4.0E0,  1.8E0,  8.5E0, 16.6E0/
+      DATA   Y(127),  Y(128),  Y(129),  Y(130),  Y(131),  Y(132)
+     +    /    36.3E0, 49.6E0, 64.2E0, 67.0E0, 70.9E0, 47.8E0/
+      DATA   Y(133),  Y(134),  Y(135),  Y(136),  Y(137),  Y(138)
+     +    /    27.5E0,  8.5E0, 13.2E0, 56.9E0,121.5E0,138.3E0/
+      DATA   Y(139),  Y(140),  Y(141),  Y(142),  Y(143),  Y(144)
+     +    /   103.2E0, 85.7E0, 64.6E0, 36.7E0, 24.2E0, 10.7E0/
+      DATA   Y(145),  Y(146),  Y(147),  Y(148),  Y(149),  Y(150)
+     +    /    15.0E0, 40.1E0, 61.5E0, 98.5E0,124.7E0, 96.3E0/
+      DATA   Y(151),  Y(152),  Y(153),  Y(154),  Y(155),  Y(156)
+     +    /    66.6E0, 64.5E0, 54.1E0, 39.0E0, 20.6E0,  6.7E0/
+      DATA   Y(157),  Y(158),  Y(159),  Y(160),  Y(161),  Y(162)
+     +    /     4.3E0, 22.7E0, 54.8E0, 93.8E0, 95.8E0, 77.2E0/
+      DATA   Y(163),  Y(164),  Y(165),  Y(166),  Y(167),  Y(168)
+     +    /    59.1E0, 44.0E0, 47.0E0, 30.5E0, 16.3E0,  7.3E0/
+      DATA   Y(169),  Y(170),  Y(171),  Y(172),  Y(173),  Y(174)
+     +    /    37.6E0, 74.0E0,139.0E0,111.2E0,101.6E0, 66.2E0/
+      DATA   Y(175),  Y(176),  Y(177),  Y(178),  Y(179),  Y(180)
+     +    /    44.7E0, 17.0E0, 11.3E0, 12.4E0,  3.4E0,  6.0E0/
+      DATA   Y(181),  Y(182),  Y(183),  Y(184),  Y(185),  Y(186)
+     +    /    32.3E0, 54.3E0, 59.7E0, 63.7E0, 63.5E0, 52.2E0/
+      DATA   Y(187),  Y(188),  Y(189),  Y(190),  Y(191),  Y(192)
+     +    /    25.4E0, 13.1E0,  6.8E0,  6.3E0,  7.1E0, 35.6E0/
+      DATA   Y(193),  Y(194),  Y(195),  Y(196),  Y(197),  Y(198)
+     +    /    73.0E0, 85.1E0, 78.0E0, 64.0E0, 41.8E0, 26.2E0/
+      DATA   Y(199),  Y(200),  Y(201),  Y(202),  Y(203),  Y(204)
+     +    /    26.7E0, 12.1E0,  9.5E0,  2.7E0,  5.0E0, 24.4E0/
+      DATA   Y(205),  Y(206),  Y(207),  Y(208),  Y(209),  Y(210)
+     +    /    42.0E0, 63.5E0, 53.8E0, 62.0E0, 48.5E0, 43.9E0/
+      DATA   Y(211),  Y(212),  Y(213),  Y(214),  Y(215),  Y(216)
+     +    /    18.6E0,  5.7E0,  3.6E0,  1.4E0,  9.6E0, 47.4E0/
+      DATA   Y(217),  Y(218),  Y(219),  Y(220),  Y(221),  Y(222)
+     +    /    57.1E0,103.9E0, 80.6E0, 63.6E0, 37.6E0, 26.1E0/
+      DATA   Y(223),  Y(224),  Y(225),  Y(226),  Y(227),  Y(228)
+     +    /    14.2E0,  5.8E0, 16.7E0, 44.3E0, 63.9E0, 69.0E0/
+      DATA   Y(229),  Y(230),  Y(231),  Y(232),  Y(233),  Y(234)
+     +    /    77.8E0, 64.9E0, 35.7E0, 21.2E0, 11.1E0,  5.7E0/
+      DATA   Y(235),  Y(236),  Y(237),  Y(238),  Y(239),  Y(240)
+     +    /     8.7E0, 36.1E0, 79.7E0,114.4E0,109.6E0, 88.8E0/
+      DATA   Y(241),  Y(242),  Y(243),  Y(244),  Y(245),  Y(246)
+     +    /    67.8E0, 47.5E0, 30.6E0, 16.3E0,  9.6E0, 33.2E0/
+      DATA   Y(247),  Y(248),  Y(249),  Y(250),  Y(251),  Y(252)
+     +    /    92.6E0,151.6E0,136.3E0,134.7E0, 83.9E0, 69.4E0/
+      DATA   Y(253),  Y(254),  Y(255),  Y(256),  Y(257),  Y(258)
+     +    /    31.5E0, 13.9E0,  4.4E0, 38.0E0,141.7E0,190.2E0/
+      DATA   Y(259),  Y(260),  Y(261)
+     +    /   184.8E0,159.0E0,112.3E0/
+
+      CALL IPRINT(IPRT)
+      ITEST = 1
+      LDSTAK = LDS
+
+      N = 261
+      NPRT = 2
+      FC = 1.0E0/22.0E0
+      NF = 101
+      FMIN = 0.0E0
+      FMAX = 0.2E0
+      LPHI = 50
+      NFAC = 1
+      ND(1) = 1
+      IOD(1) = 1
+      IAR = 1
+      PHI(1) = 0.6E0
+      K = 41
+      YMISS = 11.0E0
+C
+C     TEST OF LPCOEF
+C
+   10 WRITE (IPRT, 1001)
+      CALL LPCOEF (FC, K, HLP)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT STORAGE FROM LPCOEF
+C
+      IF (IERR.EQ.0) WRITE (IPRT, 1004) (HLP(I), I = 1, K)
+C
+C     TEST OF LOPASS
+C
+      WRITE (IPRT, 1007)
+      CALL LOPASS (Y, N, FC, K, HLP, YF, NYF)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT STORAGE FROM LOPASS
+C
+      IF (IERR.EQ.0) THEN
+        WRITE (IPRT, 1004) (HLP(I), I = 1, K)
+        WRITE (IPRT, 1004) (YF(I), I = 1, NYF)
+      END IF
+C
+C     TEST OF HIPASS
+C
+      WRITE (IPRT, 1008)
+      CALL HIPASS (Y, N, FC, K, HHP, YF, NYF)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT STORAGE FROM HIPASS
+C
+      IF (IERR.EQ.0) THEN
+        WRITE (IPRT, 1004) (HHP(I), I = 1, K)
+        WRITE (IPRT, 1004) (YF(I), I = 1, NYF)
+      END IF
+C
+C     TEST OF HPCOEF
+C
+   20 WRITE (IPRT, 1003)
+      CALL HPCOEF (HLP, K, HHP)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT STORAGE FROM HPCOEF
+C
+      IF (IERR.EQ.0) WRITE (IPRT, 1004) (HHP(I), I = 1, K)
+C
+C     TEST OF MAFLT
+C
+      WRITE (IPRT, 1020)
+      CALL MAFLT (Y, N, K, YF, NYF)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT STORAGE FROM MAFLT
+C
+      IF (IERR.EQ.0) WRITE (IPRT, 1004) (YF(I), I = 1, NYF)
+C
+C     TEST OF SLFLT
+C
+      WRITE (IPRT, 1005)
+      CALL SLFLT (Y, N, K, HLP, YF, NYF)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT STORAGE FROM SLFLT
+C
+      IF (IERR.EQ.0) WRITE (IPRT, 1004) (YF(I), I = 1, NYF)
+C
+C     TEST OF SAMPLE
+C
+      WRITE (IPRT, 1006)
+      CALL SAMPLE (YF, N, K, YS, NYS)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT STORAGE FROM SAMPLE
+C
+      IF (IERR.EQ.0) WRITE (IPRT, 1004) (YF(I), I = 1, NYS)
+C
+C     TEST OF ARFLT
+C
+      WRITE (IPRT, 1009)
+      CALL ARFLT (Y, N,  IAR, PHI, YF, NYF)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT STORAGE FROM ARFLT
+C
+      IF (IERR.EQ.0) WRITE (IPRT, 1004) (YF(I), I = 1, NYF)
+C
+C     TEST OF DIF
+C
+      WRITE (IPRT, 1015)
+      CALL DIF (Y, N, YF, NYF)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT STORAGE FROM DIF
+C
+      IF (IERR.EQ.0) WRITE (IPRT, 1004) (YF(I), I = 1, NYF)
+C
+C     TEST OF DIFM
+C
+      WRITE (IPRT, 1018)
+      CALL DIFM (Y, YMISS, N, YF, YFMISS, NYF)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT STORAGE FROM DIFM
+C
+      IF (IERR.EQ.0) THEN
+         WRITE (IPRT, 1004) (YF(I), I = 1, NYF)
+         WRITE (IPRT, 1004) YFMISS
+      END IF
+C
+C     TEST OF GFSLF
+C
+      WRITE (IPRT, 1011)
+      CALL GFSLF (HLP, K)
+      WRITE (IPRT, 1002) IERR
+C
+C     TEST OF GFARF
+C
+      WRITE (IPRT, 1013)
+      CALL GFARF (PHI, IAR)
+      WRITE (IPRT, 1002) IERR
+C
+C     TEST OF DIFC
+C
+   30 WRITE (IPRT, 1010)
+      CALL DIFC (Y, N, NFAC, ND, IOD, IAR, PHI, LPHI, YF, NYF, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT STORAGE FROM DIFC
+C
+      IF (IERR.EQ.0) THEN
+        WRITE (IPRT, 1004) (PHI(I), I = 1, K)
+        WRITE (IPRT, 1004) (YF(I), I = 1, NYF)
+      END IF
+C
+C     TEST OF DIFMC
+C
+      WRITE (IPRT, 1019)
+      CALL DIFMC (Y, YMISS, N, NFAC, ND, IOD, IAR, PHI, LPHI, YF,
+     +   YFMISS, NYF, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT STORAGE FROM DIFMC
+C
+      IF (IERR.EQ.0) THEN
+        WRITE (IPRT, 1004) (PHI(I), I = 1, K)
+        WRITE (IPRT, 1004) (YF(I), I = 1, NYF)
+        WRITE (IPRT, 1004) YFMISS
+      END IF
+C
+C     TEST OF GFSLFS
+C
+      WRITE (IPRT, 1012)
+      CALL GFSLFS (HLP, K, NF, FMIN, FMAX, GAIN, FREQ, NPRT, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT STORAGE FROM GFSLFS
+C
+      IF (IERR.EQ.0) THEN
+        WRITE (IPRT, 1004) (GAIN(I), I = 1, NF)
+        WRITE (IPRT, 1004) (FREQ(I), I = 1, NF)
+      END IF
+C
+C     TEST OF GFARFS
+C
+      WRITE (IPRT, 1014)
+      CALL GFARFS (PHI, IAR, NF, FMIN, FMAX, GAIN, PHAS, FREQ, NPRT,
+     +   LDSTAK)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT STORAGE FROM GFARFS
+C
+      IF (IERR.EQ.0) THEN
+        WRITE (IPRT, 1004) (GAIN(I), I = 1, NF)
+        WRITE (IPRT, 1004) (PHAS(I), I = 1, NF)
+        WRITE (IPRT, 1004) (FREQ(I), I = 1, NF)
+      END IF
+
+      GO TO (100, 200, 300, 400), ITEST
+C
+C     TEST SPECIAL CASES
+C
+  100 ITEST = ITEST + 1
+C
+C     TEST OF GFSLFS
+C
+      FMIN = 0.4E0
+      FMAX = 0.1E0
+      NPRT = 1
+      WRITE (IPRT, 1012)
+      CALL GFSLFS (HLP, K, NF, FMIN, FMAX, GAIN, FREQ, NPRT, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT STORAGE FROM GFSLFS
+C
+      IF (IERR.EQ.0) THEN
+        WRITE (IPRT, 1004) (GAIN(I), I = 1, NF)
+        WRITE (IPRT, 1004) (FREQ(I), I = 1, NF)
+      END IF
+C
+C     TEST OF GFARFS
+C
+      NPRT = -1
+      WRITE (IPRT, 1014)
+      CALL GFARFS (PHI, IAR, NF, FMIN, FMAX, GAIN, PHAS, FREQ, NPRT,
+     +   LDSTAK)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT STORAGE FROM GFARFS
+C
+      IF (IERR.EQ.0) THEN
+        WRITE (IPRT, 1004) (GAIN(I), I = 1, NF)
+        WRITE (IPRT, 1004) (PHAS(I), I = 1, NF)
+        WRITE (IPRT, 1004) (FREQ(I), I = 1, NF)
+      END IF
+C
+C     TEST MINIMUM PROBLEM SIZE
+C
+      N = 3
+      K = 1
+      NPRT = -1
+      IAR = 1
+      NF = 1
+      GO TO 20
+C
+C     TEST ERROR CONDITIONS
+C
+  200 ITEST = ITEST + 1
+      N = -5
+      FC = 1.0E0
+      NF = 0
+      LPHI = 0
+      NFAC = 1
+      ND(1) = -1
+      IOD(1) = -1
+      IAR = 0
+      K = -1
+      GO TO 10
+C
+C     TEST LDSTAK
+C
+  300 ITEST = ITEST + 1
+      N = 261
+      NPRT = 2
+      FC = 1.0E0/22.0E0
+      NF = 101
+      FMIN = 0.0E0
+      FMAX = 0.2E0
+      LPHI = 50
+      NFAC = 1
+      ND(1) = 1
+      IOD(1) = 1
+      IAR = 1
+      PHI(1) = 0.6E0
+      K = 41
+      YMISS = 11.0E0
+      LDSTAK = 0
+      GO TO 30
+C
+  400 RETURN
+
+ 1001 FORMAT ('1', 14HTEST OF LPCOEF)
+ 1002 FORMAT (/' IERR IS ', I5)
+ 1003 FORMAT ('1', 14HTEST OF HPCOEF)
+ 1004 FORMAT (10E10.3)
+ 1005 FORMAT ('1', 13HTEST OF SLFLT)
+ 1006 FORMAT ('1', 14HTEST OF SAMPLE)
+ 1007 FORMAT ('1', 14HTEST OF LOPASS)
+ 1008 FORMAT ('1', 14HTEST OF HIPASS)
+ 1009 FORMAT ('1', 13HTEST OF ARFLT)
+ 1010 FORMAT ('1', 12HTEST OF DIFC)
+ 1011 FORMAT ('1', 13HTEST OF GFSLF)
+ 1012 FORMAT ('1', 14HTEST OF GFSLFS)
+ 1013 FORMAT ('1', 13HTEST OF GFARF)
+ 1014 FORMAT ('1', 14HTEST OF GFARFS)
+ 1015 FORMAT ('1', 11HTEST OF DIF)
+ 1018 FORMAT ('1', 12HTEST OF DIFM)
+ 1019 FORMAT ('1', 13HTEST OF DIFMC)
+ 1020 FORMAT ('1', 13HTEST OF MAFLT)
+
+      END
+      SUBROUTINE XHIST(LDSTAK)
+
+c*********************************************************************72
+c
+cc XHIST tests the HIST family of histogram routines.
+C
+C     THIS PROGRAM TESTS FEATURES OF THE HIST FAMILY TO ENSURE THAT
+C     ALL ASPECTS OF THE HIST FAMILY ROUTINES WORK CORRECTLY.
+C
+c  Modified:
+c
+c    25 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson and John Koontz,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      REAL
+     +   YLB,YUB
+      INTEGER
+     +   I,IPRT,LDSMIN,N,NCELL,NCONST,NPRTOF,NPRTON
+C
+C  LOCAL ARRAYS
+      REAL
+     +   Y(84),YCONST(10),YLONG(200),YPATH(10)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL HIST,HISTC,IPRINT,LDSCMP,NRAND
+C
+C  INTRINSIC FUNCTIONS
+      INTRINSIC ANINT,LOG10,MIN,NINT,REAL
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     INTEGER I
+C        A LOOP INDEX.
+C     INTEGER IERR
+C        FLAG TO INDICATE PRESENCE OF ERROR DETECTED BY PRECEDING
+C        STARPAC CALL.  (0 IS OK, 1 IS ERROR)
+C     INTEGER IPRT
+C        LOGICAL OUTPUT UNIT.
+C     INTEGER LDSMIN
+C        THE MINIMUM AMOUNT OF WORK AREA NEEDED FOR A GIVEN PROBLEM.
+C     INTEGER LDSTAK
+C        AMOUNT OF WORK AREA.  SIZE OF DSTAK.
+C     INTEGER N
+C        THE LENGTH OF THE VECTOR Y.
+C     INTEGER NCELL
+C        THE USER SUPPLIED VALUE FOR THE NUMBER OF CELLS IN THE
+C        HISTOGRAM.  IF NCELL IS LESS THAN OR EQUAL TO ZERO, THE
+C        NUMBER OF CELLS TO BE USED (NCELLS) WILL BE CALCULATED FROM
+C        THE NUMBER OF OBSERVATIONS.
+C     INTEGER NCONST
+C        LENGTH OF THE VECTOR YCONST.
+C     INTEGER NPRTOF
+C        FLAG FOR NO OUTPUT (EXCEPT ERROR MESSAGES).
+C     INTEGER NPRTON
+C        FLAG FOR FULL PRINTOUT.
+C     REAL Y(84)
+C        DATA VECTOR FOR TESTS.
+C     REAL YCONST(10)
+C        VECTOR OF CONSTANT DATA.
+C     REAL YLB
+C        THE LOWER BOUND FOR SELECTING DATA FROM Y FOR THE HISTOGRAM.
+C     REAL YLONG(200)
+C        LONG VECTOR OF DATA
+C     REAL YPATH(10)
+C        A VECTOR OF Y VALUES DESIGNED TO FORCE DIFFERENT PATHS
+C        THROUGH THE SUMMATION ROUTINES.
+C     REAL YUB
+C        THE UPPER BOUND FOR SELECTING DATA FROM Y FOR THE HISTOGRAM.
+C
+C     DATA INITIALIZATIONS.
+C
+      DATA N /84/
+      DATA NCONST /10/
+      DATA NPRTON /1/
+      DATA NPRTOF /0/
+      DATA NCELL/10/
+      DATA YLB/0.60E0/, YUB/0.63E0/
+C
+C     DAVIS-HARRISON R.H. DATA, PIKES PEAK.
+C
+C     THIS IS AN ARBITRARILY CHOSEN DATA SET.
+C
+      DATA Y( 1), Y( 2), Y( 3), Y( 4)
+     +    / 0.6067E0, 0.6087E0, 0.6086E0, 0.6134E0/
+      DATA Y( 5), Y( 6), Y( 7)
+     +    / 0.6108E0, 0.6138E0, 0.6125E0/
+      DATA Y( 8), Y( 9), Y(10), Y(11)
+     +    / 0.6122E0, 0.6110E0, 0.6104E0, 0.7213E0/
+      DATA Y(12), Y(13), Y(14)
+     +    / 0.7078E0, 0.7021E0, 0.7004E0/
+      DATA Y(15), Y(16), Y(17), Y(18)
+     +    / 0.6981E0, 0.7242E0, 0.7268E0, 0.7418E0/
+      DATA Y(19), Y(20), Y(21)
+     +    / 0.7407E0, 0.7199E0, 0.6225E0/
+      DATA Y(22), Y(23), Y(24), Y(25)
+     +    / 0.6254E0, 0.6252E0, 0.6267E0, 0.6218E0/
+      DATA Y(26), Y(27), Y(28)
+     +    / 0.6178E0, 0.6216E0, 0.6192E0/
+      DATA Y(29), Y(30), Y(31), Y(32)
+     +    / 0.6191E0, 0.6250E0, 0.6188E0, 0.6233E0/
+      DATA Y(33), Y(34), Y(35)
+     +    / 0.6225E0, 0.6204E0, 0.6207E0/
+      DATA Y(36), Y(37), Y(38), Y(39)
+     +    / 0.6168E0, 0.6141E0, 0.6291E0, 0.6231E0/
+      DATA Y(40), Y(41), Y(42)
+     +    / 0.6222E0, 0.6252E0, 0.6308E0/
+      DATA Y(43), Y(44), Y(45), Y(46)
+     +    / 0.6376E0, 0.6330E0, 0.6303E0, 0.6301E0/
+      DATA Y(47), Y(48), Y(49)
+     +    / 0.6390E0, 0.6423E0, 0.6300E0/
+      DATA Y(50), Y(51), Y(52), Y(53)
+     +    / 0.6260E0, 0.6292E0, 0.6298E0, 0.6290E0/
+      DATA Y(54), Y(55), Y(56)
+     +    / 0.6262E0, 0.5952E0, 0.5951E0/
+      DATA Y(57), Y(58), Y(59), Y(60)
+     +    / 0.6314E0, 0.6440E0, 0.6439E0, 0.6326E0/
+      DATA Y(61), Y(62), Y(63)
+     +    / 0.6392E0, 0.6417E0, 0.6412E0/
+      DATA Y(64), Y(65), Y(66), Y(67)
+     +    / 0.6530E0, 0.6411E0, 0.6355E0, 0.6344E0/
+      DATA Y(68), Y(69), Y(70)
+     +    / 0.6623E0, 0.6276E0, 0.6307E0/
+      DATA Y(71), Y(72), Y(73), Y(74)
+     +    / 0.6354E0, 0.6197E0, 0.6153E0, 0.6340E0/
+      DATA Y(75), Y(76), Y(77)
+     +    / 0.6338E0, 0.6284E0, 0.6162E0/
+      DATA Y(78), Y(79), Y(80), Y(81)
+     +    / 0.6252E0, 0.6349E0, 0.6344E0, 0.6361E0/
+      DATA Y(82), Y(83), Y(84)
+     +    / 0.6373E0, 0.6337E0, 0.6383E0/
+C
+C     DEFINE IPRT, THE CURRENT OUTPUT UNIT.
+C
+      CALL IPRINT(IPRT)
+C
+C     CHECK FOR SUFFICIENT WORK AREA LENGTH.
+C
+      IF (LDSTAK.LT.300) THEN
+        WRITE (IPRT, 1000)
+         RETURN
+      END IF
+C
+      DO 20 I=1,NCONST
+         YCONST(I) = 1.0E0
+   20 CONTINUE
+C
+C     HEADING.
+C
+      WRITE (IPRT,1150)
+C
+C     TEST 1.  CHECK ALL ERROR MESSAGES.
+C
+      WRITE (IPRT,1160)
+C
+C     ERROR 1, ZERO OR FEWER ELEMENTS.
+C
+      WRITE (IPRT,1180)
+      CALL HIST(Y, 0, LDSTAK)
+      WRITE (IPRT, 1350)
+      WRITE (IPRT, 1360) (Y(I), I = 1, N)
+      WRITE (IPRT,1170) IERR
+      CALL HISTC(Y, 0, NCELL, YLB, YUB, LDSTAK)
+      WRITE (IPRT, 1350)
+      WRITE (IPRT, 1360) (Y(I), I = 1, N)
+      WRITE (IPRT,1170) IERR
+C
+C     ERROR 2, NOT ENOUGH SPACE IN CSTAK.
+C
+      WRITE (IPRT,1190)
+      CALL LDSCMP(2, 0, N, 0, 0, 0, 'S',
+     +            MIN(NINT(5.5+1.5*ANINT(LOG10(REAL(N)))),25),LDSMIN)
+      CALL HIST(Y, N, LDSMIN-1)
+      WRITE (IPRT,1170) IERR
+      WRITE (IPRT,1195)
+      CALL HIST(Y, N, LDSMIN)
+      WRITE (IPRT,1170) IERR
+      WRITE (IPRT,1190)
+      CALL LDSCMP(2, 0, N, 0, 0, 0, 'S', NCELL, LDSMIN)
+      CALL HISTC(Y, N, NCELL, YLB, YUB, LDSMIN-1)
+      WRITE (IPRT,1170) IERR
+      WRITE (IPRT,1195)
+      CALL HISTC(Y, N, NCELL, YLB, YUB, LDSMIN)
+      WRITE (IPRT,1170) IERR
+C
+C     CONSTANT Y. (NOT AN ERROR)
+C
+      WRITE (IPRT,1200)
+      CALL HIST(YCONST, NCONST, LDSTAK)
+      WRITE (IPRT,1170) IERR
+      WRITE (IPRT,1200)
+      CALL HISTC(YCONST, NCONST, NCELL, YLB, YUB, LDSTAK)
+      WRITE (IPRT,1170) IERR
+C
+C     ERROR 4, NO DATA WITHIN USER SUPPLIED LIMITS
+C
+      WRITE (IPRT, 1110)
+      CALL HISTC(Y, N, 0, 4.0E0, 10.0E0, LDSTAK)
+      WRITE (IPRT, 1170) IERR
+C
+C     TEST 2.  MAKE A WORKING RUN OF EACH ROUTINE TO CHECK
+C     THE OUTPUT.
+C
+      WRITE (IPRT,1300)
+      WRITE (IPRT,1310)
+      CALL HIST(Y, N, LDSTAK)
+      WRITE (IPRT, 1350)
+      WRITE (IPRT, 1360) (Y(I), I = 1, N)
+      WRITE (IPRT,1170) IERR
+C
+      WRITE (IPRT,1340)
+      CALL HISTC(Y, N, NCELL, YLB, YUB, LDSTAK)
+      WRITE (IPRT, 1350)
+      WRITE (IPRT, 1360) (Y(I), I = 1, N)
+      WRITE (IPRT,1170) IERR
+C
+C     RUN DATA SET 6.7.
+C
+      DO 90 I=1,10
+         YPATH(I) = 0.0E0
+   90 CONTINUE
+      YPATH(1) = -1.0E0
+      YPATH(10) = 1.0E0
+      WRITE (IPRT,1130)
+      CALL HIST(YPATH, NCONST, LDSTAK)
+      WRITE (IPRT,1170) IERR
+      WRITE (IPRT, 1130)
+      CALL HISTC(YPATH, NCONST, 0, 0.0E0, 0.0E0, LDSTAK)
+      WRITE (IPRT, 1130)
+      CALL HISTC(YPATH, NCONST, 1, 0.0E0, 0.0E0, LDSTAK)
+      WRITE (IPRT, 1130)
+      CALL HISTC(YPATH, NCONST, 0, -0.5E0, 0.5E0, LDSTAK)
+      WRITE (IPRT, 1130)
+      CALL HISTC(YPATH, NCONST, 0, 1.0E0, 4.0E0, LDSTAK)
+C
+C     RUN DATA SET 6.8
+C
+      WRITE (IPRT, 1120)
+      CALL NRAND (YLONG, 200, 3254767)
+      CALL HIST (YLONG, 200, LDSTAK)
+      RETURN
+C
+C     FORMATS
+C
+ 1000 FORMAT ('1THE DIMENSION OF DSTAK AND THE VALUE OF LDSTAK NEEDED'/
+     +  ' FOR HISTX MUST EQUAL OR EXCEED 300.  CHANGE DRIVER'/
+     +  ' AND RECALL HISTX.')
+ 1110 FORMAT (41H1TRY NO DATA WITHIN USER SUPPLIED LIMITS.)
+ 1120 FORMAT (38H1RUN HIST ON 200 PSEUDO-RANDON NUMBERS)
+ 1130 FORMAT(24H1RUN HIST ON -1, 8*0, 1.)
+ 1150 FORMAT (48H1TEST RUNS FOR THE HISTOGRAM FAMILY OF ROUTINES.)
+ 1160 FORMAT(47H TEST 1.  GENERATE ONE OF EACH OF THE POSSIBLE ,
+     +   15HERROR MESSAGES.)
+ 1170 FORMAT(22H THE VALUE OF IERR IS , I4)
+ 1180 FORMAT(28H TRY ZERO OR FEWER ELEMENTS.)
+ 1190 FORMAT('1TEST WITH INSUFFICIENT WORK AREA')
+ 1195 FORMAT(' TEST WITH EXACTLY THE RIGHT AMOUNT OF WORK AREA.')
+ 1200 FORMAT('1TRY CONSTANT Y. (NOT AN ERROR)')
+ 1300 FORMAT(52H1TEST 4.  MAKE WORKING RUNS OF ALL ROUTINES TO CHECK,
+     +   12H THE OUTPUT.)
+ 1310 FORMAT(48H1RUN HIST ON THE DAVIS-HARRISON PIKES PEAK DATA.)
+ 1340 FORMAT(49H1RUN HISTC ON THE DAVIS-HARRISON PIKES PEAK DATA.)
+ 1350 FORMAT(/48H PRINT THE DATA TO INSURE THE ORIGINAL ORDER HAS,
+     +   15H BEEN RESTORED.)
+ 1360 FORMAT (7F10.5)
+      END
+      SUBROUTINE XLLS(LDS)
+
+c*********************************************************************72
+c
+cc XLLS tests the linear least squares routines.
+C
+c  Modified:
+c
+c    25 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDS
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      REAL
+     +   RSD,SUM,TERM
+      INTEGER
+     +   I,IPRT,IVCV,IXM,J,LDSMIN,LDSTAK,LPAR,N,NDEG,NPAR,NPRT
+C
+C  LOCAL ARRAYS
+      REAL
+     +   PAR(10),PV(50),RAND(1),RES(50),SDPV(50),SDRES(50),VCV(10,10),
+     +   WT(50),X(50,9),XM(50,10),XM1(50,10),Y(50),Y1(50)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL FITSXP,GENR,IPRINT,LDSCMP,LLS,LLSP,LLSPS,LLSPW,LLSPWS,
+     +   LLSS,LLSW,LLSWS,NRAND,SETRV
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C  EQUIVALENCES
+      EQUIVALENCE (XM(1,2),X(1,1))
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     INTEGER I
+C        AN INDEX.
+C     INTEGER IERR
+C        THE INTEGER VALUE DESIGNATING WHETHER ANY ERRORS WERE
+C        DETECTED IN THE PARAMETER LIST.
+C        IF IERR .EQ. 0, NO ERRORS WERE DETECTED.
+C        IF IERR .EQ. 1, ERRORS WERE DETECTED.
+C     INTEGER IPRT
+C        THE UNIT NUMBER FOR PRINTED OUTPUT.
+C     INTEGER IVCV
+C        THE FIRST DIMENSION OF THE MATRIX VCV.
+C     INTEGER IXM
+C        THE FIRST DIMENSION OF THE MATRIX X.
+C     INTEGER J
+C        AN INDEX.
+C     INTEGER LDS
+C       ..
+C     INTEGER LDSMIN
+C        THE MINIMUM LENGTH ALLOWED FOR THE ARRAY DSTAK.
+C     INTEGER LDSTAK
+C        THE LENGTH OF THE VECTOR DSTAK IN COMMON CSTAK.
+C     INTEGER LPAR
+C        THE ACTUAL LENGTH OF THE PARAMETER ARRAY.
+C     INTEGER N
+C        THE NUMBER OF OBSERVATIONS.
+C     INTEGER NDEG
+C        THE DEGREE OF THE POLYNOMIAL MODEL TO BE FIT.
+C     INTEGER NPAR
+C        THE NUMBER OF PARAMETERS.
+C     INTEGER NPRT
+C        THE INDICATOR VARIABLE USED TO DESIGNATE THE AMOUNT OF
+C        PRINTED OUTPUT.
+C     REAL PAR(10)
+C        THE PARAMETERS  TO BE ESTIMATED.
+C     REAL PV(50)
+C        THE PREDICTED VALUES.
+C     REAL RAND(1)
+C        *
+C     REAL RES(50)
+C        THE RESIDUALS.
+C     REAL RSD
+C        THE RESIDUAL STANDARD DEVIATION.
+C     REAL SDPV(50)
+C        THE STANDARD DEVIATIONS OF THE PREDICTED VALUES.
+C     REAL SDRES(50)
+C        THE STANDARDIZED RESIDUALS.
+C     REAL SUM, TERM
+C        *
+C     REAL VCV(10,10)
+C        THE VARIANCE COVARIANCE MATRIX.
+C     REAL WT(50)
+C        THE WEIGHTS (A DUMMY VECTOR IN THE UNWEIGHTED CASE).
+C     REAL X(50,9)
+C        THE INDEPENDENT VARIABLE.
+C     REAL XM(50,10)
+C        THE INDEPENDENT VARIABLE.
+C     REAL XM1(50,10)
+C        THE INDEPENDENT VARIABLE.
+C     REAL Y(50)
+C        THE DEPENDENT VARIABLE.
+C     REAL Y1(50)
+C        THE DEPENDENT VARIABLE.
+C
+C
+      DATA      XM(1,1),  XM(1,2),  XM(1,3),  XM(1,4)
+     +    /      1.0E0, 42.2E0, 11.2E0, 31.9E0/
+      DATA      XM(2,1),  XM(2,2),  XM(2,3),  XM(2,4)
+     +    /      1.0E0, 48.6E0, 10.6E0, 13.2E0/
+      DATA      XM(3,1),  XM(3,2),  XM(3,3),  XM(3,4)
+     +    /      1.0E0, 42.6E0, 10.6E0, 28.7E0/
+      DATA      XM(4,1),  XM(4,2),  XM(4,3),  XM(4,4)
+     +    /      1.0E0, 39.0E0, 10.4E0, 26.1E0/
+      DATA      XM(5,1),  XM(5,2),  XM(5,3),  XM(5,4)
+     +    /      1.0E0, 34.7E0,  9.3E0, 30.1E0/
+      DATA      XM(6,1),  XM(6,2),  XM(6,3),  XM(6,4)
+     +    /      1.0E0, 44.5E0, 10.8E0,  8.5E0/
+      DATA      XM(7,1),  XM(7,2),  XM(7,3),  XM(7,4)
+     +    /      1.0E0, 39.1E0, 10.7E0, 24.3E0/
+      DATA      XM(8,1),  XM(8,2),  XM(8,3),  XM(8,4)
+     +    /      1.0E0, 40.1E0, 10.0E0, 18.6E0/
+      DATA      XM(9,1),  XM(9,2),  XM(9,3),  XM(9,4)
+     +    /      1.0E0, 45.9E0, 12.0E0, 20.4E0/
+      DATA         Y(1),     Y(2),     Y(3)
+     +    /    167.1E0,174.4E0,160.8E0/
+      DATA         Y(4),     Y(5),     Y(6)
+     +    /    162.0E0,140.8E0,174.6E0/
+      DATA         Y(7),     Y(8),     Y(9)
+     +    /    163.7E0,174.5E0,185.7E0/
+C
+C     SET PARAMETERS NECESSARY FOR THE COMPUTATIONS
+C
+      CALL IPRINT(IPRT)
+      N = 9
+      NPAR = 4
+      NDEG = 3
+      NPRT = 2
+      LPAR = 10
+      IVCV = 10
+      IXM = 50
+      LDSTAK = LDS
+C
+      CALL SETRV(WT, N, 1.0E0)
+C
+C     CHECK ERROR HANDLING
+C
+C        ERROR 1  -  NON POSITIVE NUMBER OF OBSERVATIONS AND PARAMETER
+C                    NUMBER OF PARAMETERS GREATER THAN N
+C                    IXM LESS THAN NUMBER OF OBSERVATIONS
+C                    IVCV LESS THAN NUMBER OF PARAMETERS
+C                    LPAR TOO SMALL
+C
+      N = -5
+      NPAR = 0
+      NDEG = -1
+      IXM = -10
+      LPAR = -1
+      IVCV = -10
+      NPRT = -1
+      WRITE (IPRT,1200)
+      WRITE (IPRT,1000)
+      CALL LLS(Y, XM, N, IXM, NPAR, RES, LDSTAK)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1010)
+      CALL LLSS(Y, XM, N, IXM, NPAR, RES, LDSTAK,
+     +   NPRT, PAR, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1020)
+      CALL LLSW(Y, WT, XM, N, IXM, NPAR, RES, LDSTAK)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1030)
+      CALL LLSWS(Y, WT, XM, N, IXM, NPAR, RES, LDSTAK,
+     +   NPRT, PAR, RSD, PV,SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1040)
+      CALL LLSP(Y, X, N, NDEG, RES, LDSTAK)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1050)
+      CALL LLSPS(Y, X, N, NDEG, RES, LDSTAK,
+     +   NPRT, LPAR, PAR, NPAR, RSD, PV,SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1060)
+      CALL LLSPW(Y, WT, X, N, NDEG, RES, LDSTAK)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1070)
+      CALL LLSPWS(Y, WT, X, N, NDEG, RES, LDSTAK,
+     +   NPRT, LPAR, PAR, NPAR, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      N = 9
+      NPAR = 4
+      NDEG = 3
+      IXM = 50
+      LPAR = -10
+      IVCV = 10
+C
+C        ERROR 2  -  LDS TOO SMALL
+C                    LPAR TOO SMALL
+C
+      LDSTAK = 0
+      WRITE (IPRT,1220)
+      WRITE (IPRT,1000)
+      CALL LLS(Y, XM, N, IXM, NPAR, RES, LDSTAK)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1010)
+      CALL LLSS(Y, XM, N, IXM, NPAR, RES, LDSTAK,
+     +   NPRT, PAR, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1020)
+      CALL LLSW(Y, WT, XM, N, IXM, NPAR, RES, LDSTAK)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1030)
+      CALL LLSWS(Y, WT, XM, N, IXM, NPAR, RES, LDSTAK,
+     +   NPRT, PAR, RSD, PV,SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1040)
+      CALL LLSP(Y, X, N, NDEG, RES, LDSTAK)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1050)
+      CALL LLSPS(Y, X, N, NDEG, RES, LDSTAK,
+     +   NPRT, LPAR, PAR, NPAR, RSD, PV,SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1060)
+      CALL LLSPW(Y, WT, X, N, NDEG, RES, LDSTAK)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1070)
+      CALL LLSPWS(Y, WT, X, N, NDEG, RES, LDSTAK,
+     +   NPRT, LPAR, PAR, NPAR, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      LDSTAK = LDS
+      NPRT = 2
+      LPAR = 10
+C
+C        ERROR 3  -  NEGATIVE WEIGHTS
+C
+      WT(1) = -1.0E0
+      WRITE (IPRT,1240)
+      WRITE (IPRT,1020)
+      CALL LLSW(Y, WT, XM, N, IXM, NPAR, RES, LDSTAK)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1030)
+      CALL LLSWS(Y, WT, XM, N, IXM, NPAR, RES, LDSTAK,
+     +   NPRT, PAR, RSD, PV,SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1060)
+      CALL LLSPW(Y, WT, X, N, NDEG, RES, LDSTAK)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1070)
+      CALL LLSPWS(Y, WT, X, N, NDEG, RES, LDSTAK,
+     +   NPRT, LPAR, PAR, NPAR, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      WT(1) = 1.0E0
+C
+C        ERROR 4  -  TOO FEW POSITIVE WEIGHTS
+C
+      CALL SETRV(WT(2), N-1, 0.0E0)
+      WRITE (IPRT,1250)
+      WRITE (IPRT,1020)
+      CALL LLSW(Y, WT, XM, N, IXM, NPAR, RES, LDSTAK)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1030)
+      CALL LLSWS(Y, WT, XM, N, IXM, NPAR, RES, LDSTAK,
+     +   NPRT, PAR, RSD, PV,SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1060)
+      CALL LLSPW(Y, WT, X, N, NDEG, RES, LDSTAK)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1070)
+      CALL LLSPWS(Y, WT, X, N, NDEG, RES, LDSTAK,
+     +   NPRT, LPAR, PAR, NPAR, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL SETRV(WT(2), N-1, 1.0E0)
+C
+C     CHECK RESULTS FROM VALID CALL
+C
+      WRITE (IPRT,1260)
+      WRITE (IPRT,1000)
+      CALL LLS(Y, XM, N, IXM, NPAR, RES, LDSTAK)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1430) (RES(I), I = 1, N)
+      WRITE (IPRT,1260)
+      WRITE (IPRT,1010)
+      CALL LLSS(Y, XM, N, IXM, NPAR, RES, LDSTAK,
+     +   NPRT, PAR, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+      WRITE (IPRT,1260)
+      WRITE (IPRT,1020)
+      CALL LLSW(Y, WT, XM, N, IXM, NPAR, RES, LDSTAK)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1430) (RES(I), I = 1, N)
+      WRITE (IPRT,1260)
+      WRITE (IPRT,1030)
+      CALL LLSWS(Y, WT, XM, N, IXM, NPAR, RES, LDSTAK,
+     +   NPRT, PAR, RSD, PV,SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+      WRITE (IPRT,1260)
+      WRITE (IPRT,1040)
+      CALL LLSP(Y, X, N, NDEG, RES, LDSTAK)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1430) (RES(I), I = 1, N)
+      WRITE (IPRT,1260)
+      WRITE (IPRT,1050)
+      CALL LLSPS(Y, X, N, NDEG, RES, LDSTAK,
+     +   NPRT, LPAR, PAR, NPAR, RSD, PV,SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+      WRITE (IPRT,1260)
+      WRITE (IPRT,1060)
+      CALL LLSPW(Y, WT, X, N, NDEG, RES, LDSTAK)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1430) (RES(I), I = 1, N)
+      WRITE (IPRT,1260)
+      WRITE (IPRT,1070)
+      CALL LLSPWS(Y, WT, X, N, NDEG, RES, LDSTAK,
+     +   NPRT, LPAR, PAR, NPAR, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+C
+C     CHECK RESULTS FROM EXACT FIT
+C
+      N = NPAR
+      NDEG = NPAR-1
+C
+      WRITE (IPRT,1270)
+      WRITE (IPRT,1000)
+      CALL LLS(Y, XM, N, IXM, NPAR, RES, LDSTAK)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1430) (RES(I), I = 1, N)
+      WRITE (IPRT,1270)
+      WRITE (IPRT,1010)
+      CALL LLSS(Y, XM, N, IXM, NPAR, RES, LDSTAK,
+     +   NPRT, PAR, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+      WRITE (IPRT,1270)
+      WRITE (IPRT,1040)
+      CALL LLSP(Y, X, N, NDEG, RES, LDSTAK)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1430) (RES(I), I = 1, N)
+      WRITE (IPRT,1270)
+      WRITE (IPRT,1050)
+      CALL LLSPS(Y, X, N, NDEG, RES, LDSTAK,
+     +   NPRT, LPAR, PAR, NPAR, RSD, PV,SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+
+      N = 9
+
+      CALL SETRV(WT(NPAR+1), N-NPAR, 0.0E0)
+
+      WRITE (IPRT,1270)
+      WRITE (IPRT,1020)
+      CALL LLSW(Y, WT, XM, N, IXM, NPAR, RES, LDSTAK)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1430) (RES(I), I = 1, N)
+      WRITE (IPRT,1270)
+      WRITE (IPRT,1030)
+      CALL LLSWS(Y, WT, XM, N, IXM, NPAR, RES, LDSTAK,
+     +   NPRT, PAR, RSD, PV,SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+      WRITE (IPRT,1270)
+      WRITE (IPRT,1060)
+      CALL LLSPW(Y, WT, X, N, NDEG, RES, LDSTAK)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1430) (RES(I), I = 1, N)
+      WRITE (IPRT,1270)
+      WRITE (IPRT,1070)
+      CALL LLSPWS(Y, WT, X, N, NDEG, RES, LDSTAK,
+     +   NPRT, LPAR, PAR, NPAR, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+
+      CALL SETRV(WT(NPAR+1), N-NPAR, 1.0E0)
+C
+C     CHECK RESULTS FROM RANK DEFICIENT FIT
+C
+      DO 10 I = 1, N
+         XM(I,5) = XM(I,4)
+   10 CONTINUE
+      WRITE (IPRT,1280)
+      WRITE (IPRT,1000)
+      CALL LLS(Y, XM, N, IXM, NPAR+1, RES, LDSTAK)
+      WRITE (IPRT,1500) IERR
+C
+C     CHECK RESULTS FROM A POORLY SCALED PROBLEM.
+C
+      DO 30 I = 1, N
+         Y1(I) = Y(I) * 1.0E-8
+         DO 20 J = 1, 4
+            XM1(I,J) = XM(I,J)
+   20    CONTINUE
+         XM1(I,3) = XM1(I,3) * 1.0E+8
+   30 CONTINUE
+C
+      WRITE (IPRT,1290)
+      WRITE (IPRT,1000)
+      CALL LLS(Y1, XM, N, IXM, NPAR, RES, LDSTAK)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1290)
+      WRITE (IPRT,1000)
+      CALL LLS(Y, XM1, N, IXM, NPAR, RES, LDSTAK)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1290)
+      WRITE (IPRT,1000)
+      CALL LLS(Y1, XM1, N, IXM, NPAR, RES, LDSTAK)
+      WRITE (IPRT,1500) IERR
+C
+C     MINIMUM AMOUNT OF WORK AREA.
+C
+      CALL LDSCMP(15, 0, 0, 0, 0, 0, 'S',
+     +            6*N + NPAR*(N+2*NPAR+5) + 1, LDSMIN)
+
+      WRITE (IPRT,1300)
+      WRITE (IPRT,1000)
+      CALL LLS(Y, XM, N, IXM, NPAR, RES, LDSMIN)
+      WRITE (IPRT,1500) IERR
+      WRITE (IPRT,1430) (RES(I), I = 1, N)
+C
+C     CHECK RESULTS FOR WEIGHTED ANALYSIS
+C
+      NPRT = 1111
+      CALL SETRV(WT, N, 100.0E0)
+      WRITE (IPRT,1310)
+      WRITE (IPRT,1030)
+      CALL LLSWS(Y, WT, XM, N, IXM, NPAR, RES, LDSTAK,
+     +   NPRT, PAR, RSD, PV,SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+
+      WT(1) = 0.0E0
+      WT(5) = 0.0E0
+      WT(9) = 0.0E0
+
+      WRITE (IPRT,1310)
+      WRITE (IPRT,1030)
+      CALL LLSWS(Y, WT, XM, N, IXM, NPAR, RES, LDSTAK,
+     +   NPRT, PAR, RSD, PV,SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+      CALL SETRV(WT, N, 100.0E0)
+
+      CALL GENR(WT, N, 1.0E0, 1.0E0)
+      WRITE (IPRT,1310)
+      WRITE (IPRT,1030)
+      CALL LLSWS(Y, WT, XM, N, IXM, NPAR, RES, LDSTAK,
+     +   NPRT, PAR, RSD, PV,SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+      CALL SETRV(WT, N, 100.0E0)
+C
+C     CHECK PRINT CONTROL
+C
+      NPRT = 1000
+      WRITE (IPRT,1320) NPRT
+      WRITE (IPRT,1010)
+      CALL LLSS(Y, XM, N, IXM, NPAR, RES, LDSTAK,
+     +   NPRT, PAR, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+
+      NPRT = 2000
+      WRITE (IPRT,1320) NPRT
+      WRITE (IPRT,1010)
+      CALL LLSS(Y, XM, N, IXM, NPAR, RES, LDSTAK,
+     +   NPRT, PAR, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+
+      NPRT = 200
+      WRITE (IPRT,1320) NPRT
+      WRITE (IPRT,1010)
+      CALL LLSS(Y, XM, N, IXM, NPAR, RES, LDSTAK,
+     +   NPRT, PAR, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+
+      NPRT = 20
+      WRITE (IPRT,1320) NPRT
+      WRITE (IPRT,1010)
+      CALL LLSS(Y, XM, N, IXM, NPAR, RES, LDSTAK,
+     +   NPRT, PAR, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+
+      NPRT = 2
+      WRITE (IPRT,1320) NPRT
+      WRITE (IPRT,1010)
+      CALL LLSS(Y, XM, N, IXM, NPAR, RES, LDSTAK,
+     +   NPRT, PAR, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+
+      NPRT = 0
+      WRITE (IPRT,1320) NPRT
+      WRITE (IPRT,1010)
+      CALL LLSS(Y, XM, N, IXM, NPAR, RES, LDSTAK,
+     +   NPRT, PAR, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+C
+C     CHECK RESULTS FOR N = 2, NPAR = ID+1 = 1
+C
+      NPRT = 2222
+      N = 2
+      NPAR = 1
+      NDEG = 0
+      WRITE (IPRT,1330)
+      WRITE (IPRT,1010)
+      CALL LLSS(Y, XM, N, IXM, NPAR, RES, LDSTAK,
+     +   NPRT, PAR, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+      WRITE (IPRT,1330)
+      WRITE (IPRT,1070)
+      CALL LLSPWS(Y, WT, X, N, NDEG, RES, LDSTAK,
+     +   NPRT, LPAR, PAR, NPAR, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+C
+C     CHECK RESULTS FOR N = 1, NPAR = ID+1 = 1
+C
+      NPRT = 2222
+      N = 1
+      NPAR = 1
+      NDEG = 0
+      WRITE (IPRT,1330)
+      WRITE (IPRT,1010)
+      CALL LLSS(Y, XM, N, IXM, NPAR, RES, LDSTAK,
+     +   NPRT, PAR, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+      WRITE (IPRT,1330)
+      WRITE (IPRT,1070)
+      CALL LLSPWS(Y, WT, X, N, NDEG, RES, LDSTAK,
+     +   NPRT, LPAR, PAR, NPAR, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+      N = 9
+      NPAR = 4
+      NDEG = 3
+C
+C
+C     ILL-CONDITIONED
+C
+      DO 40 I = 1, 50
+         TERM = 1.0E0
+         SUM = 0.0E0
+         DO 35 J = 1, 6
+            XM1(I,J) = TERM
+            SUM = SUM + TERM
+            TERM = (I-1)*TERM
+   35    CONTINUE
+         Y1(I) = SUM
+   40 CONTINUE
+C
+      N = 21
+      NPAR = 6
+      NDEG = 5
+      WRITE (IPRT,1340)
+      WRITE (IPRT,1010)
+      CALL LLSS(Y1, XM1, N, IXM, NPAR, RES, LDSTAK,
+     +   NPRT, PAR, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+      WRITE (IPRT,1340)
+      WRITE (IPRT,1050)
+      CALL LLSPS(Y1, XM1(1,2), N, NDEG, RES, LDSTAK,
+     +   NPRT, LPAR, PAR, NPAR, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+
+      N = 50
+      NPAR = 6
+      NDEG = 5
+      CALL NRAND(RAND, 1, 223)
+      DO 50 I = 1, N
+         CALL NRAND(RAND, 1, 0)
+         Y1(I) = Y1(I) + RAND(1)
+   50 CONTINUE
+      WRITE (IPRT,1340)
+      WRITE (IPRT,1010)
+      CALL LLSS(Y1, XM1, N, IXM, NPAR, RES, LDSTAK,
+     +   NPRT, PAR, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+      WRITE (IPRT,1340)
+      WRITE (IPRT,1050)
+      CALL LLSPS(Y1, XM1(1,2), N, NDEG, RES, LDSTAK,
+     +   NPRT, LPAR, PAR, NPAR, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+
+      NPRT = 1000
+      WRITE (IPRT,1340)
+      WRITE (IPRT,1010)
+      CALL LLSS(Y1, XM1, N, IXM, NPAR, RES, LDSTAK,
+     +   NPRT, PAR, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+      WRITE (IPRT,1340)
+      WRITE (IPRT,1050)
+      CALL LLSPS(Y1, XM1(1,2), N, NDEG, RES, LDSTAK,
+     +   NPRT, LPAR, PAR, NPAR, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+
+      N = 45
+      CALL SETRV(WT, N, 1.0E0)
+      WRITE (IPRT,1340)
+      WRITE (IPRT,1010)
+      CALL LLSWS(Y1, WT, XM1, N, IXM, NPAR, RES, LDSTAK,
+     +   NPRT, PAR, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+
+      N = 44
+      WRITE (IPRT,1340)
+      WRITE (IPRT,1010)
+      CALL LLSWS(Y1, WT, XM1, N, IXM, NPAR, RES, LDSTAK,
+     +   NPRT, PAR, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+
+      N = 41
+      WRITE (IPRT,1340)
+      WRITE (IPRT,1010)
+      CALL LLSWS(Y1, WT, XM1, N, IXM, NPAR, RES, LDSTAK,
+     +   NPRT, PAR, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+
+      N = 40
+      WRITE (IPRT,1340)
+      WRITE (IPRT,1010)
+      CALL LLSWS(Y1, WT, XM1, N, IXM, NPAR, RES, LDSTAK,
+     +   NPRT, PAR, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1500) IERR
+      CALL FITSXP(PAR, PV, SDPV, RES, SDRES, VCV, N, NPAR, IVCV, RSD)
+
+      RETURN
+
+ 1000 FORMAT (' CALL TO LLS   ')
+ 1010 FORMAT (' CALL TO LLSS  ')
+ 1020 FORMAT (' CALL TO LLSW  ')
+ 1030 FORMAT (' CALL TO LLSWS ')
+ 1040 FORMAT (' CALL TO LLSP  ')
+ 1050 FORMAT (' CALL TO LLSPS ')
+ 1060 FORMAT (' CALL TO LLSPW ')
+ 1070 FORMAT (' CALL TO LLSPWS')
+ 1200 FORMAT ('1MISCELLANEOUS ERRORS  -  TEST 1')
+ 1220 FORMAT ('1MISCELLANEOUS ERRORS  -  TEST 2')
+ 1240 FORMAT ('1NEGATIVE WEIGHTS')
+ 1250 FORMAT ('1TOO FEW POSITIVE WEIGHTS')
+ 1260 FORMAT ('1VALID PROBLEM')
+ 1270 FORMAT ('1ZERO RESIDUAL PROBLEM')
+ 1280 FORMAT ('1RANK DEFICIENT PROBLEM')
+ 1290 FORMAT ('1POORLY SCALED PROBLEM')
+ 1300 FORMAT ('1MINIMUM WORK AREA SIZE')
+ 1310 FORMAT ('1WEIGHTED ANALYSIS')
+ 1320 FORMAT ('1CHECK PRINT CONTROL  -  NPRT = ', I5)
+ 1330 FORMAT ('1CHECK MINIMUM PROBLEM SIZE')
+ 1340 FORMAT ('1ILL-CONDITIONED PROBLEM')
+ 1430 FORMAT (//4H RES/ (1X, E22.14))
+ 1500 FORMAT (/' IERR = ', I5)
+
+      END
+      SUBROUTINE XNLSD(LDSTAK)
+
+c*********************************************************************72
+c
+cc XNLSD tests the routines in the nonlinear least squares family.
+C
+c  Modified:
+c
+c    25 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      REAL
+     +   DELTA,RSD,STOPP,STOPSS
+      INTEGER
+     +   IDRVCK,IPRT,IVAPRX,IVCV,IXM1,LDSA1,LDSMIN,LDSN1A,LDSN1B,
+     +   M1,MIT,N1,NNZW,NPAR1,NPARE,NPRT,NTEST
+C
+C  LOCAL ARRAYS
+      REAL
+     +   PAR1(10),PV(100),RES(100),SCALE(10),SDPV(100),SDRES(100),
+     +   STP(10),VCV(6,6),WT(100),XM1(10,2),Y1(10)
+      INTEGER
+     +   IFIXED(10)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL DRV1A,FITXSP,IPRINT,LDSCMP,MDL1,NL2X,NLS,NLSC,NLSD,NLSDC,
+     +   NLSDS,NLSS,NLSW,NLSWC,NLSWD,NLSWDC,NLSWDS,NLSWS,NLSX1,
+     +   NLSX2,SETRV
+C
+C  INTRINSIC FUNCTIONS
+      INTRINSIC MAX
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     REAL DELTA
+C        THE MAXIMUM CHANGE ALLOWED IN THE MODEL PARAMETERS AT THE
+C        FIRST ITERATION.
+C     EXTERNAL DRV1A
+C        THE NAME OF THE USER SUPPLIED SUBROUTINE WHICH COMPUTES THE
+C        DERIVATIVE (JACOBIAN) MATRIX OF THE MODEL.
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     INTEGER IDRVCK
+C        THE VARIABLE USED TO INDICATE WHETHER THE DERIVATIVES ARE
+C        TO BE CHECKED (IDRVCK = 1) OR NOT (IDRVCK = 0).
+C     INTEGER IERR
+C        THE INTEGER VALUE RETURNED BY THIS ROUTINE DESIGNATING
+C        WHETHER ANY ERRORS WERE DETECTED IN THE PARAMETER LIST.
+C        IF IERR .EQ. 0, NO ERRORS WERE DETECTED.
+C        IF IERR .GE. 1, ERRORS WERE DETECTED.
+C     INTEGER IFIXED(10)
+C        THE INDICATOR VALUES USED TO DESIGNATE WHETHER THE
+C        PARAMETERS ARE TO BE OPTIMIZED OR ARE TO BE HELD FIXED.  IF
+C        IFIXED(I).NE.0, THEN PAR(I) WILL BE OPTIMIZED.  IF
+C        IFIXED(I).EQ.0, THEN PAR(I) WILL BE HELD FIXED.
+C        IFIXED(I).LT.0, THEN ALL PAR(I),I=1,NPAR, WILL BE OPTIMIZED..
+C     INTEGER IPRT
+C        THE UNIT NUMBER FOR PRINTED OUTPUT.
+C     INTEGER IVAPRX
+C        AN INDICATOR VALUE USED TO DESIGNATE WHICH OPTION IS TO BE USED
+C        TO COMPUTE THE VARIANCE COVARIANCE MATRIX (VCV), WHERE
+C        IVAPRX LE 0 INDICATES THE THE DEFAULT OPTION WILL BE USED
+C        IVAPRX EQ 1 INDICATES THE VCV IS TO BE COMPUTED BY
+C                       INVERSE(HESSIAN)*TRANSPOSE(JACOBIAN)*JACOBIAN
+C                          *INVERSE(HESSIAN)
+C                    USING BOTH THE MODEL SUBROUTINE THE USER SUPPLIED
+C                    DERIVATIVE SUBROUTINE WHEN IT IS AVAILABLE
+C        IVAPRX EQ 2 INDICATES THE VCV IS TO BE COMPUTED BY
+C                       INVERSE(HESSIAN)
+C                    USING BOTH THE MODEL SUBROUTINE THE USER SUPPLIED
+C                    DERIVATIVE SUBROUTINE WHEN IT IS AVAILABLE
+C        IVAPRX EQ 3 INDICATES THE VCV IS TO BE COMPUTED BY
+C                       INVERSE(TRANSPOSE(JACOBIAN)*JACOBIAN)
+C                    USING BOTH THE MODEL SUBROUTINE THE USER SUPPLIED
+C                    DERIVATIVE SUBROUTINE WHEN IT IS AVAILABLE
+C        IVAPRX EQ 4 INDICATES THE VCV IS TO BE COMPUTED BY
+C                       INVERSE(HESSIAN)*TRANSPOSE(JACOBIAN)*JACOBIAN
+C                          *INVERSE(HESSIAN)
+C                    USING ONLY THE MODEL SUBROUTINE
+C        IVAPRX EQ 5 INDICATES THE VCV IS TO BE COMPUTED BY
+C                       INVERSE(HESSIAN)
+C                    USING ONLY THE MODEL SUBROUTINE
+C        IVAPRX EQ 6 INDICATES THE VCV IS TO BE COMPUTED BY
+C                       INVERSE(TRANSPOSE(JACOBIAN)*JACOBIAN)
+C                    USING ONLY THE MODEL SUBROUTINE
+C        IVAPRX GE 7 INDICATES THE DEFAULT OPTION WILL BE USED
+C     INTEGER IVCV
+C        THE FIRST DIMENSION OF THE VARIANCE COVARIANCE MATRIX VCV.
+C     INTEGER IXM1
+C        THE FIRST DIMENSION OF THE INDEPENDENT VARIABLE ARRAY.
+C     INTEGER LDSA1, LDSN1A, LDSN1B
+C        THE MINIMUM LENGTH ALLOWED FOR THE ARRAY DSTAK
+C        FOR THE ROUTINES WITH ANALYTIC DERIVATIVES AND
+C        NUMERICAL DERIVATIVES, RESPECTIVELY.
+C     INTEGER LDSMIN
+C        THE MINIMUM LENGTH OF THE ARRAY DSTAK ALLOWED.
+C     INTEGER LDSTAK
+C        THE LENGTH OF THE ARRAY DSTAK.
+C     INTEGER M1
+C        THE NUMBER OF INDEPENDENT VARIABLES.
+C     INTEGER MIT
+C        THE MAXIMUM NUMBER OF ITERATIONS ALLOWED.
+C     EXTERNAL MDL1
+C        THE NAME OF THE USER SUPPLIED SUBROUTINE WHICH COMPUTES THE
+C        PREDICTED VALUES BASED ON THE CURRENT PARAMETER ESTIMATE.
+C     INTEGER N1
+C        THE NUMBER OF OBSERVATIONS.
+C     INTEGER NPARE
+C        THE NUMBER OF PARAMETERS ESTIMATED BY THE ROUTINE.
+C     INTEGER NPAR1
+C        THE NUMBER OF UNKNOWN PARAMETERS IN THE MODEL.
+C     INTEGER NNZW
+C        THE NUMBER OF NON ZERO WEIGHTS.
+C     INTEGER NPRT
+C        THE PARAMETER USED TO INDICATE HOW MUCH PRINTED OUTPUT IS
+C        TO BE PROVIDED.
+C     INTEGER NTEST
+C        THE NUMBER OF THE CURRENT TEST.
+C     REAL PAR1(10)
+C        THE ARRAY IN WHICH THE CURRENT ESTIMATES OF THE UNKNOWN
+C        PARAMETERS ARE STORED.
+C     REAL PV(100)
+C        THE STARTING LOCATION IN RSTAK/DSTAK OF
+C        THE PREDICTED VALUE BASED ON THE CURRENT PARAMETER ESTIMATES
+C     REAL RES(100)
+C        THE RESIDUALS FROM THE FIT.
+C     REAL RSD
+C        THE VALUE OF THE RESIDUAL STANDARD DEVIATION AT THE SOLUTION.
+C     REAL SCALE(10)
+C        A VALUE TO INDICATE USE OF THE DEFAULT VALUES OF
+C        THE TYPICAL SIZE OF THE UNKNOWN PARAMETERS.
+C     REAL SDPV(100)
+C        THE STARTING LOCATION IN RSTAK/DSTAK OF
+C        THE STANDARD DEVIATION OF THE PREDICTED VALUE.
+C     REAL SDRES(100)
+C        THE STARTING LOCATION IN RSTAK/DSTAK OF THE
+C        THE STANDARD DEVIATIONS OF THE RESIDUALS.
+C     REAL STOPP
+C        THE STOPPING CRITERION FOR THE TEST BASED ON THE MAXIMUM SCALED
+C        RELATIVE CHANGE IN THE ELEMENTS OF THE MODEL PARAMETER VECTOR
+C     REAL STOPSS
+C        THE STOPPING CRITERION FOR THE TEST BASED ON THE RATIO OF THE
+C        PREDICTED DECREASE IN THE RESIDUAL SUM OF SQUARES (COMPUTED
+C        BY STARPAC) TO THE CURRENT RESIDUAL SUM OF SQUARES ESTIMATE.
+C     REAL STP(10)
+C        THE RCSTEP SIZE ARRAY.
+C     REAL VCV(6,6)
+C        THE COVARIANCE MATRIX.
+C     REAL WT(100)
+C        THE USER SUPPLIED WEIGHTS.
+C     REAL XM1(10,2)
+C        THE ARRAY IN WHICH ONE ROW OF THE INDEPENDENT VARIABLE ARRAY
+C        IS STORED.
+C     REAL Y1(10)
+C        THE ARRAY OF THE DEPENDENT VARIABLE.
+C
+C     DEFINE CONSTANTS
+C
+      DATA Y1(1), Y1(2), Y1(3), Y1(4), Y1(5), Y1(6)
+     +   /2.138E0, 3.421E0, 3.597E0, 4.340E0, 4.882E0, 5.660E0/
+
+      DATA XM1(1,1), XM1(2,1), XM1(3,1), XM1(4,1), XM1(5,1), XM1(6,1)
+     +   /1.309E0, 1.471E0, 1.490E0, 1.565E0, 1.611E0, 1.680E0/
+
+      CALL IPRINT(IPRT)
+
+      CALL NLSX2(N1, M1, IXM1, NPAR1, IFIXED, STP, IDRVCK, MIT, STOPSS,
+     +   STOPP, SCALE, DELTA, IVAPRX, NPRT, IVCV)
+C
+      CALL SETRV(WT, N1, 1.0E0)
+C
+      CALL LDSCMP(6, 0, 60+2*NPAR1, 0, 0, 0,
+     +   'S', 94+N1*(3+NPAR1)+NPAR1*(3*NPAR1+35)/2, LDSA1)
+      CALL LDSCMP(14, 0, MAX(2*(N1+NPAR1),60+2*NPAR1), 0, 0, 0,
+     +   'S', MAX(10*N1,94+N1*(3+NPAR1)+NPAR1*(3*NPAR1+37)/2), LDSN1A)
+      CALL LDSCMP(14, 0, 60+2*NPAR1, 0, 0, 0,
+     +   'S', 94+N1*(3+NPAR1)+NPAR1*(3*NPAR1+37)/2, LDSN1B)
+C
+      LDSMIN = MAX(LDSA1, LDSN1A, LDSN1B)
+C
+      IF (LDSMIN.LE.LDSTAK) GO TO 5
+C
+      WRITE (IPRT, 1140) LDSMIN
+      RETURN
+C
+    5 CONTINUE
+C
+      NTEST = 0
+C
+C
+C     **TEST ON NORMAL STATEMENT**
+C
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1130)
+      WRITE (IPRT,1000)
+      CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1, IVCV,
+     +   NNZW, NPARE, RSD)
+      CALL NLS(Y1, XM1, N1, M1, IXM1, MDL1, PAR1, NPAR1, RES, LDSN1A)
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR1, PV, SDPV, RES, SDRES, VCV, N1, NPAR1, IVCV,
+     +   NNZW, NPARE, RSD)
+
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1130)
+      WRITE (IPRT,1010)
+      WRITE (IPRT,1340) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1, IVCV,
+     +   NNZW, NPARE, RSD)
+      CALL NLSC(Y1, XM1, N1, M1, IXM1, MDL1, PAR1, NPAR1, RES, LDSN1B,
+     +   IFIXED, STP, MIT, STOPSS, STOPP, SCALE, DELTA, IVAPRX, NPRT)
+      WRITE (IPRT,1350) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR1, PV, SDPV, RES, SDRES, VCV, N1, NPAR1, IVCV,
+     +   NNZW, NPARE, RSD)
+
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1130)
+      WRITE (IPRT,1020)
+      WRITE (IPRT,1340) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1, IVCV,
+     +   NNZW, NPARE, RSD)
+      CALL NLSS(Y1, XM1, N1, M1, IXM1, MDL1, PAR1, NPAR1, RES, LDSN1B,
+     +   IFIXED, STP, MIT, STOPSS, STOPP, SCALE, DELTA, IVAPRX, NPRT,
+     +   NPARE, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1350) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR1, PV, SDPV, RES, SDRES, VCV, N1, NPAR1, IVCV,
+     +   NNZW, NPARE, RSD)
+
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1130)
+      WRITE (IPRT,1030)
+      CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1, IVCV,
+     +   NNZW, NPARE, RSD)
+      CALL NLSW(Y1, WT, XM1, N1, M1, IXM1, MDL1, PAR1, NPAR1, RES,
+     +   LDSN1A)
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR1, PV, SDPV, RES, SDRES, VCV, N1, NPAR1, IVCV,
+     +   NNZW, NPARE, RSD)
+
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1130)
+      WRITE (IPRT,1040)
+      WRITE (IPRT,1340) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1, IVCV,
+     +   NNZW, NPARE, RSD)
+      CALL NLSWC(Y1, WT, XM1, N1, M1, IXM1, MDL1, PAR1, NPAR1, RES,
+     +   LDSN1B, IFIXED, STP, MIT, STOPSS, STOPP, SCALE, DELTA, IVAPRX,
+     +   NPRT)
+      WRITE (IPRT,1350) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR1, PV, SDPV, RES, SDRES, VCV, N1, NPAR1, IVCV,
+     +   NNZW, NPARE, RSD)
+
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1130)
+      WRITE (IPRT,1050)
+      WRITE (IPRT,1340) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1, IVCV,
+     +   NNZW, NPARE, RSD)
+      CALL NLSWS(Y1, WT, XM1, N1, M1, IXM1, MDL1, PAR1, NPAR1, RES,
+     +   LDSN1B, IFIXED, STP, MIT, STOPSS, STOPP, SCALE, DELTA, IVAPRX,
+     +   NPRT, NNZW, NPARE, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1350) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR1, PV, SDPV, RES, SDRES, VCV, N1, NPAR1, IVCV,
+     +   NNZW, NPARE, RSD)
+
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1130)
+      WRITE (IPRT,1060)
+      CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1, IVCV,
+     +   NNZW, NPARE, RSD)
+      CALL NLSD(Y1, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1, NPAR1, RES,
+     +   LDSA1)
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR1, PV, SDPV, RES, SDRES, VCV, N1, NPAR1, IVCV,
+     +   NNZW, NPARE, RSD)
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1130)
+      WRITE (IPRT,1070)
+      WRITE (IPRT,1360) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1, IVCV,
+     +   NNZW, NPARE, RSD)
+      CALL NLSDC(Y1, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1, NPAR1, RES,
+     +   LDSA1, IFIXED, IDRVCK, MIT, STOPSS, STOPP, SCALE, DELTA,
+     +   IVAPRX, NPRT)
+      WRITE (IPRT,1370) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR1, PV, SDPV, RES, SDRES, VCV, N1, NPAR1, IVCV,
+     +   NNZW, NPARE, RSD)
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1130)
+      WRITE (IPRT,1080)
+      WRITE (IPRT,1360) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1, IVCV,
+     +   NNZW, NPARE, RSD)
+      CALL NLSDS(Y1, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1, NPAR1, RES,
+     +   LDSA1, IFIXED, IDRVCK, MIT, STOPSS, STOPP, SCALE, DELTA,
+     +   IVAPRX, NPRT, NPARE, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1370) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR1, PV, SDPV, RES, SDRES, VCV, N1, NPAR1, IVCV,
+     +   NNZW, NPARE, RSD)
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1130)
+      WRITE (IPRT,1090)
+      WRITE (IPRT,1360) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1, IVCV,
+     +   NNZW, NPARE, RSD)
+      CALL NLSWD(Y1, WT, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1, NPAR1,
+     +   RES, LDSA1)
+      WRITE (IPRT,1370) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR1, PV, SDPV, RES, SDRES, VCV, N1, NPAR1, IVCV,
+     +   NNZW, NPARE, RSD)
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1130)
+      WRITE (IPRT,1100)
+      WRITE (IPRT,1360) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1, IVCV,
+     +   NNZW, NPARE, RSD)
+      CALL NLSWDC(Y1, WT, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1, NPAR1,
+     +   RES, LDSA1, IFIXED, IDRVCK, MIT, STOPSS, STOPP, SCALE, DELTA,
+     +   IVAPRX, NPRT)
+      WRITE (IPRT,1370) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR1, PV, SDPV, RES, SDRES, VCV, N1, NPAR1, IVCV,
+     +   NNZW, NPARE, RSD)
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1130)
+      WRITE (IPRT,1110)
+      WRITE (IPRT,1360) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1, IVCV,
+     +   NNZW, NPARE, RSD)
+      CALL NLSWDS(Y1, WT, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1, NPAR1,
+     +   RES, LDSA1, IFIXED, IDRVCK, MIT, STOPSS, STOPP, SCALE, DELTA,
+     +   IVAPRX, NPRT, NNZW, NPARE, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1370) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR1, PV, SDPV, RES, SDRES, VCV, N1, NPAR1, IVCV,
+     +   NNZW, NPARE, RSD)
+C
+C     TEST NL2SOL AND NL2SNO DIRECTLY
+C
+      WRITE (IPRT,1320)
+      CALL NL2X
+
+      RETURN
+
+ 1000 FORMAT (14H TEST OF NLS  )
+ 1010 FORMAT (15H TEST OF NLSC  )
+ 1020 FORMAT (15H TEST OF NLSS  )
+ 1030 FORMAT (14H TEST OF NLSW )
+ 1040 FORMAT (15H TEST OF NLSWC )
+ 1050 FORMAT (15H TEST OF NLSWS )
+ 1060 FORMAT (14H TEST OF NLSD )
+ 1070 FORMAT (15H TEST OF NLSDC )
+ 1080 FORMAT (15H TEST OF NLSDS )
+ 1090 FORMAT (14H TEST OF NLSWD)
+ 1100 FORMAT (15H TEST OF NLSWDC)
+ 1110 FORMAT (15H TEST OF NLSWDS)
+ 1120 FORMAT (/29H ***** RETURNED RESULTS *****, 5X, 15H (-1 INDICATES ,
+     +   39HVALUE NOT CHANGED BY CALLED SUBROUTINE)//9H IERR IS , I3)
+ 1130 FORMAT (15H NORMAL PROBLEM)
+ 1140 FORMAT (45H1 *** LDSTAK MUST BE GREATER THAN OR EQUAL TO , I6)
+ 1320 FORMAT (42H1TEST OF NL2SOL AND NL2SNO CALLED DIRECTLY)
+ 1330 FORMAT (54H1NONLINEAR LEAST SQUARES ESTIMATION SUBROUTINE TEST NU,
+     +   4HMBER, I5/)
+ 1340 FORMAT (24H INPUT   -  IFIXED(1) = , I6, 9X, 11H, STP(1) = ,
+     +   G15.8, 11H,    MIT = ,I5, 11H, STOPSS = , G15.8, 10H, STOPP = ,
+     +   G15.8/13X, 11HSCALE(1) = , G15.8, 11H,  DELTA = , G15.8,
+     +   11H, IVAPRX = , I5, 11H,   NPRT = , I5)
+ 1350 FORMAT (//24H OUTPUT  -  IFIXED(1) = , I6, 9X, 11H, STP(1) = ,
+     +   G15.8, 11H,    MIT = ,I5, 11H, STOPSS = , G15.8, 10H, STOPP = ,
+     +   G15.8/13X, 11HSCALE(1) = , G15.8, 11H,  DELTA = , G15.8,
+     +   11H, IVAPRX = , I5, 11H,   NPRT = , I5//)
+ 1360 FORMAT (24H INPUT   -  IFIXED(1) = , I6, 9X, 11H, IDRVCK = ,
+     +   I5, 10X, 11H,    MIT = ,I5, 11H, STOPSS = , G15.8,
+     +   10H, STOPP = , G15.8/
+     +   13X, 11HSCALE(1) = , G15.8, 11H,  DELTA = , G15.8,
+     +   11H, IVAPRX = , I5, 11H,   NPRT = , I6)
+ 1370 FORMAT (//24H OUTPUT  -  IFIXED(1) = , I6, 9X, 11H, IDRVCK = ,
+     +   I5, 10X, 11H,    MIT = ,I5, 11H, STOPSS = , G15.8,
+     +   10H, STOPP = , G15.8/
+     +   13X, 11HSCALE(1) = , G15.8, 11H,  DELTA = , G15.8,
+     +   11H, IVAPRX = , I5, 11H,   NPRT = , I5//)
+      END
+      SUBROUTINE XNLSE(LDSTAK)
+
+c*********************************************************************72
+c
+cc XNLSE demonstrates user callable routines in the nonlinear least squares family.
+C
+c  Modified:
+c
+c    25 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      REAL
+     +   DELTA,RSD,STOPP,STOPSS
+      INTEGER
+     +   I,IDRVCK,IPRT,IVAPRX,IVCV,IXM1,IXM3,LDSA1,LDSMIN,LDSN3A,
+     +   M1,M3,MIT,N1,N3,NNZW,NPAR1,NPAR3,NPARE,NPRT,NTEST
+C
+C  LOCAL ARRAYS
+      REAL
+     +   PAR1(10),PAR3(10),PV(100),RES(100),SCALE(10),SDPV(100),
+     +   SDRES(100),STP(10),VCV(6,6),WT(100),XM1(10,2),XM3(101,5),
+     +   Y1(10),Y3(100)
+      INTEGER
+     +   IFIXED(10)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL DRV1A,DRV1B,IPRINT,LDSCMP,MDL1,MDL3,NLS,NLSC,NLSD,NLSDC,
+     +   NLSDS,NLSS,NLSW,NLSWC,NLSWD,NLSWDC,NLSWDS,NLSWS,NLSX1,
+     +   NLSX2,SETRV
+C
+C  INTRINSIC FUNCTIONS
+      INTRINSIC MAX
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     REAL DELTA
+C        THE MAXIMUM CHANGE ALLOWED IN THE MODEL PARAMETERS AT THE
+C        FIRST ITERATION.
+C     EXTERNAL DRV1A, DRV1B
+C        THE NAME OF THE USER SUPPLIED SUBROUTINE WHICH COMPUTES THE
+C        DERIVATIVE (JACOBIAN) MATRIX OF THE MODEL.
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     INTEGER I
+C        AN INDEX VALUE.
+C     INTEGER IDRVCK
+C        THE VARIABLE USED TO INDICATE WHETHER THE DERIVATIVES ARE
+C        TO BE CHECKED (IDRVCK = 1) OR NOT (IDRVCK = 0).
+C     INTEGER IERR
+C        THE INTEGER VALUE RETURNED BY THIS ROUTINE DESIGNATING
+C        WHETHER ANY ERRORS WERE DETECTED IN THE PARAMETER LIST.
+C        IF IERR .EQ. 0, NO ERRORS WERE DETECTED.
+C        IF IERR .GE. 1, ERRORS WERE DETECTED.
+C     INTEGER IFIXED(10)
+C        THE INDICATOR VALUES USED TO DESIGNATE WHETHER THE
+C        PARAMETERS ARE TO BE OPTIMIZED OR ARE TO BE HELD FIXED.  IF
+C        IFIXED(I).NE.0, THEN PAR(I) WILL BE OPTIMIZED.  IF
+C        IFIXED(I).EQ.0, THEN PAR(I) WILL BE HELD FIXED.
+C        IFIXED(I).LT.0, THEN ALL PAR(I),I=1,NPAR, WILL BE OPTIMIZED..
+C     INTEGER IPRT
+C        THE UNIT NUMBER FOR PRINTED OUTPUT.
+C     INTEGER IVAPRX
+C        AN INDICATOR VALUE USED TO DESIGNATE WHICH OPTION IS TO BE USED
+C        TO COMPUTE THE VARIANCE COVARIANCE MATRIX (VCV), WHERE
+C        IVAPRX LE 0 INDICATES THE THE DEFAULT OPTION WILL BE USED
+C        IVAPRX EQ 1 INDICATES THE VCV IS TO BE COMPUTED BY
+C                       INVERSE(HESSIAN)*TRANSPOSE(JACOBIAN)*JACOBIAN
+C                          *INVERSE(HESSIAN)
+C                    USING BOTH THE MODEL SUBROUTINE THE USER SUPPLIED
+C                    DERIVATIVE SUBROUTINE WHEN IT IS AVAILABLE
+C        IVAPRX EQ 2 INDICATES THE VCV IS TO BE COMPUTED BY
+C                       INVERSE(HESSIAN)
+C                    USING BOTH THE MODEL SUBROUTINE THE USER SUPPLIED
+C                    DERIVATIVE SUBROUTINE WHEN IT IS AVAILABLE
+C        IVAPRX EQ 3 INDICATES THE VCV IS TO BE COMPUTED BY
+C                       INVERSE(TRANSPOSE(JACOBIAN)*JACOBIAN)
+C                    USING BOTH THE MODEL SUBROUTINE THE USER SUPPLIED
+C                    DERIVATIVE SUBROUTINE WHEN IT IS AVAILABLE
+C        IVAPRX EQ 4 INDICATES THE VCV IS TO BE COMPUTED BY
+C                       INVERSE(HESSIAN)*TRANSPOSE(JACOBIAN)*JACOBIAN
+C                          *INVERSE(HESSIAN)
+C                    USING ONLY THE MODEL SUBROUTINE
+C        IVAPRX EQ 5 INDICATES THE VCV IS TO BE COMPUTED BY
+C                       INVERSE(HESSIAN)
+C                    USING ONLY THE MODEL SUBROUTINE
+C        IVAPRX EQ 6 INDICATES THE VCV IS TO BE COMPUTED BY
+C                       INVERSE(TRANSPOSE(JACOBIAN)*JACOBIAN)
+C                    USING ONLY THE MODEL SUBROUTINE
+C        IVAPRX GE 7 INDICATES THE DEFAULT OPTION WILL BE USED
+C     INTEGER IVCV
+C        THE FIRST DIMENSION OF THE VARIANCE COVARIANCE MATRIX VCV.
+C     INTEGER IXM1, IXM3
+C        THE FIRST DIMENSION OF THE INDEPENDENT VARIABLE ARRAY.
+C     INTEGER LDSA1, LDSN3A
+C        THE MINIMUM LENGTH ALLOWED FOR THE ARRAY DSTAK
+C        FOR THE ROUTINES WITH ANALYTIC DERIVATIVES AND
+C        NUMERICAL DERIVATIVES, RESPECTIVELY.
+C     INTEGER LDSMIN
+C        THE MINIMUM LENGTH OF THE ARRAY DSTAK ALLOWED.
+C     INTEGER LDSTAK
+C        THE LENGTH OF THE ARRAY DSTAK.
+C     INTEGER M1, M3
+C        THE NUMBER OF INDEPENDENT VARIABLES.
+C     INTEGER MIT
+C        THE MAXIMUM NUMBER OF ITERATIONS ALLOWED.
+C     EXTERNAL MDL1, MDL3
+C        THE NAME OF THE USER SUPPLIED SUBROUTINE WHICH COMPUTES THE
+C        PREDICTED VALUES BASED ON THE CURRENT PARAMETER ESTIMATE.
+C     INTEGER N1, N3
+C        THE NUMBER OF OBSERVATIONS.
+C     INTEGER NPARE
+C        THE NUMBER OF PARAMETERS ESTIMATED BY THE ROUTINE.
+C     INTEGER NPAR1, NPAR3
+C        THE NUMBER OF UNKNOWN PARAMETERS IN THE MODEL.
+C     INTEGER NNZW
+C        THE NUMBER OF NON ZERO WEIGHTS.
+C     INTEGER NPRT
+C        THE PARAMETER USED TO INDICATE HOW MUCH PRINTED OUTPUT IS
+C        TO BE PROVIDED.
+C     INTEGER NTEST
+C        THE NUMBER OF THE CURRENT TEST.
+C     REAL PAR1(10), PAR3(10)
+C        THE ARRAY IN WHICH THE CURRENT ESTIMATES OF THE UNKNOWN
+C        PARAMETERS ARE STORED.
+C     REAL PV(100)
+C        THE STARTING LOCATION IN RSTAK/DSTAK OF
+C        THE PREDICTED VALUE BASED ON THE CURRENT PARAMETER ESTIMATES
+C     REAL RES(100)
+C        THE RESIDUALS FROM THE FIT.
+C     REAL RSD
+C        THE VALUE OF THE RESIDUAL STANDARD DEVIATION AT THE SOLUTION.
+C     REAL SCALE(10)
+C        A VALUE TO INDICATE USE OF THE DEFAULT VALUES OF
+C        THE TYPICAL SIZE OF THE UNKNOWN PARAMETERS.
+C     REAL SDPV(100)
+C        THE STARTING LOCATION IN RSTAK/DSTAK OF
+C        THE STANDARD DEVIATION OF THE PREDICTED VALUE.
+C     REAL SDRES(100)
+C        THE STARTING LOCATION IN RSTAK/DSTAK OF THE
+C        THE STANDARD DEVIATIONS OF THE RESIDUALS.
+C     REAL STOPP
+C        THE STOPPING CRITERION FOR THE TEST BASED ON THE MAXIMUM SCALED
+C        RELATIVE CHANGE IN THE ELEMENTS OF THE MODEL PARAMETER VECTOR
+C     REAL STOPSS
+C        THE STOPPING CRITERION FOR THE TEST BASED ON THE RATIO OF THE
+C        PREDICTED DECREASE IN THE RESIDUAL SUM OF SQUARES (COMPUTED
+C        BY STARPAC) TO THE CURRENT RESIDUAL SUM OF SQUARES ESTIMATE.
+C     REAL STP(10)
+C        THE RCSTEP SIZE ARRAY.
+C     REAL VCV(6,6)
+C        THE COVARIANCE MATRIX.
+C     REAL WT(100)
+C        THE USER SUPPLIED WEIGHTS.
+C     REAL XM1(10,2), XM3(101,5)
+C        THE ARRAY IN WHICH ONE ROW OF THE INDEPENDENT VARIABLE ARRAY
+C        IS STORED.
+C     REAL Y1(10), Y3(100)
+C        THE ARRAY OF THE DEPENDENT VARIABLE.
+C
+C     DEFINE CONSTANTS
+C
+      DATA Y1(1), Y1(2), Y1(3), Y1(4), Y1(5), Y1(6)
+     +   /2.138E0, 3.421E0, 3.597E0, 4.340E0, 4.882E0, 5.660E0/
+C
+      DATA XM1(1,1), XM1(2,1), XM1(3,1), XM1(4,1), XM1(5,1), XM1(6,1)
+     +   /1.309E0, 1.471E0, 1.490E0, 1.565E0, 1.611E0, 1.680E0/
+C
+      DATA N3 /50/, M3 /5/, IXM3 /101/, NPAR3 /5/
+C
+      CALL IPRINT(IPRT)
+C
+      CALL NLSX2(N1, M1, IXM1, NPAR1, IFIXED, STP, IDRVCK, MIT, STOPSS,
+     +   STOPP, SCALE, DELTA, IVAPRX, NPRT, IVCV)
+C
+      CALL SETRV(WT, N3, 1.0E0)
+C
+      CALL LDSCMP(6, 0, 60+2*NPAR1, 0, 0, 0,
+     +   'S', 94+N1*(3+NPAR1)+NPAR1*(3*NPAR1+35)/2, LDSA1)
+      CALL LDSCMP(14, 0, MAX(2*(N3+NPAR3),60+2*NPAR3), 0, 0, 0,
+     +   'S', MAX(10*N3,94+N3*(3+NPAR3)+NPAR3*(3*NPAR3+37)/2), LDSN3A)
+C
+      LDSMIN = MAX(LDSA1, LDSN3A)
+C
+      IF (LDSMIN.LE.LDSTAK) GO TO 5
+C
+      WRITE (IPRT, 1190) LDSMIN
+      RETURN
+C
+    5 CONTINUE
+C
+      DO 20 I=1,N3
+         XM3(I,1) = 1.0E0
+         XM3(I,2) = I
+         XM3(I,3) = XM3(I,2)*XM3(I,2)
+         XM3(I,4) = XM3(I,3)*XM3(I,2)
+         XM3(I,5) = XM3(I,4)*XM3(I,2)
+         Y3(I) = XM3(I,1) + XM3(I,2) + XM3(I,3) + XM3(I,4) + XM3(I,5)
+   20 CONTINUE
+C
+      NTEST = 0
+C
+C
+C
+C     CHECK ERROR HANDLING
+C
+C        TEST 1  -  PROBLEM SPECIFICATION
+C
+      N1 = -5
+      M1 = -1
+      IXM1 = -10
+      NPAR1 = 0
+      IVCV = -10
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1140)
+C
+      WRITE (IPRT,1000)
+      CALL NLS(Y1, XM1, N1, M1, IXM1, MDL1, PAR1, NPAR1, RES, LDSTAK)
+      WRITE (IPRT,1120) IERR
+C
+      WRITE (IPRT,1010)
+      WRITE (IPRT,1340) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSC(Y1, XM1, N1, M1, IXM1, MDL1, PAR1, NPAR1, RES, LDSTAK,
+     +   IFIXED, STP, MIT, STOPSS, STOPP, SCALE, DELTA, IVAPRX, NPRT)
+      WRITE (IPRT,1350) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+C
+      NPAR1 = 8
+      N1 = 2
+      WRITE (IPRT,1020)
+      WRITE (IPRT,1340) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSS(Y1, XM1, N1, M1, IXM1, MDL1, PAR1, NPAR1, RES, LDSTAK,
+     +   IFIXED, STP, MIT, STOPSS, STOPP, SCALE, DELTA, IVAPRX, NPRT,
+     +   NPARE, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1350) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+C
+      WRITE (IPRT,1030)
+      CALL NLSW(Y1, WT, XM1, N1, M1, IXM1, MDL1, PAR1, NPAR1, RES,
+     +   LDSTAK)
+      WRITE (IPRT,1120) IERR
+C
+      WRITE (IPRT,1040)
+      WRITE (IPRT,1340) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSWC(Y1, WT, XM1, N1, M1, IXM1, MDL1, PAR1, NPAR1, RES,
+     +   LDSTAK, IFIXED, STP, MIT, STOPSS, STOPP, SCALE, DELTA, IVAPRX,
+     +   NPRT)
+      WRITE (IPRT,1350) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+C
+      WRITE (IPRT,1050)
+      WRITE (IPRT,1340) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSWS(Y1, WT, XM1, N1, M1, IXM1, MDL1, PAR1, NPAR1, RES,
+     +   LDSTAK, IFIXED, STP, MIT, STOPSS, STOPP, SCALE, DELTA, IVAPRX,
+     +   NPRT, NNZW, NPARE, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1350) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+C
+      WRITE (IPRT,1060)
+      CALL NLSD(Y1, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1, NPAR1, RES,
+     +   LDSTAK)
+      WRITE (IPRT,1120) IERR
+C
+      WRITE (IPRT,1070)
+      WRITE (IPRT,1360) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSDC(Y1, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1, NPAR1, RES,
+     +   LDSTAK, IFIXED, IDRVCK, MIT, STOPSS, STOPP, SCALE, DELTA,
+     +   IVAPRX, NPRT)
+      WRITE (IPRT,1370) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+C
+      N1 = 15
+      WRITE (IPRT,1080)
+      WRITE (IPRT,1370) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSDS(Y1, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1, NPAR1, RES,
+     +   LDSTAK, IFIXED, IDRVCK, MIT, STOPSS, STOPP, SCALE, DELTA,
+     +   IVAPRX, NPRT, NPARE, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1370) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+C
+      WRITE (IPRT,1090)
+      CALL NLSWD(Y1, WT, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1, NPAR1,
+     +   RES, LDSTAK)
+      WRITE (IPRT,1120) IERR
+C
+      WRITE (IPRT,1100)
+      WRITE (IPRT,1360) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSWDC(Y1, WT, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1, NPAR1,
+     +   RES, LDSTAK, IFIXED, IDRVCK, MIT, STOPSS, STOPP, SCALE, DELTA,
+     +   IVAPRX, NPRT)
+      WRITE (IPRT,1370) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+C
+      WRITE (IPRT,1110)
+      WRITE (IPRT,1360) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSWDS(Y1, WT, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1, NPAR1,
+     +   RES, LDSTAK, IFIXED, IDRVCK, MIT, STOPSS, STOPP, SCALE, DELTA,
+     +   IVAPRX, NPRT, NNZW, NPARE, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1370) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+C
+C        TEST 2  -  WEIGHTS AND CONTROL VALUES
+C
+      CALL NLSX2(N1, M1, IXM1, NPAR1, IFIXED, STP, IDRVCK, MIT, STOPSS,
+     +   STOPP, SCALE, DELTA, IVAPRX, NPRT, IVCV)
+C
+      WT(N1) = -1.0E0
+      STP(1) = 1.0E0
+      STP(2) = 0.0E0
+      SCALE(1) = 1.0E0
+      SCALE(2) = 0.0E0
+      DO 30 I=1,NPAR1
+         IFIXED(I) = 1
+   30 CONTINUE
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1150)
+C
+      WRITE (IPRT,1050)
+      WRITE (IPRT,1340) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSWS(Y1, WT, XM1, N1, M1, IXM1, MDL1, PAR1, NPAR1, RES,
+     +   LDSTAK, IFIXED, STP, MIT, STOPSS, STOPP, SCALE, DELTA, IVAPRX,
+     +   NPRT, NNZW, NPARE, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1350) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+C
+      WRITE (IPRT,1090)
+      WRITE (IPRT,1360) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSWD(Y1, WT, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1, NPAR1,
+     +   RES, LDSTAK)
+      CALL NLSWDS(Y1, WT, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1, NPAR1,
+     +   RES, LDSTAK, IFIXED, IDRVCK, MIT, STOPSS, STOPP, SCALE, DELTA,
+     +   IVAPRX, NPRT, NNZW, NPARE, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1370) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+C
+C
+C        TEST 3  -  TOO FEW POSITIVE WEIGHTS
+C
+      CALL NLSX2(N1, M1, IXM1, NPAR1, IFIXED, STP, IDRVCK, MIT, STOPSS,
+     +   STOPP, SCALE, DELTA, IVAPRX, NPRT, IVCV)
+C
+      CALL SETRV(WT(2), N1-1, 0.0E0)
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1160)
+C
+      WRITE (IPRT,1030)
+      CALL NLSW(Y1, WT, XM1, N1, M1, IXM1, MDL1, PAR1, NPAR1, RES,
+     +   LDSTAK)
+      WRITE (IPRT,1120) IERR
+C
+      WRITE (IPRT,1110)
+      CALL NLSWDS(Y1, WT, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1, NPAR1,
+     +   RES, LDSTAK, IFIXED, IDRVCK, MIT, STOPSS, STOPP, SCALE, DELTA,
+     +   IVAPRX, NPRT, NNZW, NPARE, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1120) IERR
+C
+C
+C        TEST 4  -  DEFINITE ERROR IN DERIVATIVE
+C
+      CALL NLSX2(N1, M1, IXM1, NPAR1, IFIXED, STP, IDRVCK, MIT, STOPSS,
+     +   STOPP, SCALE, DELTA, IVAPRX, NPRT, IVCV)
+C
+      CALL SETRV(WT, N1, 1.0E0)
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1170)
+C
+      WRITE (IPRT,1060)
+      CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1, IVCV,
+     +   NNZW, NPARE, RSD)
+      CALL NLSD(Y1, XM1, N1, M1, IXM1, MDL1, DRV1B, PAR1, NPAR1, RES,
+     +   LDSTAK)
+      WRITE (IPRT,1120) IERR
+C
+C
+C        TEST 5  -  POSSIBLE ERROR IN DERIVATIVE
+C
+      CALL NLSX2(N1, M1, IXM1, NPAR1, IFIXED, STP, IDRVCK, MIT, STOPSS,
+     +   STOPP, SCALE, DELTA, IVAPRX, NPRT, IVCV)
+      IDRVCK = 1
+      NPRT = 10000
+C
+      CALL SETRV(WT, N1, 1.0E0)
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1180)
+      CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1, IVCV,
+     +   NNZW, NPARE, RSD)
+      PAR1(1) = 0.0E0
+      WRITE (IPRT,1070)
+      WRITE (IPRT,1360) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSDC(Y1, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1, NPAR1, RES,
+     +   LDSTAK, IFIXED, IDRVCK, MIT, STOPSS, STOPP, SCALE, DELTA,
+     +   IVAPRX, NPRT)
+      WRITE (IPRT,1370) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+C
+C
+C        TEST 6 -  INSUFFICIENT WORK AREA LENGTH
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1230)
+      CALL NLSX2(N1, M1, IXM1, NPAR1, IFIXED, STP, IDRVCK, MIT, STOPSS,
+     +   STOPP, SCALE, DELTA, IVAPRX, NPRT, IVCV)
+C
+      WRITE (IPRT,1000)
+      CALL NLSX1(3, PAR3, NPAR3, PV, SDPV, RES, SDRES, VCV, N3, IVCV,
+     +   NNZW, NPARE, RSD)
+      CALL NLS(Y3, XM3, N3, M3, IXM3, MDL3, PAR3, NPAR3, RES, LDSN3A-1)
+      WRITE (IPRT,1120) IERR
+C
+      WRITE (IPRT,1090)
+      CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N3, IVCV,
+     +   NNZW, NPARE, RSD)
+      CALL NLSWD(Y1, WT, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1, NPAR1,
+     +   RES, LDSA1-1)
+      WRITE (IPRT,1120) IERR
+C
+C
+      RETURN
+C
+C     FORMAT STATEMENTS
+C
+ 1000 FORMAT (14H TEST OF NLS  )
+ 1010 FORMAT (15H TEST OF NLSC  )
+ 1020 FORMAT (15H TEST OF NLSS  )
+ 1030 FORMAT (14H TEST OF NLSW )
+ 1040 FORMAT (15H TEST OF NLSWC )
+ 1050 FORMAT (15H TEST OF NLSWS )
+ 1060 FORMAT (14H TEST OF NLSD )
+ 1070 FORMAT (15H TEST OF NLSDC )
+ 1080 FORMAT (15H TEST OF NLSDS )
+ 1090 FORMAT (14H TEST OF NLSWD)
+ 1100 FORMAT (15H TEST OF NLSWDC)
+ 1110 FORMAT (15H TEST OF NLSWDS)
+ 1120 FORMAT (/29H ***** RETURNED RESULTS *****, 5X, 15H (-1 INDICATES ,
+     +   39HVALUE NOT CHANGED BY CALLED SUBROUTINE)//9H IERR IS , I3)
+ 1140 FORMAT (46H ERROR HANDLING TEST 1 - PROBLEM SPECIFICATION)
+ 1150 FORMAT (51H ERROR HANDLING TEST 2 - WEIGHTS AND CONTROL VALUES)
+ 1160 FORMAT (49H ERROR HANDLING TEST 3 - TOO FEW POSITIVE WEIGHTS)
+ 1170 FORMAT (53H ERROR HANDLING TEST 4 - DEFINITE ERROR IN DERIVATIVE)
+ 1180 FORMAT (53H ERROR HANDLING TEST 5 - POSSIBLE ERROR IN DERIVATIVE)
+ 1190 FORMAT (45H1 *** LDSTAK MUST BE GREATER THAN OR EQUAL TO , I6)
+ 1230 FORMAT (' ERROR HANDLING TEST 6 - INSUFFICIENT WORK AREA LENGTH')
+ 1330 FORMAT (54H1NONLINEAR LEAST SQUARES ESTIMATION SUBROUTINE TEST NU,
+     +   4HMBER, I5/)
+ 1340 FORMAT (24H INPUT   -  IFIXED(1) = , I6, 9X, 11H, STP(1) = ,
+     +   G15.8, 11H,    MIT = ,I5, 11H, STOPSS = , G15.8, 10H, STOPP = ,
+     +   G15.8/13X, 11HSCALE(1) = , G15.8, 11H,  DELTA = , G15.8,
+     +   11H, IVAPRX = , I5, 11H,   NPRT = , I5)
+ 1350 FORMAT (//24H OUTPUT  -  IFIXED(1) = , I6, 9X, 11H, STP(1) = ,
+     +   G15.8, 11H,    MIT = ,I5, 11H, STOPSS = , G15.8, 10H, STOPP = ,
+     +   G15.8/13X, 11HSCALE(1) = , G15.8, 11H,  DELTA = , G15.8,
+     +   11H, IVAPRX = , I5, 11H,   NPRT = , I5//)
+ 1360 FORMAT (24H INPUT   -  IFIXED(1) = , I6, 9X, 11H, IDRVCK = ,
+     +   I5, 10X, 11H,    MIT = ,I5, 11H, STOPSS = , G15.8,
+     +   10H, STOPP = , G15.8/
+     +   13X, 11HSCALE(1) = , G15.8, 11H,  DELTA = , G15.8,
+     +   11H, IVAPRX = , I5, 11H,   NPRT = , I6)
+ 1370 FORMAT (//24H OUTPUT  -  IFIXED(1) = , I6, 9X, 11H, IDRVCK = ,
+     +   I5, 10X, 11H,    MIT = ,I5, 11H, STOPSS = , G15.8,
+     +   10H, STOPP = , G15.8/
+     +   13X, 11HSCALE(1) = , G15.8, 11H,  DELTA = , G15.8,
+     +   11H, IVAPRX = , I5, 11H,   NPRT = , I5//)
+      END
+      SUBROUTINE XNLST(LDSTAK)
+
+c*********************************************************************72
+c
+cc XNLST demonstrates user callable routines in the nonlinear least squares family.
+C
+c  Modified:
+c
+c    25 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      REAL
+     +   DELTA,RSD,STOPP,STOPSS
+      INTEGER
+     +   I,IDRVCK,IPRT,IVAPRX,IVCV,IXM1,IXM2,IXM3,LDSA1,LDSMIN,
+     +   LDSN1B,M1,M2,M3,MIT,N1,N2,N3,NNZW,NPAR1,NPAR2,NPAR3,NPARE,
+     +   NPRT,NTEST
+C
+C  LOCAL ARRAYS
+      REAL
+     +   PAR1(10),PAR2(10),PAR3(10),PV(100),RES(100),SCALE(10),
+     +   SDPV(100),SDRES(100),STOP(8),STP(10),VCV(6,6),WT(100),
+     +   XM1(10,2),XM2(10,3),XM3(101,5),Y1(10),Y2(10),Y3(100)
+      INTEGER
+     +   IFIXED(10),IVCTST(9)
+C
+C  EXTERNAL FUNCTIONS
+      REAL
+     +   RMDCON
+      EXTERNAL RMDCON
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL DRV1A,DRV2,DRV3,FITXSP,IPRINT,LDSCMP,MDL1,MDL2,MDL3,NLSC,
+     +   NLSDC,NLSDS,NLSS,NLSWC,NLSWDC,NLSWDS,NLSWS,NLSX1,NLSX2,
+     +   SETRV
+C
+C  INTRINSIC FUNCTIONS
+      INTRINSIC MAX
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     REAL DELTA
+C        THE MAXIMUM CHANGE ALLOWED IN THE MODEL PARAMETERS AT THE
+C        FIRST ITERATION.
+C     EXTERNAL DRV1A, DRV2, DRV3
+C        THE NAME OF THE USER SUPPLIED SUBROUTINE WHICH COMPUTES THE
+C        DERIVATIVE (JACOBIAN) MATRIX OF THE MODEL.
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     INTEGER I
+C        AN INDEX VALUE.
+C     INTEGER IDRVCK
+C        THE VARIABLE USED TO INDICATE WHETHER THE DERIVATIVES ARE
+C        TO BE CHECKED (IDRVCK = 1) OR NOT (IDRVCK = 0).
+C     INTEGER IERR
+C        THE INTEGER VALUE RETURNED BY THIS ROUTINE DESIGNATING
+C        WHETHER ANY ERRORS WERE DETECTED IN THE PARAMETER LIST.
+C        IF IERR .EQ. 0, NO ERRORS WERE DETECTED.
+C        IF IERR .GE. 1, ERRORS WERE DETECTED.
+C     INTEGER IFIXED(10)
+C        THE INDICATOR VALUES USED TO DESIGNATE WHETHER THE
+C        PARAMETERS ARE TO BE OPTIMIZED OR ARE TO BE HELD FIXED.  IF
+C        IFIXED(I).NE.0, THEN PAR(I) WILL BE OPTIMIZED.  IF
+C        IFIXED(I).EQ.0, THEN PAR(I) WILL BE HELD FIXED.
+C        IFIXED(I).LT.0, THEN ALL PAR(I),I=1,NPAR, WILL BE OPTIMIZED..
+C     INTEGER IPRT
+C        THE UNIT NUMBER FOR PRINTED OUTPUT.
+C     INTEGER IVCTST(9)
+C        VARIANCE-COVARIANCE CODE TEST VALUES.
+C     INTEGER IVAPRX
+C        AN INDICATOR VALUE USED TO DESIGNATE WHICH OPTION IS TO BE USED
+C        TO COMPUTE THE VARIANCE COVARIANCE MATRIX (VCV), WHERE
+C        IVAPRX LE 0 INDICATES THE THE DEFAULT OPTION WILL BE USED
+C        IVAPRX EQ 1 INDICATES THE VCV IS TO BE COMPUTED BY
+C                       INVERSE(HESSIAN)*TRANSPOSE(JACOBIAN)*JACOBIAN
+C                          *INVERSE(HESSIAN)
+C                    USING BOTH THE MODEL SUBROUTINE THE USER SUPPLIED
+C                    DERIVATIVE SUBROUTINE WHEN IT IS AVAILABLE
+C        IVAPRX EQ 2 INDICATES THE VCV IS TO BE COMPUTED BY
+C                       INVERSE(HESSIAN)
+C                    USING BOTH THE MODEL SUBROUTINE THE USER SUPPLIED
+C                    DERIVATIVE SUBROUTINE WHEN IT IS AVAILABLE
+C        IVAPRX EQ 3 INDICATES THE VCV IS TO BE COMPUTED BY
+C                       INVERSE(TRANSPOSE(JACOBIAN)*JACOBIAN)
+C                    USING BOTH THE MODEL SUBROUTINE THE USER SUPPLIED
+C                    DERIVATIVE SUBROUTINE WHEN IT IS AVAILABLE
+C        IVAPRX EQ 4 INDICATES THE VCV IS TO BE COMPUTED BY
+C                       INVERSE(HESSIAN)*TRANSPOSE(JACOBIAN)*JACOBIAN
+C                          *INVERSE(HESSIAN)
+C                    USING ONLY THE MODEL SUBROUTINE
+C        IVAPRX EQ 5 INDICATES THE VCV IS TO BE COMPUTED BY
+C                       INVERSE(HESSIAN)
+C                    USING ONLY THE MODEL SUBROUTINE
+C        IVAPRX EQ 6 INDICATES THE VCV IS TO BE COMPUTED BY
+C                       INVERSE(TRANSPOSE(JACOBIAN)*JACOBIAN)
+C                    USING ONLY THE MODEL SUBROUTINE
+C        IVAPRX GE 7 INDICATES THE DEFAULT OPTION WILL BE USED
+C     INTEGER IVCV
+C        THE FIRST DIMENSION OF THE VARIANCE COVARIANCE MATRIX VCV.
+C     INTEGER IXM1, IXM2, IXM3
+C        THE FIRST DIMENSION OF THE INDEPENDENT VARIABLE ARRAY.
+C     INTEGER LDSA1, LDSN1B
+C        THE MINIMUM LENGTH ALLOWED FOR THE ARRAY DSTAK
+C        FOR THE ROUTINES WITH ANALYTIC DERIVATIVES AND
+C        NUMERICAL DERIVATIVES, RESPECTIVELY.
+C     INTEGER LDSTAK
+C        THE LENGTH OF THE ARRAY DSTAK.
+C     INTEGER M1, M2, M3
+C        THE NUMBER OF INDEPENDENT VARIABLES.
+C     INTEGER MIT
+C        THE MAXIMUM NUMBER OF ITERATIONS ALLOWED.
+C     EXTERNAL MDL1, MDL2, MDL3
+C        THE NAME OF THE USER SUPPLIED SUBROUTINE WHICH COMPUTES THE
+C        PREDICTED VALUES BASED ON THE CURRENT PARAMETER ESTIMATE.
+C     INTEGER N1, N2, N3
+C        THE NUMBER OF OBSERVATIONS.
+C     INTEGER NPARE
+C        THE NUMBER OF PARAMETERS ESTIMATED BY THE ROUTINE.
+C     INTEGER NPAR1, NPAR2, NPAR3
+C        THE NUMBER OF UNKNOWN PARAMETERS IN THE MODEL.
+C     INTEGER NNZW
+C        THE NUMBER OF NON ZERO WEIGHTS.
+C     INTEGER NPRT
+C        THE PARAMETER USED TO INDICATE HOW MUCH PRINTED OUTPUT IS
+C        TO BE PROVIDED.
+C     INTEGER NTEST
+C        THE NUMBER OF THE CURRENT TEST.
+C     REAL PAR1(10), PAR2(10), PAR3(10)
+C        THE ARRAY IN WHICH THE CURRENT ESTIMATES OF THE UNKNOWN
+C        PARAMETERS ARE STORED.
+C     REAL PV(100)
+C        THE STARTING LOCATION IN RSTAK/DSTAK OF
+C        THE PREDICTED VALUE BASED ON THE CURRENT PARAMETER ESTIMATES
+C     REAL RES(100)
+C        THE RESIDUALS FROM THE FIT.
+C     REAL RSD
+C        THE VALUE OF THE RESIDUAL STANDARD DEVIATION AT THE SOLUTION.
+C     REAL SCALE(10)
+C        A VALUE TO INDICATE USE OF THE DEFAULT VALUES OF
+C        THE TYPICAL SIZE OF THE UNKNOWN PARAMETERS.
+C     REAL SDPV(100)
+C        THE STARTING LOCATION IN RSTAK/DSTAK OF
+C        THE STANDARD DEVIATION OF THE PREDICTED VALUE.
+C     REAL SDRES(100)
+C        THE STARTING LOCATION IN RSTAK/DSTAK OF THE
+C        THE STANDARD DEVIATIONS OF THE RESIDUALS.
+C     REAL STOP(8)
+C        STOPPING CRITERIA TEST VARIABLE.
+C     REAL STOPP
+C        THE STOPPING CRITERION FOR THE TEST BASED ON THE MAXIMUM SCALED
+C        RELATIVE CHANGE IN THE ELEMENTS OF THE MODEL PARAMETER VECTOR
+C     REAL STOPSS
+C        THE STOPPING CRITERION FOR THE TEST BASED ON THE RATIO OF THE
+C        PREDICTED DECREASE IN THE RESIDUAL SUM OF SQUARES (COMPUTED
+C        BY STARPAC) TO THE CURRENT RESIDUAL SUM OF SQUARES ESTIMATE.
+C     REAL STP(10)
+C        THE RCSTEP SIZE ARRAY.
+C     REAL VCV(6,6)
+C        THE COVARIANCE MATRIX.
+C     REAL WT(100)
+C        THE USER SUPPLIED WEIGHTS.
+C     REAL XM1(10,2), XM2(10,3), XM3(101,5)
+C        THE ARRAY IN WHICH ONE ROW OF THE INDEPENDENT VARIABLE ARRAY
+C        IS STORED.
+C     REAL Y1(10), Y2(10), Y3(100)
+C        THE ARRAY OF THE DEPENDENT VARIABLE.
+C
+C     DEFINE CONSTANTS
+C
+      DATA Y1(1), Y1(2), Y1(3), Y1(4), Y1(5), Y1(6)
+     +   /2.138E0, 3.421E0, 3.597E0, 4.340E0, 4.882E0, 5.660E0/
+C
+      DATA XM1(1,1), XM1(2,1), XM1(3,1), XM1(4,1), XM1(5,1), XM1(6,1)
+     +   /1.309E0, 1.471E0, 1.490E0, 1.565E0, 1.611E0, 1.680E0/
+C
+      DATA N2 /10/, M2 /3/, IXM2 /10/, NPAR2 /3/
+C
+      DATA N3 /50/, M3 /5/, IXM3 /101/, NPAR3 /5/
+C
+      CALL IPRINT(IPRT)
+C
+      CALL NLSX2(N1, M1, IXM1, NPAR1, IFIXED, STP, IDRVCK, MIT, STOPSS,
+     +   STOPP, SCALE, DELTA, IVAPRX, NPRT, IVCV)
+C
+      CALL SETRV(WT, N3, 1.0E0)
+C
+      CALL LDSCMP(6, 0, 60+2*NPAR1, 0, 0, 0,
+     +   'S', 94+N1*(3+NPAR1)+NPAR1*(3*NPAR1+35)/2, LDSA1)
+      CALL LDSCMP(14, 0, 60+2*NPAR1, 0, 0, 0,
+     +   'S', 94+N1*(3+NPAR1)+NPAR1*(3*NPAR1+37)/2, LDSN1B)
+      CALL LDSCMP(14, 0, MAX(2*(N3+NPAR3),60+2*NPAR3), 0, 0, 0,
+     +   'S', MAX(10*N3,94+N3*(3+NPAR3)+NPAR3*(3*NPAR3+37)/2), LDSMIN)
+C
+      IF (LDSMIN.LE.LDSTAK) GO TO 5
+C
+      WRITE (IPRT, 1000) LDSMIN
+      RETURN
+C
+    5 CONTINUE
+C
+      DO 10 I=1,N2
+         Y2(I) = 0.0E0
+         XM2(I,1) = I
+         XM2(I,2) = I + 0.125E0
+         XM2(I,3) = I + 0.25E0
+   10 CONTINUE
+C
+      DO 20 I=1,N3
+         XM3(I,1) = 1.0E0
+         XM3(I,2) = I
+         XM3(I,3) = XM3(I,2)*XM3(I,2)
+         XM3(I,4) = XM3(I,3)*XM3(I,2)
+         XM3(I,5) = XM3(I,4)*XM3(I,2)
+         Y3(I) = XM3(I,1) + XM3(I,2) + XM3(I,3) + XM3(I,4) + XM3(I,5)
+   20 CONTINUE
+C
+      NTEST = 0
+C
+C
+C
+C     **TEST CHECKING OF CONTROL CRITERIA**
+C
+      WRITE (IPRT,1240)
+C
+      STOP(1) = RMDCON(3)
+      STOP(2) = 0.1E0
+      STOP(3) = 0.9E0*RMDCON(3)
+      STOP(4) = 0.11E0
+      STOP(5) = 0.0E0
+      STOP(6) = 1.0E0
+      STOP(7) = -1.0E0
+      STOP(8) = 1.1E0
+C
+      NPRT = 11000
+      MIT = 0
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1250) MIT
+      CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1, IVCV,
+     +   NNZW, NPARE, RSD)
+      WRITE (IPRT,1100)
+      WRITE (IPRT,1360) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP, SCALE(1),
+     +   DELTA, IVAPRX, NPRT
+      CALL NLSWDC(Y1, WT, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1, NPAR1,
+     +   RES, LDSTAK, IFIXED, IDRVCK, MIT, STOPSS, STOPP, SCALE, DELTA,
+     +   IVAPRX, NPRT)
+      WRITE (IPRT,1370) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP, SCALE(1),
+     +   DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+C
+      MIT = 1
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1250) MIT
+      CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1, IVCV,
+     +   NNZW, NPARE, RSD)
+      WRITE (IPRT,1100)
+      WRITE (IPRT,1360) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP, SCALE(1),
+     +   DELTA, IVAPRX, NPRT
+      CALL NLSWDC(Y1, WT, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1, NPAR1,
+     +   RES, LDSTAK, IFIXED, IDRVCK, MIT, STOPSS, STOPP, SCALE, DELTA,
+     +   IVAPRX, NPRT)
+      WRITE (IPRT,1370) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP, SCALE(1),
+     +   DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1250) MIT
+      CALL NLSX1(2, PAR2, NPAR2, PV, SDPV, RES, SDRES, VCV, N2, IVCV,
+     +   NNZW, NPARE, RSD)
+      WRITE (IPRT,1050)
+      WRITE (IPRT,1340) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSWS(Y2, WT, XM2, N2, M2, IXM2, MDL2, PAR2, NPAR2, RES,
+     +   LDSTAK, IFIXED, STP, MIT, STOPSS, STOPP, SCALE, DELTA, IVAPRX,
+     +   NPRT, NNZW, NPARE, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1350) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR2, PV, SDPV, RES, SDRES, VCV, N2, NPAR2, IVCV,
+     +   NNZW, NPARE, RSD)
+C
+      CALL NLSX2(N1, M1, IXM1, NPAR1, IFIXED, STP, IDRVCK, MIT, STOPSS,
+     +   STOPP, SCALE, DELTA, IVAPRX, NPRT, IVCV)
+      DO 40 I=1,4
+         NTEST = NTEST + 1
+         WRITE (IPRT,1330) NTEST
+         WRITE (IPRT,1260) STOP(I)
+         CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1,
+     +      IVCV, NNZW, NPARE, RSD)
+         WRITE (IPRT,1100)
+         WRITE (IPRT,1360) IFIXED(1), IDRVCK, MIT, STOP(I), STOPP,
+     +      SCALE(1), DELTA, IVAPRX, NPRT
+         CALL NLSWDC(Y1, WT, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1,
+     +      NPAR1, RES, LDSTAK, IFIXED, IDRVCK, MIT, STOP(I), STOPP,
+     +      SCALE, DELTA, IVAPRX, NPRT)
+         WRITE (IPRT,1370) IFIXED(1), IDRVCK, MIT, STOP(I), STOPP,
+     +      SCALE(1), DELTA, IVAPRX, NPRT
+         WRITE (IPRT,1120) IERR
+   40 CONTINUE
+      DO 50 I=5,8
+         NTEST = NTEST + 1
+         WRITE (IPRT,1330) NTEST
+         WRITE (IPRT,1270) STOP(I)
+         CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1,
+     +      IVCV, NNZW, NPARE, RSD)
+         WRITE (IPRT,1100)
+         WRITE (IPRT,1360) IFIXED(1), IDRVCK, MIT, STOPSS, STOP(I),
+     +      SCALE(1), DELTA, IVAPRX, NPRT
+         CALL NLSWDC(Y1, WT, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1,
+     +      NPAR1, RES, LDSTAK, IFIXED, IDRVCK, MIT, STOPSS, STOP(I),
+     +      SCALE, DELTA, IVAPRX, NPRT)
+         WRITE (IPRT,1370) IFIXED(1), IDRVCK, MIT, STOPSS, STOP(I),
+     +      SCALE(1), DELTA, IVAPRX, NPRT
+         WRITE (IPRT,1120) IERR
+   50 CONTINUE
+      NPRT = 100000
+      DO 60 I=1,6
+         NTEST = NTEST + 1
+         WRITE (IPRT,1330) NTEST
+         WRITE (IPRT,1280) NPRT
+         CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1,
+     +      IVCV, NNZW, NPARE, RSD)
+         WRITE (IPRT,1110)
+         WRITE (IPRT,1360) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +      SCALE(1), DELTA, IVAPRX, NPRT
+         CALL NLSWDS(Y1, WT, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1,
+     +      NPAR1, RES, LDSA1, IFIXED, IDRVCK, MIT, STOPSS, STOPP,
+     +      SCALE, DELTA, IVAPRX, NPRT, NNZW, NPARE, RSD, PV, SDPV,
+     +      SDRES, VCV, IVCV)
+         WRITE (IPRT,1370) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +      SCALE(1), DELTA, IVAPRX, NPRT
+         WRITE (IPRT,1120) IERR
+         CALL FITXSP(PAR1, PV, SDPV, RES, SDRES, VCV, N1, NPAR1, IVCV,
+     +      NNZW, NPARE, RSD)
+         NPRT = NPRT/10
+   60 CONTINUE
+      NPRT = 11000
+      DO 70 I=1,2
+         NTEST = NTEST + 1
+         WRITE (IPRT,1330) NTEST
+         WRITE (IPRT,1280) NPRT
+         CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1,
+     +      IVCV, NNZW, NPARE, RSD)
+         WRITE (IPRT,1110)
+         WRITE (IPRT,1360) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +      SCALE(1), DELTA, IVAPRX, NPRT
+         CALL NLSWDS(Y1, WT, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1,
+     +      NPAR1, RES, LDSA1, IFIXED, IDRVCK, MIT, STOPSS, STOPP,
+     +      SCALE, DELTA, IVAPRX, NPRT, NNZW, NPARE, RSD, PV, SDPV,
+     +      SDRES, VCV, IVCV)
+         WRITE (IPRT,1370) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +      SCALE(1), DELTA, IVAPRX, NPRT
+         WRITE (IPRT,1120) IERR
+         CALL FITXSP(PAR1, PV, SDPV, RES, SDRES, VCV, N1, NPAR1, IVCV,
+     +      NNZW, NPARE, RSD)
+         NPRT = 11001
+   70 CONTINUE
+C
+      NPRT = 0
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1280) NPRT
+C
+      WRITE (IPRT,1010)
+      WRITE (IPRT,1340) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1, IVCV,
+     +   NNZW, NPARE, RSD)
+      CALL NLSC(Y1, XM1, N1, M1, IXM1, MDL1, PAR1, NPAR1, RES, LDSN1B,
+     +   IFIXED, STP, MIT, STOPSS, STOPP, SCALE, DELTA, IVAPRX, NPRT)
+      WRITE (IPRT,1350) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR1, PV, SDPV, RES, SDRES, VCV, N1, NPAR1, IVCV,
+     +   NNZW, NPARE, RSD)
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1280) NPRT
+      WRITE (IPRT,1020)
+      WRITE (IPRT,1340) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1, IVCV,
+     +   NNZW, NPARE, RSD)
+      CALL NLSS(Y1, XM1, N1, M1, IXM1, MDL1, PAR1, NPAR1, RES, LDSN1B,
+     +   IFIXED, STP, MIT, STOPSS, STOPP, SCALE, DELTA, IVAPRX, NPRT,
+     +   NPARE, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1350) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR1, PV, SDPV, RES, SDRES, VCV, N1, NPAR1, IVCV,
+     +   NNZW, NPARE, RSD)
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1280) NPRT
+      WRITE (IPRT,1040)
+      WRITE (IPRT,1340) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1, IVCV,
+     +   NNZW, NPARE, RSD)
+      CALL NLSWC(Y1, WT, XM1, N1, M1, IXM1, MDL1, PAR1, NPAR1, RES,
+     +   LDSN1B, IFIXED, STP, MIT, STOPSS, STOPP, SCALE, DELTA, IVAPRX,
+     +   NPRT)
+      WRITE (IPRT,1350) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR1, PV, SDPV, RES, SDRES, VCV, N1, NPAR1, IVCV,
+     +   NNZW, NPARE, RSD)
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1280) NPRT
+      WRITE (IPRT,1050)
+      WRITE (IPRT,1340) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1, IVCV,
+     +   NNZW, NPARE, RSD)
+      CALL NLSWS(Y1, WT, XM1, N1, M1, IXM1, MDL1, PAR1, NPAR1, RES,
+     +   LDSN1B, IFIXED, STP, MIT, STOPSS, STOPP, SCALE, DELTA, IVAPRX,
+     +   NPRT, NNZW, NPARE, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1350) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR1, PV, SDPV, RES, SDRES, VCV, N1, NPAR1, IVCV,
+     +   NNZW, NPARE, RSD)
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1280) NPRT
+      WRITE (IPRT,1070)
+      WRITE (IPRT,1360) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1, IVCV,
+     +   NNZW, NPARE, RSD)
+      CALL NLSDC(Y1, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1, NPAR1, RES,
+     +   LDSA1, IFIXED, IDRVCK, MIT, STOPSS, STOPP, SCALE, DELTA,
+     +   IVAPRX, NPRT)
+      WRITE (IPRT,1370) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR1, PV, SDPV, RES, SDRES, VCV, N1, NPAR1, IVCV,
+     +   NNZW, NPARE, RSD)
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1280) NPRT
+      WRITE (IPRT,1080)
+      WRITE (IPRT,1360) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1, IVCV,
+     +   NNZW, NPARE, RSD)
+      CALL NLSDS(Y1, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1, NPAR1, RES,
+     +   LDSA1, IFIXED, IDRVCK, MIT, STOPSS, STOPP, SCALE, DELTA,
+     +   IVAPRX, NPRT, NPARE, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1370) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR1, PV, SDPV, RES, SDRES, VCV, N1, NPAR1, IVCV,
+     +   NNZW, NPARE, RSD)
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1280) NPRT
+      WRITE (IPRT,1100)
+      WRITE (IPRT,1360) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1, IVCV,
+     +   NNZW, NPARE, RSD)
+      CALL NLSWDC(Y1, WT, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1, NPAR1,
+     +   RES, LDSA1, IFIXED, IDRVCK, MIT, STOPSS, STOPP, SCALE, DELTA,
+     +   IVAPRX, NPRT)
+      WRITE (IPRT,1370) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR1, PV, SDPV, RES, SDRES, VCV, N1, NPAR1, IVCV,
+     +   NNZW, NPARE, RSD)
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1280) NPRT
+      WRITE (IPRT,1110)
+      WRITE (IPRT,1360) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1, IVCV,
+     +   NNZW, NPARE, RSD)
+      CALL NLSWDS(Y1, WT, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1, NPAR1,
+     +   RES, LDSA1, IFIXED, IDRVCK, MIT, STOPSS, STOPP, SCALE, DELTA,
+     +   IVAPRX, NPRT, NNZW, NPARE, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1370) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR1, PV, SDPV, RES, SDRES, VCV, N1, NPAR1, IVCV,
+     +   NNZW, NPARE, RSD)
+C
+      NPRT = -1
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1280) NPRT
+      WRITE (IPRT,1110)
+      WRITE (IPRT,1360) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1, IVCV,
+     +   NNZW, NPARE, RSD)
+      CALL NLSWDS(Y1, WT, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1, NPAR1,
+     +   RES, LDSA1, IFIXED, IDRVCK, MIT, STOPSS, STOPP, SCALE, DELTA,
+     +   IVAPRX, NPRT, NNZW, NPARE, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1370) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR1, PV, SDPV, RES, SDRES, VCV, N1, NPAR1, IVCV,
+     +   NNZW, NPARE, RSD)
+C
+C
+C     **TEST PARAMETER HANDLING**
+C
+      WRITE (IPRT,1190)
+C
+C     ALL ZERO
+C
+      CALL NLSX2(N1, M1, IXM1, NPAR1, IFIXED, STP, IDRVCK, MIT, STOPSS,
+     +   STOPP, SCALE, DELTA, IVAPRX, NPRT, IVCV)
+      STP(1) = -1.0E0
+      SCALE(1) = -1.0E0
+      DELTA = -1.0E0
+      NPRT = 11000
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1200)
+      CALL NLSX1(4, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1, IVCV,
+     +   NNZW, NPARE, RSD)
+      WRITE (IPRT,1010)
+      WRITE (IPRT,1340) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSC(Y1, XM1, N1, M1, IXM1, MDL1, PAR1, NPAR1, RES, LDSTAK,
+     +   IFIXED, STP, MIT, STOPSS, STOPP, SCALE, DELTA, IVAPRX, NPRT)
+      WRITE (IPRT,1350) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR1, PV, SDPV, RES, SDRES, VCV, N1, NPAR1, IVCV,
+     +   NNZW, NPARE, RSD)
+C
+      CALL NLSX1(4, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1, IVCV,
+     +   NNZW, NPARE, RSD)
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1200)
+      WRITE (IPRT,1100)
+      WRITE (IPRT,1360) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSWDC(Y1, WT, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1, NPAR1,
+     +   RES, LDSTAK, IFIXED, IDRVCK, MIT, STOPSS, STOPP, SCALE, DELTA,
+     +   IVAPRX, NPRT)
+      WRITE (IPRT,1370) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR1, PV, SDPV, RES, SDRES, VCV, N1, NPAR1, IVCV,
+     +   NNZW, NPARE, RSD)
+C
+C
+C
+C     **TEST WITH CONSTANT Y**
+C
+C     CONSTANT Y=0
+C
+      NPRT = 21222
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1210)
+      CALL NLSX1(2, PAR2, NPAR2, PV, SDPV, RES, SDRES, VCV, N2, IVCV,
+     +   NNZW, NPARE, RSD)
+      WRITE (IPRT,1050)
+      WRITE (IPRT,1340) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSWS(Y2, WT, XM2, N2, M2, IXM2, MDL2, PAR2, NPAR2, RES,
+     +   LDSTAK, IFIXED, STP, MIT, STOPSS, STOPP, SCALE, DELTA, IVAPRX,
+     +   NPRT, NNZW, NPARE, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1350) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR2, PV, SDPV, RES, SDRES, VCV, N2, NPAR2, IVCV,
+     +   NNZW, NPARE, RSD)
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1210)
+      WRITE (IPRT,1110)
+      WRITE (IPRT,1360) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSX1(2, PAR2, NPAR2, PV, SDPV, RES, SDRES, VCV, N2, IVCV,
+     +   NNZW, NPARE, RSD)
+      CALL NLSWDS(Y2, WT, XM2, N2, M2, IXM2, MDL2, DRV2, PAR2, NPAR2,
+     +   RES, LDSTAK, IFIXED, IDRVCK, MIT, STOPSS, STOPP, SCALE, DELTA,
+     +   IVAPRX, NPRT, NNZW, NPARE, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1370) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR2, PV, SDPV, RES, SDRES, VCV, N2, NPAR2, IVCV,
+     +   NNZW, NPARE, RSD)
+C
+C     **TEST WITH LINEAR MODEL**
+C
+      NPRT = 11212
+      IVAPRX = 1
+C
+      DO 80 I=1,NPAR3
+         IFIXED(I) = 0
+   80 CONTINUE
+      IFIXED(1) = 1
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1220)
+      WRITE (IPRT,1010)
+      WRITE (IPRT,1340) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSX1(3, PAR3, NPAR3, PV, SDPV, RES, SDRES, VCV, N3, IVCV,
+     +   NNZW, NPARE, RSD)
+      CALL NLSC(Y3, XM3, N3, M3, IXM3, MDL3, PAR3, NPAR3, RES, LDSTAK,
+     +   IFIXED, STP, MIT, STOPSS, STOPP, SCALE, DELTA, IVAPRX, NPRT)
+      WRITE (IPRT,1350) IFIXED(1), STP(1), MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1220)
+      NPRT = 11111
+      WRITE (IPRT,1070)
+      WRITE (IPRT,1360) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSX1(3, PAR3, NPAR3, PV, SDPV, RES, SDRES, VCV, N3, IVCV,
+     +   NNZW, NPARE, RSD)
+      CALL NLSDC(Y3, XM3, N3, M3, IXM3, MDL3, DRV3, PAR3, NPAR3, RES,
+     +   LDSTAK, IFIXED, IDRVCK, MIT, STOPSS, STOPP, SCALE, DELTA,
+     +   IVAPRX, NPRT)
+      WRITE (IPRT,1370) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+C
+C     **TEST XM**
+C
+C
+C     FIRST COLUMN ZERO
+C
+      CALL SETRV(Y2, N2, 2.0E0)
+      CALL SETRV(XM2(1,1), N2, 0.0E0)
+C
+      NPRT = 11000
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1310)
+      CALL NLSX1(2, PAR2, NPAR2, PV, SDPV, RES, SDRES, VCV, N2, IVCV,
+     +   NNZW, NPARE, RSD)
+      WRITE (IPRT,1110)
+      WRITE (IPRT,1360) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSWDS(Y2, WT, XM2, N2, M2, IXM2, MDL2, DRV2, PAR2, NPAR2,
+     +   RES, LDSTAK, IFIXED, IDRVCK, MIT, STOPSS, STOPP, SCALE,
+     +   DELTA, IVAPRX, NPRT, NNZW, NPARE, RSD, PV, SDPV, SDRES, VCV,
+     +   IVCV)
+      WRITE (IPRT,1370) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR2, PV, SDPV, RES, SDRES, VCV, N2, NPAR2, IVCV,
+     +   NNZW, NPARE, RSD)
+C
+C     2 COLUMNS ZERO
+C
+      CALL SETRV(XM2(1,2), N2, 0.0E0)
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1300)
+      WRITE (IPRT,1110)
+      WRITE (IPRT,1360) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSX1(2, PAR2, NPAR2, PV, SDPV, RES, SDRES, VCV, N2, IVCV,
+     +   NNZW, NPARE, RSD)
+      CALL NLSWDS(Y2, WT, XM2, N2, M2, IXM2, MDL2, DRV2, PAR2, NPAR2,
+     +   RES, LDSTAK, IFIXED, IDRVCK, MIT, STOPSS, STOPP, SCALE, DELTA,
+     +   IVAPRX, NPRT, NNZW, NPARE, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1370) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR2, PV, SDPV, RES, SDRES, VCV, N2, NPAR2, IVCV,
+     +   NNZW, NPARE, RSD)
+C
+C     **TEST VARIANCE-COVARIANCE MATRIX COMPUTATIONS**
+C
+C
+      IVCTST(1) = -1
+      IVCTST(2) = 0
+      IVCTST(3) = 1
+      IVCTST(4) = 2
+      IVCTST(5) = 3
+      IVCTST(6) = 4
+      IVCTST(7) = 5
+      IVCTST(8) = 6
+      IVCTST(9) = 7
+      NPRT = 2
+      DO 90 I=1,9
+         NTEST = NTEST + 1
+         WRITE (IPRT,1330) NTEST
+         WRITE (IPRT,1380)
+         CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1,
+     +      IVCV, NNZW, NPARE, RSD)
+         WRITE (IPRT,1110)
+         WRITE (IPRT,1360) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +      SCALE(1), DELTA, IVCTST(I), NPRT
+         CALL NLSWDS(Y1, WT, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1,
+     +      NPAR1, RES, LDSTAK, IFIXED, IDRVCK, MIT, STOPSS, STOPP,
+     +      SCALE, DELTA, IVCTST(I), NPRT, NNZW, NPARE, RSD, PV, SDPV,
+     +      SDRES, VCV, IVCV)
+         WRITE (IPRT,1370) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +      SCALE(1), DELTA, IVCTST(I), NPRT
+         WRITE (IPRT,1120) IERR
+         CALL FITXSP(PAR1, PV, SDPV, RES, SDRES, VCV, N1, NPAR1, IVCV,
+     +      NNZW, NPARE, RSD)
+   90 CONTINUE
+C
+C     **TEST WITH 2 ZERO WEIGHTS**
+C
+      NPRT = 22222
+      NTEST = NTEST + 1
+      WRITE (IPRT,1330) NTEST
+      WRITE (IPRT,1290)
+      CALL NLSX1(1, PAR1, NPAR1, PV, SDPV, RES, SDRES, VCV, N1, IVCV,
+     +   NNZW, NPARE, RSD)
+      WT(3) = 0.0E0
+      WT(5) = 0.0E0
+      WRITE (IPRT,1110)
+      WRITE (IPRT,1360) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      CALL NLSWDS(Y1, WT, XM1, N1, M1, IXM1, MDL1, DRV1A, PAR1, NPAR1,
+     +   RES, LDSTAK, IFIXED, IDRVCK, MIT, STOPSS, STOPP, SCALE, DELTA,
+     +   IVAPRX, NPRT, NNZW, NPARE, RSD, PV, SDPV, SDRES, VCV, IVCV)
+      WRITE (IPRT,1370) IFIXED(1), IDRVCK, MIT, STOPSS, STOPP,
+     +   SCALE(1), DELTA, IVAPRX, NPRT
+      WRITE (IPRT,1120) IERR
+      CALL FITXSP(PAR1, PV, SDPV, RES, SDRES, VCV, N1, NPAR1, IVCV,
+     +   NNZW, NPARE, RSD)
+C
+C
+      RETURN
+C
+C     FORMAT STATEMENTS
+C
+ 1000 FORMAT (45H1 *** LDSTAK MUST BE GREATER THAN OR EQUAL TO , I6)
+ 1010 FORMAT (15H TEST OF NLSC  )
+ 1020 FORMAT (15H TEST OF NLSS  )
+ 1040 FORMAT (15H TEST OF NLSWC )
+ 1050 FORMAT (15H TEST OF NLSWS )
+ 1070 FORMAT (15H TEST OF NLSDC )
+ 1080 FORMAT (15H TEST OF NLSDS )
+ 1100 FORMAT (15H TEST OF NLSWDC)
+ 1110 FORMAT (15H TEST OF NLSWDS)
+ 1120 FORMAT (/29H ***** RETURNED RESULTS *****, 5X, 15H (-1 INDICATES ,
+     +   39HVALUE NOT CHANGED BY CALLED SUBROUTINE)//9H IERR IS , I3)
+ 1190 FORMAT (28H **TEST PARAMETER HANDLING**)
+ 1200 FORMAT (20H ALL PARAMETERS ZERO)
+ 1210 FORMAT (30H **TEST WITH CONSTANT ZERO Y**)
+ 1220 FORMAT (22H **TEST LINEAR MODEL**)
+ 1240 FORMAT (26H **TEST CONTROL CRITERIA**)
+ 1250 FORMAT (34H --MAXIMUM NUMBER OF ITERATIONS = , I5)
+ 1260 FORMAT (12H --STOPSS = , G14.8)
+ 1270 FORMAT (11H --STOPP = , G14.8)
+ 1280 FORMAT (10H --NPRT = , I6)
+ 1290 FORMAT (29H **TEST WITH 2 ZERO WEIGHTS**)
+ 1300 FORMAT (19H **2 COLUMNS ZERO**)
+ 1310 FORMAT (18H **1 COLUMN ZERO**)
+ 1330 FORMAT (54H1NONLINEAR LEAST SQUARES ESTIMATION SUBROUTINE TEST NU,
+     +   4HMBER, I5/)
+ 1340 FORMAT (24H INPUT   -  IFIXED(1) = , I6, 9X, 11H, STP(1) = ,
+     +   G15.8, 11H,    MIT = ,I5, 11H, STOPSS = , G15.8, 10H, STOPP = ,
+     +   G15.8/13X, 11HSCALE(1) = , G15.8, 11H,  DELTA = , G15.8,
+     +   11H, IVAPRX = , I5, 11H,   NPRT = , I6)
+ 1350 FORMAT (//24H OUTPUT  -  IFIXED(1) = , I6, 9X, 11H, STP(1) = ,
+     +   G15.8, 11H,    MIT = ,I5, 11H, STOPSS = , G15.8, 10H, STOPP = ,
+     +   G15.8/13X, 11HSCALE(1) = , G15.8, 11H,  DELTA = , G15.8,
+     +   11H, IVAPRX = , I5, 11H,   NPRT = , I6//)
+ 1360 FORMAT (24H INPUT   -  IFIXED(1) = , I6, 9X, 11H, IDRVCK = ,
+     +   I5, 10X, 11H,    MIT = ,I5, 11H, STOPSS = , G15.8,
+     +   10H, STOPP = , G15.8/
+     +   13X, 11HSCALE(1) = , G15.8, 11H,  DELTA = , G15.8,
+     +   11H, IVAPRX = , I5, 11H,   NPRT = , I6)
+ 1370 FORMAT (//24H OUTPUT  -  IFIXED(1) = , I6, 9X, 11H, IDRVCK = ,
+     +   I5, 10X, 11H,    MIT = ,I5, 11H, STOPSS = , G15.8,
+     +   10H, STOPP = , G15.8/
+     +   13X, 11HSCALE(1) = , G15.8, 11H,  DELTA = , G15.8,
+     +   11H, IVAPRX = , I5, 11H,   NPRT = , I6//)
+ 1380 FORMAT (54H TEST HANDLING OF VARIANCE-COVARIANCE COMPUTATION CODE,
+     +   'S')
+      END
+      SUBROUTINE XNRAND(LDSTAK)
+
+c*********************************************************************72
+c
+cc XNRAND demonstrates features of the NRAND family.
+C
+c  Modified:
+c
+c    25 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson and John Koontz,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      REAL
+     +   SIGMA,YMEAN
+      INTEGER
+     +   I,IPRT,ISEED,N
+C
+C  LOCAL ARRAYS
+      REAL
+     +   Y(1000)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL HIST,IPRINT,NRAND,NRANDC
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     INTEGER I
+C        AN INDEX VARIABLE
+C     INTEGER IERR
+C        FLAG TO INDICATE PRESENCE OF ERROR DETECTED BY PRECEDING
+C        STARPAC CALL.  (0 IS OK, 1 IS ERROR)
+C     INTEGER IPRT
+C        LOGICAL OUTPUT UNIT.
+C     INTEGER ISEED
+C        THE SEED FOR THE RANDOM NUMBER GENERATOR.
+C     INTEGER LDSTAK
+C        AMOUNT OF WORK AREA.  SIZE OF DSTAK.
+C     INTEGER N
+C        THE LENGTH OF THE VECTOR Y.
+C     REAL SIGMA
+C        THE S.D. OF THE SAMPLE.
+C     REAL Y(1000)
+C        DATA VECTOR FOR TESTS.
+C     REAL YMEAN
+C        THE MEAN OF THE SAMPLE.
+C
+C
+C     DEFINE IPRT, THE CURRENT OUTPUT UNIT.
+C
+      CALL IPRINT(IPRT)
+C
+C     CHECK FOR SUFFICIENT WORK AREA LENGTH.
+C
+      IF (LDSTAK.LT.1000) THEN
+        WRITE (IPRT, 1000)
+         RETURN
+      END IF
+C
+C     HEADING.
+C
+      WRITE (IPRT,1150)
+C
+C     TEST 1.  CHECK ALL ERROR MESSAGES.
+C
+      WRITE (IPRT,1160)
+C
+C     ERROR 1, ZERO OR FEWER ELEMENTS OR NEGATIVE STANDARD DEVIATION.
+C
+      ISEED = 0
+      SIGMA = -1
+      N = 0
+      YMEAN = 0.0E0
+      CALL NRAND(Y, N, ISEED)
+      WRITE (IPRT,1170) IERR
+      CALL NRANDC(Y, N, ISEED, YMEAN, SIGMA)
+      WRITE (IPRT,1170) IERR
+C
+C     COMPARE RESULTS
+C
+      ISEED = 334
+      N = 10
+      YMEAN = 0.0E0
+      SIGMA = 1.0E0
+C
+      WRITE (IPRT, 1120) N, ISEED
+      CALL NRAND (Y, N, ISEED)
+      WRITE (IPRT, 1100) (Y(I),I=1,N)
+C
+      ISEED = 333
+      WRITE (IPRT, 1130) N, YMEAN, SIGMA, ISEED
+      CALL NRANDC (Y, N, ISEED, YMEAN, SIGMA)
+      WRITE (IPRT, 1100) (Y(I),I=1,N)
+C
+      ISEED = 13531
+      N = 1000
+      YMEAN = 0.0E0
+      SIGMA = 1.0E0
+C
+      WRITE (IPRT, 1120) N, ISEED
+      CALL NRAND (Y, N, ISEED)
+      CALL HIST (Y, N, LDSTAK)
+C
+      WRITE (IPRT, 1130) N, YMEAN, SIGMA, ISEED
+      CALL NRANDC (Y, N, ISEED, YMEAN, SIGMA)
+      CALL HIST (Y, N, LDSTAK)
+C
+      ISEED = 99999
+      N = 1000
+      YMEAN = 4.0E0
+      SIGMA = 4.0E0
+C
+      WRITE (IPRT, 1120) N, ISEED
+      CALL NRAND (Y, N, ISEED)
+      CALL HIST (Y, N, LDSTAK)
+C
+      WRITE (IPRT, 1130) N, YMEAN, SIGMA, ISEED
+      CALL NRANDC (Y, N, ISEED, YMEAN, SIGMA)
+      CALL HIST (Y, N, LDSTAK)
+C
+      RETURN
+C
+C     FORMATS
+C
+ 1000 FORMAT ('1THE DIMENSION OF DSTAK AND THE VALUE OF LDSTAK NEEDED'/
+     +  ' FOR NRANDX MUST EQUAL OR EXCEED 1000.  CHANGE DRIVER'/
+     +  ' AND RECALL NRANDX.')
+ 1100 FORMAT (5E15.8)
+ 1120 FORMAT ('1GENERATE ', I4,
+     +  ' STANDARD NORMAL NUMBERS USING ISEED = ', I5)
+ 1130 FORMAT ('1GENERATE ', I4,
+     +  ' NORMALLY DISTRIBUTED NUMBERS WITH YMEAN = ', F5.2,
+     +  ' AND SIGMA = ', F5.2, ' USING ISEED = ', I5)
+ 1150 FORMAT ('1TEST RUNS FOR THE NRAND FAMILY OF ROUTINES.')
+ 1160 FORMAT(' TEST 1.  GENERATE EACH OF THE POSSIBLE ',
+     +   15HERROR MESSAGES.)
+ 1170 FORMAT(/22H THE VALUE OF IERR IS , I4//)
+      END
+      SUBROUTINE XPGM(LDSTAK)
+
+c*********************************************************************72
+c
+cc XPGM tests the time series periodogram.
+C
+C     SERIES Y IS THE FIRST 50 VALUES OF THE SERIES LISTED ON PAGE
+C     318 OF JENKINS AND WATTS.  THE SPECTRUM OF THIS SERIES IS SHOWN
+C     FOR VARIOUS BANDWIDTH ON PAGE 270 OF JENKINS AND WATTS.
+C
+C     SERIES Z IS THE WOLF SUNSPOT NUMBERS FROM 1700 TO 1960 AS
+C     TABULATED BY WALDMEIER.  THE RAW AND SMOOTHED PERIODOGRAMS OF
+C     TAPERED SERIES ARE SHOWN ON PAGES 95 AND 176, RESPECTIVELY, OF
+C     BLOOMFIELD.
+C
+c  Modified:
+c
+c    25 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      REAL
+     +   TAPERP
+      INTEGER
+     +   I,IEXTND,IPRT,ITEST,LAB,LFREQ,LPER,LPERI,LZFFT,NF,NFFT,NK,
+     +   NPRT,NTEMP,NY,NZ
+C
+C  LOCAL ARRAYS
+      REAL
+     +   AB(600),FREQ(300),PER(300),PERF(300),PERI(300),Y(150),
+     +   YFFT(400),Z(275),ZFFT(600),ZT(275)
+      INTEGER
+     +   K(10)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL CENTER,FFTLEN,FFTR,IPGM,IPGMP,IPGMPS,IPGMS,IPRINT,MDFLT,
+     +   PGM,PGMS,PPL,SCOPY,TAPER
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     REAL AB(600)
+C        THE VECTOR OF THE NF REAL AND IMAGINARY COMPONENTS OF THE
+C        FOURIER COEFFICIENTS.
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     REAL FREQ(300)
+C        THE VECTOR OF FREQUENCIES AT WHICH THE SPECTRUM IS COMPUTED.
+C     INTEGER I
+C        AN INDEX VARIABLE
+C     INTEGER IERR
+C        THE INTEGER VALUE RETURNED BY THIS ROUTINE DESIGNATING
+C        WHETHER ANY ERRORS WERE DETECTED IN THE PARAMETER LIST
+C        IF IERR .EQ. 0, NO ERRORS WERE DETECTED
+C        IF IERR .EQ. 1, ERRORS HAVE BEEN DETECTED
+C     INTEGER IEXTND
+C        THE INDICATOR VARIABLE USED TO DESIGNATE WHETHER ZERO
+C        (IEXTND .EQ. 0) OR THE SERIES MEAN (IEXTND .NE. 0) IS TO BE
+C        USED TO EXTEND THE SERIES.
+C     INTEGER IPRT
+C        THE LOGICAL UNIT USED FOR PRINTED OUTPUT.
+C     INTEGER ITEST
+C        THE NUMBER OF THE TEST SET BEING PERFORMED
+C     INTEGER K(10)
+C        THE VECTOR OF THE MODIFIED DANIEL FILTER LENGTHS.
+C     INTEGER LAB
+C        THE LENGTH OF THE VECTOR AB.
+C     INTEGER LDSTAK
+C        THE LENGTH OF THE VECTOR DSTAK IN COMMON CSTAK.
+C     INTEGER LFREQ
+C        THE LENGTH OF THE VECTOR FREQ.
+C     INTEGER LPER
+C        THE LENGTH OF THE VECTOR PER.
+C     INTEGER LPERI
+C        THE LENGTH OF THE VECTOR PERI.
+C     INTEGER LZFFT
+C        THE LENGTH OF THE VECTORS YFFT AND ZFFT, RESPECTIVELY..
+C     INTEGER NF
+C        THE NUMBER OF FREQUENCIES AT WHICH THE SPECTRUM IS
+C        TO BE COMPUTED.
+C     INTEGER NFFT
+C        THE EXTENDED SERIES LENGTH.
+C     INTEGER NK
+C        THE NUMBER OF MODIFIED DANIEL FILTERS TO BE APPLIED.
+C     INTEGER NPRT
+C        THE VARIABLE CONTROLING PRINTED OUTPUT, WHERE
+C        FOR THE PERIODOGRAM ROUTINES
+C        IF NPRT .LE. -2, THE OUTPUT CONSISTS OF A PAGE PLOT OF THE
+C                         PERIODOGRAM ON A LOG-LINEAR SCALE,
+C        IF NPRT .EQ. -1, THE OUTPUT CONSISTS OF A PAGE PLOT OF THE
+C                         PERIODOGRAM IN DECIBELS ON A LINEAR SCALE,
+C        IF NPRT .EQ.  0, THE OUTPUT IS SUPPRESSED,
+C        IF NPRT .EQ.  1, THE OUTPUT CONSISTS OF A VERTICAL PLOT OF THE
+C                         PERIODOGRAM IN DECIBELS ON A LINEAR SCALE.
+C        IF NPRT .GE.  2, THE OUTPUT CONSISTS OF A VERTICAL PLOT OF THE
+C                         PERIODOGRAM ON A LOG-LINEAR SCALE,
+C        AND FOR THE INTEGRATED PERIODOGRAM ROUTINES
+C        IF NPRT .EQ.  0, THE OUTPUT IS SUPPRESSED,
+C        IF NPRT .NE.  0, THE OUTPUT CONSISTS OF A PAGE PLOT OF THE
+C                         INTEGRATED PERIODOGRAM
+C     INTEGER NTEMP
+C        A TEMPORARY STORAGE LOCATION
+C     INTEGER NY
+C        THE NUMBER OF OBSERVATIONS IN THE SERIES Y.
+C     INTEGER NZ
+C        THE NUMBER OF OBSERVATIONS IN THE SERIES Z.
+C     REAL PER(300)
+C        THE SERIES PERIODOGRAM.
+C     REAL PERF(300)
+C        THE FILTERED (SMOOTHED) PERIODOGRAM.
+C     REAL PERI(300)
+C        THE SERIES INTEGRATED PERIODOGRAM.
+C     REAL TAPERP
+C        THE PERCENT OF THE SERIES TO BE TAPERED.
+C     REAL Y(150)
+C         THE ARRAY CONTAINING THE TIME SERIES FROM JENKINS AND WATTS.
+C     REAL YFFT(400)
+C        THE VECTOR OF THE OBSERVED TIME SERIES TO BE ANALYZED USING
+C        THE FFT.
+C     REAL Z(275)
+C        THE ARRAY OF THE WOLF SUNSPOT NUMBERS.
+C     REAL ZFFT(600)
+C        THE VECTOR OF THE TAPERED WOLF SUNSPOT NUMBERS TO BE
+C        ANALYZED USING THE FFT.
+C     REAL ZT(275)
+C        THE ARRAY OF THE TAPERED SUNSPOT NUMBERS.
+C
+      DATA   Y(  1),  Y(  2),  Y(  3),  Y(  4),  Y(  5),  Y(  6)
+     +    / -.88E0,  -.12E0,  -.89E0, -1.38E0,  -.07E0,  1.03E0/
+      DATA   Y(  7),  Y(  8),  Y(  9),  Y( 10),  Y( 11),  Y( 12)
+     +    / 2.14E0,   .35E0, -1.10E0, -1.78E0, -2.76E0, -1.77E0/
+      DATA   Y( 13),  Y( 14),  Y( 15),  Y( 16),  Y( 17),  Y( 18)
+     +    /  .98E0,  1.00E0,  -.70E0, -1.01E0, -1.30E0,  -.85E0/
+      DATA   Y( 19),  Y( 20),  Y( 21),  Y( 22),  Y( 23),  Y( 24)
+     +    / -.46E0,  1.63E0,   .06E0,  -.17E0, -1.01E0, -1.04E0/
+      DATA   Y( 25),  Y( 26),  Y( 27),  Y( 28),  Y( 29),  Y( 30)
+     +    / -.66E0, -1.12E0,  -.51E0,  -.71E0,  -.20E0,  -.13E0/
+      DATA   Y( 31),  Y( 32),  Y( 33),  Y( 34),  Y( 35),  Y( 36)
+     +    /  .14E0,  1.59E0,  -.76E0, -1.08E0, -1.77E0, -1.20E0/
+      DATA   Y( 37),  Y( 38),  Y( 39),  Y( 40),  Y( 41),  Y( 42)
+     +    /  .45E0,  -.07E0,  -.63E0,  -.35E0,  -.87E0,  -.62E0/
+      DATA   Y( 43),  Y( 44),  Y( 45),  Y( 46),  Y( 47),  Y( 48)
+     +    /  .28E0,  1.90E0,  2.14E0,  1.05E0,   .31E0,  1.07E0/
+      DATA   Y( 49),  Y( 50)
+     +    / 2.67E0,  2.44E0/
+C
+      DATA   Z(  1),  Z(  2),  Z(  3),  Z(  4),  Z(  5),  Z(  6)
+     +    /  5.0E0,  11.0E0,  16.0E0,  23.0E0,  36.0E0,  58.0E0/
+      DATA   Z(  7),  Z(  8),  Z(  9),  Z( 10),  Z( 11),  Z( 12)
+     +    / 29.0E0,  20.0E0,  10.0E0,   8.0E0,   3.0E0,   0.0E0/
+      DATA   Z( 13),  Z( 14),  Z( 15),  Z( 16),  Z( 17),  Z( 18)
+     +    /  0.0E0,   2.0E0,  11.0E0,  27.0E0,  47.0E0,  63.0E0/
+      DATA   Z( 19),  Z( 20),  Z( 21),  Z( 22),  Z( 23),  Z( 24)
+     +    / 60.0E0,  39.0E0,  28.0E0,  26.0E0,  22.0E0,  11.0E0/
+      DATA   Z( 25),  Z( 26),  Z( 27),  Z( 28),  Z( 29),  Z( 30)
+     +    / 21.0E0,  40.0E0,  78.0E0, 122.0E0, 103.0E0,  73.0E0/
+      DATA   Z( 31),  Z( 32),  Z( 33),  Z( 34),  Z( 35),  Z( 36)
+     +    / 47.0E0,  35.0E0,  11.0E0,   5.0E0,  16.0E0,  34.0E0/
+      DATA   Z( 37),  Z( 38),  Z( 39),  Z( 40),  Z( 41),  Z( 42)
+     +    / 70.0E0,  81.0E0, 111.0E0, 101.0E0,  73.0E0,  40.0E0/
+      DATA   Z( 43),  Z( 44),  Z( 45),  Z( 46),  Z( 47),  Z( 48)
+     +    / 20.0E0,  16.0E0,   5.0E0,  11.0E0,  22.0E0,  40.0E0/
+      DATA   Z( 49),  Z( 50),  Z( 51),  Z( 52),  Z( 53),  Z( 54)
+     +    / 60.0E0,  80.9E0,  83.4E0,  47.7E0,  47.8E0,  30.7E0/
+      DATA   Z( 55),  Z( 56),  Z( 57),  Z( 58),  Z( 59),  Z( 60)
+     +    / 12.2E0,   9.6E0,  10.2E0,  32.4E0,  47.6E0,  54.0E0/
+      DATA   Z( 61),  Z( 62),  Z( 63),  Z( 64),  Z( 65),  Z( 66)
+     +    / 62.9E0,  85.9E0,  61.2E0,  45.1E0,  36.4E0,  20.9E0/
+      DATA   Z( 67),  Z( 68),  Z( 69),  Z( 70),  Z( 71),  Z( 72)
+     +    / 11.4E0,  37.8E0,  69.8E0, 106.1E0, 100.8E0,  81.6E0/
+      DATA   Z( 73),  Z( 74),  Z( 75),  Z( 76),  Z( 77),  Z( 78)
+     +    / 66.5E0,  34.8E0,  30.6E0,   7.0E0,  19.8E0,  92.5E0/
+      DATA   Z( 79),  Z( 80),  Z( 81),  Z( 82),  Z( 83),  Z( 84)
+     +    /154.4E0, 125.9E0,  84.8E0,  68.1E0,  38.5E0,  22.8E0/
+      DATA   Z( 85),  Z( 86),  Z( 87),  Z( 88),  Z( 89),  Z( 90)
+     +    / 10.2E0,  24.1E0,  82.9E0, 132.0E0, 130.9E0, 118.1E0/
+      DATA   Z( 91),  Z( 92),  Z( 93),  Z( 94),  Z( 95),  Z( 96)
+     +    / 89.9E0,  66.6E0,  60.0E0,  46.9E0,  41.0E0,  21.3E0/
+      DATA   Z( 97),  Z( 98),  Z( 99),  Z(100),  Z(101),  Z(102)
+     +    / 16.0E0,   6.4E0,   4.1E0,   6.8E0,  14.5E0,  34.0E0/
+      DATA   Z(103),  Z(104),  Z(105),  Z(106),  Z(107),  Z(108)
+     +    / 45.0E0,  43.1E0,  47.5E0,  42.2E0,  28.1E0,  10.1E0/
+      DATA   Z(109),  Z(110),  Z(111),  Z(112),  Z(113),  Z(114)
+     +    /  8.1E0,   2.5E0,   0.0E0,   1.4E0,   5.0E0,  12.2E0/
+      DATA   Z(115),  Z(116),  Z(117),  Z(118),  Z(119),  Z(120)
+     +    / 13.9E0,  35.4E0,  45.8E0,  41.1E0,  30.1E0,  23.9E0/
+      DATA   Z(121),  Z(122),  Z(123),  Z(124),  Z(125),  Z(126)
+     +    / 15.6E0,   6.6E0,   4.0E0,   1.8E0,   8.5E0,  16.6E0/
+      DATA   Z(127),  Z(128),  Z(129),  Z(130),  Z(131),  Z(132)
+     +    / 36.3E0,  49.6E0,  64.2E0,  67.0E0,  70.9E0,  47.8E0/
+      DATA   Z(133),  Z(134),  Z(135),  Z(136),  Z(137),  Z(138)
+     +    / 27.5E0,   8.5E0,  13.2E0,  56.9E0, 121.5E0, 138.3E0/
+      DATA   Z(139),  Z(140),  Z(141),  Z(142),  Z(143),  Z(144)
+     +    /103.2E0,  85.7E0,  64.6E0,  36.7E0,  24.2E0,  10.7E0/
+      DATA   Z(145),  Z(146),  Z(147),  Z(148),  Z(149),  Z(150)
+     +    / 15.0E0,  40.1E0,  61.5E0,  98.5E0, 124.7E0,  96.3E0/
+      DATA   Z(151),  Z(152),  Z(153),  Z(154),  Z(155),  Z(156)
+     +    / 66.6E0,  64.5E0,  54.1E0,  39.0E0,  20.6E0,   6.7E0/
+      DATA   Z(157),  Z(158),  Z(159),  Z(160),  Z(161),  Z(162)
+     +    /  4.3E0,  22.7E0,  54.8E0,  93.8E0,  95.8E0,  77.2E0/
+      DATA   Z(163),  Z(164),  Z(165),  Z(166),  Z(167),  Z(168)
+     +    / 59.1E0,  44.0E0,  47.0E0,  30.5E0,  16.3E0,   7.3E0/
+      DATA   Z(169),  Z(170),  Z(171),  Z(172),  Z(173),  Z(174)
+     +    / 37.6E0,  74.0E0, 139.0E0, 111.2E0, 101.6E0,  66.2E0/
+      DATA   Z(175),  Z(176),  Z(177),  Z(178),  Z(179),  Z(180)
+     +    / 44.7E0,  17.0E0,  11.3E0,  12.4E0,   3.4E0,   6.0E0/
+      DATA   Z(181),  Z(182),  Z(183),  Z(184),  Z(185),  Z(186)
+     +    / 32.3E0,  54.3E0,  59.7E0,  63.7E0,  63.5E0,  52.2E0/
+      DATA   Z(187),  Z(188),  Z(189),  Z(190),  Z(191),  Z(192)
+     +    / 25.4E0,  13.1E0,   6.8E0,   6.3E0,   7.1E0,  35.6E0/
+      DATA   Z(193),  Z(194),  Z(195),  Z(196),  Z(197),  Z(198)
+     +    / 73.0E0,  85.1E0,  78.0E0,  64.0E0,  41.8E0,  26.2E0/
+      DATA   Z(199),  Z(200),  Z(201),  Z(202),  Z(203),  Z(204)
+     +    / 26.7E0,  12.1E0,   9.5E0,   2.7E0,   5.0E0,  24.4E0/
+      DATA   Z(205),  Z(206),  Z(207),  Z(208),  Z(209),  Z(210)
+     +    / 42.0E0,  63.5E0,  53.8E0,  62.0E0,  48.5E0,  43.9E0/
+      DATA   Z(211),  Z(212),  Z(213),  Z(214),  Z(215),  Z(216)
+     +    / 18.6E0,   5.7E0,   3.6E0,   1.4E0,   9.6E0,  47.4E0/
+      DATA   Z(217),  Z(218),  Z(219),  Z(220),  Z(221),  Z(222)
+     +    / 57.1E0, 103.9E0,  80.6E0,  63.6E0,  37.6E0,  26.1E0/
+      DATA   Z(223),  Z(224),  Z(225),  Z(226),  Z(227),  Z(228)
+     +    / 14.2E0,   5.8E0,  16.7E0,  44.3E0,  63.9E0,  69.0E0/
+      DATA   Z(229),  Z(230),  Z(231),  Z(232),  Z(233),  Z(234)
+     +    / 77.8E0,  64.9E0,  35.7E0,  21.2E0,  11.1E0,   5.7E0/
+      DATA   Z(235),  Z(236),  Z(237),  Z(238),  Z(239),  Z(240)
+     +    /  8.7E0,  36.1E0,  79.7E0, 114.4E0, 109.6E0,  88.8E0/
+      DATA   Z(241),  Z(242),  Z(243),  Z(244),  Z(245),  Z(246)
+     +    / 67.8E0,  47.5E0,  30.6E0,  16.3E0,   9.6E0,  33.2E0/
+      DATA   Z(247),  Z(248),  Z(249),  Z(250),  Z(251),  Z(252)
+     +    / 92.6E0, 151.6E0, 136.3E0, 134.7E0,  83.9E0,  69.4E0/
+      DATA   Z(253),  Z(254),  Z(255),  Z(256),  Z(257),  Z(258)
+     +    / 31.5E0,  13.9E0,   4.4E0,  38.0E0, 141.7E0, 190.2E0/
+      DATA   Z(259),  Z(260),  Z(261)
+     +    /184.8E0, 159.0E0, 112.3E0/
+C
+      ITEST = 1
+C
+C     MAKE CALLS WITH VALID DATA
+C
+      NY = 50
+      NZ = 261
+      NFFT = 514
+      NPRT = 2
+      LZFFT = 600
+      LPER = 514
+      LPERI = 514
+      TAPERP = 0.10E0
+      LFREQ = 300
+      IEXTND = 0
+      LAB = 600
+      NK = 3
+      K(1) = 8
+      K(2) = 8
+      K(3) = 8
+C
+      CALL IPRINT(IPRT)
+C
+C     TEST OF CENTER
+C
+    5 WRITE (IPRT, 1018)
+      CALL CENTER (Z, NZ, ZT)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VARIABLES FROM CENTER
+C
+      IF (IERR.EQ.0) WRITE (IPRT, 1004) (ZT(I), I = 1, NZ)
+C
+C     TEST OF TAPER
+C
+      WRITE (IPRT, 1015)
+      CALL TAPER (Z, NZ, TAPERP, ZT)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VARIABLES FROM TAPER
+C
+      IF (IERR.EQ.0) WRITE (IPRT, 1004) (ZT(I), I = 1, NZ)
+C
+C     TEST OF PGM
+C
+      WRITE (IPRT, 1013)
+      CALL SCOPY (NZ, ZT, 1, ZFFT, 1)
+      CALL PGM (ZFFT, NZ, LZFFT, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+C
+C     TEST OF FFTLEN
+C
+      WRITE (IPRT, 1026)
+      CALL FFTLEN(NFFT-2, 2, NTEMP)
+      WRITE(IPRT, 1002) IERR
+C
+C     PRINT RETURNED VARIABLES FROM FFTLEN
+C
+      IF (IERR.EQ.0) WRITE (IPRT, 1027) NTEMP
+C
+C     TEST OF PGMS
+C
+      NTEMP = NFFT-1
+      WRITE (IPRT, 1025)
+      CALL SCOPY (NZ, ZT, 1, ZFFT, 1)
+      CALL PGMS (ZFFT, NZ, NTEMP, LZFFT, IEXTND, NF, PER, LPER, FREQ,
+     +   LFREQ, -2)
+      WRITE (IPRT, 1027) NTEMP
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VARIABLES FROM PGMS
+C
+      IF (IERR.EQ.0) THEN
+        WRITE (IPRT, 1004) (FREQ(I), I = 1, NF)
+        WRITE (IPRT, 1004) (PER(I), I = 1, NF)
+      END IF
+C
+C     TEST OF MDFLT
+C
+      WRITE (IPRT, 1016)
+      CALL MDFLT (PER, NF, NK, K, PERF, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+      IF (IERR.EQ.0) THEN
+C
+C       PRINT RETURNED VARIABLES FROM MDFLT
+C
+        WRITE (IPRT, 1004) (PERF(I), I = 1, NF)
+C
+C       DISPLAY SMOOTHED PERIODOGRAM ON A LOG PLOT
+C
+        WRITE (IPRT, 1028)
+        CALL PPL (PERF, FREQ, NF, 1)
+      END IF
+C
+C     TEST OF IPGMP
+C
+      WRITE (IPRT, 1029)
+      CALL IPGMP (PER, FREQ, NF, NZ, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+C
+C     TEST OF IPGMPS
+C
+      WRITE (IPRT, 1030)
+      CALL IPGMPS (PER, FREQ, NF, NZ, LDSTAK, PERI, NPRT)
+      WRITE (IPRT, 1002) IERR
+      IF (IERR.EQ.0) THEN
+C
+C     PRINT RETURNED VARIABLES FROM IPGMPS
+C
+         WRITE (IPRT, 1004) (FREQ(I), I = 1, NF)
+         WRITE (IPRT, 1004) (PERI(I), I = 1, NF)
+      END IF
+C
+C     TEST OF IPGM
+C
+      WRITE (IPRT, 1017)
+      CALL SCOPY (NZ, ZT, 1, ZFFT, 1)
+      CALL IPGM (ZFFT, NZ, LZFFT, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+C
+C     TEST OF IPGMS
+C
+      WRITE (IPRT, 1014)
+      CALL SCOPY (NZ, ZT, 1, ZFFT, 1)
+      CALL IPGMS (ZFFT, NZ, LZFFT, LDSTAK, NF, PERI, LPERI, FREQ, LFREQ,
+     +   NPRT)
+      WRITE (IPRT, 1002) IERR
+      IF (IERR.EQ.0) THEN
+C
+C     PRINT RETURNED VARIABLES FROM IPGMS
+C
+         WRITE (IPRT, 1004) (FREQ(I), I = 1, NF)
+         WRITE (IPRT, 1004) (PERI(I), I = 1, NF)
+      END IF
+C
+C     TEST OF FFTR (CENTERED DATA - O PERCENT TAPER)
+C
+      TAPERP = -1.0E0
+      WRITE (IPRT, 1031)
+      IF (NY.GE.1) CALL TAPER (Y, NY, TAPERP, YFFT)
+      CALL FFTR (YFFT, NY, NFFT, IEXTND, NF, AB, LAB)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VARIABLES FROM FFTR
+C
+      IF (IERR.EQ.0) WRITE (IPRT, 1004) (AB(I), I = 1, NF)
+C
+      GO TO (10, 20, 30, 40) ITEST
+C
+C     CHECK MINIMUM PROBLEM SIZE
+C
+   10 ITEST = ITEST + 1
+      NZ = 17
+      NY = 17
+      GO TO 5
+C
+C     CHECK VARIOUS OPTIONS
+C
+   20 ITEST = ITEST + 1
+C
+C     TEST OF MDFLT (ELEMENTS OF K NOT EVEN)
+C
+      K(1) = 7
+      WRITE (IPRT, 1016)
+      CALL MDFLT (PER, NF, NK, K, PERF, LDSTAK)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VARIABLES FROM MDFLT
+C
+      WRITE (IPRT, 1004) (PERF(I), I = 1, NF)
+C
+C     TEST OF PGMS (UNCENTERED DATA)
+C
+      IEXTND = 1
+      NPRT = 1
+      WRITE (IPRT, 1025)
+      CALL SCOPY (NZ, Z, 1, ZFFT, 1)
+      CALL PGMS (ZFFT, NZ, NFFT, LZFFT, IEXTND, NF, PER, LPER, FREQ,
+     +   LFREQ, NPRT)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VARIABLES FROM PGMS
+C
+      WRITE (IPRT, 1004) (FREQ(I), I = 1, NF)
+      WRITE (IPRT, 1004) (PER(I), I = 1, NF)
+C
+      NPRT = 2
+      WRITE (IPRT, 1025)
+      CALL SCOPY (NZ, Z, 1, ZFFT, 1)
+      CALL PGMS (ZFFT, NZ, NFFT, LZFFT, IEXTND, NF, PER, LPER, FREQ,
+     +   LFREQ, NPRT)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VARIABLES FROM PGMS
+C
+      WRITE (IPRT, 1004) (FREQ(I), I = 1, NF)
+      WRITE (IPRT, 1004) (PER(I), I = 1, NF)
+C
+C     TEST OF FFTR (CENTERED DATA - 100 PERCENT TAPER)
+C
+      TAPERP = 1.1E0
+      WRITE (IPRT, 1031)
+      CALL TAPER (Y, NY, TAPERP, YFFT)
+      CALL FFTR (YFFT, NY, NFFT, IEXTND, NF, AB, LAB)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VARIABLES FROM FFTR
+C
+      WRITE (IPRT, 1004) (AB(I), I = 1, NF)
+C
+C     TEST OF FFTR (CENTERED DATA - O PERCENT TAPER)
+C
+      TAPERP = -1.0E0
+      WRITE (IPRT, 1031)
+      CALL TAPER (Y, NY, TAPERP, YFFT)
+      CALL FFTR (YFFT, NY, NFFT-1, IEXTND, NF, AB, NFFT-2)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VARIABLES FROM FFTR
+C
+      WRITE (IPRT, 1004) (AB(I), I = 1, NF)
+C
+C     PERFORM ERROR CHECKING
+C
+      NY = -1
+      NZ = -1
+      NFFT = 0
+      NPRT = 2
+      LZFFT = 0
+      LPER = 0
+      LPERI = 0
+      TAPERP = 0.10E0
+      LFREQ = 0
+      IEXTND = 0
+      LAB = 0
+      NK = 0
+      K(1) = 0
+      K(2) = 0
+      K(3) = 0
+      GO TO 5
+C
+C     PERFORM MORE ERROR CHECKING
+C
+   30 ITEST = ITEST + 1
+      NY = 50
+      NZ = 261
+      NPRT = 2
+      LZFFT = 0
+      LPER = 0
+      LPERI = 0
+      TAPERP = 0.10E0
+      LFREQ = 0
+      IEXTND = 0
+      LAB = 0
+      NK = 3
+      K(1) = 0
+      K(2) = 0
+      K(3) = 0
+      GO TO 5
+C
+   40 RETURN
+C
+C     FORMAT STATEMENTS
+C
+ 1002 FORMAT (8H IERR IS, I5)
+ 1004 FORMAT (3(1X, E16.8))
+ 1013 FORMAT ('1', 11HTEST OF PGM)
+ 1014 FORMAT ('1', 13HTEST OF IPGMS)
+ 1015 FORMAT ('1', 13HTEST OF TAPER)
+ 1016 FORMAT ('1', 13HTEST OF MDFLT)
+ 1017 FORMAT ('1', 12HTEST OF IPGM)
+ 1018 FORMAT ('1', 14HTEST OF CENTER)
+ 1025 FORMAT ('1', 12HTEST OF PGMS)
+ 1026 FORMAT ('1', 14HTEST OF FFTLEN)
+ 1027 FORMAT (/8H NFFT IS, I6)
+ 1028 FORMAT ('1', 45HDISPLAY OF PERIODOGRAM SMOOTHED WITH MODIFIED,
+     +   14H DANIEL FILTER)
+ 1029 FORMAT ('1', 13HTEST OF IPGMP)
+ 1030 FORMAT ('1', 14HTEST OF IPGMPS)
+ 1031 FORMAT ('1', 12HTEST OF FFTR)
+      END
+      SUBROUTINE XPP(LDSTAK)
+
+c*********************************************************************72
+c
+cc XPP tests the plotting subroutines.
+C
+C     SERIES Y IS THE AIRLINE DATA LISTED ON PAGE 531 OF BOX AND
+C     JENKINS.
+C
+c  Modified:
+c
+c    25 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  LOCAL SCALARS
+      REAL
+     +   XLB,XMISS,XUB,YLB,YMISS,YUB
+      INTEGER
+     +   ILOG,IPRT,ISIZE,ITEST,IYM,M,NOUT,NY,NYM
+C
+C  LOCAL ARRAYS
+      REAL
+     +   AIR(144),TIME(144),X(144),Y(144),YM(12,12),YMMISS(144)
+      INTEGER
+     +   ISYM(144)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL IPRINT,MPP,MPPC,MPPL,MPPM,MPPMC,MPPML,PP,PPC,PPL,PPM,
+     +   PPMC,PPML,SCOPY,SETRV,SPP,SPPC,SPPL,SPPM,SPPMC,SPPML
+C
+C  COMMON BLOCKS
+      COMMON /ERRCHK/IERR
+C
+C  EQUIVALENCES
+      EQUIVALENCE (Y(1),YM(1,1))
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     REAL AIR(144)
+C        THE AIRLINE DATA.
+C     INTEGER IERR
+C        A COMMON VARIABLE USED AS A FLAG TO INDICATE WHETHER
+C        OR NOT THERE ARE ANY ERRORS, IF =0 THEN NO ERRORS.
+C     INTEGER ILOG
+C        THE TWO DIGIT INTEGER, PQ, USED TO SELECT AXIS SCALE, WHERE
+C        P DESIGNATES THE X-AXIS AND Q DESIGNATES THE Y-AXIS.
+C        IF P.EQ.0 (Q.EQ.0), THEN THE X-AXIS (Y-AXIS) IS LINEAR.
+C        IF P.NE.0 (Q.NE.0), THEN THE X-AXIS (Y-AXIS) IS LOG.
+C     INTEGER IPRT
+C        OUTPUT LOGICAL UNIT NUMBER
+C     INTEGER ISIZE
+C        THE TWO DIGIT INTEGER, PQ, USED TO SELECT AXIS SIZE, WHERE
+C        P DESIGNATES THE X-AXIS AND Q DESIGNATES THE Y-AXIS.
+C        IF P.EQ.0 (Q.EQ.0), THEN THE X-AXIS (Y-AXIS) IS THE MAXIMUM.
+C        IF P.NE.0 (Q.NE.0), THEN THE X-AXIS (Y-AXIS) IS HALF THE MAXIMU
+C     INTEGER ISYM(144)
+C        VECTOR CONTAINING SYMBOL DESIGNATIONS FOR PLOTTING
+C     INTEGER ITEST
+C        THE NUMBER OF THE TEST.
+C     INTEGER IYM
+C        ACTUAL DIMENSION OF YM IN USERS MAIN PROGRAM
+C     INTEGER LDSTAK
+C        *
+C     INTEGER M
+C        THE NUMBER OF VECTORS IN YM
+C     INTEGER NOUT
+C        USED TO INDICATE HOW MANY OF THE POINTS OUTSIDE THE BOUNDS
+C        OF THE PLOT ARE TO BE LISTED.
+C     INTEGER NY, NYM
+C        THE NUMBER OF OBSERVATIONS IN ARRAYS Y AND YM, RESPECTIVELY.
+C     REAL TIME(144)
+C        THE TIME VALUES FOR THE AIRLINE DATA.
+C     REAL X(144)
+C        VECTOR OF OBSERVATIONS FOR X(HORIZONTAL) COORDINATES
+C     REAL XLB
+C        THE LOWER BOUND FOR THE X-AXIS.  (XLB=XUB INDICATES LIMITS ARE
+C        TO BE DETERMINED FROM THE RANGE OF THE DATA.)
+C     REAL XMISS
+C        THE MISSING VALUE CODE FOR THE X-AXIS.
+C     REAL XUB
+C        THE UPPER BOUND FOR THE X-AXIS.  (XLB=XUB INDICATES LIMITS ARE
+C        TO BE DETERMINED FROM THE RANGE OF THE DATA.)
+C     REAL Y(144)
+C        VECTOR OF OBSERVATIONS FOR THE Y (VERTICAL) COORDINATES
+C     REAL YLB
+C        THE LOWER BOUND FOR THE Y-AXIS.  (YLB=YUB INDICATES LIMITS ARE
+C        TO BE DETERMINED FROM THE RANGE OF THE DATA.)
+C     REAL YM(12,12)
+C        MULTIVARIATE OBSERVATIONS FOR THE Y (VERTICAL) COORDINATES.
+C     REAL YMISS
+C        THE MISSING VALUE CODE FOR THE Y-AXIS.
+C     REAL YMMISS(144)
+C        THE MISSING VALUE CODES FOR EACH COLUMN OF YM.
+C     REAL YUB
+C        THE UPPER BOUND FOR THE Y-AXIS.  (YLB=YUB INDICATES LIMITS ARE
+C        TO BE DETERMINED FROM THE RANGE OF THE DATA.)
+C
+C
+      DATA     XMISS,    YMISS
+     +    /      7.0E0,    180.0E0/
+C
+      DATA ISYM(  1),ISYM(  2),ISYM(  3),ISYM(  4),ISYM(  5),ISYM(  6)
+     +    /    -5000,     6000,        7,        8,        9,       10/
+      DATA ISYM(  7),ISYM(  8),ISYM(  9),ISYM( 10),ISYM( 11),ISYM( 12)
+     +    /       11,       12,       13,       14,       15,       16/
+      DATA ISYM( 13),ISYM( 14),ISYM( 15),ISYM( 16),ISYM( 17),ISYM( 18)
+     +    /        5,        6,        7,        8,        9,       10/
+      DATA ISYM( 19),ISYM( 20),ISYM( 21),ISYM( 22),ISYM( 23),ISYM( 24)
+     +    /       11,       12,       13,       14,       15,       16/
+      DATA ISYM( 25),ISYM( 26),ISYM( 27),ISYM( 28),ISYM( 29),ISYM( 30)
+     +    /        5,        6,        7,        8,        9,       10/
+      DATA ISYM( 31),ISYM( 32),ISYM( 33),ISYM( 34),ISYM( 35),ISYM( 36)
+     +    /       11,       12,       13,       14,       15,       16/
+      DATA ISYM( 37),ISYM( 38),ISYM( 39),ISYM( 40),ISYM( 41),ISYM( 42)
+     +    /        5,        6,        7,        8,        9,       10/
+      DATA ISYM( 43),ISYM( 44),ISYM( 45),ISYM( 46),ISYM( 47),ISYM( 48)
+     +    /       11,       12,       13,       14,       15,       16/
+      DATA ISYM( 49),ISYM( 50),ISYM( 51),ISYM( 52),ISYM( 53),ISYM( 54)
+     +    /        5,        6,        7,        8,        9,       10/
+      DATA ISYM( 55),ISYM( 56),ISYM( 57),ISYM( 58),ISYM( 59),ISYM( 60)
+     +    /       11,       12,       13,       14,       15,       16/
+      DATA ISYM( 61),ISYM( 62),ISYM( 63),ISYM( 64),ISYM( 65),ISYM( 66)
+     +    /        5,        6,        7,        8,        9,       10/
+      DATA ISYM( 67),ISYM( 68),ISYM( 69),ISYM( 70),ISYM( 71),ISYM( 72)
+     +    /       11,       12,       13,       14,       15,       16/
+      DATA ISYM( 73),ISYM( 74),ISYM( 75),ISYM( 76),ISYM( 77),ISYM( 78)
+     +    /        5,        6,        7,        8,        9,       10/
+      DATA ISYM( 79),ISYM( 80),ISYM( 81),ISYM( 82),ISYM( 83),ISYM( 84)
+     +    /       11,       12,       13,       14,       15,       16/
+      DATA ISYM( 85),ISYM( 86),ISYM( 87),ISYM( 88),ISYM( 89),ISYM( 90)
+     +    /        5,        6,        7,        8,        9,       10/
+      DATA ISYM( 91),ISYM( 92),ISYM( 93),ISYM( 94),ISYM( 95),ISYM( 96)
+     +    /       11,       12,       13,       14,       15,       16/
+      DATA ISYM( 97),ISYM( 98),ISYM( 99),ISYM(100),ISYM(101),ISYM(102)
+     +    /        5,        6,        7,        8,        9,       10/
+      DATA ISYM(103),ISYM(104),ISYM(105),ISYM(106),ISYM(107),ISYM(108)
+     +    /       11,       12,       13,       14,       15,       16/
+      DATA ISYM(109),ISYM(110),ISYM(111),ISYM(112),ISYM(113),ISYM(114)
+     +    /        5,        6,        7,        8,        9,       10/
+      DATA ISYM(115),ISYM(116),ISYM(117),ISYM(118),ISYM(119),ISYM(120)
+     +    /       11,       12,       13,       14,       15,       16/
+      DATA ISYM(121),ISYM(122),ISYM(123),ISYM(124),ISYM(125),ISYM(126)
+     +    /        5,        6,        7,        8,        9,       10/
+      DATA ISYM(127),ISYM(128),ISYM(129),ISYM(130),ISYM(131),ISYM(132)
+     +    /       11,       12,       13,       14,       15,       16/
+      DATA ISYM(133),ISYM(134),ISYM(135),ISYM(136),ISYM(137),ISYM(138)
+     +    /        5,        6,        7,        8,        9,       10/
+      DATA ISYM(139),ISYM(140),ISYM(141),ISYM(142),ISYM(143),ISYM(144)
+     +    /       11,       12,       13,       14,       15,       16/
+C
+      DATA TIME(  1),TIME(  2),TIME(  3),TIME(  4),TIME(  5),TIME(  6)
+     +    /   1.0E0,    2.0E0,    3.0E0,    4.0E0,    5.0E0,    6.0E0/
+      DATA TIME(  7),TIME(  8),TIME(  9),TIME( 10),TIME( 11),TIME( 12)
+     +    /   7.0E0,    8.0E0,    9.0E0,   10.0E0,   11.0E0,   12.0E0/
+      DATA TIME( 13),TIME( 14),TIME( 15),TIME( 16),TIME( 17),TIME( 18)
+     +    /  13.0E0,   14.0E0,   15.0E0,   16.0E0,   17.0E0,   18.0E0/
+      DATA TIME( 19),TIME( 20),TIME( 21),TIME( 22),TIME( 23),TIME( 24)
+     +    /  19.0E0,   20.0E0,   21.0E0,   22.0E0,   23.0E0,   24.0E0/
+      DATA TIME( 25),TIME( 26),TIME( 27),TIME( 28),TIME( 29),TIME( 30)
+     +    /  25.0E0,   26.0E0,   27.0E0,   28.0E0,   29.0E0,   30.0E0/
+      DATA TIME( 31),TIME( 32),TIME( 33),TIME( 34),TIME( 35),TIME( 36)
+     +    /  31.0E0,   32.0E0,   33.0E0,   34.0E0,   35.0E0,   36.0E0/
+      DATA TIME( 37),TIME( 38),TIME( 39),TIME( 40),TIME( 41),TIME( 42)
+     +    /  37.0E0,   38.0E0,   39.0E0,   40.0E0,   41.0E0,   42.0E0/
+      DATA TIME( 43),TIME( 44),TIME( 45),TIME( 46),TIME( 47),TIME( 48)
+     +    /  43.0E0,   44.0E0,   45.0E0,   46.0E0,   47.0E0,   48.0E0/
+      DATA TIME( 49),TIME( 50),TIME( 51),TIME( 52),TIME( 53),TIME( 54)
+     +    /  49.0E0,   50.0E0,   51.0E0,   52.0E0,   53.0E0,   54.0E0/
+      DATA TIME( 55),TIME( 56),TIME( 57),TIME( 58),TIME( 59),TIME( 60)
+     +    /  55.0E0,   56.0E0,   57.0E0,   58.0E0,   59.0E0,   60.0E0/
+      DATA TIME( 61),TIME( 62),TIME( 63),TIME( 64),TIME( 65),TIME( 66)
+     +    /  61.0E0,   62.0E0,   63.0E0,   64.0E0,   65.0E0,   66.0E0/
+      DATA TIME( 67),TIME( 68),TIME( 69),TIME( 70),TIME( 71),TIME( 72)
+     +    /  67.0E0,   68.0E0,   69.0E0,   70.0E0,   71.0E0,   72.0E0/
+      DATA TIME( 73),TIME( 74),TIME( 75),TIME( 76),TIME( 77),TIME( 78)
+     +    /  73.0E0,   74.0E0,   75.0E0,   76.0E0,   77.0E0,   78.0E0/
+      DATA TIME( 79),TIME( 80),TIME( 81),TIME( 82),TIME( 83),TIME( 84)
+     +    /  79.0E0,   80.0E0,   81.0E0,   82.0E0,   83.0E0,   84.0E0/
+      DATA TIME( 85),TIME( 86),TIME( 87),TIME( 88),TIME( 89),TIME( 90)
+     +    /  85.0E0,   86.0E0,   87.0E0,   88.0E0,   89.0E0,   90.0E0/
+      DATA TIME( 91),TIME( 92),TIME( 93),TIME( 94),TIME( 95),TIME( 96)
+     +    /  91.0E0,   92.0E0,   93.0E0,   94.0E0,   95.0E0,   96.0E0/
+      DATA TIME( 97),TIME( 98),TIME( 99),TIME(100),TIME(101),TIME(102)
+     +    /  97.0E0,   98.0E0,   99.0E0,  100.0E0,  101.0E0,  102.0E0/
+      DATA TIME(103),TIME(104),TIME(105),TIME(106),TIME(107),TIME(108)
+     +    / 103.0E0,  104.0E0,  105.0E0,  106.0E0,  107.0E0,  108.0E0/
+      DATA TIME(109),TIME(110),TIME(111),TIME(112),TIME(113),TIME(114)
+     +    / 109.0E0,  110.0E0,  111.0E0,  112.0E0,  113.0E0,  114.0E0/
+      DATA TIME(115),TIME(116),TIME(117),TIME(118),TIME(119),TIME(120)
+     +    / 115.0E0,  116.0E0,  117.0E0,  118.0E0,  119.0E0,  120.0E0/
+      DATA TIME(121),TIME(122),TIME(123),TIME(124),TIME(125),TIME(126)
+     +    / 121.0E0,  122.0E0,  123.0E0,  124.0E0,  125.0E0,  126.0E0/
+      DATA TIME(127),TIME(128),TIME(129),TIME(130),TIME(131),TIME(132)
+     +    / 127.0E0,  128.0E0,  129.0E0,  130.0E0,  131.0E0,  132.0E0/
+      DATA TIME(133),TIME(134),TIME(135),TIME(136),TIME(137),TIME(138)
+     +    / 133.0E0,  134.0E0,  135.0E0,  136.0E0,  137.0E0,  138.0E0/
+      DATA TIME(139),TIME(140),TIME(141),TIME(142),TIME(143),TIME(144)
+     +    / 139.0E0,  140.0E0,  141.0E0,  142.0E0,  143.0E0,  144.0E0/
+C
+      DATA  AIR(  1), AIR(  2), AIR(  3), AIR(  4), AIR(  5), AIR(  6)
+     +    / 112.0E0,  118.0E0,  132.0E0,  129.0E0,  121.0E0,  135.0E0/
+      DATA  AIR(  7), AIR(  8), AIR(  9), AIR( 10), AIR( 11), AIR( 12)
+     +    / 148.0E0,  148.0E0,  136.0E0,  119.0E0,  104.0E0,  118.0E0/
+      DATA  AIR( 13), AIR( 14), AIR( 15), AIR( 16), AIR( 17), AIR( 18)
+     +    / 115.0E0,  126.0E0,  141.0E0,  135.0E0,  125.0E0,  149.0E0/
+      DATA  AIR( 19), AIR( 20), AIR( 21), AIR( 22), AIR( 23), AIR( 24)
+     +    / 170.0E0,  170.0E0,  158.0E0,  133.0E0,  114.0E0,  140.0E0/
+      DATA  AIR( 25), AIR( 26), AIR( 27), AIR( 28), AIR( 29), AIR( 30)
+     +    / 145.0E0,  150.0E0,  178.0E0,  163.0E0,  172.0E0,  178.0E0/
+      DATA  AIR( 31), AIR( 32), AIR( 33), AIR( 34), AIR( 35), AIR( 36)
+     +    / 199.0E0,  199.0E0,  184.0E0,  162.0E0,  146.0E0,  166.0E0/
+      DATA  AIR( 37), AIR( 38), AIR( 39), AIR( 40), AIR( 41), AIR( 42)
+     +    / 171.0E0,  180.0E0,  193.0E0,  181.0E0,  183.0E0,  218.0E0/
+      DATA  AIR( 43), AIR( 44), AIR( 45), AIR( 46), AIR( 47), AIR( 48)
+     +    / 230.0E0,  242.0E0,  209.0E0,  191.0E0,  172.0E0,  194.0E0/
+      DATA  AIR( 49), AIR( 50), AIR( 51), AIR( 52), AIR( 53), AIR( 54)
+     +    / 196.0E0,  196.0E0,  236.0E0,  235.0E0,  229.0E0,  243.0E0/
+      DATA  AIR( 55), AIR( 56), AIR( 57), AIR( 58), AIR( 59), AIR( 60)
+     +    / 264.0E0,  272.0E0,  237.0E0,  211.0E0,  180.0E0,  201.0E0/
+      DATA  AIR( 61), AIR( 62), AIR( 63), AIR( 64), AIR( 65), AIR( 66)
+     +    / 204.0E0,  188.0E0,  235.0E0,  227.0E0,  234.0E0,  264.0E0/
+      DATA  AIR( 67), AIR( 68), AIR( 69), AIR( 70), AIR( 71), AIR( 72)
+     +    / 302.0E0,  293.0E0,  259.0E0,  229.0E0,  203.0E0,  229.0E0/
+      DATA  AIR( 73), AIR( 74), AIR( 75), AIR( 76), AIR( 77), AIR( 78)
+     +    / 242.0E0,  233.0E0,  267.0E0,  269.0E0,  270.0E0,  315.0E0/
+      DATA  AIR( 79), AIR( 80), AIR( 81), AIR( 82), AIR( 83), AIR( 84)
+     +    / 364.0E0,  347.0E0,  312.0E0,  274.0E0,  237.0E0,  278.0E0/
+      DATA  AIR( 85), AIR( 86), AIR( 87), AIR( 88), AIR( 89), AIR( 90)
+     +    / 284.0E0,  277.0E0,  317.0E0,  313.0E0,  318.0E0,  374.0E0/
+      DATA  AIR( 91), AIR( 92), AIR( 93), AIR( 94), AIR( 95), AIR( 96)
+     +    / 413.0E0,  405.0E0,  355.0E0,  306.0E0,  271.0E0,  306.0E0/
+      DATA  AIR( 97), AIR( 98), AIR( 99), AIR(100), AIR(101), AIR(102)
+     +    / 315.0E0,  301.0E0,  356.0E0,  348.0E0,  355.0E0,  422.0E0/
+      DATA  AIR(103), AIR(104), AIR(105), AIR(106), AIR(107), AIR(108)
+     +    / 465.0E0,  467.0E0,  404.0E0,  347.0E0,  305.0E0,  336.0E0/
+      DATA  AIR(109), AIR(110), AIR(111), AIR(112), AIR(113), AIR(114)
+     +    / 340.0E0,  318.0E0,  362.0E0,  348.0E0,  363.0E0,  435.0E0/
+      DATA  AIR(115), AIR(116), AIR(117), AIR(118), AIR(119), AIR(120)
+     +    / 491.0E0,  505.0E0,  404.0E0,  359.0E0,  310.0E0,  337.0E0/
+      DATA  AIR(121), AIR(122), AIR(123), AIR(124), AIR(125), AIR(126)
+     +    / 360.0E0,  342.0E0,  406.0E0,  396.0E0,  420.0E0,  472.0E0/
+      DATA  AIR(127), AIR(128), AIR(129), AIR(130), AIR(131), AIR(132)
+     +    / 548.0E0,  559.0E0,  463.0E0,  407.0E0,  362.0E0,  405.0E0/
+      DATA  AIR(133), AIR(134), AIR(135), AIR(136), AIR(137), AIR(138)
+     +    / 417.0E0,  391.0E0,  419.0E0,  461.0E0,  472.0E0,  535.0E0/
+      DATA  AIR(139), AIR(140), AIR(141), AIR(142), AIR(143), AIR(144)
+     +    / 622.0E0,  606.0E0,  508.0E0,  461.0E0,  390.0E0,  432.0E0/
+C
+      CALL SETRV(YMMISS, 144, YMISS)
+      CALL SCOPY(144, AIR, 1, Y, 1)
+      CALL SCOPY(144, TIME, 1, X, 1)
+C
+C     DEFINE CONSTANTS
+C
+      CALL IPRINT(IPRT)
+C
+C     COMMENCE BODY OF ROUTINE
+C
+      ITEST = 0
+C
+C     SHORT CALLS
+C
+      NY = 144
+      NYM = 12
+      IYM = 12
+      M = 12
+      ILOG = -1
+      ISIZE = -1
+      NOUT = -1
+      YLB = 0.0E0
+      YUB = 0.0E0
+      XLB = 0.0E0
+      XUB = 0.0E0
+C
+   10 CONTINUE
+C
+C     TEST OF PP
+C
+      WRITE(IPRT, 1000)
+      WRITE (IPRT, 3100) ITEST
+      WRITE (IPRT, 3010) NY
+      CALL PP(Y, X, NY)
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF PPM
+C
+      WRITE(IPRT, 1030)
+      WRITE (IPRT, 3100) ITEST
+      WRITE (IPRT, 3010) NY
+      CALL PPM(Y, YMISS, X, XMISS, NY)
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF SPP
+C
+      WRITE(IPRT, 1120)
+      WRITE (IPRT, 3100) ITEST
+      WRITE (IPRT, 3010) NY
+      CALL SPP(Y, X, NY, ISYM)
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF SPPM
+C
+      WRITE(IPRT, 1150)
+      WRITE (IPRT, 3100) ITEST
+      WRITE (IPRT, 3010) NY
+      CALL SPPM(Y, YMISS, X, XMISS, NY, ISYM)
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF MPP
+C
+      WRITE(IPRT, 1060)
+      WRITE (IPRT, 3100) ITEST
+      WRITE (IPRT, 3010) NYM
+      WRITE (IPRT, 3020) M, IYM
+      CALL MPP(YM, X, NYM, M, IYM)
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF MPPM
+C
+      WRITE(IPRT, 1090)
+      WRITE (IPRT, 3100) ITEST
+      WRITE (IPRT, 3010) NYM
+      WRITE (IPRT, 3020) M, IYM
+      CALL MPPM(YM, YMMISS, X, XMISS, NYM, M, IYM)
+      WRITE (IPRT, 3000) IERR
+C
+C
+C     LOG OPTION CALLS
+C
+C
+   20 CONTINUE
+C
+C     TEST OF PPL
+C
+      WRITE(IPRT, 1010)
+      WRITE (IPRT, 3100) ITEST
+      WRITE (IPRT, 3010) NY
+      WRITE (IPRT, 3040) ILOG
+      CALL PPL(Y, X, NY, ILOG)
+C
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF PPML
+C
+      WRITE(IPRT, 1040)
+      WRITE (IPRT, 3100) ITEST
+      WRITE (IPRT, 3010) NY
+      WRITE (IPRT, 3040) ILOG
+      CALL PPML(Y, YMISS, X, XMISS, NY, ILOG)
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF SPPL
+C
+      WRITE(IPRT, 1130)
+      WRITE (IPRT, 3100) ITEST
+      WRITE (IPRT, 3010) NY
+      WRITE (IPRT, 3040) ILOG
+      CALL SPPL(Y, X, NY, ISYM, ILOG)
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF SPPML
+C
+      WRITE(IPRT, 1160)
+      WRITE (IPRT, 3100) ITEST
+      WRITE (IPRT, 3010) NY
+      WRITE (IPRT, 3040) ILOG
+      CALL SPPML(Y, YMISS, X, XMISS, NY, ISYM, ILOG)
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF MPPL
+C
+      WRITE(IPRT, 1070)
+      WRITE (IPRT, 3100) ITEST
+      WRITE (IPRT, 3010) NYM
+      WRITE (IPRT, 3020) M, IYM
+      WRITE (IPRT, 3040) ILOG
+      CALL MPPL(YM, X, NYM, M, IYM, ILOG)
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF MPPML
+C
+      WRITE(IPRT, 1100)
+      WRITE (IPRT, 3100) ITEST
+      WRITE (IPRT, 3010) NYM
+      WRITE (IPRT, 3020) M, IYM
+      WRITE (IPRT, 3040) ILOG
+      CALL MPPML(YM, YMMISS, X, XMISS, NYM, M, IYM, ILOG)
+      WRITE (IPRT, 3000) IERR
+C
+C
+C     TEST OF LONG CALLS
+C
+C
+   30 CONTINUE
+C
+C     TEST OF PPC
+C
+      WRITE(IPRT, 1020)
+      WRITE (IPRT, 3100) ITEST
+      WRITE (IPRT, 3010) NY
+      WRITE (IPRT, 3040) ILOG
+      WRITE (IPRT, 3050) ISIZE, NOUT
+      WRITE (IPRT, 3070) YLB, YUB, XLB
+      WRITE (IPRT, 3080) XUB
+      CALL PPC(Y, X, NY, ILOG, ISIZE, NOUT, YLB, YUB, XLB, XUB)
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF PPMC
+C
+      WRITE(IPRT, 1050)
+      WRITE (IPRT, 3100) ITEST
+      WRITE (IPRT, 3010) NY
+      WRITE (IPRT, 3040) ILOG
+      WRITE (IPRT, 3050) ISIZE, NOUT
+      WRITE (IPRT, 3070) YLB, YUB, XLB
+      WRITE (IPRT, 3080) XUB
+      CALL PPMC(Y, YMISS, X, XMISS, NY, ILOG, ISIZE, NOUT, YLB, YUB,
+     +   XLB, XUB)
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF SPPC
+C
+      WRITE(IPRT, 1140)
+      WRITE (IPRT, 3100) ITEST
+      WRITE (IPRT, 3010) NY
+      WRITE (IPRT, 3040) ILOG
+      WRITE (IPRT, 3050) ISIZE, NOUT
+      WRITE (IPRT, 3070) YLB, YUB, XLB
+      WRITE (IPRT, 3080) XUB
+      CALL SPPC(Y, X, NY, ISYM, ILOG, ISIZE, NOUT, YLB, YUB, XLB,
+     +   XUB)
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF SPPMC
+C
+      WRITE(IPRT, 1170)
+      WRITE (IPRT, 3100) ITEST
+      WRITE (IPRT, 3010) NY
+      WRITE (IPRT, 3040) ILOG
+      WRITE (IPRT, 3050) ISIZE, NOUT
+      WRITE (IPRT, 3070) YLB, YUB, XLB
+      WRITE (IPRT, 3080) XUB
+      CALL SPPMC(Y, YMISS, X, XMISS, NY, ISYM, ILOG, ISIZE, NOUT,
+     +   YLB, YUB, XLB, XUB)
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF MPPC
+C
+   40 WRITE(IPRT, 1080)
+      WRITE (IPRT, 3100) ITEST
+      WRITE (IPRT, 3010) NYM
+      WRITE (IPRT, 3020) M, IYM
+      WRITE (IPRT, 3040) ILOG
+      WRITE (IPRT, 3050) ISIZE, NOUT
+      WRITE (IPRT, 3070) YLB, YUB, XLB
+      WRITE (IPRT, 3080) XUB
+      CALL MPPC(YM, X, NYM, M, IYM, ILOG, ISIZE, NOUT, YLB, YUB,
+     +   XLB, XUB)
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF MPPMC
+C
+   50 WRITE(IPRT, 1110)
+      WRITE (IPRT, 3100) ITEST
+      WRITE (IPRT, 3010) NYM
+      WRITE (IPRT, 3020) M, IYM
+      WRITE (IPRT, 3040) ILOG
+      WRITE (IPRT, 3050) ISIZE, NOUT
+      WRITE (IPRT, 3070) YLB, YUB, XLB
+      WRITE (IPRT, 3080) XUB
+      CALL MPPMC(YM, YMMISS, X, XMISS, NYM, M, IYM, ILOG, ISIZE, NOUT,
+     +   YLB, YUB, XLB, XUB)
+      WRITE (IPRT, 3000) IERR
+C
+      ITEST = ITEST + 1
+C
+      GO TO (110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 300),
+     +  ITEST
+C
+C     TEST VALID OPTIONS
+C
+  110 ILOG = 0
+      ISIZE = 0
+      NOUT = 0
+      YLB = 100.0E0
+      YUB = 700.0E0
+      XLB = 4.0E0
+      XUB = 16.0E0
+      GO TO 20
+C
+  120 ILOG = 2
+      ISIZE = 2
+      NOUT = 5
+      GO TO 20
+C
+  130 ILOG = 20
+      ISIZE = 20
+      NOUT = 55
+      YUB = 300.0E0
+      GO TO 30
+C
+  140 ILOG = 22
+      ISIZE = 22
+      GO TO 40
+C
+  150 NY = 1
+      NYM = 1
+      M = 144
+      IYM = 1
+      X(1) = 10.0E0
+      GO TO 40
+C
+  160 CALL SETRV(Y, 144, 1.0E0)
+      CALL SETRV(X, 144, 1.0E0)
+      NYM = 6
+      IYM = 12
+      M = 6
+      NY = 36
+      YLB = 0.0E0
+      YUB = 0.0E0
+      XLB = 0.0E0
+      XUB = 0.0E0
+      GO TO 30
+C
+C     TEST ERROR RESPONSE
+C
+  170 NY = 0
+      NYM = 0
+      M = 0
+      IYM = -1
+      GO TO 10
+C
+  180 NY = 144
+      NYM = 12
+      M = 12
+      IYM = -1
+      XLB = -1.0E0
+      YLB = -1.0E0
+      GO TO 40
+C
+  190 IYM = 12
+      X(1) = 0.0E0
+      Y(1) = 0.0E0
+      GO TO 50
+C
+  200 CALL SETRV(X, 144, XMISS)
+      CALL SETRV(Y, 144, YMISS)
+      XLB = XUB
+      YLB = YUB
+      GO TO 50
+C
+  300 CONTINUE
+C
+      RETURN
+C
+C     FORMAT STATEMENTS
+C
+ 1000 FORMAT ('1', 10HTEST OF PP)
+ 1010 FORMAT ('1', 11HTEST OF PPL)
+ 1020 FORMAT ('1', 11HTEST OF PPC)
+ 1030 FORMAT ('1', 11HTEST OF PPM)
+ 1040 FORMAT ('1', 12HTEST OF PPML)
+ 1050 FORMAT ('1', 12HTEST OF PPMC)
+ 1060 FORMAT ('1', 11HTEST OF MPP)
+ 1070 FORMAT ('1', 12HTEST OF MPPL)
+ 1080 FORMAT ('1', 12HTEST OF MPPC)
+ 1090 FORMAT ('1', 12HTEST OF MPPM)
+ 1100 FORMAT ('1', 13HTEST OF MPPML)
+ 1110 FORMAT ('1', 13HTEST OF MPPMC)
+ 1120 FORMAT ('1', 11HTEST OF SPP)
+ 1130 FORMAT ('1', 12HTEST OF SPPL)
+ 1140 FORMAT ('1', 12HTEST OF SPPC)
+ 1150 FORMAT ('1', 12HTEST OF SPPM)
+ 1160 FORMAT ('1', 13HTEST OF SPPML)
+ 1170 FORMAT ('1', 13HTEST OF SPPMC)
+ 3000 FORMAT (/8H IERR = , I4)
+ 3010 FORMAT (' ', 5X, 10H   N     =, I5)
+ 3020 FORMAT ('+', 20X, 10H / M     =, I5, 10H / IYM   =, I5)
+ 3040 FORMAT ('+', 65X, 10H / ILOG  =, I5)
+ 3050 FORMAT (' ',  5X, 10H   ISIZE =, I5, 10H / NOUT  =, I5)
+ 3070 FORMAT ('+', 50X, 10H / YLB   =, F10.4, 10H / YUB   =, F10.4,
+     +   10H / XLB   =, F10.4)
+ 3080 FORMAT ('+', 110X, 10H / XUB   =, F10.4)
+ 3100 FORMAT (' ', 13H TEST NUMBER , I5)
+      END
+      SUBROUTINE XSTAT(LDSTAK)
+
+c*********************************************************************72
+c
+cc XSTAT tests features of the STAT family.
+C
+c  Modified:
+c
+c    24 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson and John Koontz,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      REAL
+     +   FPLM,WTEMP,YTEMP1,YTEMPN
+      INTEGER
+     +   I,IPRT,N,NCONST,NPRTOF,NPRTON
+C
+C  LOCAL ARRAYS
+      REAL
+     +   STS(53),WT(84),WTALL0(10),WTALL1(84),Y(84),YCONST(10),
+     +   YPATH(10)
+C
+C  EXTERNAL FUNCTIONS
+      REAL
+     +   R1MACH
+      EXTERNAL R1MACH
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL IPRINT,STAT,STATS,STATW,STATWS
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     REAL FPLM
+C        THE FLOATING POINT LARGEST MAGNITUDE.
+C     INTEGER I
+C        A LOOP INDEX.
+C     INTEGER IERR
+C        FLAG TO INDICATE PRESENCE OF ERROR DETECTED BY PRECEDING
+C        STARPAC CALL.  (0 IS OK, 1 IS ERROR)
+C     INTEGER IPRT
+C        LOGICAL OUTPUT UNIT.
+C     INTEGER LDSTAK
+C        AMOUNT OF WORK AREA.  SIZE OF DSTAK.
+C     INTEGER N
+C        THE LENGTH OF THE VECTOR Y.
+C     INTEGER NCONST
+C        LENGTH OF THE VECTOR YCONST.
+C     INTEGER NPRTOF
+C        FLAG FOR NO OUTPUT (EXCEPT ERROR MESSAGES).
+C     INTEGER NPRTON
+C        FLAG FOR FULL PRINTOUT.
+C     REAL STS(53)
+C        VECTOR OF STATISTICS.
+C     REAL WT(84)
+C        WEIGHTS VECTOR.
+C     REAL WTALL0(10)
+C        N VECTOR OF 0 WEIGHTS.
+C     REAL WTALL1(84)
+C        N VECTOR OF 1 WEIGHTS.
+C     REAL WTEMP
+C        TEMPORARY STORAGE FOR ONE OF THE WEIGHTS.
+C     REAL Y(84)
+C        DATA VECTOR FOR TESTS.
+C     REAL YCONST(10)
+C        VECTOR OF CONSTANT DATA.
+C     REAL YPATH(10)
+C        A VECTOR OF Y VALUES DESIGNED TO FORCE DIFFERENT PATHS
+C        THROUGH THE SUMMATION ROUTINES.
+C     REAL YTEMPN, YTEMP1
+C        TEMPORARY STORAGE FOR THE FIRST AND LAST Y VALUE.
+C
+C     DATA INITIALIZATIONS.
+C
+      DATA N /84/
+      DATA NCONST /10/
+      DATA NPRTON /1/
+      DATA NPRTOF /0/
+C
+C     DAVIS-HARRISON R.H. DATA, PIKES PEAK.
+C
+C     THIS IS AN ARBITRARILY CHOSEN DATA SET.
+C
+      DATA Y( 1), Y( 2), Y( 3), Y( 4)
+     +    / 0.6067E0, 0.6087E0, 0.6086E0, 0.6134E0/
+      DATA Y( 5), Y( 6), Y( 7)
+     +    / 0.6108E0, 0.6138E0, 0.6125E0/
+      DATA Y( 8), Y( 9), Y(10), Y(11)
+     +    / 0.6122E0, 0.6110E0, 0.6104E0, 0.7213E0/
+      DATA Y(12), Y(13), Y(14)
+     +    / 0.7078E0, 0.7021E0, 0.7004E0/
+      DATA Y(15), Y(16), Y(17), Y(18)
+     +    / 0.6981E0, 0.7242E0, 0.7268E0, 0.7418E0/
+      DATA Y(19), Y(20), Y(21)
+     +    / 0.7407E0, 0.7199E0, 0.6225E0/
+      DATA Y(22), Y(23), Y(24), Y(25)
+     +    / 0.6254E0, 0.6252E0, 0.6267E0, 0.6218E0/
+      DATA Y(26), Y(27), Y(28)
+     +    / 0.6178E0, 0.6216E0, 0.6192E0/
+      DATA Y(29), Y(30), Y(31), Y(32)
+     +    / 0.6191E0, 0.6250E0, 0.6188E0, 0.6233E0/
+      DATA Y(33), Y(34), Y(35)
+     +    / 0.6225E0, 0.6204E0, 0.6207E0/
+      DATA Y(36), Y(37), Y(38), Y(39)
+     +    / 0.6168E0, 0.6141E0, 0.6291E0, 0.6231E0/
+      DATA Y(40), Y(41), Y(42)
+     +    / 0.6222E0, 0.6252E0, 0.6308E0/
+      DATA Y(43), Y(44), Y(45), Y(46)
+     +    / 0.6376E0, 0.6330E0, 0.6303E0, 0.6301E0/
+      DATA Y(47), Y(48), Y(49)
+     +    / 0.6390E0, 0.6423E0, 0.6300E0/
+      DATA Y(50), Y(51), Y(52), Y(53)
+     +    / 0.6260E0, 0.6292E0, 0.6298E0, 0.6290E0/
+      DATA Y(54), Y(55), Y(56)
+     +    / 0.6262E0, 0.5952E0, 0.5951E0/
+      DATA Y(57), Y(58), Y(59), Y(60)
+     +    / 0.6314E0, 0.6440E0, 0.6439E0, 0.6326E0/
+      DATA Y(61), Y(62), Y(63)
+     +    / 0.6392E0, 0.6417E0, 0.6412E0/
+      DATA Y(64), Y(65), Y(66), Y(67)
+     +    / 0.6530E0, 0.6411E0, 0.6355E0, 0.6344E0/
+      DATA Y(68), Y(69), Y(70)
+     +    / 0.6623E0, 0.6276E0, 0.6307E0/
+      DATA Y(71), Y(72), Y(73), Y(74)
+     +    / 0.6354E0, 0.6197E0, 0.6153E0, 0.6340E0/
+      DATA Y(75), Y(76), Y(77)
+     +    / 0.6338E0, 0.6284E0, 0.6162E0/
+      DATA Y(78), Y(79), Y(80), Y(81)
+     +    / 0.6252E0, 0.6349E0, 0.6344E0, 0.6361E0/
+      DATA Y(82), Y(83), Y(84)
+     +    / 0.6373E0, 0.6337E0, 0.6383E0/
+      DATA WT( 1), WT( 2), WT( 3), WT( 4), WT( 5), WT( 6), WT( 7)
+     +   / 0.5E0, 0.5E0, 0.5E0, 0.5E0, 0.5E0, 0.5E0, 0.5E0/
+      DATA WT( 8), WT( 9), WT(10), WT(11), WT(12), WT(13), WT(14)
+     +   / 0.5E0, 0.5E0, 0.5E0, 0.0E0, 0.0E0, 0.0E0, 0.0E0/
+      DATA WT(15), WT(16), WT(17), WT(18), WT(19), WT(20), WT(21)
+     +   / 0.0E0, 0.0E0, 0.0E0, 0.0E0, 0.0E0, 0.0E0, 0.5E0/
+      DATA WT(22), WT(23), WT(24), WT(25), WT(26), WT(27), WT(28)
+     +   / 0.5E0, 0.5E0, 0.5E0, 0.5E0, 0.5E0, 0.5E0, 0.5E0/
+      DATA WT(29), WT(30), WT(31), WT(32), WT(33), WT(34), WT(35)
+     +   / 0.5E0, 0.5E0, 0.5E0, 0.5E0, 0.5E0, 0.5E0, 0.5E0/
+      DATA WT(36), WT(37), WT(38), WT(39), WT(40), WT(41), WT(42)
+     +   / 0.5E0, 0.5E0, 0.5E0, 0.5E0, 0.5E0, 0.5E0, 0.5E0/
+      DATA WT(43), WT(44), WT(45), WT(46), WT(47), WT(48), WT(49)
+     +   / 1.0E0, 1.0E0, 1.0E0, 1.0E0, 1.0E0, 1.0E0, 1.0E0/
+      DATA WT(50), WT(51), WT(52), WT(53), WT(54), WT(55), WT(56)
+     +   / 1.0E0, 1.0E0, 1.0E0, 1.0E0, 1.0E0, 0.0E0, 0.0E0/
+      DATA WT(57), WT(58), WT(59), WT(60), WT(61), WT(62), WT(63)
+     +   / 1.0E0, 1.0E0, 1.0E0, 1.0E0, 1.0E0, 1.0E0, 1.0E0/
+      DATA WT(64), WT(65), WT(66), WT(67), WT(68), WT(69), WT(70)
+     +   / 1.0E0, 1.0E0, 1.0E0, 1.0E0, 1.0E0, 1.0E0, 1.0E0/
+      DATA WT(71), WT(72), WT(73), WT(74), WT(75), WT(76), WT(77)
+     +   / 1.0E0, 1.0E0, 1.0E0, 1.0E0, 1.0E0, 1.0E0, 1.0E0/
+      DATA WT(78), WT(79), WT(80), WT(81), WT(82), WT(83), WT(84)
+     +   / 1.0E0, 1.0E0, 1.0E0, 1.0E0, 1.0E0, 1.0E0, 1.0E0/
+C
+C     DEFINE IPRT, THE CURRENT OUTPUT UNIT.
+C
+      CALL IPRINT(IPRT)
+C
+      FPLM = R1MACH(2)
+C
+C     SET UP THE WEIGHTS VECTORS.
+C
+      DO 10 I=1,N
+         WTALL1(I) = 1.0E0
+   10 CONTINUE
+      DO 20 I=1,NCONST
+         YCONST(I) = 1.0E0
+         WTALL0(I) = 0.0E0
+   20 CONTINUE
+C
+C     HEADING.
+C
+      WRITE (IPRT,1150)
+C
+C     TEST 1.  CHECK ALL ERROR MESSAGES.
+C
+C     ERROR 1, TWO OR FEWER ELEMENTS.
+C
+      WRITE (IPRT,1180)
+      WRITE(IPRT,1230)
+      WRITE(IPRT,1240)
+      CALL STAT(Y, 2, LDSTAK)
+      WRITE(IPRT,1390) (Y(I), I = 1, 10)
+      WRITE (IPRT,1170) IERR
+      WRITE(IPRT,1230)
+      WRITE(IPRT,1250)
+      CALL STATS(Y, 2, LDSTAK, STS, NPRTON)
+      WRITE(IPRT,1390) (Y(I), I = 1, 10)
+      WRITE (IPRT,1170) IERR
+      WRITE(IPRT,1230)
+      WRITE(IPRT,1400)
+      CALL STATW(Y, WT, 2, LDSTAK)
+      WRITE(IPRT,1390) (Y(I), I = 1, 10)
+      WRITE (IPRT,1170) IERR
+      WRITE(IPRT,1230)
+      WRITE(IPRT,1410)
+      CALL STATWS(Y, WT, 2, LDSTAK, STS, NPRTON)
+      WRITE(IPRT,1390) (Y(I), I = 1, 10)
+      WRITE (IPRT,1170) IERR
+C
+C     ERROR 2, NOT ENOUGH SPACE IN CSTAK.
+C
+      WRITE (IPRT,1190)
+      WRITE(IPRT,1230)
+      WRITE(IPRT,1240)
+      CALL STAT(Y, N, N/4)
+      WRITE (IPRT,1170) IERR
+      WRITE(IPRT,1230)
+      WRITE(IPRT,1250)
+      CALL STATS(Y, N, N/4, STS, NPRTON)
+      WRITE (IPRT,1170) IERR
+      WRITE(IPRT,1230)
+      WRITE(IPRT,1400)
+      CALL STATW(Y, WT, N, N/4)
+      WRITE (IPRT,1170) IERR
+      WRITE(IPRT,1230)
+      WRITE(IPRT,1410)
+      CALL STATWS(Y, WT, N, N/4, STS, NPRTON)
+      WRITE (IPRT,1170) IERR
+C
+C     ERROR 4, NEGATIVE WEIGHTS.
+C
+      WRITE (IPRT,1210)
+      WTEMP = WT(2)
+      WT(2) = -1.0E0
+      WRITE(IPRT,1230)
+      WRITE(IPRT,1400)
+      CALL STATW(Y, WT, N, LDSTAK)
+      WRITE(IPRT,1390) (Y(I), I = 1, 10)
+      WRITE(IPRT,1390) (Y(I), I = 1, 10)
+      WRITE (IPRT,1170) IERR
+      WRITE(IPRT,1230)
+      WRITE(IPRT,1410)
+      CALL STATWS(Y, WT, N, LDSTAK, STS, NPRTON)
+      WRITE(IPRT,1390) (Y(I), I = 1, 10)
+      WRITE(IPRT,1390) (Y(I), I = 1, 10)
+      WRITE (IPRT,1170) IERR
+      WT(2) = WTEMP
+C
+C     ERROR 5, ALL WEIGHTS ZERO (PLUS CONSTANT Y).
+C
+      WRITE (IPRT,1220)
+      WRITE(IPRT,1230)
+      WRITE(IPRT,1400)
+      CALL STATW(YCONST, WTALL0, NCONST, LDSTAK)
+      WRITE (IPRT,1170) IERR
+      WRITE(IPRT,1230)
+      WRITE(IPRT,1410)
+      CALL STATWS(YCONST, WTALL0, NCONST, LDSTAK, STS, NPRTON)
+      WRITE (IPRT,1170) IERR
+C
+C     TEST 2.  CHECK FOR READING OUTSIDE OF DATA ARRAY.
+C
+      WRITE (IPRT,1160)
+      YTEMP1 = YCONST(1)
+      YCONST(1) = FPLM
+      YTEMPN = YCONST(NCONST)
+      YCONST(NCONST) = FPLM
+      WRITE(IPRT,1440)
+      WRITE(IPRT,1240)
+      CALL STAT(YCONST(2), NCONST-2, LDSTAK)
+      WRITE (IPRT,1170) IERR
+      WRITE(IPRT,1440)
+      WRITE(IPRT,1250)
+      CALL STATS(YCONST(2), NCONST-2, LDSTAK, STS, NPRTON)
+      WRITE (IPRT,1170) IERR
+      WRITE(IPRT,1440)
+      WRITE(IPRT,1400)
+      CALL STATW(YCONST(2), WT, NCONST-2, LDSTAK)
+      WRITE (IPRT,1170) IERR
+      WRITE(IPRT,1440)
+      WRITE(IPRT,1410)
+      CALL STATWS(YCONST(2), WT, NCONST-2, LDSTAK, STS, NPRTON)
+      WRITE (IPRT,1170) IERR
+      YCONST(1) = YTEMP1
+      YCONST(NCONST) = YTEMPN
+C
+C     TEST 3.  CONSTANT Y.
+C
+      WRITE (IPRT,1200)
+      WRITE(IPRT,1440)
+      WRITE(IPRT,1240)
+      CALL STAT(YCONST, NCONST, LDSTAK)
+      WRITE (IPRT,1170) IERR
+      WRITE(IPRT,1440)
+      WRITE(IPRT,1250)
+      CALL STATS(YCONST, NCONST, LDSTAK, STS, NPRTON)
+      WRITE (IPRT,1170) IERR
+      WRITE(IPRT,1440)
+      WRITE(IPRT,1400)
+      CALL STATW(YCONST, WT, NCONST, LDSTAK)
+      WRITE (IPRT,1170) IERR
+      WRITE(IPRT,1440)
+      WRITE(IPRT,1410)
+      CALL STATWS(YCONST, WT, NCONST, LDSTAK, STS, NPRTON)
+      WRITE (IPRT,1170) IERR
+C
+C     TEST 4.  SEE IF TURNING OFF THE PRINTOUT WORKS.
+C
+      WRITE (IPRT,1260)
+      WRITE (IPRT,1270)
+      WRITE(IPRT,1230)
+      WRITE(IPRT,1250)
+      CALL STATS(Y, N, LDSTAK, STS, NPRTOF)
+      WRITE(IPRT,1390) (Y(I), I = 1, 10)
+      WRITE (IPRT,1280)
+      WRITE(IPRT,1230)
+      WRITE(IPRT,1410)
+      CALL STATWS(Y, WT, N, LDSTAK, STS, NPRTOF)
+      WRITE(IPRT,1390) (Y(I), I = 1, 10)
+C
+C     TEST 5.  MAKE A WORKING RUN OF EACH ROUTINE  FIRST WITH
+C              N=2 (THE MINIMUN VALID VALUE) AND THEN FOR THE WHOLE
+C              DATA SET TO CHECK THE OUTPUT.
+C
+      WRITE (IPRT,1300)
+      WRITE (IPRT,1310)
+      WRITE(IPRT,1240)
+      CALL STAT(Y, 3, LDSTAK)
+      WRITE (IPRT,1310)
+      WRITE(IPRT,1240)
+      CALL STAT(Y, N, LDSTAK)
+      WRITE(IPRT,1390) (Y(I), I = 1, 10)
+      WRITE (IPRT,1170) IERR
+C
+      WRITE (IPRT,1320)
+      WRITE(IPRT,1400)
+      CALL STATW(Y, WT, 3, LDSTAK)
+      WRITE (IPRT,1320)
+      WRITE(IPRT,1400)
+      CALL STATW(Y, WT, N, LDSTAK)
+      WRITE(IPRT,1390) (Y(I), I = 1, 10)
+      WRITE (IPRT,1170) IERR
+C
+      WRITE (IPRT,1340)
+      WRITE(IPRT,1250)
+      CALL STATS(Y, 3, LDSTAK, STS, NPRTON)
+      WRITE (IPRT,1340)
+      WRITE(IPRT,1250)
+      CALL STATS(Y, N, LDSTAK, STS, NPRTON)
+      WRITE(IPRT,1390) (Y(I), I = 1, 10)
+      WRITE (IPRT,1170) IERR
+C
+      WRITE (IPRT,1350)
+      WRITE(IPRT,1410)
+      CALL STATWS(Y, WT, 3, LDSTAK, STS, NPRTON)
+      WRITE (IPRT,1350)
+      WRITE(IPRT,1410)
+      CALL STATWS(Y, WT, N, LDSTAK, STS, NPRTON)
+      WRITE(IPRT,1390) (Y(I), I = 1, 10)
+      WRITE (IPRT,1170) IERR
+C
+C     TEST 5.  CHECK RESULTS OF WEIGHTING ALL OBSERVATIONS
+C              WITH 1.0E0.  COMPARE WITH STAT EXECUTION.
+C
+      WRITE (IPRT,1370)
+      WRITE(IPRT,1400)
+      CALL STATW(Y, WTALL1, N, LDSTAK)
+      WRITE (IPRT,1170) IERR
+C
+C     TEST 6.  CHECK RESULTS OF FORCING DIFFERENCE PATHS THROUGH
+C              THE SUMMATION ROUTINES, USING SMALL, SIMPLE DATA SETS.
+C
+      WRITE (IPRT,1000)
+C
+C     RUN DATA SET 6.1
+C
+      DO 30 I=1,10
+         YPATH(I) = I
+   30 CONTINUE
+      WRITE (IPRT,1010)
+      WRITE(IPRT,1240)
+      CALL STAT(YPATH, NCONST, LDSTAK)
+      WRITE (IPRT,1170) IERR
+      WRITE (IPRT,1020)
+      WRITE(IPRT,1400)
+      CALL STATW(YPATH, WTALL1, NCONST, LDSTAK)
+      WRITE (IPRT,1170) IERR
+C
+C     RUN DATA SET 6.2
+C
+      DO 40 I=1,10
+         YPATH(I) = -I
+   40 CONTINUE
+      WRITE (IPRT,1030)
+      WRITE(IPRT,1240)
+      CALL STAT(YPATH, NCONST, LDSTAK)
+      WRITE (IPRT,1170) IERR
+      WRITE (IPRT,1040)
+      WRITE(IPRT,1400)
+      CALL STATW(YPATH, WTALL1, NCONST, LDSTAK)
+      WRITE (IPRT,1170) IERR
+C
+C     RUN DATA SET 6.3
+C
+      DO 50 I=1,10
+         YPATH(I) = I-1
+   50 CONTINUE
+      WRITE (IPRT,1050)
+      WRITE(IPRT,1240)
+      CALL STAT(YPATH, NCONST, LDSTAK)
+      WRITE (IPRT,1170) IERR
+      WRITE (IPRT,1060)
+      WRITE(IPRT,1400)
+      CALL STATW(YPATH, WTALL1, NCONST, LDSTAK)
+      WRITE (IPRT,1170) IERR
+C
+C     RUN DATA SET 6.4
+C
+      DO 60 I=1,10
+         YPATH(I) = 1-I
+   60 CONTINUE
+      WRITE (IPRT,1070)
+      WRITE(IPRT,1240)
+      CALL STAT(YPATH, NCONST, LDSTAK)
+      WRITE (IPRT,1170) IERR
+      WRITE (IPRT,1080)
+      WRITE(IPRT,1400)
+      CALL STATW(YPATH, WTALL1, NCONST, LDSTAK)
+      WRITE (IPRT,1170) IERR
+C
+C     RUN DATA SET 6.5
+C
+      DO 70 I=1,10
+         YPATH(I) = I-6
+   70 CONTINUE
+      WRITE (IPRT,1090)
+      WRITE(IPRT,1240)
+      CALL STAT(YPATH, NCONST, LDSTAK)
+      WRITE (IPRT,1170) IERR
+      WRITE (IPRT,1100)
+      WRITE(IPRT,1400)
+      CALL STATW(YPATH, WTALL1, NCONST, LDSTAK)
+      WRITE (IPRT,1170) IERR
+C
+C     RUN DATA SET 6.6
+C
+      DO 80 I=1,10
+         YPATH(I) = I-5
+   80 CONTINUE
+      WRITE (IPRT,1110)
+      WRITE(IPRT,1240)
+      CALL STAT(YPATH, NCONST, LDSTAK)
+      WRITE (IPRT,1170) IERR
+      WRITE (IPRT,1120)
+      WRITE(IPRT,1400)
+      CALL STATW(YPATH, WTALL1, NCONST, LDSTAK)
+      WRITE (IPRT,1170) IERR
+C
+C     RUN DATA SET 6.7
+C
+      DO 90 I=1,10
+         YPATH(I) = 0.0E0
+   90 CONTINUE
+      YPATH(1) = -5.0E0
+      YPATH(10) = 5.0E0
+      WRITE (IPRT,1130)
+      WRITE(IPRT,1240)
+      CALL STAT(YPATH, NCONST, LDSTAK)
+      WRITE (IPRT,1170) IERR
+      WRITE (IPRT,1140)
+      WRITE(IPRT,1400)
+      CALL STATW(YPATH, WTALL1, NCONST, LDSTAK)
+      WRITE (IPRT,1170) IERR
+C
+C     RUN DATA SET 6.8
+C
+      DO 100 I=1,10
+         YPATH(I) = 0.0E0
+  100 CONTINUE
+      YPATH(1) = -5.0E0
+      WTALL1(1) = 0.0E0
+      YPATH(10) = 5.0E0
+      WTALL1(10) = 0.0E0
+      WRITE (IPRT,1380)
+      WRITE(IPRT,1400)
+      CALL STATW(YPATH, WTALL1, NCONST, LDSTAK)
+      WRITE (IPRT,1170) IERR
+      RETURN
+C
+C     FORMATS
+C
+ 1000 FORMAT(51H1TEST 6.  TRY DIFFERENT PATHS THROUGH THE SUMMATION,
+     +   6H CODE.)
+ 1010 FORMAT('1RUN STAT ON 1, ..., 10.')
+ 1020 FORMAT('1RUN STATW ON 1, ..., 10.  WEIGHTS ARE ALL 1.')
+ 1030 FORMAT('1RUN STAT ON -1, ..., -10.')
+ 1040 FORMAT('1RUN STATW ON -1, ..., -10.  WEIGHTS ARE ALL 1.')
+ 1050 FORMAT('1RUN STAT ON 0, ..., 9.')
+ 1060 FORMAT('1RUN STATW ON 0, ..., 9.  WEIGHTS ARE ALL 1.')
+ 1070 FORMAT('1RUN STAT ON 0, ..., -9.')
+ 1080 FORMAT('1RUN STATW ON 0, ..., -9.  WEIGHTS ARE ALL 1.')
+ 1090 FORMAT('1STAT ON -5, ..., 4.')
+ 1100 FORMAT('1RUN STATW ON -5, ..., 4.  WEIGHTS ARE ALL 1.')
+ 1110 FORMAT('1RUN STAT ON -4, ..., 5.')
+ 1120 FORMAT('1RUN STATW ON -4, ..., 5.  WEIGHTS ARE ALL 1.')
+ 1130 FORMAT('1RUN STAT ON -1, 8*0, 1.')
+ 1140 FORMAT('1RUN STATW ON -1, 8*0, 1.  WEIGHTS ARE ALL 1.')
+ 1150 FORMAT('1TEST RUNS FOR THE STATISTICAL ANALYSIS FAMILY ROUTINES.')
+ 1160 FORMAT('1TEST RUNS TO BE SURE CODE IS NOT READING OUTSIDE',
+     +       ' DATA ARRAY.')
+ 1170 FORMAT(/' THE VALUE OF IERR IS ', I4)
+ 1180 FORMAT('1TRY TWO OR FEWER ELEMENTS.')
+ 1190 FORMAT('1TRY INSUFFICIENT WORK AREA.')
+ 1200 FORMAT('1TRY CONSTANT Y.')
+ 1210 FORMAT('1TRY NEGATIVE WEIGHTS.')
+ 1220 FORMAT('1TRY ALL WEIGHTS ZERO (AND CONSTANT Y).')
+ 1230 FORMAT (///)
+ 1240 FORMAT (' CALL TO STAT')
+ 1250 FORMAT (' CALL TO STATS')
+ 1260 FORMAT(45H1TEST3.  TRY TURNING OFF THE PRINT FOR THOSE ,
+     +   24HROUTINES WHICH ALLOW IT.)
+ 1270 FORMAT(37H TRY TURNING THE PRINT OFF FOR STATS.)
+ 1280 FORMAT(38H TRY TURNING THE PRINT OFF FOR STATWS.)
+ 1300 FORMAT(52H1TEST 4.  MAKE WORKING RUNS OF ALL ROUTINES TO CHECK,
+     +   16H THE STATISTICS.)
+ 1310 FORMAT('1RUN STAT ON THE DAVIS-HARRISON PIKES PEAK DATA.')
+ 1320 FORMAT('1RUN STATW ON THE DAVIS-HARRISON PIKES PEAK DATA.')
+ 1340 FORMAT('1RUN STATS ON THE DAVIS-HARRISON PIKES PEAK DATA.')
+ 1350 FORMAT('1RUN STATWS ON THE DAVIS-HARRISON PIKES PEAK DATA.')
+ 1370 FORMAT('1RUN STATW ON THE DAVIS-HARRISON PIKES PEAK DATA.',
+     +  '  WEIGHTS ALL EQUAL TO ONE.  COMPARE TO STAT ABOVE, NOT TO',
+     +  ' STATW.')
+ 1380 FORMAT(42H SERIES WITH NONZERO VALUES WEIGHTED ZERO.)
+ 1390 FORMAT(/8H DATA = , 10F7.4)
+ 1400 FORMAT (14H CALL TO STATW)
+ 1410 FORMAT (15H CALL TO STATWS)
+ 1440 FORMAT ('1')
+      END
+      SUBROUTINE XSTPLD(LDSTAK)
+
+c*********************************************************************72
+c
+cc XSTPLD tests derivative checking routines.
+C
+c  Modified:
+c
+c    24 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      REAL
+     +   DELTA,EXMPT
+      INTEGER
+     +   I,IPRT,IXM,LDSMIN,M,N,NETA,NPAR,NPRT,NTEST
+C
+C  LOCAL ARRAYS
+      REAL
+     +   PAR(10),SCALE(10),STP(10),XM(200,2)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL IPRINT,LDSCMP,LSTVEC,MDL4,STPLS,STPLS1,STPLS2,STPLSC
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     REAL DELTA
+C        *
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     REAL EXMPT
+C        THE PROPORTION OF OBSERVATIONS FOR WHICH THE COMPUTED
+C        NUMERICAL DERIVATIVES WRT A GIVEN PARAMETER ARE EXEMPTED
+C        FROM MEETING THE DERIVATIVE ACCEPTANCE CRITERIA.
+C     INTEGER I
+C        AN INDEX VARIABLE.
+C     INTEGER IERR
+C        THE INTEGER VALUE RETURNED BY THIS ROUTINE DESIGNATING
+C        WHETHER ANY ERRORS WERE DETECTED IN THE PARAMETER LIST.
+C        IF IERR .EQ. 0, NO ERRORS WERE DETECTED.
+C        IF IERR .EQ. 1, ERRORS WERE DETECTED.
+C     INTEGER IPRT
+C        THE UNIT NUMBER FOR PRINTED OUTPUT.
+C     INTEGER IXM
+C        THE FIRST DIMENSION OF THE INDEPENDENT VARIABLE ARRAY XM.
+C     INTEGER LDSMIN
+C        THE MINIMUM LENGTH OF THE ARRAY DSTAK ALLOWED.
+C     INTEGER LDSTAK
+C        THE LENGTH OF THE ARRAY DSTAK.
+C     INTEGER M
+C        THE NUMBER OF INDEPENDENT VARIABLES.
+C     EXTERNAL MDL4
+C        THE NAME OF THE USER SUPPLIED SUBROUTINE WHICH COMPUTES THE
+C        PREDICTED VALUES BASED ON THE CURRENT PARAMETER ESTIMATES.
+C     INTEGER N
+C        THE NUMBER OF OBSERVATIONS OF DATA.
+C     INTEGER NETA
+C        THE NUMBER OF RELIABLE DIGITS IN THE MODEL.
+C     INTEGER NPAR
+C        THE NUMBER OF UNKNOWN PARAMETERS IN THE MODEL.
+C     INTEGER NPRT
+C        THE INDICATOR VARIABLE USED TO SPECIFY WHETHER OR NOT
+C        PRINTED OUTPUT IS TO BE PROVIDED, WHERE IF THE VALUE OF
+C        NPRT IS ZERO, NO PRINTED OUTPUT IS GIVEN.
+C     INTEGER NTEST
+C        THE NUMBER OF THE CURRENT TEST.
+C     REAL PAR(10)
+C        THE ARRAY IN WHICH THE CURRENT ESTIMATES OF THE UNKNOWN
+C        PARAMETERS ARE STORED.
+C     REAL SCALE(10)
+C        A DUMMY ARRAY, INDICATING USE OF DEFAULT VALUES FOR
+C        THE TYPICAL SIZE OF THE PARAMETERS.
+C     REAL STP(10)
+C        THE SELECTED STEP SIZES FOR EACH PARAMETER.
+C     REAL XM(200,2)
+C        THE ARRAY IN WHICH ONE ROW OF THE INDEPENDENT VARIABLE ARRAY
+C        IS STORED.
+C
+      CALL IPRINT(IPRT)
+C
+C     SET PARAMETER VALUES
+C
+      CALL STPLS1(N, M, IXM, PAR, NPAR, NETA, EXMPT, SCALE, NPRT)
+      CALL STPLS2(NPAR, STP)
+      CALL LDSCMP(14, 0, 2*(N+NPAR), 0, 0, 0, 'S', 10*N, LDSMIN)
+C
+      IF (LDSMIN.LE.LDSTAK) GO TO 5
+C
+      WRITE (IPRT, 1020) LDSMIN
+      RETURN
+C
+    5 CONTINUE
+C
+C     CREATE INDEPENDENT VARIABLE
+C
+      DELTA = 0.0625E0
+      XM(1,1) = 0.0E0
+      DO 10 I=2,N
+         XM(I,1) = XM(I-1,1) + DELTA
+   10 CONTINUE
+C
+      NTEST = 0
+C
+C     CHECK RESULTS FROM VALID CALLS
+C
+C     SIMPLE EXAMPLE
+C
+      CALL STPLS1(N, M, IXM, PAR, NPAR, NETA, EXMPT, SCALE, NPRT)
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1090) NTEST
+      WRITE (IPRT,1040)
+      WRITE (IPRT,1000)
+      CALL STPLS2(NPAR, STP)
+      CALL STPLS(XM, N, M, IXM, MDL4, PAR, NPAR, LDSMIN, STP)
+      WRITE (IPRT,1050) IERR
+      WRITE (IPRT,1080)
+      CALL LSTVEC(4, STP)
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1090) NTEST
+      WRITE (IPRT,1040)
+      WRITE (IPRT,1060) NETA, EXMPT, SCALE(1), NPRT
+      WRITE (IPRT,1010)
+      CALL STPLS2(NPAR, STP)
+      CALL STPLSC(XM, N, M, IXM, MDL4, PAR, NPAR, LDSMIN, STP, NETA,
+     +   EXMPT, SCALE, NPRT)
+      WRITE (IPRT,1100) NETA, EXMPT, SCALE(1), NPRT
+      WRITE (IPRT,1050) IERR
+      WRITE (IPRT,1080)
+      CALL LSTVEC(4, STP)
+C
+      RETURN
+C
+C     FORMAT STATEMENTS
+C
+ 1000 FORMAT (15H TEST OF STPLS )
+ 1010 FORMAT (15H TEST OF STPLSC)
+ 1020 FORMAT (45H1 *** LDSTAK MUST BE GREATER THAN OR EQUAL TO , I6)
+ 1040 FORMAT (15H SIMPLE EXAMPLE)
+ 1050 FORMAT (/29H ***** RETURNED RESULTS *****, 5X, 15H (-1 INDICATES ,
+     +   39HVALUE NOT CHANGED BY CALLED SUBROUTINE)//9H IERR IS , I3)
+ 1060 FORMAT (19H INPUT   -  NETA = , I5, 10H, EXMPT = , G15.8,
+     +   13H, SCALE(1) = , G15.8, 9H, NPRT = , I5)
+ 1080 FORMAT (//23H RETURNED VALUES OF STP)
+ 1090 FORMAT (54H1DERIVATIVE STEP SIZE SELECTION SUBROUTINE TEST NUMBER,
+     +   I5)
+ 1100 FORMAT (//19H OUTPUT  -  NETA = , I5, 10H, EXMPT = , G15.8,
+     +   13H, SCALE(1) = , G15.8, 9H, NPRT = , I5//)
+      END
+      SUBROUTINE XSTPLE(LDSTAK)
+
+c*********************************************************************72
+c
+cc XSTPLE tests derivative checking routines.
+c
+c  Modified:
+c
+c    24 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      REAL
+     +   DELTA,EXMPT
+      INTEGER
+     +   I,IPRT,IXM,LDSMIN,M,N,NETA,NPAR,NPRT,NTEST
+C
+C  LOCAL ARRAYS
+      REAL
+     +   PAR(10),SCALE(10),STP(10),XM(200,2)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL IPRINT,LDSCMP,MDL4,STPLS,STPLS1,STPLS2,STPLSC
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     REAL DELTA
+C        *
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     REAL EXMPT
+C        THE PROPORTION OF OBSERVATIONS FOR WHICH THE COMPUTED
+C        NUMERICAL DERIVATIVES WRT A GIVEN PARAMETER ARE EXEMPTED
+C        FROM MEETING THE DERIVATIVE ACCEPTANCE CRITERIA.
+C     INTEGER I
+C        AN INDEX VARIABLE.
+C     INTEGER IERR
+C        THE INTEGER VALUE RETURNED BY THIS ROUTINE DESIGNATING
+C        WHETHER ANY ERRORS WERE DETECTED IN THE PARAMETER LIST.
+C        IF IERR .EQ. 0, NO ERRORS WERE DETECTED.
+C        IF IERR .EQ. 1, ERRORS WERE DETECTED.
+C     INTEGER IPRT
+C        THE UNIT NUMBER FOR PRINTED OUTPUT.
+C     INTEGER IXM
+C        THE FIRST DIMENSION OF THE INDEPENDENT VARIABLE ARRAY XM.
+C     INTEGER LDSMIN
+C        THE MINIMUM LENGTH OF THE ARRAY DSTAK ALLOWED.
+C     INTEGER LDSTAK
+C        THE LENGTH OF THE ARRAY DSTAK.
+C     INTEGER M
+C        THE NUMBER OF INDEPENDENT VARIABLES.
+C     EXTERNAL MDL4
+C        THE NAME OF THE USER SUPPLIED SUBROUTINE WHICH COMPUTES THE
+C        PREDICTED VALUES BASED ON THE CURRENT PARAMETER ESTIMATES.
+C     INTEGER N
+C        THE NUMBER OF OBSERVATIONS OF DATA.
+C     INTEGER NETA
+C        THE NUMBER OF RELIABLE DIGITS IN THE MODEL.
+C     INTEGER NPAR
+C        THE NUMBER OF UNKNOWN PARAMETERS IN THE MODEL.
+C     INTEGER NPRT
+C        THE INDICATOR VARIABLE USED TO SPECIFY WHETHER OR NOT
+C        PRINTED OUTPUT IS TO BE PROVIDED, WHERE IF THE VALUE OF
+C        NPRT IS ZERO, NO PRINTED OUTPUT IS GIVEN.
+C     INTEGER NTEST
+C        THE NUMBER OF THE CURRENT TEST.
+C     REAL PAR(10)
+C        THE ARRAY IN WHICH THE CURRENT ESTIMATES OF THE UNKNOWN
+C        PARAMETERS ARE STORED.
+C     REAL SCALE(10)
+C        A DUMMY ARRAY, INDICATING USE OF DEFAULT VALUES FOR
+C        THE TYPICAL SIZE OF THE PARAMETERS.
+C     REAL STP(10)
+C        THE SELECTED STEP SIZES FOR EACH PARAMETER.
+C     REAL XM(200,2)
+C        THE ARRAY IN WHICH ONE ROW OF THE INDEPENDENT VARIABLE ARRAY
+C        IS STORED.
+C
+      CALL IPRINT(IPRT)
+C
+C     SET PARAMETER VALUES
+C
+      CALL STPLS1(N, M, IXM, PAR, NPAR, NETA, EXMPT, SCALE, NPRT)
+      CALL STPLS2(NPAR, STP)
+      CALL LDSCMP(14, 0, 2*(N+NPAR), 0, 0, 0, 'S', 10*N, LDSMIN)
+C
+      IF (LDSMIN.LE.LDSTAK) GO TO 5
+C
+      WRITE (IPRT, 1040) LDSMIN
+      RETURN
+C
+    5 CONTINUE
+C
+C     CREATE INDEPENDENT VARIABLE
+C
+      DELTA = 0.0625E0
+      XM(1,1) = 0.0E0
+      DO 10 I=2,N
+         XM(I,1) = XM(I-1,1) + DELTA
+   10 CONTINUE
+C
+      NTEST = 0
+C     CHECK ERROR HANDLING
+C
+C        TEST 1  -  MISCELANEOUS ERROR CHECKING
+C
+      N = -5
+      M = -5
+      IXM = -10
+      NPAR = -10
+C
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1090) NTEST
+      WRITE (IPRT,1020)
+      WRITE (IPRT,1000)
+      IERR = -1
+      CALL STPLS(XM, N, M, IXM, MDL4, PAR, NPAR, LDSTAK, STP)
+      WRITE (IPRT,1050) IERR
+      WRITE (IPRT,1010)
+      IERR = -1
+      CALL STPLSC(XM, N, M, IXM, MDL4, PAR, NPAR, LDSTAK, STP, NETA,
+     +   EXMPT, SCALE, NPRT)
+      WRITE (IPRT,1050) IERR
+C
+C        TEST 2  -  MISCELANEOUS ERROR CHECKING (CONTINUED)
+C
+      CALL STPLS1(N, M, IXM, PAR, NPAR, NETA, EXMPT, SCALE, NPRT)
+      SCALE(2) = 0.0E0
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1090) NTEST
+      WRITE (IPRT,1030)
+      WRITE (IPRT,1000)
+      IERR = -1
+      CALL STPLS(XM, N, M, IXM, MDL4, PAR, NPAR, LDSMIN-1, STP)
+      WRITE (IPRT,1050) IERR
+      WRITE (IPRT,1010)
+      IERR = -1
+      CALL STPLSC(XM, N, M, IXM, MDL4, PAR, NPAR, LDSMIN-1, STP, NETA,
+     +   EXMPT, SCALE, NPRT)
+      WRITE (IPRT,1050) IERR
+C
+      RETURN
+C
+C     FORMAT STATEMENTS
+C
+ 1000 FORMAT (15H TEST OF STPLS )
+ 1010 FORMAT (15H TEST OF STPLSC)
+ 1020 FORMAT (32H CHECK ERROR HANDLING  -  TEST 1)
+ 1030 FORMAT (32H CHECK ERROR HANDLING  -  TEST 2)
+ 1040 FORMAT (45H1 *** LDSTAK MUST BE GREATER THAN OR EQUAL TO , I6)
+ 1050 FORMAT (/29H ***** RETURNED RESULTS *****, 5X, 15H (-1 INDICATES ,
+     +   39HVALUE NOT CHANGED BY CALLED SUBROUTINE)//9H IERR IS , I3)
+ 1090 FORMAT (54H1DERIVATIVE STEP SIZE SELECTION SUBROUTINE TEST NUMBER,
+     +   I5)
+      END
+      SUBROUTINE XSTPLT(LDSTAK)
+
+c*********************************************************************72
+c
+cc XSTPLT tests derivative checking routines.
+c
+c  Modified:
+c
+c    24 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      REAL
+     +   DELTA,EXMPT
+      INTEGER
+     +   I,IPRT,IXM,LDSMIN,M,N,NETA,NPAR,NPRT,NTEST
+C
+C  LOCAL ARRAYS
+      REAL
+     +   EXMTST(5),PAR(10),SCALE(10),STP(10),XM(200,2)
+      INTEGER
+     +   NETTST(6)
+C
+C  EXTERNAL FUNCTIONS
+      REAL
+     +   R1MACH
+      EXTERNAL R1MACH
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL IPRINT,LDSCMP,LSTVEC,MDL4,STPLS1,STPLS2,STPLSC
+C
+C  INTRINSIC FUNCTIONS
+      INTRINSIC LOG10
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     REAL DELTA
+C        *
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     REAL EXMPT
+C        THE PROPORTION OF OBSERVATIONS FOR WHICH THE COMPUTED
+C        NUMERICAL DERIVATIVES WRT A GIVEN PARAMETER ARE EXEMPTED
+C        FROM MEETING THE DERIVATIVE ACCEPTANCE CRITERIA.
+C     REAL EXMTST(5)
+C        VARIOUS TEST VALUES FOR EXMPT.
+C     INTEGER I
+C        AN INDEX VARIABLE.
+C     INTEGER IERR
+C        THE INTEGER VALUE RETURNED BY THIS ROUTINE DESIGNATING
+C        WHETHER ANY ERRORS WERE DETECTED IN THE PARAMETER LIST.
+C        IF IERR .EQ. 0, NO ERRORS WERE DETECTED.
+C        IF IERR .EQ. 1, ERRORS WERE DETECTED.
+C     INTEGER IPRT
+C        THE UNIT NUMBER FOR PRINTED OUTPUT.
+C     INTEGER IXM
+C        THE FIRST DIMENSION OF THE INDEPENDENT VARIABLE ARRAY XM.
+C     INTEGER LDSMIN
+C        THE MINIMUM LENGTH OF THE ARRAY DSTAK ALLOWED.
+C     INTEGER LDSTAK
+C        THE LENGTH OF THE ARRAY DSTAK.
+C     INTEGER M
+C        THE NUMBER OF INDEPENDENT VARIABLES.
+C     EXTERNAL MDL4
+C        THE NAME OF THE USER SUPPLIED SUBROUTINE WHICH COMPUTES THE
+C        PREDICTED VALUES BASED ON THE CURRENT PARAMETER ESTIMATES.
+C     INTEGER N
+C        THE NUMBER OF OBSERVATIONS OF DATA.
+C     INTEGER NETA
+C        THE NUMBER OF RELIABLE DIGITS IN THE MODEL.
+C     INTEGER NETTST(6)
+C        VARIOUS TEST VALUES FOR NETA.
+C     INTEGER NPAR
+C        THE NUMBER OF UNKNOWN PARAMETERS IN THE MODEL.
+C     INTEGER NPRT
+C        THE INDICATOR VARIABLE USED TO SPECIFY WHETHER OR NOT
+C        PRINTED OUTPUT IS TO BE PROVIDED, WHERE IF THE VALUE OF
+C        NPRT IS ZERO, NO PRINTED OUTPUT IS GIVEN.
+C     INTEGER NTEST
+C        THE NUMBER OF THE CURRENT TEST.
+C     REAL PAR(10)
+C        THE ARRAY IN WHICH THE CURRENT ESTIMATES OF THE UNKNOWN
+C        PARAMETERS ARE STORED.
+C     REAL SCALE(10)
+C        A DUMMY ARRAY, INDICATING USE OF DEFAULT VALUES FOR
+C        THE TYPICAL SIZE OF THE PARAMETERS.
+C     REAL STP(10)
+C        THE SELECTED STEP SIZES FOR EACH PARAMETER.
+C     REAL XM(200,2)
+C        THE ARRAY IN WHICH ONE ROW OF THE INDEPENDENT VARIABLE ARRAY
+C        IS STORED.
+C
+      CALL IPRINT(IPRT)
+C
+C     SET PARAMETER VALUES
+C
+      CALL STPLS1(N, M, IXM, PAR, NPAR, NETA, EXMPT, SCALE, NPRT)
+      CALL STPLS2(NPAR, STP)
+      CALL LDSCMP(14, 0, 2*(N+NPAR), 0, 0, 0, 'S', 10*N, LDSMIN)
+C
+      IF (LDSMIN.LE.LDSTAK) GO TO 5
+C
+      WRITE (IPRT, 1000) LDSMIN
+      RETURN
+C
+    5 CONTINUE
+C
+C     CREATE INDEPENDENT VARIABLE
+C
+      DELTA = 0.0625E0
+      XM(1,1) = 0.0E0
+      DO 10 I=2,N
+         XM(I,1) = XM(I-1,1) + DELTA
+   10 CONTINUE
+C
+      NTEST = 0
+C
+C
+C     TEST VARIOUS VALUES OF EXMPT
+C
+      CALL STPLS1(N, M, IXM, PAR, NPAR, NETA, EXMPT, SCALE, NPRT)
+      EXMTST(1) = -1.0E0
+      EXMTST(2) = 0.0001E0
+      EXMTST(3) = 0.5E0
+      EXMTST(4) = 1.0E0
+      EXMTST(5) = 1.1E0
+C
+      DO 20 I=1,5
+C
+         NTEST = NTEST + 1
+         WRITE (IPRT,1090) NTEST
+         WRITE (IPRT,1040)
+         WRITE (IPRT,1060) NETA, EXMTST(I), SCALE(1), NPRT
+         WRITE (IPRT,1010)
+         CALL STPLS2(NPAR, STP)
+         CALL STPLSC(XM, N, M, IXM, MDL4, PAR, NPAR, LDSTAK, STP, NETA,
+     +      EXMTST(I), SCALE, NPRT)
+         WRITE (IPRT,1100) NETA, EXMTST(I), SCALE(1), NPRT
+         WRITE (IPRT,1050) IERR
+         WRITE (IPRT,1080)
+         CALL LSTVEC(4, STP)
+C
+   20 CONTINUE
+C
+C     TEST VARIOUS VALUES OF NETA
+C
+      NETTST(1) = -1
+      NETTST(2) = 0
+      NETTST(3) = 1
+      NETTST(4) = 2
+C
+      NETTST(5) = -LOG10(R1MACH(4))
+      NETTST(6) = NETTST(5) + 1
+C
+      SCALE(1) = 0.0E0
+C
+      DO 30 I=1,6
+C
+         NTEST = NTEST + 1
+         WRITE (IPRT,1090) NTEST
+         WRITE (IPRT,1040)
+         WRITE (IPRT,1060) NETTST(I), EXMPT, SCALE(1), NPRT
+         WRITE (IPRT,1010)
+         CALL STPLS2(NPAR, STP)
+         CALL STPLSC(XM, N, M, IXM, MDL4, PAR, NPAR, LDSTAK, STP,
+     +      NETTST(I), EXMPT, SCALE, NPRT)
+         WRITE (IPRT,1100) NETTST(I), EXMPT, SCALE(1), NPRT
+         WRITE (IPRT,1050) IERR
+         WRITE (IPRT,1080)
+         CALL LSTVEC(4, STP)
+C
+   30 CONTINUE
+C
+C     SUPPRESS OUTPUT
+C
+      CALL STPLS1(N, M, IXM, PAR, NPAR, NETA, EXMPT, SCALE, NPRT)
+      NPRT = 0
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1090) NTEST
+      WRITE (IPRT,1040)
+      WRITE (IPRT,1060) NETA, EXMPT, SCALE(1), NPRT
+      WRITE (IPRT,1010)
+      CALL STPLS2(NPAR, STP)
+      CALL STPLSC(XM, N, M, IXM, MDL4, PAR, NPAR, LDSTAK, STP, NETA,
+     +   EXMPT, SCALE, NPRT)
+      WRITE (IPRT,1100) NETA, EXMPT, SCALE(1), NPRT
+      WRITE (IPRT,1050) IERR
+      WRITE (IPRT,1080)
+      CALL LSTVEC(4, STP)
+C
+C     LARGE CALCULATION ERROR PROBLEM
+C
+      CALL STPLS1(N, M, IXM, PAR, NPAR, NETA, EXMPT, SCALE, NPRT)
+      PAR(3) = 10.0E0**((NETTST(5)-1)/2)
+      SCALE(1) = -1.0E0
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1090) NTEST
+      WRITE (IPRT,1070)
+      WRITE (IPRT,1060) NETA, EXMPT, SCALE(1), NPRT
+      WRITE (IPRT,1010)
+      CALL STPLS2(NPAR, STP)
+      CALL STPLSC(XM, N, M, IXM, MDL4, PAR, NPAR, LDSTAK, STP, NETA,
+     +   EXMPT, SCALE, NPRT)
+      WRITE (IPRT,1100) NETA, EXMPT, SCALE(1), NPRT
+      WRITE (IPRT,1050) IERR
+      WRITE (IPRT,1080)
+      CALL LSTVEC(4, STP)
+C
+      EXMPT = 0.11E0
+      NPRT = 0
+C
+      NTEST = NTEST + 1
+      WRITE (IPRT,1090) NTEST
+      WRITE (IPRT,1070)
+      WRITE (IPRT,1060) NETA, EXMPT, SCALE(1), NPRT
+      WRITE (IPRT,1010)
+      CALL STPLS2(NPAR, STP)
+      CALL STPLSC(XM, N, M, IXM, MDL4, PAR, NPAR, LDSTAK, STP, NETA,
+     +   EXMPT, SCALE, NPRT)
+      WRITE (IPRT,1100) NETA, EXMPT, SCALE(1), NPRT
+      WRITE (IPRT,1050) IERR
+      WRITE (IPRT,1080)
+      CALL LSTVEC(4, STP)
+C
+      RETURN
+C
+C     FORMAT STATEMENTS
+C
+ 1000 FORMAT (45H1 *** LDSTAK MUST BE GREATER THAN OR EQUAL TO , I6)
+ 1010 FORMAT (15H TEST OF STPLSC)
+ 1040 FORMAT (15H SIMPLE EXAMPLE)
+ 1050 FORMAT (/29H ***** RETURNED RESULTS *****, 5X, 15H (-1 INDICATES ,
+     +   39HVALUE NOT CHANGED BY CALLED SUBROUTINE)//9H IERR IS , I3)
+ 1060 FORMAT (19H INPUT   -  NETA = , I5, 10H, EXMPT = , G15.8,
+     +   13H, SCALE(1) = , G15.8, 9H, NPRT = , I5)
+ 1070 FORMAT (32H LARGE CALCULATION ERROR PROBLEM)
+ 1080 FORMAT (//23H RETURNED VALUES OF STP)
+ 1090 FORMAT (54H1DERIVATIVE STEP SIZE SELECTION SUBROUTINE TEST NUMBER,
+     +   I5)
+ 1100 FORMAT (//19H OUTPUT  -  NETA = , I5, 10H, EXMPT = , G15.8,
+     +   13H, SCALE(1) = , G15.8, 9H, NPRT = , I5//)
+      END
+      SUBROUTINE XUAS(LDSTAK)
+
+c*********************************************************************72
+c
+cc XUAS tests the autoregressive spectrum analysis routines.
+c
+C     SERIES Y IS THE FIRST 50 VALUES OF THE SERIES LISTED ON PAGE
+C     318 OF JENKINS AND WATTS.  THE SPECTRUM OF THIS SERIES IS SHOWN
+C     FOR VARIOUS BANDWIDTH ON PAGE 270 OF JENKINS AND WATTS.
+C
+c  Modified:
+c
+c    24 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      REAL
+     +   FMAX,FMIN,YMISS
+      INTEGER
+     +   I,IAR,IPRT,LACOV,LAG,LAGMAX,LDS,LYFFT,NF,NPRT,NY
+C
+C  LOCAL ARRAYS
+      REAL
+     +   ACOV(101),FREQ(300),PHI(101),SPCA(101),SPCF(101),Y(150),
+     +   YFFT(400)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL ACFS,IPRINT,SCOPY,SETRV,UAS,UASF,UASFS,UASS,UASV,UASVS
+C
+C  INTRINSIC FUNCTIONS
+      INTRINSIC ABS
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     REAL ACOV(101)
+C        THE AUTOCOVARIANCE VECTOR.
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     REAL FMAX, FMIN
+C        THE MAXIMUM AND MINIMUM FREQUENCIES AT WHICH THE
+C        SPECTRUM IS TO BE COMPUTED.
+C     REAL FREQ(300)
+C        THE VECTOR OF FREQUENCIES AT WHICH THE SPECTRUM IS COMPUTED.
+C     INTEGER I
+C        AN INDEX VARIABLE
+C     INTEGER IAR
+C        THE ORDER OF THE AUTOREGRESSIVE MODEL TO BE USED.
+C     INTEGER IERR
+C        THE INTEGER VALUE RETURNED BY THIS ROUTINE DESIGNATING
+C        WHETHER ANY ERRORS WERE DETECTED IN THE PARAMETER LIST
+C        IF IERR .EQ. 0, NO ERRORS WERE DETECTED
+C        IF IERR .EQ. 1, ERRORS HAVE BEEN DETECTED
+C     INTEGER IPRT
+C        THE LOGICAL UNIT USED FOR PRINTED OUTPUT.
+C     INTEGER LACOV
+C        THE LENGTH OF THE VECTOR ACOV.
+C     INTEGER LAG, LAGMAX
+C        THE INDEXING VARIABLE INDICATING THE LAG VALUE OF THE
+C        AUTOCOVARIANCE BEING COMPUTED AND THE MAXIMUM LAG TO BE USED,
+C        RESPECTIVELY.
+C     INTEGER LDS
+C        THE LENGTH OF THE VECTOR DSTAK IN COMMON CSTAK.
+C     INTEGER LYFFT
+C        THE LENGTH OF THE VECTOR YFFT.
+C     INTEGER NF
+C        THE NUMBER OF FREQUENCIES AT WHICH THE SPECTRUM IS
+C        TO BE COMPUTED.
+C     INTEGER NPRT
+C        A CODE USED TO SPECIFY THE TYPE OF PLOT, WHERE IF
+C        NPRT < 0 THE PLOT IS DECIBLES/LINEAR
+C        NPRT = 0 THE PLOT IS SUPPRESSED
+C        NPRT > 0 THE PLOT IS LOG/LINEAR
+C     INTEGER NY
+C        THE NUMBER OF OBSERVATIONS IN THE SERIES Y.
+C     REAL PHI(101)
+C        THE VECTOR OF THE ORDER IAR AUTOREGRESSIVE MODEL COEFFICIENTS.
+C     REAL SPCA(101)
+C        THE ARRAYS IN WHICH THE AUTOREGRESSIVE SPECTRUM IS STORED
+C        FOR EACH LAG WINDOW.
+C     REAL SPCF(101)
+C        THE ARRAYS IN WHICH THE FOURIER SPECTRUM IS STORED
+C        FOR EACH LAG WINDOW.
+C     REAL Y(150)
+C         THE ARRAY CONTAINING THE TIME SERIES FROM JENKINS AND WATTS.
+C     REAL YFFT(400)
+C        THE VECTOR OF THE OBSERVED TIME SERIES TO BE ANALYZED USING
+C        THE FFT.
+C     REAL YMISS
+C        THE USER SUPPLIED CODE WHICH IS USED TO DETERMINE WHETHER OR
+C        NOT AN OBSERVATION IN THE SERIES IS MISSING.  IF Y(I) = YMISS,
+C        THE VALUE IS ASSUMED MISSING, OTHERWISE IT IS NOT.
+C
+C
+      DATA   Y(  1), Y(  2), Y(  3), Y(  4), Y(  5), Y(  6)
+     +    /-0.88E0, -0.12E0, -0.89E0, -1.38E0, -0.07E0,  1.03E0/
+      DATA   Y(  7), Y(  8), Y(  9), Y( 10), Y( 11), Y( 12)
+     +    / 2.14E0,  0.35E0, -1.10E0, -1.78E0, -2.76E0, -1.77E0/
+      DATA   Y( 13), Y( 14), Y( 15), Y( 16), Y( 17), Y( 18)
+     +    / 0.98E0,  1.00E0, -0.70E0, -1.01E0, -1.30E0, -0.85E0/
+      DATA   Y( 19), Y( 20), Y( 21), Y( 22), Y( 23), Y( 24)
+     +    /-0.46E0,  1.63E0,  0.06E0, -0.17E0, -1.01E0, -1.04E0/
+      DATA   Y( 25), Y( 26), Y( 27), Y( 28), Y( 29), Y( 30)
+     +    /-0.66E0, -1.12E0, -0.51E0, -0.71E0, -0.20E0, -0.13E0/
+      DATA   Y( 31), Y( 32), Y( 33), Y( 34), Y( 35), Y( 36)
+     +    / 0.14E0,  1.59E0, -0.76E0, -1.08E0, -1.77E0, -1.20E0/
+      DATA   Y( 37), Y( 38), Y( 39), Y( 40), Y( 41), Y( 42)
+     +    / 0.45E0, -0.07E0, -0.63E0, -0.35E0, -0.87E0, -0.62E0/
+      DATA   Y( 43), Y( 44), Y( 45), Y( 46), Y( 47), Y( 48)
+     +    / 0.28E0,  1.90E0,  2.14E0,  1.05E0,  0.31E0,  1.07E0/
+      DATA   Y( 49), Y( 50)
+     +    / 2.67E0,  2.44E0/
+C
+C
+      CALL IPRINT(IPRT)
+C
+C     CHECK ERROR HANDLING
+C
+C        TEST 1  -  MISCELANEOUS ERROR CHECKING
+C
+      WRITE (IPRT, 2000)
+      YMISS = 1.16E0
+      LAGMAX = -1
+      NY = -10
+      LACOV = 101
+      LAG = -2
+      IAR = -2
+      LYFFT = -11
+      NF = -5
+      FMIN = 0.5E0
+      FMAX = 0.0E0
+      NPRT = -1
+      LDS = 0
+      WRITE(IPRT, 1001)
+      CALL UAS(Y, NY)
+      WRITE (IPRT, 1002) IERR
+      WRITE(IPRT, 1003)
+      CALL UASS(Y, NY, IAR, PHI, LAGMAX, LAG, NF,
+     +   FMIN, FMAX, NPRT,SPCA, SPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+      WRITE(IPRT, 1019)
+      CALL UASF (YFFT, NY, LYFFT, LDS)
+      WRITE (IPRT, 1002) IERR
+      WRITE(IPRT, 1020)
+      CALL UASFS(YFFT, NY, LYFFT, LDS, IAR, PHI, LAGMAX, LAG, NF,
+     +   FMIN, FMAX, NPRT, SPCA, SPCF, FREQ)
+      WRITE (IPRT, 1002) IERR
+      WRITE (IPRT, 1007)
+      CALL UASV(ACOV, LAGMAX, NY)
+      WRITE (IPRT, 1002) IERR
+      WRITE (IPRT, 1008)
+      CALL UASVS(ACOV, LAGMAX, Y, NY, IAR, PHI, LAG, NF,
+     +   FMIN, FMAX, NPRT, SPCA, SPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+C
+C        TEST 2  -  MISCELANEOUS ERROR CHECKING (CONTINUED)
+C
+      WRITE (IPRT, 2010)
+      YMISS = 1.16E0
+      NY = 50
+      LAGMAX = 50
+      LAG = 101
+      IAR = 101
+      CALL SETRV(PHI, IAR, 2.0E0)
+      CALL SETRV(ACOV, LAGMAX+1, 2.0E0)
+      ACOV(1) = 1.0E0
+      LYFFT = -11
+      NF = 51
+      FMIN = 0.0E0
+      FMAX = 0.5E0
+      NPRT = 5
+      LDS = 0
+      WRITE(IPRT, 1003)
+      CALL UASS(Y, NY, IAR, PHI, LAGMAX, LAG, NF,
+     +   FMIN, FMAX, NPRT, SPCA, SPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+      WRITE(IPRT, 1019)
+      CALL UASF (YFFT, NY, LYFFT, LDS)
+      WRITE (IPRT, 1002) IERR
+      WRITE(IPRT, 1020)
+      CALL UASFS(YFFT, NY, LYFFT, LDS, IAR, PHI, LAGMAX, LAG, NF,
+     +   FMIN, FMAX, NPRT, SPCA, SPCF, FREQ)
+      WRITE (IPRT, 1002) IERR
+      WRITE (IPRT, 1007)
+      CALL UASV(ACOV, LAGMAX, NY)
+      WRITE (IPRT, 1002) IERR
+      WRITE (IPRT, 1008)
+      CALL UASVS(ACOV, LAGMAX, Y, NY, IAR, PHI, LAG, NF,
+     +   FMIN, FMAX, NPRT, SPCA, SPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+C
+C        TEST 3  -  LDS TOO SMALL
+C
+      WRITE (IPRT, 2030)
+      YMISS = 1.16E0
+      NY = 50
+      LAGMAX = 49
+      LYFFT = 400
+      LAG = 16
+      IAR = 2
+      PHI(1) = 1.0E0
+      PHI(2) = -0.5E0
+      CALL ACFS (Y, NY, LAGMAX, LACOV, ACOV, IAR, PHI, 0, 700)
+      NF = 51
+      FMIN = 0.0E0
+      FMAX = 0.5E0
+      NPRT = 3
+      LDS = 0
+      WRITE(IPRT, 1003)
+      CALL UASS(Y, NY, IAR, PHI, LAGMAX, LAG, NF,
+     +   FMIN, FMAX, NPRT, SPCA, SPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+      WRITE(IPRT, 1019)
+      CALL UASF (YFFT, NY, LYFFT, LDS)
+      WRITE (IPRT, 1002) IERR
+      WRITE(IPRT, 1020)
+      CALL UASFS(YFFT, NY, LYFFT, LDS, IAR, PHI, LAGMAX, LAG, NF,
+     +   FMIN, FMAX, NPRT, SPCA, SPCF, FREQ)
+      WRITE (IPRT, 1002) IERR
+      WRITE (IPRT, 1008)
+      CALL UASVS(ACOV, LAGMAX, Y, NY, IAR, PHI, LAG, NF,
+     +   FMIN, FMAX, NPRT, SPCA, SPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+C
+C     CHECK RESULTS FROM VALID CALL
+C
+      YMISS = 1.16E0
+      NY = 50
+      LAGMAX = 49
+      LYFFT = 400
+      LAG = 16
+      IAR = 2
+      PHI(1) = 1.0E0
+      PHI(2) = -0.5E0
+      NF = 51
+      FMIN = 0.0E0
+      FMAX = 0.5E0
+      NPRT = 2
+      LDS = 700
+C
+C     TEST OF UAS
+C
+      WRITE(IPRT, 2020)
+      WRITE(IPRT, 1001)
+      CALL UAS(Y, NY)
+      WRITE (IPRT, 1002) IERR
+C
+C     TEST OF UASS
+C
+      WRITE(IPRT, 2020)
+      WRITE(IPRT, 1003)
+      CALL UASS(Y, NY, IAR, PHI, LAGMAX, LAG, NF,
+     +   FMIN, FMAX, NPRT, SPCA, SPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VALUES FROM UASS
+C
+      WRITE (IPRT, 1004) (FREQ(I), SPCA(I), SPCF(I), I=1,NF)
+      WRITE (IPRT, 1005) IAR, LAG
+      WRITE (IPRT, 1006) (PHI(I), I=1,ABS(IAR))
+C
+C     TEST OF UASF
+C
+      WRITE(IPRT, 2020)
+      WRITE(IPRT, 1019)
+      CALL SCOPY(NY, Y, 1, YFFT, 1)
+      CALL UASF (YFFT, NY, LYFFT, LDS)
+      WRITE (IPRT, 1002) IERR
+C
+C     TEST OF UASFS
+C
+      WRITE(IPRT, 2020)
+      WRITE(IPRT, 1020)
+      CALL SCOPY(NY, Y, 1, YFFT, 1)
+      CALL UASFS(YFFT, NY, LYFFT, LDS, IAR, PHI, LAGMAX, LAG, NF,
+     +   FMIN, FMAX, NPRT, SPCA, SPCF, FREQ)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VALUES FROM UASFS
+C
+      WRITE (IPRT, 1004) (FREQ(I), SPCA(I), SPCF(I), I=1,NF)
+      WRITE (IPRT, 1005) IAR, LAG
+      WRITE (IPRT, 1006) (PHI(I), I=1,ABS(IAR))
+C
+C     TEST OF UASV
+C
+      WRITE(IPRT, 2020)
+      WRITE (IPRT, 1007)
+      CALL UASV(ACOV, LAGMAX, NY)
+      WRITE (IPRT, 1002) IERR
+C
+C     TEST OF UASVS
+C
+      WRITE(IPRT, 2020)
+      WRITE (IPRT, 1008)
+      CALL UASVS(ACOV, LAGMAX, Y, NY, IAR, PHI, LAG, NF,
+     +   FMIN, FMAX, NPRT, SPCA, SPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VALUES FROM UASVS
+C
+      WRITE (IPRT, 1004) (FREQ(I), SPCA(I), SPCF(I), I=1,NF)
+      WRITE (IPRT, 1005) IAR, LAG
+      WRITE (IPRT, 1006) (PHI(I), I=1,ABS(IAR))
+C
+C     MINIMUM PROBLEM SIZE
+C
+      YMISS = 1.16E0
+      NY = 17
+      LAGMAX = 1
+      LYFFT = 400
+      LAG = 1
+      IAR = -1
+      PHI(1) = 1.0E0
+      PHI(2) = -0.5E0
+      NF = 1
+      FMIN = 0.0E0
+      FMAX = 0.5E0
+      NPRT = 2
+      LDS = LDSTAK
+C
+C     TEST OF UAS
+C
+      WRITE (IPRT, 2060)
+      WRITE(IPRT, 1001)
+      CALL UAS(Y, NY)
+      WRITE (IPRT, 1002) IERR
+C
+C     TEST OF UASS
+C
+      WRITE(IPRT, 2060)
+      WRITE(IPRT, 1003)
+      CALL UASS(Y, NY, IAR, PHI, LAGMAX, LAG, NF,
+     +   FMIN, FMAX, NPRT, SPCA, SPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VALUES FROM UASS
+C
+      WRITE (IPRT, 1004) (FREQ(I), SPCA(I), SPCF(I), I=1,NF)
+      WRITE (IPRT, 1005) IAR, LAG
+      WRITE (IPRT, 1006) (PHI(I), I=1,ABS(IAR))
+C
+C     CHECK HANDLING OF FMIN AND FMAX, AND LAG.EQ.0 AND IAR.EQ.0
+C
+      NY = 50
+      LAGMAX = 49
+      LYFFT = 400
+      LAG = 0
+      IAR = 0
+      PHI(1) = 1.0E0
+      PHI(2) = -0.5E0
+      NF = 51
+      FMIN = 0.45E0
+      FMAX = 0.5E0
+      NPRT = 2
+C
+C     TEST OF UASS
+C
+      WRITE(IPRT, 2070)
+      WRITE(IPRT, 1003)
+      CALL UASS(Y, NY, IAR, PHI, LAGMAX, LAG, NF,
+     +   FMIN, FMAX, NPRT, SPCA, SPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VALUES FROM UASS
+C
+      WRITE (IPRT, 1004) (FREQ(I), SPCA(I), SPCF(I), I=1,NF)
+      WRITE (IPRT, 1005) IAR, LAG
+      WRITE (IPRT, 1006) (PHI(I), I=1,ABS(IAR))
+C
+C     WHITE NOISE SPECTRUM
+C
+      YMISS = 1.16E0
+      CALL SETRV(YFFT, NY, 0.0E0)
+      NY = 50
+      LAGMAX = 49
+      LYFFT = 400
+      LAG = 16
+      IAR = 2
+      PHI(1) = 1.0E0
+      PHI(2) = -0.5E0
+      NF = 51
+      FMIN = 0.0E0
+      FMAX = 0.5E0
+      NPRT = 2
+C
+C     TEST OF UASS
+C
+      WRITE(IPRT, 2080)
+      WRITE(IPRT, 1003)
+      CALL UASS(YFFT, NY, IAR, PHI, LAGMAX, LAG, NF,
+     +   FMIN, FMAX, NPRT, SPCA, SPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VALUES FROM UASS
+C
+      WRITE (IPRT, 1004) (FREQ(I), SPCA(I), SPCF(I), I=1,NF)
+      WRITE (IPRT, 1005) IAR, LAG
+      WRITE (IPRT, 1006) (PHI(I), I=1,ABS(IAR))
+C
+C     SUPPRESS OUTPUT AND
+C     CHECK HANDLING OF LAG .LT.0 AND IAR .LT. 0
+C
+      NY = 50
+      LAGMAX = 49
+      LYFFT = 400
+      LAG = 0
+      IAR = 0
+      PHI(1) = 1.0E0
+      PHI(2) = -0.5E0
+      NF = 51
+      FMIN = 0.45E0
+      FMAX = 0.5E0
+      NPRT = 0
+C
+C     TEST OF UASS
+C
+      WRITE(IPRT, 2090)
+      WRITE(IPRT, 1003)
+      CALL UASS(Y, NY, IAR, PHI, LAGMAX, LAG, NF,
+     +   FMIN, FMAX, NPRT, SPCA, SPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VALUES FROM UASS
+C
+      WRITE (IPRT, 1004) (FREQ(I), SPCA(I), SPCF(I), I=1,NF)
+      WRITE (IPRT, 1005) IAR, LAG
+      WRITE (IPRT, 1006) (PHI(I), I=1,ABS(IAR))
+C
+      RETURN
+C
+C     FORMAT STATEMENTS
+C
+ 1001 FORMAT (12H TEST OF UAS)
+ 1002 FORMAT (/8H IERR IS, I5/)
+ 1003 FORMAT (13H TEST OF UASS)
+ 1004 FORMAT (3(1X, E16.8))
+ 1005 FORMAT (/7H IAR = , I5/7H LAG = , I5)
+ 1006 FORMAT (/7H PHI = , (1X, 5E21.8))
+ 1007 FORMAT (13H TEST OF UASV)
+ 1008 FORMAT (14H TEST OF UASVS)
+ 1019 FORMAT (13H TEST OF UASF)
+ 1020 FORMAT (14H TEST OF UASFS)
+ 2000 FORMAT (32H1CHECK ERROR HANDLING  -  TEST 1)
+ 2010 FORMAT (32H1CHECK ERROR HANDLING  -  TEST 2)
+ 2020 FORMAT (14H1VALID PROBLEM)
+ 2030 FORMAT (14H1LDS TOO SMALL)
+ 2060 FORMAT (21H1MINIMUM PROBLEM SIZE)
+ 2070 FORMAT (
+     +   59H1CHECK HANDLING OF FMIN AND FMAX, LAG AND IAR EQUAL TO ZERO)
+ 2080 FORMAT (21H1WHITE NOISE SPECTRUM)
+ 2090 FORMAT (44H1SUPPRESS OUTPUT, LAG AND IAR LESS THAN ZERO)
+      END
+      SUBROUTINE XUFS(LDSTAK)
+
+c*********************************************************************72
+c
+cc XUFS tests the Fourier spectrum analysis routines.
+c
+C     SERIES Y IS THE FIRST 50 VALUES OF THE SERIES LISTED ON PAGE
+C     318 OF JENKINS AND WATTS.  THE SPECTRUM OF THIS SERIES IS SHOWN
+C     FOR VARIOUS BANDWIDTH ON PAGE 270 OF JENKINS AND WATTS.
+C
+C     SERIES Z IS THE WOLF SUNSPOT NUMBERS FROM 1700 TO 1960 AS
+C     TABULATED BY WALDMEIER.  THE RAW AND SMOOTHED PERIODOGRAMS OF
+C     TAPERED SERIES ARE SHOWN ON PAGES 95 AND 176, RESPECTIVELY, OF
+C     BLOOMFIELD.
+C
+c  Modified:
+c
+c    24 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      REAL
+     +   AMISS,FMAX,FMIN,YMISS
+      INTEGER
+     +   I,IAR,IPRT,ISPCF,J,LACOV,LAGMAX,LDS,LYFFT,NF,NPRT,NW,NY
+C
+C  LOCAL ARRAYS
+      REAL
+     +   ACOV(101),FREQ(300),PHI(100),SPCF(101,4),Y(150),YFFT(400)
+      INTEGER
+     +   LAGS(4),NLPPA(101)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL ACFMS,ACFS,IPRINT,NRAND,SCOPY,SETRV,UFS,UFSF,UFSFS,UFSM,
+     +   UFSMS,UFSMV,UFSMVS,UFSS,UFSV,UFSVS
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     REAL ACOV(101)
+C        THE AUTOCOVARIANCE VECTOR.
+C     REAL AMISS
+C         THE MISSING VALUE CODE FOR THE RETURNED ACVF ESTIMATES.
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     REAL FMAX, FMIN
+C        THE MAXIMUM AND MINIMUM FREQUENCIES AT WHICH THE
+C        SPECTRUM IS TO BE COMPUTED.
+C     REAL FREQ(300)
+C        THE VECTOR OF FREQUENCIES AT WHICH THE SPECTRUM IS COMPUTED.
+C     INTEGER I
+C        AN INDEX VARIABLE
+C     INTEGER IAR
+C        THE ORDER OF THE AUTOREGRESSIVE MODEL TO BE USED.
+C     INTEGER IERR
+C        THE INTEGER VALUE RETURNED BY THIS ROUTINE DESIGNATING
+C        WHETHER ANY ERRORS WERE DETECTED IN THE PARAMETER LIST
+C        IF IERR .EQ. 0, NO ERRORS WERE DETECTED
+C        IF IERR .EQ. 1, ERRORS HAVE BEEN DETECTED
+C     INTEGER IPRT
+C        THE LOGICAL UNIT USED FOR PRINTED OUTPUT.
+C     INTEGER ISPCF
+C         THE ACTUAL DIMENSION FOR THE SPECTRUM ARRAYS.
+C     INTEGER J
+C        INDEX VARIABLE.
+C     INTEGER LACOV
+C        THE LENGTH OF THE VECTOR ACOV.
+C     INTEGER LAGMAX
+C        THE INDEXING VARIABLE INDICATING THE LAG VALUE OF THE
+C        AUTOCOVARIANCE BEING COMPUTED AND THE MAXIMUM LAG TO BE USED,
+C        RESPECTIVELY.
+C     INTEGER LAGS(4)
+C        THE ARRAY USED TO STORE THE LAG WINDOW TRUCCATION
+C        POINTS USED FOR EACH SET OF SPECTRUM VALUES.
+C     INTEGER LDS
+C        THE LENGTH OF THE VECTOR DSTAK IN COMMON CSTAK.
+C     INTEGER LYFFT
+C        THE LENGTH OF THE VECTOR YFFT.
+C     INTEGER NF
+C        THE NUMBER OF FREQUENCIES AT WHICH THE SPECTRUM IS
+C        TO BE COMPUTED.
+C     INTEGER NLPPA(101)
+C        THE NUMBERS OF LAGGED PRODUCT PAIRS USED FOR EACH ACVF.
+C     INTEGER NPRT
+C        A CODE USED TO SPECIFY THE TYPE OF PLOT, WHERE IF
+C        NPRT = 0 THE PLOT IS SUPPRESSED, IF
+C        NPRT = 2 THE PLOT IS DECIBELS/LINEAR, IF
+C        NPRT = 2 THE PLOT IS LOG/LINEAR, IF
+C        NPRT = 3 THE PLOT IS DECIBELS/LOG, AND IF
+C        NPRT = 4 THE PLOT IS LOG/LOG.
+C     INTEGER NW
+C        THE NUMBER OF DIFFERENT LAG WINDOW TRUNCATION POINTS SPECIFIED,
+C        AND THEREFORE, THE NUMBER OF PLOTS.
+C     INTEGER NY
+C        THE NUMBER OF OBSERVATIONS IN THE SERIES Y.
+C     REAL PHI(100)
+C        THE VECTOR OF THE ORDER IAR AUTOREGRESSIVE MODEL COEFFICIENTS.
+C     REAL SPCF(101, 4)
+C        THE ARRAYS IN WHICH THE FOURIER SPECTRUM IS STORED
+C        FOR EACH LAG WINDOW.
+C     REAL Y(150)
+C         THE ARRAY CONTAINING THE TIME SERIES FROM JENKINS AND WATTS.
+C     REAL YFFT(400)
+C        THE VECTOR OF THE OBSERVED TIME SERIES TO BE ANALYZED USING
+C        THE FFT.
+C     REAL YMISS
+C        THE USER SUPPLIED CODE WHICH IS USED TO DETERMINE WHETHER OR
+C        NOT AN OBSERVATION IN THE SERIES IS MISSING.  IF Y(I) = YMISS,
+C        THE VALUE IS ASSUMED MISSING, OTHERWISE IT IS NOT.
+C
+C
+      DATA   Y(  1), Y(  2), Y(  3), Y(  4), Y(  5), Y(  6)
+     +    /-0.88E0, -0.12E0, -0.89E0, -1.38E0, -0.07E0,  1.03E0/
+      DATA   Y(  7), Y(  8), Y(  9), Y( 10), Y( 11), Y( 12)
+     +    / 2.14E0,  0.35E0, -1.10E0, -1.78E0, -2.76E0, -1.77E0/
+      DATA   Y( 13), Y( 14), Y( 15), Y( 16), Y( 17), Y( 18)
+     +    / 0.98E0,  1.00E0, -0.70E0, -1.01E0, -1.30E0, -0.85E0/
+      DATA   Y( 19), Y( 20), Y( 21), Y( 22), Y( 23), Y( 24)
+     +    /-0.46E0,  1.63E0,  0.06E0, -0.17E0, -1.01E0, -1.04E0/
+      DATA   Y( 25), Y( 26), Y( 27), Y( 28), Y( 29), Y( 30)
+     +    /-0.66E0, -1.12E0, -0.51E0, -0.71E0, -0.20E0, -0.13E0/
+      DATA   Y( 31), Y( 32), Y( 33), Y( 34), Y( 35), Y( 36)
+     +    / 0.14E0,  1.59E0, -0.76E0, -1.08E0, -1.77E0, -1.20E0/
+      DATA   Y( 37), Y( 38), Y( 39), Y( 40), Y( 41), Y( 42)
+     +    / 0.45E0, -0.07E0, -0.63E0, -0.35E0, -0.87E0, -0.62E0/
+      DATA   Y( 43), Y( 44), Y( 45), Y( 46), Y( 47), Y( 48)
+     +    / 0.28E0,  1.90E0,  2.14E0,  1.05E0,  0.31E0,  1.07E0/
+      DATA   Y( 49), Y( 50)
+     +    / 2.67E0,  2.44E0/
+C
+      CALL IPRINT(IPRT)
+C
+C     CHECK ERROR HANDLING
+C
+C        TEST 1  -  MISCELANEOUS ERROR CHECKING
+C
+      WRITE (IPRT, 2000)
+      YMISS = 1.16E0
+      LAGMAX = -1
+      NY = -10
+      LACOV = 101
+      LYFFT = -11
+      NW = -1
+      NF = -5
+      FMIN = 0.5E0
+      FMAX = 0.0E0
+      NPRT = -1
+      ISPCF = -20
+      LDS = 0
+      WRITE(IPRT, 1001)
+      CALL UFS (Y, NY)
+      WRITE (IPRT, 1002) IERR
+      WRITE(IPRT, 1003)
+      CALL UFSS(Y, NY, NW, LAGS, NF, FMIN, FMAX, NPRT, SPCF,
+     +   ISPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+      WRITE(IPRT, 1019)
+      CALL UFSF (YFFT, NY, LYFFT, LDS)
+      WRITE (IPRT, 1002) IERR
+      WRITE(IPRT, 1020)
+      CALL UFSFS(YFFT, NY, LYFFT, LDS, NW, LAGS, NF, FMIN, FMAX, NPRT,
+     +   SPCF, ISPCF, FREQ)
+      WRITE (IPRT, 1002) IERR
+      WRITE(IPRT, 1005)
+      CALL UFSM (Y, YMISS, NY)
+      WRITE (IPRT, 1002) IERR
+      WRITE(IPRT, 1006)
+      CALL UFSMS(Y, YMISS, NY, NW, LAGS, NF, FMIN, FMAX, NPRT, SPCF,
+     +   ISPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+      WRITE (IPRT, 1007)
+      CALL UFSV(ACOV, LAGMAX, NY)
+      WRITE (IPRT, 1002) IERR
+      WRITE (IPRT, 1008)
+      CALL UFSVS (ACOV, LAGMAX, NY, NW, LAGS, NF,
+     +   FMIN, FMAX, NPRT, SPCF, ISPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+      WRITE (IPRT, 1021)
+      CALL UFSMV(ACOV, NLPPA, LAGMAX, NY)
+      WRITE (IPRT, 1002) IERR
+      WRITE (IPRT, 1022)
+      CALL UFSMVS (ACOV, NLPPA, LAGMAX, NY, NW, LAGS, NF,
+     +   FMIN, FMAX, NPRT, SPCF, ISPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+C
+C        TEST 2  -  MISCELANEOUS ERROR CHECKING (CONTINUED)
+C
+      WRITE (IPRT, 2010)
+      YMISS = 1.16E0
+      NY = 50
+      LAGMAX = 55
+      LYFFT = -11
+      NW = 2
+      LAGS(1) = 0
+      LAGS(2) = 50
+      NF = 51
+      FMIN = 0.0E0
+      FMAX = 0.5E0
+      NPRT = 3
+      ISPCF = 20
+      LDS = 0
+      WRITE(IPRT, 1003)
+      CALL UFSS(Y, NY, NW, LAGS, NF, FMIN, FMAX, NPRT, SPCF,
+     +   ISPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+      WRITE(IPRT, 1019)
+      CALL UFSF (YFFT, NY, LYFFT, LDS)
+      WRITE (IPRT, 1002) IERR
+      WRITE(IPRT, 1020)
+      CALL UFSFS(YFFT, NY, LYFFT, LDS, NW, LAGS, NF, FMIN, FMAX, NPRT,
+     +   SPCF, ISPCF, FREQ)
+      WRITE (IPRT, 1002) IERR
+      WRITE(IPRT, 1006)
+      CALL UFSMS(Y, YMISS, NY, NW, LAGS, NF, FMIN, FMAX, NPRT, SPCF,
+     +   ISPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+      WRITE (IPRT, 1008)
+      CALL UFSVS (ACOV, LAGMAX, NY, NW, LAGS, NF,
+     +   FMIN, FMAX, NPRT, SPCF, ISPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+      WRITE (IPRT, 1022)
+      CALL UFSMVS (ACOV, NLPPA, LAGMAX, NY, NW, LAGS, NF,
+     +   FMIN, FMAX, NPRT, SPCF, ISPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+C
+C        TEST 3  -  LDS TOO SMALL
+C
+      WRITE (IPRT, 2030)
+      YMISS = 1.16E0
+      NY = 50
+      LAGMAX = 49
+      LYFFT = 400
+      NW = 2
+      LAGS(1) = 0
+      LAGS(2) = 50
+      NF = 51
+      FMIN = 0.0E0
+      FMAX = 0.5E0
+      NPRT = 3
+      ISPCF = 101
+      LDS = 0
+      WRITE(IPRT, 1003)
+      CALL UFSS(Y, NY, NW, LAGS, NF, FMIN, FMAX, NPRT, SPCF,
+     +   ISPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+      WRITE(IPRT, 1019)
+      CALL UFSF (YFFT, NY, LYFFT, LDS)
+      WRITE (IPRT, 1002) IERR
+      WRITE(IPRT, 1020)
+      CALL UFSFS(YFFT, NY, LYFFT, LDS, NW, LAGS, NF, FMIN, FMAX, NPRT,
+     +   SPCF, ISPCF, FREQ)
+      WRITE (IPRT, 1002) IERR
+      WRITE(IPRT, 1006)
+      CALL UFSMS(Y, YMISS, NY, NW, LAGS, NF, FMIN, FMAX, NPRT, SPCF,
+     +   ISPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+      WRITE (IPRT, 1008)
+      CALL UFSVS (ACOV, LAGMAX, NY, NW, LAGS, NF,
+     +   FMIN, FMAX, NPRT, SPCF, ISPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+      WRITE (IPRT, 1022)
+      CALL UFSMVS (ACOV, NLPPA, LAGMAX, NY, NW, LAGS, NF,
+     +   FMIN, FMAX, NPRT, SPCF, ISPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+C
+C        TEST 4  -  ALL DATA AND COVARIANCES MISSING
+C
+      WRITE (IPRT, 2040)
+      YMISS = 1.16E0
+      NY = 50
+      LAGMAX = 49
+      LYFFT = 400
+      NW = 2
+      LAGS(1) = 8
+      LAGS(2) = 16
+      NF = 51
+      FMIN = 0.0E0
+      FMAX = 0.5E0
+      NPRT = 3
+      ISPCF = 101
+      LDS = 700
+      CALL SETRV(YFFT, NY, YMISS)
+      CALL SETRV(ACOV, LAGMAX, 0.0E0)
+      DO 5 I = 1, LAGMAX
+         NLPPA(I) = 0
+    5 CONTINUE
+      WRITE (IPRT, 1005)
+      CALL UFSM(YFFT, YMISS, NY)
+      WRITE (IPRT, 1002) IERR
+      WRITE(IPRT, 1006)
+      CALL UFSMS(YFFT, YMISS, NY, NW, LAGS, NF, FMIN, FMAX, NPRT, SPCF,
+     +   ISPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+      WRITE (IPRT, 1021)
+      CALL UFSMV (ACOV, NLPPA, LAGMAX, NY)
+      WRITE (IPRT, 1002) IERR
+      WRITE (IPRT, 1022)
+      CALL UFSMVS (ACOV, NLPPA, LAGMAX, NY, NW, LAGS, NF,
+     +   FMIN, FMAX, NPRT, SPCF, ISPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+C
+C        TEST 5  -  EVERY OTHER VALUE MISSING
+C
+      WRITE (IPRT, 2050)
+      YMISS = 1.16E0
+      NY = 50
+      LAGMAX = 49
+      LYFFT = 400
+      NW = 2
+      LAGS(1) = 8
+      LAGS(2) = 16
+      NF = 51
+      FMIN = 0.0E0
+      FMAX = 0.5E0
+      NPRT = 3
+      ISPCF = 101
+      LDS = 700
+      CALL SETRV(YFFT, NY, YMISS)
+      DO 10 I = 1, NY, 2
+         YFFT(I) = Y(I)
+   10 CONTINUE
+      WRITE (IPRT, 1005)
+      CALL UFSM(YFFT, YMISS, NY)
+      WRITE (IPRT, 1002) IERR
+      WRITE(IPRT, 1006)
+      CALL UFSMS(YFFT, YMISS, NY, NW, LAGS, NF, FMIN, FMAX, NPRT, SPCF,
+     +   ISPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+C
+C     CHECK RESULTS FROM VALID CALL
+C
+      YMISS = 1.16E0
+      NY = 50
+      LAGMAX = 49
+      LYFFT = 400
+      NW = 2
+      LAGS(1) = 8
+      LAGS(2) = 16
+      NF = 51
+      FMIN = 0.0E0
+      FMAX = 0.5E0
+      NPRT = 2
+      ISPCF = 101
+      LDS = LDSTAK
+C
+C     TEST OF UFS
+C
+      WRITE(IPRT, 2020)
+      WRITE(IPRT, 1001)
+      CALL UFS (Y, NY)
+      WRITE (IPRT, 1002) IERR
+C
+C     TEST OF UFSS
+C
+      WRITE(IPRT, 2020)
+      WRITE(IPRT, 1003)
+      CALL UFSS(Y, NY, NW, LAGS, NF, FMIN, FMAX, NPRT, SPCF,
+     +   ISPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VALUES FROM UFSS
+C
+      WRITE (IPRT, 1004) (FREQ(I), (SPCF(I,J),J=1,NW), I=1,NF)
+C
+C     TEST OF UFSF
+C
+      WRITE(IPRT, 2020)
+      WRITE(IPRT, 1019)
+      CALL SCOPY(NY, Y, 1, YFFT, 1)
+      CALL UFSF (YFFT, NY, LYFFT, LDS)
+      WRITE (IPRT, 1002) IERR
+C
+C     TEST OF UFSFS
+C
+      WRITE(IPRT, 2020)
+      WRITE(IPRT, 1020)
+      CALL SCOPY(NY, Y, 1, YFFT, 1)
+      CALL UFSFS(YFFT, NY, LYFFT, LDS, NW, LAGS, NF, FMIN, FMAX, NPRT,
+     +   SPCF, ISPCF, FREQ)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VALUES FROM UFSFS
+C
+      WRITE (IPRT, 1004) (FREQ(I), (SPCF(I,J),J=1,NW), I=1,NF)
+C
+C     TEST OF UFSM
+C
+      WRITE(IPRT, 2020)
+      WRITE(IPRT, 1005)
+      CALL UFSM (Y, YMISS, NY)
+      WRITE (IPRT, 1002) IERR
+C
+C     TEST OF UFSMS
+C
+      WRITE(IPRT, 2020)
+      WRITE(IPRT, 1006)
+      CALL UFSMS(Y, YMISS, NY, NW, LAGS, NF, FMIN, FMAX, NPRT, SPCF,
+     +   ISPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VALUES FROM UFSMS
+C
+      WRITE (IPRT, 1004) (FREQ(I), (SPCF(I,J),J=1,NW), I=1,NF)
+C
+C     TEST OF UFSV
+C
+      WRITE(IPRT, 2020)
+      CALL ACFS (Y, NY, LAGMAX, LACOV, ACOV, IAR, PHI, 0, LDS)
+      WRITE (IPRT, 1007)
+      CALL UFSV(ACOV, LAGMAX, NY)
+      WRITE (IPRT, 1002) IERR
+C
+C     TEST OF UFSVS
+C
+      WRITE(IPRT, 2020)
+      WRITE (IPRT, 1008)
+      CALL UFSVS (ACOV, LAGMAX, NY, NW, LAGS, NF,
+     +   FMIN, FMAX, NPRT, SPCF, ISPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VALUES FROM UFSVS
+C
+      WRITE (IPRT, 1004) (FREQ(I), (SPCF(I,J),J=1,NW), I=1,NF)
+C
+C     TEST OF UFSMV
+C
+      WRITE(IPRT, 2020)
+      CALL ACFMS (Y, YMISS, NY, LAGMAX, LACOV, ACOV, AMISS, NLPPA,
+     +   0, LDS)
+      WRITE (IPRT, 1021)
+      CALL UFSMV(ACOV, NLPPA, LAGMAX, NY)
+      WRITE (IPRT, 1002) IERR
+C
+C     TEST OF UFSMVS
+C
+      WRITE(IPRT, 2020)
+      WRITE (IPRT, 1022)
+      CALL UFSMVS (ACOV, NLPPA, LAGMAX, NY, NW, LAGS, NF,
+     +   FMIN, FMAX, NPRT, SPCF, ISPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VALUES FROM UFSMVS
+C
+      WRITE (IPRT, 1004) (FREQ(I), (SPCF(I,J),J=1,NW), I=1,NF)
+C
+C     MINIMUM PROBLEM SIZE
+C
+      YMISS = 1.16E0
+      NY = 17
+      LAGMAX = 1
+      LYFFT = 400
+      NW = 2
+      LAGS(1) = 1
+      LAGS(2) = 16
+      NF = 1
+      FMIN = 0.0E0
+      FMAX = 0.5E0
+      NPRT = 2
+      ISPCF = 101
+      LDS = 700
+C
+C     TEST OF UFS
+C
+      WRITE (IPRT, 2060)
+      WRITE(IPRT, 1001)
+      CALL UFS (Y, NY)
+      WRITE (IPRT, 1002) IERR
+C
+C     TEST OF UFSS
+C
+      WRITE(IPRT, 2060)
+      WRITE(IPRT, 1003)
+      CALL UFSS(Y, NY, NW, LAGS, NF, FMIN, FMAX, NPRT, SPCF,
+     +   ISPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VALUES FROM UFSS
+C
+      WRITE (IPRT, 1004) (FREQ(I), (SPCF(I,J),J=1,NW), I=1,NF)
+C
+C     CHECK HANDLING OF FMIN AND FMAX
+C
+      YMISS = 1.16E0
+      NY = 50
+      LAGMAX = 49
+      LYFFT = 400
+      NW = 2
+      LAGS(1) = 8
+      LAGS(2) = 16
+      NF = 51
+      FMIN = 0.45E0
+      FMAX = 0.5E0
+      NPRT = 2
+      ISPCF = 101
+      LDS = 700
+C
+C     TEST OF UFSS
+C
+      WRITE(IPRT, 2070)
+      WRITE(IPRT, 1003)
+      CALL UFSS(Y, NY, NW, LAGS, NF, FMIN, FMAX, NPRT, SPCF,
+     +   ISPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VALUES FROM UFSS
+C
+      WRITE (IPRT, 1004) (FREQ(I), (SPCF(I,J),J=1,NW), I=1,NF)
+C
+C     WHITE NOISE SPECTRUM
+C
+      YMISS = 1.16E0
+      CALL NRAND(YFFT, NY, 12345)
+      NY = 50
+      LAGMAX = 49
+      LYFFT = 400
+      NW = 2
+      LAGS(1) = 8
+      LAGS(2) = 16
+      NF = 51
+      FMIN = 0.0E0
+      FMAX = 0.5E0
+      NPRT = 2
+      ISPCF = 101
+      LDS = 700
+C
+C     TEST OF UFSS
+C
+      WRITE(IPRT, 2080)
+      WRITE(IPRT, 1003)
+      CALL UFSS(YFFT, NY, NW, LAGS, NF, FMIN, FMAX, NPRT, SPCF,
+     +   ISPCF, FREQ, LDS)
+      WRITE (IPRT, 1002) IERR
+C
+C     PRINT RETURNED VALUES FROM UFSS
+C
+      WRITE (IPRT, 1004) (FREQ(I), (SPCF(I,J),J=1,NW), I=1,NF)
+C
+      RETURN
+C
+C     FORMAT STATEMENTS
+C
+ 1001 FORMAT (12H TEST OF UFS)
+ 1002 FORMAT (/8H IERR IS, I5/)
+ 1003 FORMAT (13H TEST OF UFSS)
+ 1004 FORMAT (3(1X, E16.8))
+ 1005 FORMAT (13H TEST OF UFSM)
+ 1006 FORMAT (14H TEST OF UFSMS)
+ 1007 FORMAT (13H TEST OF UFSV)
+ 1008 FORMAT (14H TEST OF UFSVS)
+ 1019 FORMAT (13H TEST OF UFSF)
+ 1020 FORMAT (14H TEST OF UFSFS)
+ 1021 FORMAT (14H TEST OF UFSMV)
+ 1022 FORMAT (15H TEST OF UFSMVS)
+ 2000 FORMAT (32H1CHECK ERROR HANDLING  -  TEST 1)
+ 2010 FORMAT (32H1CHECK ERROR HANDLING  -  TEST 2)
+ 2020 FORMAT (14H1VALID PROBLEM)
+ 2030 FORMAT (14H1LDS TOO SMALL)
+ 2040 FORMAT (33H1ALL DATA AND COVARIANCES MISSING)
+ 2050 FORMAT (31H1EVERY OTHER DATA VALUE MISSING)
+ 2060 FORMAT (21H1MINIMUM PROBLEM SIZE)
+ 2070 FORMAT (32H1CHECK HANDLING OF FMIN AND FMAX)
+ 2080 FORMAT (21H1WHITE NOISE SPECTRUM)
+      END
+      SUBROUTINE XVP ( LDSTAK )
+
+c*********************************************************************72
+c
+cc XVP tests the plotting subroutines.
+c
+c  Discussion:
+c
+C    SERIES Y IS THE AIRLINE DATA LISTED ON PAGE 531 OF BOX AND JENKINS.
+C
+c  Modified:
+c
+c    24 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     REAL AIR(144)
+C        THE AIRLINE DATA.
+C     INTEGER IBAR
+C        THE VARIABLE USED TO DETERMINE IF SINGLE POINTS (IBAR .NE. 0)
+C        OR BARS (IBAR .EQ. 0) ARE TO BE PLOTTED.
+C     INTEGER IERR
+C        A COMMON VARIABLE USED AS A FLAG TO INDICATE WHETHER
+C        OR NOT THERE ARE ANY ERRORS, IF =0 THEN NO ERRORS.
+C     INTEGER ILOG
+C        THE TWO DIGIT INTEGER, PQ, USED TO SELECT AXIS SCALE, WHERE
+C        P DESIGNATES THE X-AXIS AND Q DESIGNATES THE Y-AXIS.
+C        IF P.EQ.0 (Q.EQ.0), THEN THE X-AXIS (Y-AXIS) IS LINEAR.
+C        IF P.NE.0 (Q.NE.0), THEN THE X-AXIS (Y-AXIS) IS LOG.
+C     INTEGER IPRT
+C        OUTPUT LOGICAL UNIT NUMBER
+C     INTEGER IRLIN
+C        THE INDICATOR VARIABLE USED TO DESIGNATE WHETHER ZERO OR THE
+C        SERIES MEAN IS TO BE PLOTTED AS A REFERENCE LINE, OR WHETHER
+C        NO REFERENCE LINE IS TO BE PLOTTED.
+C        IF IRLIN .LE. -1, NO REFERENCE LINE IS PLOTTED.
+C        IF IRLIN .EQ.  0, ZERO IS PLOTTED AS THE REFERENCE LINE.
+C        IF IRLIN .GE.  1, THE SERIES MEAN IS PLOTTED.
+C     INTEGER ISIZE
+C        THE TWO DIGIT INTEGER, PQ, USED TO SELECT AXIS SIZE, WHERE
+C        P DESIGNATES THE X-AXIS AND Q DESIGNATES THE Y-AXIS.
+C        IF P.EQ.0 (Q.EQ.0), THEN THE X-AXIS (Y-AXIS) IS THE MAXIMUM.
+C        IF P.NE.0 (Q.NE.0), THEN THE X-AXIS (Y-AXIS) IS HALF THE MAXIMU
+C     INTEGER ISYM(144)
+C        VECTOR CONTAINING SYMBOL DESIGNATIONS FOR PLOTTING
+C     INTEGER ITEST
+C        THE NUMBER OF THE TEST.
+C     INTEGER IYM
+C        ACTUAL DIMENSION OF YM IN USERS MAIN PROGRAM
+C     INTEGER LDSTAK
+C        *
+C     INTEGER M
+C        THE NUMBER OF VECTORS IN YM
+C     INTEGER NS
+C        THE SAMPLING FREQUENCY,
+C        WHERE IF NS .LE. 1, EVERY POINT IS PLOTTED,
+C                       = 2, EVERY OTHER POINT IS PLOTTED,
+C                       = 3, EVERY THIRD POINT IS PLOTTED, ETC.
+C     INTEGER NY, NYM
+C        THE NUMBER OF OBSERVATIONS IN ARRAYS Y AND YM, RESPECTIVELY.
+C     REAL XINC
+C        THE INCREMENT FOR THE X AXIS.
+C     REAL XLB
+C        THE LOWER BOUND FOR THE X-AXIS.
+C     REAL Y(144)
+C        VECTOR OF OBSERVATIONS FOR THE Y (VERTICAL) COORDINATES
+C     REAL YLB
+C        THE LOWER BOUND FOR THE Y-AXIS.  (YLB=YUB INDICATES LIMITS ARE
+C        TO BE DETERMINED FROM THE RANGE OF THE DATA.)
+C     REAL YM(12,12)
+C        MULTIVARIATE OBSERVATIONS FOR THE Y (VERTICAL) COORDINATES.
+C     REAL YMISS
+C        THE MISSING VALUE CODE FOR THE Y-AXIS.
+C     REAL YMMISS(144)
+C        THE MISSING VALUE CODES FOR EACH COLUMN OF YM.
+C     REAL YUB
+C        THE UPPER BOUND FOR THE Y-AXIS.  (YLB=YUB INDICATES LIMITS ARE
+C        TO BE DETERMINED FROM THE RANGE OF THE DATA.)
+C
+      implicit none
+
+      integer ldstak
+
+      real air(144)
+      integer ibar
+      integer ierr
+      integer ilog
+      integer iprt
+      integer irlin
+      integer isize
+      integer isym(144)
+      integer itest
+      integer iym
+      integer m
+      integer nout
+      integer ns
+      integer ny
+      integer nym
+      real xinc
+      real xlb
+      real y(144)
+      real ylb
+      real ym(12,12)
+      real ymiss
+      parameter ( ymiss = 180.0E+00 )
+      real ymmiss(144)
+      real yub
+
+      COMMON /ERRCHK/IERR
+C
+C  EQUIVALENCES
+      EQUIVALENCE (Y(1),YM(1,1))
+C
+      DATA ISYM(  1),ISYM(  2),ISYM(  3),ISYM(  4),ISYM(  5),ISYM(  6)
+     +    /    -5000,     6000,        7,        8,        9,       10/
+      DATA ISYM(  7),ISYM(  8),ISYM(  9),ISYM( 10),ISYM( 11),ISYM( 12)
+     +    /       11,       12,       13,       14,       15,       16/
+      DATA ISYM( 13),ISYM( 14),ISYM( 15),ISYM( 16),ISYM( 17),ISYM( 18)
+     +    /        5,        6,        7,        8,        9,       10/
+      DATA ISYM( 19),ISYM( 20),ISYM( 21),ISYM( 22),ISYM( 23),ISYM( 24)
+     +    /       11,       12,       13,       14,       15,       16/
+      DATA ISYM( 25),ISYM( 26),ISYM( 27),ISYM( 28),ISYM( 29),ISYM( 30)
+     +    /        5,        6,        7,        8,        9,       10/
+      DATA ISYM( 31),ISYM( 32),ISYM( 33),ISYM( 34),ISYM( 35),ISYM( 36)
+     +    /       11,       12,       13,       14,       15,       16/
+      DATA ISYM( 37),ISYM( 38),ISYM( 39),ISYM( 40),ISYM( 41),ISYM( 42)
+     +    /        5,        6,        7,        8,        9,       10/
+      DATA ISYM( 43),ISYM( 44),ISYM( 45),ISYM( 46),ISYM( 47),ISYM( 48)
+     +    /       11,       12,       13,       14,       15,       16/
+      DATA ISYM( 49),ISYM( 50),ISYM( 51),ISYM( 52),ISYM( 53),ISYM( 54)
+     +    /        5,        6,        7,        8,        9,       10/
+      DATA ISYM( 55),ISYM( 56),ISYM( 57),ISYM( 58),ISYM( 59),ISYM( 60)
+     +    /       11,       12,       13,       14,       15,       16/
+      DATA ISYM( 61),ISYM( 62),ISYM( 63),ISYM( 64),ISYM( 65),ISYM( 66)
+     +    /        5,        6,        7,        8,        9,       10/
+      DATA ISYM( 67),ISYM( 68),ISYM( 69),ISYM( 70),ISYM( 71),ISYM( 72)
+     +    /       11,       12,       13,       14,       15,       16/
+      DATA ISYM( 73),ISYM( 74),ISYM( 75),ISYM( 76),ISYM( 77),ISYM( 78)
+     +    /        5,        6,        7,        8,        9,       10/
+      DATA ISYM( 79),ISYM( 80),ISYM( 81),ISYM( 82),ISYM( 83),ISYM( 84)
+     +    /       11,       12,       13,       14,       15,       16/
+      DATA ISYM( 85),ISYM( 86),ISYM( 87),ISYM( 88),ISYM( 89),ISYM( 90)
+     +    /        5,        6,        7,        8,        9,       10/
+      DATA ISYM( 91),ISYM( 92),ISYM( 93),ISYM( 94),ISYM( 95),ISYM( 96)
+     +    /       11,       12,       13,       14,       15,       16/
+      DATA ISYM( 97),ISYM( 98),ISYM( 99),ISYM(100),ISYM(101),ISYM(102)
+     +    /        5,        6,        7,        8,        9,       10/
+      DATA ISYM(103),ISYM(104),ISYM(105),ISYM(106),ISYM(107),ISYM(108)
+     +    /       11,       12,       13,       14,       15,       16/
+      DATA ISYM(109),ISYM(110),ISYM(111),ISYM(112),ISYM(113),ISYM(114)
+     +    /        5,        6,        7,        8,        9,       10/
+      DATA ISYM(115),ISYM(116),ISYM(117),ISYM(118),ISYM(119),ISYM(120)
+     +    /       11,       12,       13,       14,       15,       16/
+      DATA ISYM(121),ISYM(122),ISYM(123),ISYM(124),ISYM(125),ISYM(126)
+     +    /        5,        6,        7,        8,        9,       10/
+      DATA ISYM(127),ISYM(128),ISYM(129),ISYM(130),ISYM(131),ISYM(132)
+     +    /       11,       12,       13,       14,       15,       16/
+      DATA ISYM(133),ISYM(134),ISYM(135),ISYM(136),ISYM(137),ISYM(138)
+     +    /        5,        6,        7,        8,        9,       10/
+      DATA ISYM(139),ISYM(140),ISYM(141),ISYM(142),ISYM(143),ISYM(144)
+     +    /       11,       12,       13,       14,       15,       16/
+C
+      DATA  AIR(  1), AIR(  2), AIR(  3), AIR(  4), AIR(  5), AIR(  6)
+     +    / 112.0E0, 118.0E0, 132.0E0, 129.0E0, 121.0E0, 135.0E0/
+      DATA  AIR(  7), AIR(  8), AIR(  9), AIR( 10), AIR( 11), AIR( 12)
+     +    / 148.0E0, 148.0E0, 136.0E0, 119.0E0, 104.0E0, 118.0E0/
+      DATA  AIR( 13), AIR( 14), AIR( 15), AIR( 16), AIR( 17), AIR( 18)
+     +    / 115.0E0, 126.0E0, 141.0E0, 135.0E0, 125.0E0, 149.0E0/
+      DATA  AIR( 19), AIR( 20), AIR( 21), AIR( 22), AIR( 23), AIR( 24)
+     +    / 170.0E0, 170.0E0, 158.0E0, 133.0E0, 114.0E0, 140.0E0/
+      DATA  AIR( 25), AIR( 26), AIR( 27), AIR( 28), AIR( 29), AIR( 30)
+     +    / 145.0E0, 150.0E0, 178.0E0, 163.0E0, 172.0E0, 178.0E0/
+      DATA  AIR( 31), AIR( 32), AIR( 33), AIR( 34), AIR( 35), AIR( 36)
+     +    / 199.0E0, 199.0E0, 184.0E0, 162.0E0, 146.0E0, 166.0E0/
+      DATA  AIR( 37), AIR( 38), AIR( 39), AIR( 40), AIR( 41), AIR( 42)
+     +    / 171.0E0, 180.0E0, 193.0E0, 181.0E0, 183.0E0, 218.0E0/
+      DATA  AIR( 43), AIR( 44), AIR( 45), AIR( 46), AIR( 47), AIR( 48)
+     +    / 230.0E0, 242.0E0, 209.0E0, 191.0E0, 172.0E0, 194.0E0/
+      DATA  AIR( 49), AIR( 50), AIR( 51), AIR( 52), AIR( 53), AIR( 54)
+     +    / 196.0E0, 196.0E0, 236.0E0, 235.0E0, 229.0E0, 243.0E0/
+      DATA  AIR( 55), AIR( 56), AIR( 57), AIR( 58), AIR( 59), AIR( 60)
+     +    / 264.0E0, 272.0E0, 237.0E0, 211.0E0, 180.0E0, 201.0E0/
+      DATA  AIR( 61), AIR( 62), AIR( 63), AIR( 64), AIR( 65), AIR( 66)
+     +    / 204.0E0, 188.0E0, 235.0E0, 227.0E0, 234.0E0, 264.0E0/
+      DATA  AIR( 67), AIR( 68), AIR( 69), AIR( 70), AIR( 71), AIR( 72)
+     +    / 302.0E0, 293.0E0, 259.0E0, 229.0E0, 203.0E0, 229.0E0/
+      DATA  AIR( 73), AIR( 74), AIR( 75), AIR( 76), AIR( 77), AIR( 78)
+     +    / 242.0E0, 233.0E0, 267.0E0, 269.0E0, 270.0E0, 315.0E0/
+      DATA  AIR( 79), AIR( 80), AIR( 81), AIR( 82), AIR( 83), AIR( 84)
+     +    / 364.0E0, 347.0E0, 312.0E0, 274.0E0, 237.0E0, 278.0E0/
+      DATA  AIR( 85), AIR( 86), AIR( 87), AIR( 88), AIR( 89), AIR( 90)
+     +    / 284.0E0, 277.0E0, 317.0E0, 313.0E0, 318.0E0, 374.0E0/
+      DATA  AIR( 91), AIR( 92), AIR( 93), AIR( 94), AIR( 95), AIR( 96)
+     +    / 413.0E0, 405.0E0, 355.0E0, 306.0E0, 271.0E0, 306.0E0/
+      DATA  AIR( 97), AIR( 98), AIR( 99), AIR(100), AIR(101), AIR(102)
+     +    / 315.0E0, 301.0E0, 356.0E0, 348.0E0, 355.0E0, 422.0E0/
+      DATA  AIR(103), AIR(104), AIR(105), AIR(106), AIR(107), AIR(108)
+     +    / 465.0E0, 467.0E0, 404.0E0, 347.0E0, 305.0E0, 336.0E0/
+      DATA  AIR(109), AIR(110), AIR(111), AIR(112), AIR(113), AIR(114)
+     +    / 340.0E0, 318.0E0, 362.0E0, 348.0E0, 363.0E0, 435.0E0/
+      DATA  AIR(115), AIR(116), AIR(117), AIR(118), AIR(119), AIR(120)
+     +    / 491.0E0, 505.0E0, 404.0E0, 359.0E0, 310.0E0, 337.0E0/
+      DATA  AIR(121), AIR(122), AIR(123), AIR(124), AIR(125), AIR(126)
+     +    / 360.0E0, 342.0E0, 406.0E0, 396.0E0, 420.0E0, 472.0E0/
+      DATA  AIR(127), AIR(128), AIR(129), AIR(130), AIR(131), AIR(132)
+     +    / 548.0E0, 559.0E0, 463.0E0, 407.0E0, 362.0E0, 405.0E0/
+      DATA  AIR(133), AIR(134), AIR(135), AIR(136), AIR(137), AIR(138)
+     +    / 417.0E0, 391.0E0, 419.0E0, 461.0E0, 472.0E0, 535.0E0/
+      DATA  AIR(139), AIR(140), AIR(141), AIR(142), AIR(143), AIR(144)
+     +    / 622.0E0, 606.0E0, 508.0E0, 461.0E0, 390.0E0, 432.0E0/
+
+      CALL SETRV ( YMMISS, 144, YMISS )
+      CALL SCOPY ( 144, AIR, 1, Y, 1 )
+C
+C     DEFINE CONSTANTS
+C
+      CALL IPRINT ( IPRT )
+C
+C     COMMENCE BODY OF ROUTINE
+C
+      ITEST = 0
+C
+C     SHORT CALLS
+C
+      NY = 144
+      NYM = 12
+      IYM = 12
+      M = 12
+      NS = 1
+      ILOG = -1
+      ISIZE = -1
+      ISIZE = -1
+      IRLIN = -1
+      IBAR = -1
+      YLB = 0.0E0
+      YUB = 0.0E0
+      XLB = 0.0E0
+      XINC = 0.0E0
+C
+   10 CONTINUE
+C
+C     TEST OF VP
+C
+      WRITE(IPRT, 2000)
+      write ( iprt, '(a,i6)' ) '  Test number ', itest
+      write ( iprt, '(a,i6)' ) '  N = ', ny
+      WRITE (IPRT, 3030) NS
+      CALL VP(Y, NY, NS)
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF VPM
+C
+      WRITE(IPRT, 2030)
+      write ( iprt, '(a,i6)' ) '  Test number ', itest
+      write ( iprt, '(a,i6)' ) '  N = ', ny
+      WRITE (IPRT, 3030) NS
+      CALL VPM (Y, YMISS, NY, NS)
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF SVP
+C
+      WRITE(IPRT, 2120)
+      write ( iprt, '(a,i6)' ) '  Test number ', itest
+      write ( iprt, '(a,i6)' ) '  N = ', ny
+      WRITE (IPRT, 3030) NS
+      CALL SVP (Y, NY, NS, ISYM)
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF SVPM
+C
+      WRITE(IPRT, 2150)
+      write ( iprt, '(a,i6)' ) '  Test number ', itest
+      write ( iprt, '(a,i6)' ) '  N = ', ny
+      WRITE (IPRT, 3030) NS
+      CALL SVPM (Y, YMISS, NY, NS, ISYM)
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF MVP
+C
+      WRITE(IPRT, 2060)
+      write ( iprt, '(a,i6)' ) '  Test number ', itest
+      write ( iprt, '(a,i6)' ) '  N = ', nym
+      WRITE (IPRT, 3020) M, IYM
+      WRITE (IPRT, 3030) NS
+      CALL MVP (YM, NYM, M, IYM, NS)
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF MVPM
+C
+      WRITE(IPRT, 2090)
+      write ( iprt, '(a,i6)' ) '  Test number ', itest
+      write ( iprt, '(a,i6)' ) '  N = ', nym
+      WRITE (IPRT, 3020) M, IYM
+      WRITE (IPRT, 3030) NS
+      CALL MVPM (YM, YMMISS, NYM, M, IYM, NS)
+      WRITE (IPRT, 3000) IERR
+C
+C     LOG OPTION CALLS
+C
+   20 CONTINUE
+C
+C     TEST OF VPL
+C
+      WRITE(IPRT, 2010)
+      write ( iprt, '(a,i6)' ) '  Test number ', itest
+      write ( iprt, '(a,i6)' ) '  N = ', ny
+      WRITE (IPRT, 3030) NS
+      WRITE (IPRT, 3040) ILOG
+      CALL VPL (Y, NY, NS, ILOG)
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF VPML
+C
+      WRITE(IPRT, 2040)
+      write ( iprt, '(a,i6)' ) '  Test number ', itest
+      write ( iprt, '(a,i6)' ) '  N = ', ny
+      WRITE (IPRT, 3030) NS
+      WRITE (IPRT, 3040) ILOG
+      CALL VPML (Y, YMISS, NY, NS, ILOG)
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF SVPL
+C
+      WRITE(IPRT, 2130)
+      write ( iprt, '(a,i6)' ) '  Test number ', itest
+      write ( iprt, '(a,i6)' ) '  N = ', ny
+      WRITE (IPRT, 3030) NS
+      WRITE (IPRT, 3040) ILOG
+      CALL SVPL (Y, NY, NS, ISYM, ILOG)
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF SVPML
+C
+      WRITE(IPRT, 2160)
+      write ( iprt, '(a,i6)' ) '  Test number ', itest
+      write ( iprt, '(a,i6)' ) '  N = ', ny
+      WRITE (IPRT, 3030) NS
+      WRITE (IPRT, 3040) ILOG
+      CALL SVPML (Y, YMISS, NY, NS, ISYM, ILOG)
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF MVPL
+C
+      WRITE(IPRT, 2070)
+      write ( iprt, '(a,i6)' ) '  Test number ', itest
+      write ( iprt, '(a,i6)' ) '  N = ', nym
+      WRITE (IPRT, 3020) M, IYM
+      WRITE (IPRT, 3030) NS
+      WRITE (IPRT, 3040) ILOG
+      CALL MVPL (YM, NYM, M, IYM, NS, ILOG)
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF MVPML
+C
+      WRITE(IPRT, 2100)
+      write ( iprt, '(a,i6)' ) '  Test number ', itest
+      write ( iprt, '(a,i6)' ) '  N = ', nym
+      WRITE (IPRT, 3020) M, IYM
+      WRITE (IPRT, 3030) NS
+      WRITE (IPRT, 3040) ILOG
+      CALL MVPML(YM, YMMISS, NYM, M, IYM, NS, ILOG)
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF LONG CALLS
+C
+   30 CONTINUE
+C
+C     TEST OF VPC
+C
+      WRITE(IPRT, 2020)
+      write ( iprt, '(a,i6)' ) '  Test number ', itest
+      write ( iprt, '(a,i6)' ) '  N = ', ny
+      WRITE (IPRT, 3030) NS
+      WRITE (IPRT, 3040) ILOG
+      WRITE (IPRT, 3060) ISIZE, IRLIN, IBAR
+      WRITE (IPRT, 3070) YLB, YUB, XLB
+      WRITE (IPRT, 3090) XINC
+      CALL VPC (Y, NY, NS, ILOG, ISIZE, IRLIN, IBAR, YLB,
+     +   YUB, XLB, XINC)
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF VPMC
+C
+      WRITE(IPRT, 2050)
+      write ( iprt, '(a,i6)' ) '  Test number ', itest
+      write ( iprt, '(a,i6)' ) '  N = ', ny
+      WRITE (IPRT, 3030) NS
+      WRITE (IPRT, 3040) ILOG
+      WRITE (IPRT, 3060) ISIZE, IRLIN, IBAR
+      WRITE (IPRT, 3070) YLB, YUB, XLB
+      WRITE (IPRT, 3090) XINC
+      CALL VPMC (Y, YMISS, NY, NS, ILOG, ISIZE, IRLIN, IBAR, YLB,
+     +   YUB, XLB, XINC)
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF SVPC
+C
+      WRITE(IPRT, 2140)
+      write ( iprt, '(a,i6)' ) '  Test number ', itest
+      write ( iprt, '(a,i6)' ) '  N = ', ny
+      WRITE (IPRT, 3030) NS
+      WRITE (IPRT, 3040) ILOG
+      WRITE (IPRT, 3060) ISIZE, IRLIN, IBAR
+      WRITE (IPRT, 3070) YLB, YUB, XLB
+      WRITE (IPRT, 3090) XINC
+      CALL SVPC (Y, NY, NS, ISYM, ILOG, ISIZE, IRLIN, IBAR, YLB,
+     +   YUB, XLB, XINC)
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF SVPMC
+C
+      WRITE(IPRT, 2170)
+      write ( iprt, '(a,i6)' ) '  Test number ', itest
+      write ( iprt, '(a,i6)' ) '  N = ', ny
+      WRITE (IPRT, 3030) NS
+      WRITE (IPRT, 3040) ILOG
+      WRITE (IPRT, 3060) ISIZE, IRLIN, IBAR
+      WRITE (IPRT, 3070) YLB, YUB, XLB
+      WRITE (IPRT, 3090) XINC
+      CALL SVPMC(Y, YMISS, NY, NS, ISYM, ILOG, ISIZE, IRLIN, IBAR,
+     +   YLB, YUB, XLB, XINC)
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF MVPC
+C
+   40 WRITE(IPRT, 2080)
+      write ( iprt, '(a,i6)' ) '  Test number ', itest
+      write ( iprt, '(a,i6)' ) '  N = ', nym
+      WRITE (IPRT, 3020) M, IYM
+      WRITE (IPRT, 3030) NS
+      WRITE (IPRT, 3040) ILOG
+      WRITE (IPRT, 3060) ISIZE, IRLIN, IBAR
+      WRITE (IPRT, 3070) YLB, YUB, XLB
+      WRITE (IPRT, 3090) XINC
+      CALL MVPC(YM, NYM, M, IYM, NS, ILOG, ISIZE, YLB,
+     +   YUB, XLB, XINC)
+      WRITE (IPRT, 3000) IERR
+C
+C     TEST OF MVPMC
+C
+   50 continue
+
+      write ( iprt, '(a)' ) ' '
+      write ( iprt, '(a)' ) 'Test of MVPMC:'
+      write ( iprt, '(a)' ) ' '
+      write ( iprt, '(a,i6)' ) '  Test number ', itest
+      write ( iprt, '(a,i6)' ) '  N = ', nym
+      WRITE (IPRT, 3020) M, IYM
+      WRITE (IPRT, 3030) NS
+      WRITE (IPRT, 3040) ILOG
+      WRITE (IPRT, 3060) ISIZE, IRLIN, IBAR
+      WRITE (IPRT, 3070) YLB, YUB, XLB
+      WRITE (IPRT, 3090) XINC
+      CALL MVPMC ( YM, YMMISS, NYM, M, IYM, NS, ILOG, ISIZE, YLB,
+     +   YUB, XLB, XINC )
+      WRITE (IPRT, 3000) IERR
+C
+      ITEST = ITEST + 1
+C
+C     TEST VALID OPTIONS
+C
+      if ( itest .eq. 1 ) then
+        ILOG = 0
+        ISIZE = 0
+        YLB = 100.0E0
+        YUB = 700.0E0
+        XLB = 4.0E0
+        XINC = 16.0E0
+        GO TO 20
+
+      else if ( itest .eq. 2 ) then
+        ILOG = 2
+        ISIZE = 2
+        NOUT = 5
+        XINC = -1.0E0
+        GO TO 20
+
+      else if ( itest .eq. 3 ) then
+
+        ILOG = 20
+        ISIZE = 20
+        NOUT = 55
+        YUB = 300.0E0
+        GO TO 30
+
+      else if ( itest .eq. 4 ) then
+
+        ILOG = 22
+        ISIZE = 22
+        GO TO 40
+
+      else if ( itest .eq. 5 ) then
+
+        NY = 1
+        NYM = 1
+        M = 144
+        IYM = 1
+        GO TO 40
+
+      else if ( itest .eq. 6 ) then
+
+        CALL SETRV ( Y, 144, 1.0E0 )
+        NYM = 6
+        IYM = 12
+        M = 6
+        NY = 36
+        YLB = 0.0E0
+        YUB = 0.0E0
+        XLB = 0.0E0
+        XINC = 0.0E0
+        GO TO 30
+c
+c  Test error responses
+c
+      else if ( itest .eq. 7 ) then
+
+        NY = 0
+        NYM = 0
+        M = 0
+        IYM = -1
+        GO TO 10
+
+      else if ( itest .eq. 8 ) then
+
+        NY = 144
+        NYM = 12
+        M = 12
+        IYM = -1
+        XLB = -1.0E0
+        YLB = -1.0E0
+        GO TO 40
+
+      else if ( itest .eq. 9 ) then
+
+        IYM = 12
+        Y(1) = 0.0E0
+        GO TO 50
+
+      else if ( itest .eq. 10 ) then
+
+        CALL SETRV ( Y, 144, YMISS )
+        XLB = XINC
+        YLB = YUB
+        GO TO 50
+
+      else
+
+      end if
+
+      RETURN
+
+ 2000 FORMAT ('1', 10HTEST OF VP)
+ 2010 FORMAT ('1', 11HTEST OF VPL)
+ 2020 FORMAT ('1', 11HTEST OF VPC)
+ 2030 FORMAT ('1', 11HTEST OF VPM)
+ 2040 FORMAT ('1', 12HTEST OF VPML)
+ 2050 FORMAT ('1', 12HTEST OF VPMC)
+ 2060 FORMAT ('1', 11HTEST OF MVP)
+ 2070 FORMAT ('1', 12HTEST OF MVPL)
+ 2080 FORMAT ('1', 12HTEST OF MVPC)
+ 2090 FORMAT ('1', 12HTEST OF MVPM)
+ 2100 FORMAT ('1', 13HTEST OF MVPML)
+ 2120 FORMAT ('1', 11HTEST OF SVP)
+ 2130 FORMAT ('1', 12HTEST OF SVPL)
+ 2140 FORMAT ('1', 12HTEST OF SVPC)
+ 2150 FORMAT ('1', 12HTEST OF SVPM)
+ 2160 FORMAT ('1', 13HTEST OF SVPML)
+ 2170 FORMAT ('1', 13HTEST OF SVPMC)
+ 3000 FORMAT (/8H IERR = , I4)
+ 3010 FORMAT (' ', 5X, 10H   N     =, I5)
+ 3020 FORMAT ('+', 20X, 10H / M     =, I5, 10H / IYM   =, I5)
+ 3030 FORMAT ('+', 50X, 10H / NS    =, I5)
+ 3040 FORMAT ('+', 65X, 10H / ILOG  =, I5)
+ 3060 FORMAT (' ',  5X, '   ISIZE=', I5, ' / IRLIN=', I5,
+     +   10H / IBAR  =, I5)
+ 3070 FORMAT ('+', 50X, 10H / YLB   =, F10.4, 10H / YUB   =, F10.4,
+     +   10H / XLB   =, F10.4)
+ 3090 FORMAT ('+', 110X, 10H / XINC  =, F10.4)
+      END
+      SUBROUTINE XXCH1(LDSTAK)
+
+c*********************************************************************72
+c
+cc XXCH1 tests the page plot and statistical analysis routines.
+c
+C     DATA SET IS 84 RELATIVE HUMIDITY MEASUREMEMTS FROM PIKES PEAK.
+C
+c  Modified:
+c
+c    24 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson and John Koontz,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      INTEGER
+     +   I,IPRT,N
+C
+C  LOCAL ARRAYS
+      REAL
+     +   X(100),Y(100)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL IPRINT,PP,STAT
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     INTEGER I
+C        AN INDEX VARIABLE.
+C     INTEGER IERR
+C        ERROR FLAG
+C     INTEGER IPRT
+C        LOGICAL OUTPUT UNIT.
+C     INTEGER LDSTAK
+C        THE LENGTH OF DSTAK IN COMMON /CSTAK/.
+C     INTEGER N
+C        THE LENGTH OF THE VECTOR Y.
+C     REAL X(100)
+C        THE ORDER INDICES OF THE DATA.
+C     REAL Y(100)
+C        DATA VECTOR FOR TESTS.
+C
+C
+      DATA N /84/
+C
+      DATA Y( 1), Y( 2), Y( 3), Y( 4)
+     +    / 0.6067E0, 0.6087E0, 0.6086E0, 0.6134E0/
+      DATA Y( 5), Y( 6), Y( 7)
+     +    / 0.6108E0, 0.6138E0, 0.6125E0/
+      DATA Y( 8), Y( 9), Y(10), Y(11)
+     +    / 0.6122E0, 0.6110E0, 0.6104E0, 0.7213E0/
+      DATA Y(12), Y(13), Y(14)
+     +    / 0.7078E0, 0.7021E0, 0.7004E0/
+      DATA Y(15), Y(16), Y(17), Y(18)
+     +    / 0.6981E0, 0.7242E0, 0.7268E0, 0.7418E0/
+      DATA Y(19), Y(20), Y(21)
+     +    / 0.7407E0, 0.7199E0, 0.6225E0/
+      DATA Y(22), Y(23), Y(24), Y(25)
+     +    / 0.6254E0, 0.6252E0, 0.6267E0, 0.6218E0/
+      DATA Y(26), Y(27), Y(28)
+     +    / 0.6178E0, 0.6216E0, 0.6192E0/
+      DATA Y(29), Y(30), Y(31), Y(32)
+     +    / 0.6191E0, 0.6250E0, 0.6188E0, 0.6233E0/
+      DATA Y(33), Y(34), Y(35)
+     +    / 0.6225E0, 0.6204E0, 0.6207E0/
+      DATA Y(36), Y(37), Y(38), Y(39)
+     +    / 0.6168E0, 0.6141E0, 0.6291E0, 0.6231E0/
+      DATA Y(40), Y(41), Y(42)
+     +    / 0.6222E0, 0.6252E0, 0.6308E0/
+      DATA Y(43), Y(44), Y(45), Y(46)
+     +    / 0.6376E0, 0.6330E0, 0.6303E0, 0.6301E0/
+      DATA Y(47), Y(48), Y(49)
+     +    / 0.6390E0, 0.6423E0, 0.6300E0/
+      DATA Y(50), Y(51), Y(52), Y(53)
+     +    / 0.6260E0, 0.6292E0, 0.6298E0, 0.6290E0/
+      DATA Y(54), Y(55), Y(56)
+     +    / 0.6262E0, 0.5952E0, 0.5951E0/
+      DATA Y(57), Y(58), Y(59), Y(60)
+     +    / 0.6314E0, 0.6440E0, 0.6439E0, 0.6326E0/
+      DATA Y(61), Y(62), Y(63)
+     +    / 0.6392E0, 0.6417E0, 0.6412E0/
+      DATA Y(64), Y(65), Y(66), Y(67)
+     +    / 0.6530E0, 0.6411E0, 0.6355E0, 0.6344E0/
+      DATA Y(68), Y(69), Y(70)
+     +    / 0.6623E0, 0.6276E0, 0.6307E0/
+      DATA Y(71), Y(72), Y(73), Y(74)
+     +    / 0.6354E0, 0.6197E0, 0.6153E0, 0.6340E0/
+      DATA Y(75), Y(76), Y(77)
+     +    / 0.6338E0, 0.6284E0, 0.6162E0/
+      DATA Y(78), Y(79), Y(80), Y(81)
+     +    / 0.6252E0, 0.6349E0, 0.6344E0, 0.6361E0/
+      DATA Y(82), Y(83), Y(84)
+     +    / 0.6373E0, 0.6337E0, 0.6383E0/
+C
+C     DEFINE IPRT, THE CURRENT OUTPUT UNIT.
+C
+      CALL IPRINT(IPRT)
+C
+      DO 10 I=1,N
+         X(I) = I
+   10 CONTINUE
+C
+C     PRINT HEADING
+C
+      WRITE (IPRT,1000)
+C
+C     PERFORM SIMPLE TEST OF PP
+C
+      WRITE (IPRT,1100)
+      CALL PP(Y, X, N)
+      WRITE (IPRT,2000) IERR
+C
+C     PERFORM SIMPLE TEST OF STAT
+C
+      WRITE (IPRT,1200)
+      CALL STAT(Y, N, LDSTAK)
+      WRITE (IPRT,2000) IERR
+C
+      RETURN
+C
+C     FORMATS
+C
+ 1000 FORMAT ('1*CH1')
+ 1100 FORMAT (' SIMPLE TEST OF PP')
+ 1200 FORMAT ('1SIMPLE TEST OF STAT')
+ 2000 FORMAT (/' THE VALUE OF IERR IS ', I4)
+      END
+      SUBROUTINE XXCH2(LDSTAK)
+
+c*********************************************************************72
+c
+cc XXCH2 tests the page plot family.
+c
+C     DATA IS THE AIRLINE DATA LISTED ON PAGE 531 OF BOX AND JENKINS.
+C
+c  Modified:
+c
+c    24 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  LOCAL SCALARS
+      INTEGER
+     +   IPRT,IYM,M,N
+C
+C  LOCAL ARRAYS
+      REAL
+     +   AIR(144),X(12),YM(12,12)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL IPRINT,MPP
+C
+C  COMMON BLOCKS
+      COMMON /ERRCHK/IERR
+C
+C  EQUIVALENCES
+      EQUIVALENCE (AIR(1),YM(1,1))
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     REAL AIR(144)
+C        THE AIRLINE DATA.
+C     INTEGER IERR
+C        A COMMON VARIABLE USED AS A FLAG TO INDICATE WHETHER
+C        OR NOT THERE ARE ANY ERRORS, IF =0 THEN NO ERRORS.
+C     INTEGER IPRT
+C        LOGICAL OUTPUT UNIT.
+C     INTEGER IYM
+C        THE EXACT VALUE OF THE FIRST DIMENSION OF THE MATRIX YM.
+C     INTEGER LDSTAK
+C        A DUMMY VARIABLE FOR THIS TEST SUBPROGRAM.
+C     INTEGER M
+C        THE NUMBER OF COLUMNS OF DATA IN YM.
+C     INTEGER N
+C        THE NUMBER OF OBSERVATIONS IN EACH COLUMN OF YM.
+C     REAL X(12)
+C        VECTOR OF OBSERVATIONS FOR X(HORIZONTAL) COORDINATES
+C     REAL YM(12,12)
+C        MULTIVARIATE OBSERVATIONS FOR THE Y (VERTICAL) COORDINATES.
+C
+C
+      DATA    X(  1),   X(  2),   X(  3),   X(  4),   X(  5),   X(  6)
+     +    /   1.0E0,    2.0E0,    3.0E0,    4.0E0,    5.0E0,    6.0E0/
+      DATA    X(  7),   X(  8),   X(  9),   X( 10),   X( 11),   X( 12)
+     +    /   7.0E0,    8.0E0,    9.0E0,   10.0E0,   11.0E0,   12.0E0/
+C
+      DATA  AIR(  1), AIR(  2), AIR(  3), AIR(  4), AIR(  5), AIR(  6)
+     +    / 112.0E0,  118.0E0,  132.0E0,  129.0E0,  121.0E0,  135.0E0/
+      DATA  AIR(  7), AIR(  8), AIR(  9), AIR( 10), AIR( 11), AIR( 12)
+     +    / 148.0E0,  148.0E0,  136.0E0,  119.0E0,  104.0E0,  118.0E0/
+      DATA  AIR( 13), AIR( 14), AIR( 15), AIR( 16), AIR( 17), AIR( 18)
+     +    / 115.0E0,  126.0E0,  141.0E0,  135.0E0,  125.0E0,  149.0E0/
+      DATA  AIR( 19), AIR( 20), AIR( 21), AIR( 22), AIR( 23), AIR( 24)
+     +    / 170.0E0,  170.0E0,  158.0E0,  133.0E0,  114.0E0,  140.0E0/
+      DATA  AIR( 25), AIR( 26), AIR( 27), AIR( 28), AIR( 29), AIR( 30)
+     +    / 145.0E0,  150.0E0,  178.0E0,  163.0E0,  172.0E0,  178.0E0/
+      DATA  AIR( 31), AIR( 32), AIR( 33), AIR( 34), AIR( 35), AIR( 36)
+     +    / 199.0E0,  199.0E0,  184.0E0,  162.0E0,  146.0E0,  166.0E0/
+      DATA  AIR( 37), AIR( 38), AIR( 39), AIR( 40), AIR( 41), AIR( 42)
+     +    / 171.0E0,  180.0E0,  193.0E0,  181.0E0,  183.0E0,  218.0E0/
+      DATA  AIR( 43), AIR( 44), AIR( 45), AIR( 46), AIR( 47), AIR( 48)
+     +    / 230.0E0,  242.0E0,  209.0E0,  191.0E0,  172.0E0,  194.0E0/
+      DATA  AIR( 49), AIR( 50), AIR( 51), AIR( 52), AIR( 53), AIR( 54)
+     +    / 196.0E0,  196.0E0,  236.0E0,  235.0E0,  229.0E0,  243.0E0/
+      DATA  AIR( 55), AIR( 56), AIR( 57), AIR( 58), AIR( 59), AIR( 60)
+     +    / 264.0E0,  272.0E0,  237.0E0,  211.0E0,  180.0E0,  201.0E0/
+      DATA  AIR( 61), AIR( 62), AIR( 63), AIR( 64), AIR( 65), AIR( 66)
+     +    / 204.0E0,  188.0E0,  235.0E0,  227.0E0,  234.0E0,  264.0E0/
+      DATA  AIR( 67), AIR( 68), AIR( 69), AIR( 70), AIR( 71), AIR( 72)
+     +    / 302.0E0,  293.0E0,  259.0E0,  229.0E0,  203.0E0,  229.0E0/
+      DATA  AIR( 73), AIR( 74), AIR( 75), AIR( 76), AIR( 77), AIR( 78)
+     +    / 242.0E0,  233.0E0,  267.0E0,  269.0E0,  270.0E0,  315.0E0/
+      DATA  AIR( 79), AIR( 80), AIR( 81), AIR( 82), AIR( 83), AIR( 84)
+     +    / 364.0E0,  347.0E0,  312.0E0,  274.0E0,  237.0E0,  278.0E0/
+      DATA  AIR( 85), AIR( 86), AIR( 87), AIR( 88), AIR( 89), AIR( 90)
+     +    / 284.0E0,  277.0E0,  317.0E0,  313.0E0,  318.0E0,  374.0E0/
+      DATA  AIR( 91), AIR( 92), AIR( 93), AIR( 94), AIR( 95), AIR( 96)
+     +    / 413.0E0,  405.0E0,  355.0E0,  306.0E0,  271.0E0,  306.0E0/
+      DATA  AIR( 97), AIR( 98), AIR( 99), AIR(100), AIR(101), AIR(102)
+     +    / 315.0E0,  301.0E0,  356.0E0,  348.0E0,  355.0E0,  422.0E0/
+      DATA  AIR(103), AIR(104), AIR(105), AIR(106), AIR(107), AIR(108)
+     +    / 465.0E0,  467.0E0,  404.0E0,  347.0E0,  305.0E0,  336.0E0/
+      DATA  AIR(109), AIR(110), AIR(111), AIR(112), AIR(113), AIR(114)
+     +    / 340.0E0,  318.0E0,  362.0E0,  348.0E0,  363.0E0,  435.0E0/
+      DATA  AIR(115), AIR(116), AIR(117), AIR(118), AIR(119), AIR(120)
+     +    / 491.0E0,  505.0E0,  404.0E0,  359.0E0,  310.0E0,  337.0E0/
+      DATA  AIR(121), AIR(122), AIR(123), AIR(124), AIR(125), AIR(126)
+     +    / 360.0E0,  342.0E0,  406.0E0,  396.0E0,  420.0E0,  472.0E0/
+      DATA  AIR(127), AIR(128), AIR(129), AIR(130), AIR(131), AIR(132)
+     +    / 548.0E0,  559.0E0,  463.0E0,  407.0E0,  362.0E0,  405.0E0/
+      DATA  AIR(133), AIR(134), AIR(135), AIR(136), AIR(137), AIR(138)
+     +    / 417.0E0,  391.0E0,  419.0E0,  461.0E0,  472.0E0,  535.0E0/
+      DATA  AIR(139), AIR(140), AIR(141), AIR(142), AIR(143), AIR(144)
+     +    / 622.0E0,  606.0E0,  508.0E0,  461.0E0,  390.0E0,  432.0E0/
+C
+C     DEFINE CONSTANTS
+C
+      CALL IPRINT(IPRT)
+      IYM = 12
+      N = 12
+      M = 12
+C
+C     WRITE HEADER
+C
+      WRITE(IPRT, 1000)
+C
+C     RUN SIMPLE TEST OF MPP
+C
+      WRITE(IPRT, 1100)
+      CALL MPP(YM, X, N, M, IYM)
+      WRITE (IPRT,2000) IERR
+C
+      RETURN
+C
+C     FORMAT STATEMENTS
+C
+ 1000 FORMAT ('1*CH2')
+ 1100 FORMAT (' SIMPLE TEST OF MPP')
+ 2000 FORMAT (/' THE VALUE OF IERR IS ', I4)
+      END
+      SUBROUTINE XXCH3(LDSTAK)
+
+c*********************************************************************72
+c
+cc XXCH3 tests the normal random number generator family.
+c
+c  Modified:
+c
+c    24 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson and John Koontz,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  LOCAL SCALARS
+      REAL
+     +   SIGMA,YMEAN
+      INTEGER
+     +   I,IPRT,ISEED,IYM,M,N
+C
+C  LOCAL ARRAYS
+      REAL
+     +   YM(50,2)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL IPRINT,MVP,NRAND,NRANDC
+C
+C  COMMON BLOCKS
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     INTEGER I
+C        AN INDEX VARIABLE.
+C     INTEGER IERR
+C        FLAG TO INDICATE PRESENCE OF ERROR DETECTED BY PRECEDING
+C        STARPAC CALL.  (0 IS OK, 1 IS ERROR)
+C     INTEGER IPRT
+C        LOGICAL OUTPUT UNIT.
+C     INTEGER ISEED
+C        THE SEED FOR THE RANDOM NUMBER GENERATOR.
+C     INTEGER IYM
+C        THE EXACT VALUE OF THE FIRST DIMENSION OF ARRAY YM.
+C     INTEGER LDSTAK
+C        A DUMMY VARIABLE FOR THIS TEST SUBPROGRAM.
+C     INTEGER M
+C        THE NUMBER OF SETS OF NUMBERS TO BE GENERATED
+C     INTEGER N
+C        THE NUMBER OF OBSERVATIONS TO BE GENERATED.
+C     REAL SIGMA
+C        THE S.D. OF THE SAMPLE.
+C     REAL YM(50,2)
+C        DATA VECTOR FOR TESTS.
+C     REAL YMEAN
+C        THE MEAN OF THE SAMPLE.
+C
+C
+C     DATA INITIALIZATION
+C
+      IYM = 50
+      ISEED = 531
+      N = 50
+      M = 2
+      YMEAN = 4.0E0
+      SIGMA = 0.5E0
+C
+C     DEFINE IPRT, THE CURRENT OUTPUT UNIT.
+C
+      CALL IPRINT(IPRT)
+C
+C     WRITE HEADING
+C
+      WRITE (IPRT,1000)
+C
+C     GENERATE STANDARD NORMAL PSEUDO-RANDOM NUMBERS INTO COLUMN 1 OF YM
+C
+      WRITE (IPRT,1100)
+      CALL NRAND(YM(1,1), N, ISEED)
+      WRITE (IPRT,2000) IERR
+      WRITE (IPRT, 1400) (YM(I,1),I=1,N)
+C
+C     GENERATE NORMAL PSEUDO-RANDOM NUMBERS
+C     WITH MEAN 4.0 AND STANDARD DEVIATION 0.5 INTO COLUMN 2 OF YM
+C
+      WRITE (IPRT,1200)
+      CALL NRANDC(YM(1,2), N, ISEED, YMEAN, SIGMA)
+      WRITE (IPRT,2000) IERR
+      WRITE (IPRT, 1400) (YM(I,2),I=1,N)
+C
+C     PLOT RESULTS, SAMPLING EVERY OBSERVATION
+C
+      WRITE (IPRT,1500)
+      CALL MVP (YM, N, M, IYM, 1)
+C
+      RETURN
+C
+C     FORMATS
+C
+ 1000 FORMAT ('1*CH3')
+ 1100 FORMAT (' SIMPLE TEST OF NRAND')
+ 1200 FORMAT ('1SIMPLE TEST OF NRANDC')
+ 2000 FORMAT (/' THE VALUE OF IERR IS ', I4)
+ 1400 FORMAT (/' GENERATED RESULTS = '//(5E15.8))
+ 1500 FORMAT ('1MVP DISPLAY OF GENERATED RESULTS')
+      END
+      SUBROUTINE XXCH4(LDSTAK)
+
+c*********************************************************************72
+c
+cc XXCH4 tests the histogram family.
+c
+C     DATA SET IS FROM PAGE 39 OF MANDEL [1964]
+C
+c  Modified:
+c
+c    24 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson and John Koontz,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      INTEGER
+     +   IPRT,N
+C
+C  LOCAL ARRAYS
+      REAL
+     +   Y(40)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL HIST,IPRINT
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     INTEGER IERR
+C        ERROR FLAG
+C     INTEGER IPRT
+C        LOGICAL OUTPUT UNIT.
+C     INTEGER LDSTAK
+C        THE LENGTH OF DSTAK IN COMMON /CSTAK/.
+C     INTEGER N
+C        THE LENGTH OF THE VECTOR Y.
+C     REAL Y(40)
+C        DATA VECTOR FOR TESTS.
+C
+C
+C     DATA INITIALIZATIONS.
+C
+      DATA N /39/
+C
+      DATA Y( 1), Y( 2), Y( 3), Y( 4)
+     +    / 0.4, 0.6, 1.0, 1.0/
+      DATA Y( 5), Y( 6), Y( 7), Y( 8)
+     +    / 1.0, 0.5, 0.6, 0.7/
+      DATA Y( 9), Y(10), Y(11), Y(12)
+     +    / 1.0, 0.6, 0.2, 1.9/
+      DATA Y(13), Y(14), Y(15), Y(16)
+     +    / 0.2, 0.4, 0.0, -0.4/
+      DATA Y(17), Y(18), Y(19), Y(20)
+     +    / -0.3, 0.0, -0.4, -0.3/
+      DATA Y(21), Y(22), Y(23), Y(24)
+     +    / 0.1, -0.1, 0.2, -0.5/
+      DATA Y(25), Y(26), Y(27), Y(28)
+     +    / 0.3, -0.1, 0.2, -0.2/
+      DATA Y(29), Y(30), Y(31), Y(32)
+     +    / 0.8, 0.5, 0.6, 0.8/
+      DATA Y(33), Y(34), Y(35), Y(36)
+     +    / 0.7, 0.7, 0.2, 0.5/
+      DATA Y(37), Y(38), Y(39)
+     +    / 0.7, 0.8, 1.1/
+C
+C     DEFINE IPRT, THE CURRENT OUTPUT UNIT.
+C
+      CALL IPRINT(IPRT)
+C
+C     PRINT HEADING
+C
+      WRITE (IPRT,1000)
+C
+C     PERFORM SIMPLE TEST OF HIST
+C
+      WRITE (IPRT,1100)
+      CALL HIST(Y, N, LDSTAK)
+      WRITE (IPRT,2000) IERR
+C
+      RETURN
+C
+C     FORMATS
+C
+ 1000 FORMAT ('1*CH4')
+ 1100 FORMAT (' SIMPLE TEST OF HIST')
+ 2000 FORMAT (/' THE VALUE OF IERR IS ', I4)
+      END
+      SUBROUTINE XXCH5(LDSTAK)
+
+c*********************************************************************72
+c
+cc XXCH5 tests the statistical analysis family.
+c
+C     DATA SET IS FROM PAGE 39 OF MANDEL [1964]
+C
+c  Modified:
+c
+c    24 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson and John Koontz,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      INTEGER
+     +   IPRT,N
+C
+C  LOCAL ARRAYS
+      REAL
+     +   Y(40)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL IPRINT,STAT
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     INTEGER IERR
+C        ERROR FLAG
+C     INTEGER IPRT
+C        LOGICAL OUTPUT UNIT.
+C     INTEGER LDSTAK
+C        THE LENGTH OF DSTAK IN COMMON /CSTAK/.
+C     INTEGER N
+C        THE LENGTH OF THE VECTOR Y.
+C     REAL Y(40)
+C        DATA VECTOR FOR TESTS.
+C
+C     DATA INITIALIZATIONS.
+C
+      DATA N /39/
+C
+      DATA Y( 1), Y( 2), Y( 3), Y( 4)
+     +    / 0.4, 0.6, 1.0, 1.0/
+      DATA Y( 5), Y( 6), Y( 7), Y( 8)
+     +    / 1.0, 0.5, 0.6, 0.7/
+      DATA Y( 9), Y(10), Y(11), Y(12)
+     +    / 1.0, 0.6, 0.2, 1.9/
+      DATA Y(13), Y(14), Y(15), Y(16)
+     +    / 0.2, 0.4, 0.0, -0.4/
+      DATA Y(17), Y(18), Y(19), Y(20)
+     +    / -0.3, 0.0, -0.4, -0.3/
+      DATA Y(21), Y(22), Y(23), Y(24)
+     +    / 0.1, -0.1, 0.2, -0.5/
+      DATA Y(25), Y(26), Y(27), Y(28)
+     +    / 0.3, -0.1, 0.2, -0.2/
+      DATA Y(29), Y(30), Y(31), Y(32)
+     +    / 0.8, 0.5, 0.6, 0.8/
+      DATA Y(33), Y(34), Y(35), Y(36)
+     +    / 0.7, 0.7, 0.2, 0.5/
+      DATA Y(37), Y(38), Y(39)
+     +    / 0.7, 0.8, 1.1/
+C
+C     DEFINE IPRT, THE CURRENT OUTPUT UNIT.
+C
+      CALL IPRINT(IPRT)
+C
+C     PRINT HEADING
+C
+      WRITE (IPRT,1000)
+C
+C     PERFORM SIMPLE TEST OF STAT
+C
+      WRITE (IPRT,1100)
+      CALL STAT(Y, N, LDSTAK)
+      WRITE (IPRT,2000) IERR
+C
+      RETURN
+C
+C     FORMATS
+C
+ 1000 FORMAT ('1*CH5')
+ 1100 FORMAT (' SIMPLE TEST OF STAT')
+ 2000 FORMAT (/' THE VALUE OF IERR IS ', I4)
+      END
+      SUBROUTINE XXCH6(LDSTAK)
+
+c*********************************************************************72
+c
+cc XXCH6 tests the one-way analysis of variance family.
+c
+c  Modified:
+c
+c    24 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson and John Koontz,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      INTEGER
+     +   IPRT,N
+C
+C  LOCAL ARRAYS
+      REAL
+     +   TAG(20),Y(20)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL AOV1,IPRINT
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     INTEGER IERR
+C        ERROR FLAG
+C     INTEGER IPRT
+C        LOGICAL OUTPUT UNIT.
+C     INTEGER LDSTAK
+C        THE LENGTH OF DSTAK IN COMMON /CSTAK/.
+C     INTEGER N
+C        THE LENGTH OF THE VECTOR Y.
+C     REAL TAG(20)
+C        THE TAG VALUES FOR EACH OBSERVATION
+C     REAL Y(20)
+C        DATA VECTOR FOR TESTS.
+C
+C
+C     DATA INITIALIZATIONS.
+C
+      DATA N /16/
+C
+      DATA Y( 1), Y( 2), Y( 3), Y( 4)
+     +    / 83.0, 81.0, 76.0, 78.0/
+      DATA Y( 5), Y( 6), Y( 7), Y( 8)
+     +    / 79.0, 72.0, 61.0, 61.0/
+      DATA Y( 9), Y(10), Y(11), Y(12)
+     +    / 67.0, 67.0, 64.0, 78.0/
+      DATA Y(13), Y(14), Y(15), Y(16)
+     +    / 71.0, 75.0, 72.0, 74.0/
+C
+      DATA TAG( 1), TAG( 2), TAG( 3), TAG( 4)
+     +    / 1.0, 1.0, 1.0, 1.0/
+      DATA TAG( 5), TAG( 6), TAG( 7), TAG( 8)
+     +    / 1.0, 1.0, 2.0, 2.0/
+      DATA TAG( 9), TAG(10), TAG(11), TAG(12)
+     +    / 2.0, 2.0, 2.0, 3.0/
+      DATA TAG(13), TAG(14), TAG(15), TAG(16)
+     +    / 3.0, 3.0, 3.0, 3.0/
+C
+C     DEFINE IPRT, THE CURRENT OUTPUT UNIT.
+C
+      CALL IPRINT(IPRT)
+C
+C     PRINT HEADING
+C
+      WRITE (IPRT,1000)
+C
+C     PERFORM SIMPLE TEST OF AOV1
+C
+      WRITE (IPRT,1100)
+      CALL AOV1(Y, TAG, N, LDSTAK)
+      WRITE (IPRT,2000) IERR
+C
+      RETURN
+C
+C     FORMATS
+C
+ 1000 FORMAT ('1*CH6')
+ 1100 FORMAT (' SIMPLE TEST OF AOV1')
+ 2000 FORMAT (/' THE VALUE OF IERR IS ', I4)
+      END
+      SUBROUTINE XXCH7(LDSTAK)
+
+c*********************************************************************72
+c
+cc XXCH7 tests the correlation analysis family.
+c
+C     DATA IS FROM DRAPER AND SMITH [1968], PAGE 216.
+C
+c  Modified:
+c
+c    24 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      INTEGER
+     +   IPRT,IYM,M,N
+C
+C  LOCAL ARRAYS
+      REAL
+     +   YM(10,5)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL CORR,IPRINT
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     INTEGER IERR
+C        THE INTEGER VALUE DESIGNATING WHETHER ANY ERRORS WERE
+C        DETECTED IN THE PARAMETER LIST.
+C        IF IERR .EQ. 0, NO ERRORS WERE DETECTED.
+C        IF IERR .EQ. 1, ERRORS WERE DETECTED.
+C     INTEGER IPRT
+C        LOGICAL OUTPUT UNIT.
+C     INTEGER IYM
+C        THE FIRST DIMENSION OF THE ARRAY YM.
+C     INTEGER LDSTAK
+C        THE LENGTH OF DSTAK IN COMMON /CSTAK/.
+C     INTEGER M
+C        THE NUMBER OF VARIABLES MEASURED FOR EACH OBSERVATION.
+C     INTEGER N
+C        THE NUMBER OF OBSERVATIONS.
+C     REAL YM(10,5)
+C        THE OBSERVED MULTIVARIATE DATA.
+C
+C
+      DATA     YM(1,1),   YM(1,2),   YM(1,3),   YM(1,4)
+     +    /      42.2E0,  11.2E0,  31.9E0, 167.1E0/
+      DATA     YM(2,1),   YM(2,2),   YM(2,3),   YM(2,4)
+     +    /      48.6E0,  10.6E0,  13.2E0, 174.4E0/
+      DATA     YM(3,1),   YM(3,2),   YM(3,3),   YM(3,4)
+     +    /      42.6E0,  10.6E0,  28.7E0, 160.8E0/
+      DATA     YM(4,1),   YM(4,2),   YM(4,3),   YM(4,4)
+     +    /      39.0E0,  10.4E0,  26.1E0, 162.0E0/
+      DATA     YM(5,1),   YM(5,2),   YM(5,3),   YM(5,4)
+     +    /      34.7E0,   9.3E0,  30.1E0, 140.8E0/
+      DATA     YM(6,1),   YM(6,2),   YM(6,3),   YM(6,4)
+     +    /      44.5E0,  10.8E0,   8.5E0, 174.6E0/
+      DATA     YM(7,1),   YM(7,2),   YM(7,3),   YM(7,4)
+     +    /      39.1E0,  10.7E0,  24.3E0, 163.7E0/
+      DATA     YM(8,1),   YM(8,2),   YM(8,3),   YM(8,4)
+     +    /      40.1E0,  10.0E0,  18.6E0, 174.5E0/
+      DATA     YM(9,1),   YM(9,2),   YM(9,3),   YM(9,4)
+     +    /      45.9E0,  12.0E0,  20.4E0, 185.7E0/
+C
+C
+C     SET PARAMETERS NECESSARY FOR THE COMPUTATIONS
+C
+      CALL IPRINT(IPRT)
+      IYM = 10
+      N = 9
+      M = 4
+C
+C     PRINT HEADER
+C
+      WRITE (IPRT,1000)
+C
+C     RUN SIMPLE EXAMPLE OF CORR
+C
+      WRITE (IPRT,1100)
+      CALL CORR(YM, N, M, IYM, LDSTAK)
+      WRITE (IPRT,2000) IERR
+C
+      RETURN
+C
+C     FORMAT STATEMENTS
+C
+ 1000 FORMAT ('1*CH7')
+ 1100 FORMAT (' SIMPLE TEST OF CORR')
+ 2000 FORMAT (/' THE VALUE OF IERR IS ', I4)
+C
+      END
+      SUBROUTINE XXCH8(LDSTAK)
+
+c*********************************************************************72
+c
+cc XXCH8 tests the linear least squares family.
+c
+C     LLS PROBLEM IS FROM DANIAL AND WOOD [1971], PAGES 61-65.
+C
+C     LLSP PROBLEM IS FROM MILLER AND FREUND [1977], PAGE 311.
+C
+c  Modified:
+c
+c    24 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      INTEGER
+     +   IPRT,IXM,N1,N2,NDEG,NPAR
+C
+C  LOCAL ARRAYS
+      REAL
+     +   RES(25),X(25),XM(25,5),Y1(25),Y2(25)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL IPRINT,LLS,LLSP
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     INTEGER IERR
+C        THE INTEGER VALUE DESIGNATING WHETHER ANY ERRORS WERE
+C        DETECTED IN THE PARAMETER LIST.
+C        IF IERR .EQ. 0, NO ERRORS WERE DETECTED.
+C        IF IERR .EQ. 1, ERRORS WERE DETECTED.
+C     INTEGER IPRT
+C        LOGICAL OUTPUT UNIT.
+C     INTEGER IXM
+C        THE FIRST DIMENSION OF THE MATRIX X.
+C     INTEGER LDSTAK
+C        THE LENGTH OF DSTAK IN COMMON /CSTAK/.
+C     INTEGER NDEG
+C        THE DEGREE OF THE POLYNOMIAL MODEL TO BE FIT.
+C     INTEGER NPAR
+C        THE NUMBER OF PARAMETERS TO BE ESTIMATED.
+C     INTEGER N1, N2
+C        THE NUMBER OF OBSERVATIONS IN EACH PROBLEM.
+C     REAL RES(25)
+C        THE RESIDUALS.
+C     REAL X(25)
+C        THE INDEPENDENT VARIABLE.
+C     REAL XM(25,5)
+C        THE INDEPENDENT VARIABLE.
+C     REAL Y1(25), Y2(25)
+C        THE DEPENDENT VARIABLE.
+C
+C
+      DATA      XM(1,1),  XM(1,2),  XM(1,3),  XM(1,4)
+     +    /      1.0E0, 80.0E0, 27.0E0, 89.0E0/
+      DATA      XM(2,1),  XM(2,2),  XM(2,3),  XM(2,4)
+     +    /      1.0E0, 80.0E0, 27.0E0, 88.0E0/
+      DATA      XM(3,1),  XM(3,2),  XM(3,3),  XM(3,4)
+     +    /      1.0E0, 75.0E0, 25.0E0, 90.0E0/
+      DATA      XM(4,1),  XM(4,2),  XM(4,3),  XM(4,4)
+     +    /      1.0E0, 62.0E0, 24.0E0, 87.0E0/
+      DATA      XM(5,1),  XM(5,2),  XM(5,3),  XM(5,4)
+     +    /      1.0E0, 62.0E0, 22.0E0, 87.0E0/
+      DATA      XM(6,1),  XM(6,2),  XM(6,3),  XM(6,4)
+     +    /      1.0E0, 62.0E0, 23.0E0, 87.0E0/
+      DATA      XM(7,1),  XM(7,2),  XM(7,3),  XM(7,4)
+     +    /      1.0E0, 62.0E0, 24.0E0, 93.0E0/
+      DATA      XM(8,1),  XM(8,2),  XM(8,3),  XM(8,4)
+     +    /      1.0E0, 62.0E0, 24.0E0, 93.0E0/
+      DATA      XM(9,1),  XM(9,2),  XM(9,3),  XM(9,4)
+     +    /      1.0E0, 58.0E0, 23.0E0, 87.0E0/
+      DATA     XM(10,1), XM(10,2), XM(10,3), XM(10,4)
+     +    /      1.0E0, 58.0E0, 18.0E0, 80.0E0/
+      DATA     XM(11,1), XM(11,2), XM(11,3), XM(11,4)
+     +    /      1.0E0, 58.0E0, 18.0E0, 89.0E0/
+      DATA     XM(12,1), XM(12,2), XM(12,3), XM(12,4)
+     +    /      1.0E0, 58.0E0, 17.0E0, 88.0E0/
+      DATA     XM(13,1), XM(13,2), XM(13,3), XM(13,4)
+     +    /      1.0E0, 58.0E0, 18.0E0, 82.0E0/
+      DATA     XM(14,1), XM(14,2), XM(14,3), XM(14,4)
+     +    /      1.0E0, 58.0E0, 19.0E0, 93.0E0/
+      DATA     XM(15,1), XM(15,2), XM(15,3), XM(15,4)
+     +    /      1.0E0, 50.0E0, 18.0E0, 89.0E0/
+      DATA     XM(16,1), XM(16,2), XM(16,3), XM(16,4)
+     +    /      1.0E0, 50.0E0, 18.0E0, 86.0E0/
+      DATA     XM(17,1), XM(17,2), XM(17,3), XM(17,4)
+     +    /      1.0E0, 50.0E0, 19.0E0, 72.0E0/
+      DATA     XM(18,1), XM(18,2), XM(18,3), XM(18,4)
+     +    /      1.0E0, 50.0E0, 19.0E0, 79.0E0/
+      DATA     XM(19,1), XM(19,2), XM(19,3), XM(19,4)
+     +    /      1.0E0, 50.0E0, 20.0E0, 80.0E0/
+      DATA     XM(20,1), XM(20,2), XM(20,3), XM(20,4)
+     +    /      1.0E0, 56.0E0, 20.0E0, 82.0E0/
+      DATA     XM(21,1), XM(21,2), XM(21,3), XM(21,4)
+     +    /      1.0E0, 70.0E0, 20.0E0, 91.0E0/
+C
+      DATA        Y1(1),    Y1(2),    Y1(3)
+     +    /     42.0E0, 37.0E0, 37.0E0/
+      DATA        Y1(4),    Y1(5),    Y1(6)
+     +    /     28.0E0, 18.0E0, 18.0E0/
+      DATA        Y1(7),    Y1(8),    Y1(9)
+     +    /     19.0E0, 20.0E0, 15.0E0/
+      DATA       Y1(10),   Y1(11),   Y1(12)
+     +    /     14.0E0, 14.0E0, 13.0E0/
+      DATA       Y1(13),   Y1(14),   Y1(15)
+     +    /     11.0E0, 12.0E0,  8.0E0/
+      DATA       Y1(16),   Y1(17),   Y1(18)
+     +    /      7.0E0,  8.0E0,  8.0E0/
+      DATA       Y1(19),   Y1(20),   Y1(21)
+     +    /      9.0E0, 15.0E0, 15.0E0/
+C
+      DATA         X(1),     X(2),     X(3)
+     +    /      0.0E0,  1.0E0,  2.0E0/
+      DATA         X(4),     X(5),     X(6)
+     +    /      3.0E0,  4.0E0,  5.0E0/
+      DATA         X(7),     X(8),     X(9)
+     +    /      6.0E0,  7.0E0,  8.0E0/
+C
+      DATA        Y2(1),    Y2(2),    Y2(3)
+     +    /     12.0E0, 10.5E0, 10.0E0/
+      DATA        Y2(4),    Y2(5),    Y2(6)
+     +    /      8.0E0,  7.0E0,  8.0E0/
+      DATA        Y2(7),    Y2(8),    Y2(9)
+     +    /      7.5E0,  8.5E0,  9.0E0/
+C
+C     SET PARAMETERS NECESSARY FOR THE COMPUTATIONS
+C
+      CALL IPRINT(IPRT)
+      IXM = 25
+      N1 = 21
+      N2 = 9
+      NPAR = 4
+      NDEG = 2
+C
+C     PRINT HEADER
+C
+      WRITE (IPRT,1000)
+C
+C     RUN SIMPLE EXAMPLE OF LLS
+C
+      WRITE (IPRT,1100)
+      CALL LLS(Y1, XM, N1, IXM, NPAR, RES, LDSTAK)
+      WRITE (IPRT,2000) IERR
+C
+C     RUN SIMPLE EXAMPLE OF LLSP
+C
+      WRITE (IPRT,1200)
+      CALL LLSP(Y2, X, N2, NDEG, RES, LDSTAK)
+      WRITE (IPRT,2000) IERR
+C
+      RETURN
+C
+C     FORMAT STATEMENTS
+C
+ 1000 FORMAT ('1*CH8')
+ 1100 FORMAT (' SIMPLE TEST OF LLS')
+ 1200 FORMAT ('1SIMPLE TEST OF LLSP')
+ 2000 FORMAT (/' THE VALUE OF IERR IS ', I4)
+C
+      END
+      SUBROUTINE XXCH9(LDSTAK)
+
+c*********************************************************************72
+c
+cc XXCH9 tests the nonlinear least squares family.
+c
+C     DATA IS FROM DANIAL AND WOOD [1980], PAGES 428-441.
+C
+c  Modified:
+c
+c    24 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      INTEGER
+     +   IPRT,IXM,M,N,NPAR
+C
+C  LOCAL ARRAYS
+      REAL
+     +   PAR(5),RES(10),STP(5),XM(10,2),Y(10)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL DCKLS,DRV1A,DRV1B,IPRINT,MDL1,NLS,NLSD,STPLS
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     EXTERNAL DRV1A, DRV1B
+C        THE NAME OF THE ''USER SUPPLIED'' DERIVATIVE ROUTINES.
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     INTEGER IERR
+C        THE INTEGER VALUE DESIGNATING WHETHER ANY ERRORS WERE
+C        DETECTED IN THE PARAMETER LIST.
+C        IF IERR .EQ. 0, NO ERRORS WERE DETECTED.
+C        IF IERR .EQ. 1, ERRORS WERE DETECTED.
+C     INTEGER IPRT
+C        LOGICAL OUTPUT UNIT.
+C     INTEGER IXM
+C        THE FIRST DIMENSION OF THE MATRIX X.
+C     INTEGER LDSTAK
+C        THE LENGTH OF DSTAK IN COMMON /CSTAK/.
+C     INTEGER M
+C        THE NUMBER OF INDEPENDENT VARIABLES.
+C     EXTERNAL MDL1
+C        THE NAME OF THE ''USER SUPPLIED'' MODEL ROUTINES.
+C     INTEGER N
+C        THE NUMBER OF OBSERVATIONS IN EACH PROBLEM.
+C     INTEGER NPAR
+C        THE NUMBER OF PARAMETERS TO BE ESTIMATED.
+C     REAL PAR(5)
+C        THE ARRAY IN WHICH THE CURRENT ESTIMATES OF THE UNKNOWN
+C        PARAMETERS ARE STORED.
+C     REAL RES(10)
+C        THE RESIDUALS.
+C     REAL STP(5)
+C        THE STEP SIZES SELECTED FOR GENERATING FINITE DIFFERENCE
+C        DERIVATIVES.
+C     REAL XM(10,2)
+C        THE INDEPENDENT VARIABLE.
+C     REAL Y(10)
+C        THE DEPENDENT VARIABLE.
+C
+C
+      DATA Y(1), Y(2), Y(3), Y(4), Y(5), Y(6)
+     +   /2.138E0, 3.421E0, 3.597E0, 4.340E0, 4.882E0, 5.660E0/
+C
+      DATA XM(1,1), XM(2,1), XM(3,1), XM(4,1), XM(5,1), XM(6,1)
+     +   /1.309E0, 1.471E0, 1.490E0, 1.565E0, 1.611E0, 1.680E0/
+C
+C     SET PARAMETERS NECESSARY FOR THE COMPUTATIONS
+C
+      CALL IPRINT(IPRT)
+      IXM = 10
+      N = 6
+      M = 1
+      NPAR = 2
+C
+C     PRINT HEADER
+C
+      WRITE (IPRT,1000)
+C
+C     RUN SIMPLE EXAMPLE OF NLS
+C
+      WRITE (IPRT,1100)
+      PAR(1) = 0.725
+      PAR(2) = 4.000
+      CALL NLS(Y, XM, N, M, IXM, MDL1, PAR, NPAR, RES, LDSTAK)
+      WRITE (IPRT,2000) IERR
+C
+C     RUN SIMPLE EXAMPLE OF NLSD
+C
+      WRITE (IPRT,1200)
+      PAR(1) = 0.725
+      PAR(2) = 4.000
+      CALL NLSD(Y, XM, N, M, IXM, MDL1, DRV1A, PAR, NPAR, RES, LDSTAK)
+      WRITE (IPRT,2000) IERR
+C
+C     RUN SIMPLE EXAMPLE OF STPLS
+C
+      WRITE (IPRT,1300)
+      PAR(1) = 0.725
+      PAR(2) = 4.000
+      CALL STPLS(XM, N, M, IXM, MDL1, PAR, NPAR, LDSTAK, STP)
+      WRITE (IPRT,2000) IERR
+C
+C     RUN SIMPLE EXAMPLE OF DCKLS
+C
+      WRITE (IPRT,1400)
+      PAR(1) = 0.000
+      PAR(2) = 4.000
+      CALL DCKLS(XM, N, M, IXM, MDL1, DRV1B, PAR, NPAR, LDSTAK)
+      WRITE (IPRT,2000) IERR
+C
+      RETURN
+C
+C     FORMAT STATEMENTS
+C
+ 1000 FORMAT ('1*CH9')
+ 1100 FORMAT (' SIMPLE TEST OF NLS')
+ 1200 FORMAT ('1SIMPLE TEST OF NLSD')
+ 1300 FORMAT ('1SIMPLE TEST OF STPLS')
+ 1400 FORMAT ('1SIMPLE TEST OF DCKLS')
+ 2000 FORMAT (/' THE VALUE OF IERR IS ', I4)
+C
+      END
+      SUBROUTINE XXCH10(LDSTAK)
+
+c*********************************************************************72
+c
+cc XXCH10 tests the histogram family.
+c
+C     DATA IS THE AIRLINE DATA LISTED ON PAGE 531 OF BOX AND JENKINS.
+C
+c  Modified:
+c
+c    24 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      INTEGER
+     +   I,IAR,IPRT,N,NYF
+C
+C  LOCAL ARRAYS
+      REAL
+     +   AIR(144),PHI(5),Y(150),YF(150)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL DIF,GFARF,IPRINT,VP
+C
+C  INTRINSIC FUNCTIONS
+      INTRINSIC LOG
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     REAL AIR(144)
+C        THE AIRLINE DATA.
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     INTEGER I
+C        AN INDEX VARIABLE.
+C     INTEGER IAR
+C        THE NUMBER OF COEFFICIENTS IN THE DIFFERENCE FILTER.
+C     INTEGER IERR
+C        A COMMON VARIABLE USED AS A FLAG TO INDICATE WHETHER
+C        OR NOT THERE ARE ANY ERRORS, IF =0 THEN NO ERRORS.
+C     INTEGER IPRT
+C        LOGICAL OUTPUT UNIT.
+C     INTEGER LDSTAK
+C        THE LENGTH OF DSTAK IN COMMON /CSTAK/.
+C     INTEGER N
+C        THE NUMBER OF OBSERVATIONS.
+C     INTEGER NYF
+C        THE NUMBER OF OBSERVATIONS IN THE FILTERED SERIES.
+C     REAL PHI(5)
+C        THE FILTER COEFFICIENTS.
+C     REAL Y(150)
+C        THE LOG OF THE AIRLINE DATA.
+C     REAL YF(150)
+C        THE FILTERED DATA.
+C
+C
+      DATA  AIR(  1), AIR(  2), AIR(  3), AIR(  4), AIR(  5), AIR(  6)
+     +    / 112.0E0,  118.0E0,  132.0E0,  129.0E0,  121.0E0,  135.0E0/
+      DATA  AIR(  7), AIR(  8), AIR(  9), AIR( 10), AIR( 11), AIR( 12)
+     +    / 148.0E0,  148.0E0,  136.0E0,  119.0E0,  104.0E0,  118.0E0/
+      DATA  AIR( 13), AIR( 14), AIR( 15), AIR( 16), AIR( 17), AIR( 18)
+     +    / 115.0E0,  126.0E0,  141.0E0,  135.0E0,  125.0E0,  149.0E0/
+      DATA  AIR( 19), AIR( 20), AIR( 21), AIR( 22), AIR( 23), AIR( 24)
+     +    / 170.0E0,  170.0E0,  158.0E0,  133.0E0,  114.0E0,  140.0E0/
+      DATA  AIR( 25), AIR( 26), AIR( 27), AIR( 28), AIR( 29), AIR( 30)
+     +    / 145.0E0,  150.0E0,  178.0E0,  163.0E0,  172.0E0,  178.0E0/
+      DATA  AIR( 31), AIR( 32), AIR( 33), AIR( 34), AIR( 35), AIR( 36)
+     +    / 199.0E0,  199.0E0,  184.0E0,  162.0E0,  146.0E0,  166.0E0/
+      DATA  AIR( 37), AIR( 38), AIR( 39), AIR( 40), AIR( 41), AIR( 42)
+     +    / 171.0E0,  180.0E0,  193.0E0,  181.0E0,  183.0E0,  218.0E0/
+      DATA  AIR( 43), AIR( 44), AIR( 45), AIR( 46), AIR( 47), AIR( 48)
+     +    / 230.0E0,  242.0E0,  209.0E0,  191.0E0,  172.0E0,  194.0E0/
+      DATA  AIR( 49), AIR( 50), AIR( 51), AIR( 52), AIR( 53), AIR( 54)
+     +    / 196.0E0,  196.0E0,  236.0E0,  235.0E0,  229.0E0,  243.0E0/
+      DATA  AIR( 55), AIR( 56), AIR( 57), AIR( 58), AIR( 59), AIR( 60)
+     +    / 264.0E0,  272.0E0,  237.0E0,  211.0E0,  180.0E0,  201.0E0/
+      DATA  AIR( 61), AIR( 62), AIR( 63), AIR( 64), AIR( 65), AIR( 66)
+     +    / 204.0E0,  188.0E0,  235.0E0,  227.0E0,  234.0E0,  264.0E0/
+      DATA  AIR( 67), AIR( 68), AIR( 69), AIR( 70), AIR( 71), AIR( 72)
+     +    / 302.0E0,  293.0E0,  259.0E0,  229.0E0,  203.0E0,  229.0E0/
+      DATA  AIR( 73), AIR( 74), AIR( 75), AIR( 76), AIR( 77), AIR( 78)
+     +    / 242.0E0,  233.0E0,  267.0E0,  269.0E0,  270.0E0,  315.0E0/
+      DATA  AIR( 79), AIR( 80), AIR( 81), AIR( 82), AIR( 83), AIR( 84)
+     +    / 364.0E0,  347.0E0,  312.0E0,  274.0E0,  237.0E0,  278.0E0/
+      DATA  AIR( 85), AIR( 86), AIR( 87), AIR( 88), AIR( 89), AIR( 90)
+     +    / 284.0E0,  277.0E0,  317.0E0,  313.0E0,  318.0E0,  374.0E0/
+      DATA  AIR( 91), AIR( 92), AIR( 93), AIR( 94), AIR( 95), AIR( 96)
+     +    / 413.0E0,  405.0E0,  355.0E0,  306.0E0,  271.0E0,  306.0E0/
+      DATA  AIR( 97), AIR( 98), AIR( 99), AIR(100), AIR(101), AIR(102)
+     +    / 315.0E0,  301.0E0,  356.0E0,  348.0E0,  355.0E0,  422.0E0/
+      DATA  AIR(103), AIR(104), AIR(105), AIR(106), AIR(107), AIR(108)
+     +    / 465.0E0,  467.0E0,  404.0E0,  347.0E0,  305.0E0,  336.0E0/
+      DATA  AIR(109), AIR(110), AIR(111), AIR(112), AIR(113), AIR(114)
+     +    / 340.0E0,  318.0E0,  362.0E0,  348.0E0,  363.0E0,  435.0E0/
+      DATA  AIR(115), AIR(116), AIR(117), AIR(118), AIR(119), AIR(120)
+     +    / 491.0E0,  505.0E0,  404.0E0,  359.0E0,  310.0E0,  337.0E0/
+      DATA  AIR(121), AIR(122), AIR(123), AIR(124), AIR(125), AIR(126)
+     +    / 360.0E0,  342.0E0,  406.0E0,  396.0E0,  420.0E0,  472.0E0/
+      DATA  AIR(127), AIR(128), AIR(129), AIR(130), AIR(131), AIR(132)
+     +    / 548.0E0,  559.0E0,  463.0E0,  407.0E0,  362.0E0,  405.0E0/
+      DATA  AIR(133), AIR(134), AIR(135), AIR(136), AIR(137), AIR(138)
+     +    / 417.0E0,  391.0E0,  419.0E0,  461.0E0,  472.0E0,  535.0E0/
+      DATA  AIR(139), AIR(140), AIR(141), AIR(142), AIR(143), AIR(144)
+     +    / 622.0E0,  606.0E0,  508.0E0,  461.0E0,  390.0E0,  432.0E0/
+C
+C     DEFINE CONSTANTS
+C
+      CALL IPRINT(IPRT)
+      N = 144
+C
+C     TAKE LOG OF DATA
+C
+      DO 10 I=1,N
+         Y(I) = LOG(AIR(I))
+   10 CONTINUE
+C
+C     WRITE HEADER
+C
+      WRITE(IPRT, 1000)
+C
+C     RUN SIMPLE TEST OF DIF
+C
+      WRITE(IPRT, 1100)
+      CALL DIF (Y, N, YF, NYF)
+      WRITE (IPRT,2000) IERR
+C
+C     PLOT ORIGINAL SERIES
+C
+      WRITE(IPRT, 1200)
+      CALL VP (Y, N, 1)
+      WRITE (IPRT,2000) IERR
+C
+C     PLOT DIFFERENCED SERIES
+C
+      WRITE(IPRT, 1300)
+      CALL VP (YF, NYF, 1)
+      WRITE (IPRT,2000) IERR
+C
+C     RUN SIMPLE TEST OF GFARF
+C
+      WRITE(IPRT, 1400)
+      PHI(1) = 1.0
+      IAR = 1
+      CALL GFARF (PHI, IAR)
+      WRITE (IPRT,2000) IERR
+C
+      RETURN
+C
+C     FORMAT STATEMENTS
+C
+ 1000 FORMAT ('1*CH10')
+ 1100 FORMAT (' SIMPLE TEST OF DIF (NO OUTPUT UNLESS ERROR FOUND)')
+ 1200 FORMAT ('1PLOT OF ORIGINAL SERIES')
+ 1300 FORMAT ('1PLOT OF DIFFERENCED SERIES')
+ 1400 FORMAT ('1SIMPLE TEST OF GFARF')
+ 2000 FORMAT (/' THE VALUE OF IERR IS ', I4)
+      END
+      SUBROUTINE XXCH11(LDSTAK)
+
+c*********************************************************************72
+c
+cc XXCH11 tests the complex demodulation family.
+c
+C     DATA IS THE WOLF SUMSPOT NUMBERS FOR THE YEARS 1700 TO 1960 AS
+C     TABULATED BY WALDMEIER [1961].
+C
+c  Modified:
+c
+c    24 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      REAL
+     +   FC,FD
+      INTEGER
+     +   IPRT,K,N
+C
+C  LOCAL ARRAYS
+      REAL
+     +   Y(300)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL DEMOD,IPRINT
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     REAL FC
+C        THE CUTOFF FREQUENCY USED FOR THE LOW PASS FILTER.
+C     REAL FD
+C        THE DEMODULATION FREQUENCY.
+C     INTEGER IERR
+C        A COMMON VARIABLE USED AS A FLAG TO INDICATE WHETHER
+C        OR NOT THERE ARE ANY ERRORS, IF =0 THEN NO ERRORS.
+C     INTEGER IPRT
+C        LOGICAL OUTPUT UNIT.
+C     INTEGER K
+C        THE NUMBER OF TERMS IN THE SYMETRIC LINEAR FILTER.
+C     INTEGER LDSTAK
+C        THE LENGTH OF DSTAK IN COMMON /CSTAK/.
+C     INTEGER N
+C        THE NUMBER OF OBSERVATIONS.
+C     REAL Y(300)
+C        THE LOG OF THE AIRLINE DATA.
+C
+C
+      DATA   Y(  1),  Y(  2),  Y(  3),  Y(  4),  Y(  5),  Y(  6)
+     +    /     5.0E0, 11.0E0, 16.0E0, 23.0E0, 36.0E0, 58.0E0/
+      DATA   Y(  7),  Y(  8),  Y(  9),  Y( 10),  Y( 11),  Y( 12)
+     +    /    29.0E0, 20.0E0, 10.0E0,  8.0E0,  3.0E0,  0.0E0/
+      DATA   Y( 13),  Y( 14),  Y( 15),  Y( 16),  Y( 17),  Y( 18)
+     +    /     0.0E0, 2.0E0, 11.0E0, 27.0E0, 47.0E0, 63.0E0/
+      DATA   Y( 19),  Y( 20),  Y( 21),  Y( 22),  Y( 23),  Y( 24)
+     +    /    60.0E0, 39.0E0, 28.0E0, 26.0E0, 22.0E0, 11.0E0/
+      DATA   Y( 25),  Y( 26),  Y( 27),  Y( 28),  Y( 29),  Y( 30)
+     +    /    21.0E0, 40.0E0, 78.0E0,122.0E0,103.0E0, 73.0E0/
+      DATA   Y( 31),  Y( 32),  Y( 33),  Y( 34),  Y( 35),  Y( 36)
+     +    /    47.0E0, 35.0E0, 11.0E0,  5.0E0, 16.0E0, 34.0E0/
+      DATA   Y( 37),  Y( 38),  Y( 39),  Y( 40),  Y( 41),  Y( 42)
+     +    /    70.0E0, 81.0E0,111.0E0,101.0E0, 73.0E0, 40.0E0/
+      DATA   Y( 43),  Y( 44),  Y( 45),  Y( 46),  Y( 47),  Y( 48)
+     +    /    20.0E0, 16.0E0,  5.0E0, 11.0E0, 22.0E0, 40.0E0/
+      DATA   Y( 49),  Y( 50),  Y( 51),  Y( 52),  Y( 53),  Y( 54)
+     +    /    60.0E0, 80.9E0, 83.4E0, 47.7E0, 47.8E0, 30.7E0/
+      DATA   Y( 55),  Y( 56),  Y( 57),  Y( 58),  Y( 59),  Y( 60)
+     +    /    12.2E0,  9.6E0, 10.2E0, 32.4E0, 47.6E0, 54.0E0/
+      DATA   Y( 61),  Y( 62),  Y( 63),  Y( 64),  Y( 65),  Y( 66)
+     +    /    62.9E0, 85.9E0, 61.2E0, 45.1E0, 36.4E0, 20.9E0/
+      DATA   Y( 67),  Y( 68),  Y( 69),  Y( 70),  Y( 71),  Y( 72)
+     +    /    11.4E0, 37.8E0, 69.8E0,106.1E0,100.8E0, 81.6E0/
+      DATA   Y( 73),  Y( 74),  Y( 75),  Y( 76),  Y( 77),  Y( 78)
+     +    /    66.5E0, 34.8E0, 30.6E0,  7.0E0, 19.8E0, 92.5E0/
+      DATA   Y( 79),  Y( 80),  Y( 81),  Y( 82),  Y( 83),  Y( 84)
+     +    /   154.4E0,125.9E0, 84.8E0, 68.1E0, 38.5E0, 22.8E0/
+      DATA   Y( 85),  Y( 86),  Y( 87),  Y( 88),  Y( 89),  Y( 90)
+     +    /    10.2E0, 24.1E0, 82.9E0,132.0E0,130.9E0,118.1E0/
+      DATA   Y( 91),  Y( 92),  Y( 93),  Y( 94),  Y( 95),  Y( 96)
+     +    /    89.9E0, 66.6E0, 60.0E0, 46.9E0, 41.0E0, 21.3E0/
+      DATA   Y( 97),  Y( 98),  Y( 99),  Y(100),  Y(101),  Y(102)
+     +    /    16.0E0,  6.4E0,  4.1E0,  6.8E0, 14.5E0, 34.0E0/
+      DATA   Y(103),  Y(104),  Y(105),  Y(106),  Y(107),  Y(108)
+     +    /    45.0E0, 43.1E0, 47.5E0, 42.2E0, 28.1E0, 10.1E0/
+      DATA   Y(109),  Y(110),  Y(111),  Y(112),  Y(113),  Y(114)
+     +    /     8.1E0,  2.5E0,  0.0E0,  1.4E0,  5.0E0, 12.2E0/
+      DATA   Y(115),  Y(116),  Y(117),  Y(118),  Y(119),  Y(120)
+     +    /    13.9E0, 35.4E0, 45.8E0, 41.1E0, 30.1E0, 23.9E0/
+      DATA   Y(121),  Y(122),  Y(123),  Y(124),  Y(125),  Y(126)
+     +    /    15.6E0,  6.6E0,  4.0E0,  1.8E0,  8.5E0, 16.6E0/
+      DATA   Y(127),  Y(128),  Y(129),  Y(130),  Y(131),  Y(132)
+     +    /    36.3E0, 49.6E0, 64.2E0, 67.0E0, 70.9E0, 47.8E0/
+      DATA   Y(133),  Y(134),  Y(135),  Y(136),  Y(137),  Y(138)
+     +    /    27.5E0,  8.5E0, 13.2E0, 56.9E0,121.5E0,138.3E0/
+      DATA   Y(139),  Y(140),  Y(141),  Y(142),  Y(143),  Y(144)
+     +    /   103.2E0, 85.7E0, 64.6E0, 36.7E0, 24.2E0, 10.7E0/
+      DATA   Y(145),  Y(146),  Y(147),  Y(148),  Y(149),  Y(150)
+     +    /    15.0E0, 40.1E0, 61.5E0, 98.5E0,124.7E0, 96.3E0/
+      DATA   Y(151),  Y(152),  Y(153),  Y(154),  Y(155),  Y(156)
+     +    /    66.6E0, 64.5E0, 54.1E0, 39.0E0, 20.6E0,  6.7E0/
+      DATA   Y(157),  Y(158),  Y(159),  Y(160),  Y(161),  Y(162)
+     +    /     4.3E0, 22.7E0, 54.8E0, 93.8E0, 95.8E0, 77.2E0/
+      DATA   Y(163),  Y(164),  Y(165),  Y(166),  Y(167),  Y(168)
+     +    /    59.1E0, 44.0E0, 47.0E0, 30.5E0, 16.3E0,  7.3E0/
+      DATA   Y(169),  Y(170),  Y(171),  Y(172),  Y(173),  Y(174)
+     +    /    37.6E0, 74.0E0,139.0E0,111.2E0,101.6E0, 66.2E0/
+      DATA   Y(175),  Y(176),  Y(177),  Y(178),  Y(179),  Y(180)
+     +    /    44.7E0, 17.0E0, 11.3E0, 12.4E0,  3.4E0,  6.0E0/
+      DATA   Y(181),  Y(182),  Y(183),  Y(184),  Y(185),  Y(186)
+     +    /    32.3E0, 54.3E0, 59.7E0, 63.7E0, 63.5E0, 52.2E0/
+      DATA   Y(187),  Y(188),  Y(189),  Y(190),  Y(191),  Y(192)
+     +    /    25.4E0, 13.1E0,  6.8E0,  6.3E0,  7.1E0, 35.6E0/
+      DATA   Y(193),  Y(194),  Y(195),  Y(196),  Y(197),  Y(198)
+     +    /    73.0E0, 85.1E0, 78.0E0, 64.0E0, 41.8E0, 26.2E0/
+      DATA   Y(199),  Y(200),  Y(201),  Y(202),  Y(203),  Y(204)
+     +    /    26.7E0, 12.1E0,  9.5E0,  2.7E0,  5.0E0, 24.4E0/
+      DATA   Y(205),  Y(206),  Y(207),  Y(208),  Y(209),  Y(210)
+     +    /    42.0E0, 63.5E0, 53.8E0, 62.0E0, 48.5E0, 43.9E0/
+      DATA   Y(211),  Y(212),  Y(213),  Y(214),  Y(215),  Y(216)
+     +    /    18.6E0,  5.7E0,  3.6E0,  1.4E0,  9.6E0, 47.4E0/
+      DATA   Y(217),  Y(218),  Y(219),  Y(220),  Y(221),  Y(222)
+     +    /    57.1E0,103.9E0, 80.6E0, 63.6E0, 37.6E0, 26.1E0/
+      DATA   Y(223),  Y(224),  Y(225),  Y(226),  Y(227),  Y(228)
+     +    /    14.2E0,  5.8E0, 16.7E0, 44.3E0, 63.9E0, 69.0E0/
+      DATA   Y(229),  Y(230),  Y(231),  Y(232),  Y(233),  Y(234)
+     +    /    77.8E0, 64.9E0, 35.7E0, 21.2E0, 11.1E0,  5.7E0/
+      DATA   Y(235),  Y(236),  Y(237),  Y(238),  Y(239),  Y(240)
+     +    /     8.7E0, 36.1E0, 79.7E0,114.4E0,109.6E0, 88.8E0/
+      DATA   Y(241),  Y(242),  Y(243),  Y(244),  Y(245),  Y(246)
+     +    /    67.8E0, 47.5E0, 30.6E0, 16.3E0,  9.6E0, 33.2E0/
+      DATA   Y(247),  Y(248),  Y(249),  Y(250),  Y(251),  Y(252)
+     +    /    92.6E0,151.6E0,136.3E0,134.7E0, 83.9E0, 69.4E0/
+      DATA   Y(253),  Y(254),  Y(255),  Y(256),  Y(257),  Y(258)
+     +    /    31.5E0, 13.9E0,  4.4E0, 38.0E0,141.7E0,190.2E0/
+      DATA   Y(259),  Y(260),  Y(261)
+     +    /   184.8E0,159.0E0,112.3E0/
+C
+C     DEFINE CONSTANTS
+C
+      CALL IPRINT(IPRT)
+      N = 261
+      FD = 1.0/11.0
+      FC = 1.0/22.0
+      K = 41
+C
+C     WRITE HEADER
+C
+      WRITE(IPRT, 1000)
+C
+C     RUN SIMPLE TEST OF DIF
+C
+      WRITE(IPRT, 1100)
+      CALL DEMOD (Y, N, FD, FC, K, LDSTAK)
+      WRITE (IPRT,2000) IERR
+C
+      RETURN
+C
+C     FORMAT STATEMENTS
+C
+ 1000 FORMAT ('1*CH11')
+ 1100 FORMAT (' SIMPLE TEST OF DEMOD')
+ 2000 FORMAT (/' THE VALUE OF IERR IS ', I4)
+      END
+      SUBROUTINE XXCH12(LDSTAK)
+
+c*********************************************************************72
+c
+cc XXCH12 tests the time series correlation and spectrum analysis family.
+c
+C     DATA FOR ACF IS TAKEN FROM P. 362 OF JENKINS AND WATTS [1968]
+C     DATA FOR CCF IS TAKEN FROM P. 361 OF JENKINS AND WATTS [1968]
+C     DATA FOR UFS IS TAKEN FROM P. 318 OF JENKINS AND WATTS [1968]
+C     DATA FOR UAS IS TAKEN FROM P. 318 OF JENKINS AND WATTS [1968]
+C     DATA FOR TAPER, PGMS, MDFLT AND PPL IS
+C           THE WOLF SUNSPOT NUMBERS FOR THE YEARS 1700 TO 1960 AS
+C           TABULATED BY WALDMEIER [1961].
+C     DATA FOR BFS IS TAKEN FROM PP. 387-388 OF JENKINS AND WATTS [1968]
+C
+c  Modified:
+c
+c    24 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      REAL
+     +   TAPERP
+      INTEGER
+     +   IEXTND,ILOG,IPRT,LFREQ,LPER,LYFFT,NF,NFFT,NK,NPRT,NY1,NY2,
+     +   NY3,NY4,NY5,NY6
+C
+C  LOCAL ARRAYS
+      REAL
+     +   FREQ(300),PER(300),PERF(300),Y1(100),Y2A(100),Y2B(100),
+     +   Y3(50),Y4(50),Y5(300),Y6A(100),Y6B(100),YFFT(600)
+      INTEGER
+     +   KMD(10)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL ACF,BFS,CCF,IPRINT,MDFLT,PGMS,PPL,TAPER,UAS,UFS
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C  EQUIVALENCES
+      EQUIVALENCE (Y3(1),Y4(1))
+      EQUIVALENCE (Y2A(1),Y6A(1))
+      EQUIVALENCE (Y2B(1),Y6B(1))
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     REAL FREQ(300)
+C        THE FREQUENCIES AT WHICH THE PERIODOGRAM IS COMPUTED.
+C     INTEGER IERR
+C        A COMMON VARIABLE USED AS A FLAG TO INDICATE WHETHER
+C        OR NOT THERE ARE ANY ERRORS, IF =0 THEN NO ERRORS.
+C     INTEGER IEXTND
+C        THE INDICATOR VARIABLE USED TO DESIGNATE WHETHER ZERO OR THE
+C        SERIES MEAN IS TO BE USED TO EXTEND THE SERIES.
+C     INTEGER ILOG
+C        THE INDICATOR VARIABLE USED TO DESIGNATE WHETHER THE PLOT IS
+C        TO HAVE LOGARITHMIC AXIS OR NOT.
+C     INTEGER IPRT
+C        LOGICAL OUTPUT UNIT.
+C     INTEGER KMD(10)
+C        THE VECTOR OF MODIFIED DANIEL FILTER LENGTHS.
+C     INTEGER LDSTAK
+C        THE LENGTH OF DSTAK IN COMMON /CSTAK/.
+C     INTEGER LFREQ
+C        THE LENGTH OF VECTOR FREQ.
+C     INTEGER LPER
+C        THE LENGTH OF VECTOR PER.
+C     INTEGER LYFFT
+C        THE LENGTH OF VECTOR YFFT.
+C     INTEGER NF
+C        THE NUMBER OF FREQUENCIES.
+C     INTEGER NFFT
+C        THE EXTENDED SERIES LENGTH FOR THE FFT.
+C     INTEGER NK
+C        THE NUMBER OF DANIEL FILTERS TO APPLY.
+C     INTEGER NPRT
+C        THE PRINT CONTROL VARIABLE.
+C     INTEGER NY1, NY2, NY3, NY4, NY5, NY6
+C        THE NUMBER OF OBSERVATIONS.
+C     REAL PER(300)
+C        THE PERIODOGRAM.
+C     REAL PERF(300)
+C        THE FILTERED PERIODOGRAM.
+C     REAL TAPERP
+C        THE PERCENTAGE OF THE SERIES TO BE TAPERED.
+C     REAL YFFT(600)
+C        AN ARRAY FOR THE FFT COMPUTATIONS.
+C     REAL Y1(100)
+C        THE DATA FROM PAGE 362 OF JENKINS AND WATTS.
+C     REAL Y2A(100), Y2B(100)
+C        THE DATA FROM PAGE 361 OF JENKINS AND WATTS.
+C     REAL Y3(50), Y4(50)
+C        THE DATA FROM PAGE 318 OF JENKINS AND WATTS.
+C     REAL Y5(300)
+C        THE WOLF SUNSPOT DATA.
+C     REAL Y6A(100), Y6B(100)
+C        THE DATA FROM PAGE 387 AND 388 OF JENKINS AND WATTS.
+C
+C
+      DATA   Y1(  1),  Y1(  2),  Y1(  3),  Y1(  4),  Y1(  5),  Y1(  6)
+     +    / -2.07E0, -1.15E0,  0.69E0, -0.46E0, -1.49E0, -0.70E0/
+      DATA   Y1(  7),  Y1(  8),  Y1(  9),  Y1( 10),  Y1( 11),  Y1( 12)
+     +    / -1.07E0, -0.69E0, -0.68E0,  1.27E0, -1.05E0, -0.05E0/
+      DATA   Y1( 13),  Y1( 14),  Y1( 15),  Y1( 16),  Y1( 17),  Y1( 18)
+     +    / -0.84E0, -0.62E0, -0.49E0, -1.29E0, -0.49E0, -1.06E0/
+      DATA   Y1( 19),  Y1( 20),  Y1( 21),  Y1( 22),  Y1( 23),  Y1( 24)
+     +    / -0.38E0, -0.52E0, -0.13E0,  1.30E0, -1.51E0, -0.43E0/
+      DATA   Y1( 25),  Y1( 26),  Y1( 27),  Y1( 28),  Y1( 29),  Y1( 30)
+     +    / -1.33E0, -0.78E0,  0.31E0, -0.95E0, -0.90E0, -0.30E0/
+      DATA   Y1( 31),  Y1( 32),  Y1( 33),  Y1( 34),  Y1( 35),  Y1( 36)
+     +    / -1.02E0, -0.53E0,  0.15E0,  1.40E0,  1.22E0,  0.59E0/
+      DATA   Y1( 37),  Y1( 38),  Y1( 39),  Y1( 40),  Y1( 41),  Y1( 42)
+     +    /  0.70E0,  1.70E0,  2.78E0,  1.98E0,  1.39E0,  1.85E0/
+      DATA   Y1( 43),  Y1( 44),  Y1( 45),  Y1( 46),  Y1( 47),  Y1( 48)
+     +    /  2.60E0,  0.51E0,  2.77E0,  1.16E0,  1.07E0, -0.48E0/
+      DATA   Y1( 49),  Y1( 50),  Y1( 51),  Y1( 52),  Y1( 53),  Y1( 54)
+     +    / -0.52E0,  0.37E0,  0.00E0, -1.99E0, -1.75E0,  0.70E0/
+      DATA   Y1( 55),  Y1( 56),  Y1( 57),  Y1( 58),  Y1( 59),  Y1( 60)
+     +    /  0.73E0,  1.16E0,  0.06E0, -0.02E0,  1.10E0, -0.35E0/
+      DATA   Y1( 61),  Y1( 62),  Y1( 63),  Y1( 64),  Y1( 65),  Y1( 66)
+     +    / -1.67E0, -1.57E0,  1.16E0,  1.84E0,  3.35E0,  0.40E0/
+      DATA   Y1( 67),  Y1( 68),  Y1( 69),  Y1( 70),  Y1( 71),  Y1( 72)
+     +    /  0.45E0,  1.30E0,  0.93E0,  1.17E0, -1.74E0, -1.28E0/
+      DATA   Y1( 73),  Y1( 74),  Y1( 75),  Y1( 76),  Y1( 77),  Y1( 78)
+     +    / -0.07E0,  1.50E0,  0.53E0,  0.20E0, -0.42E0,  1.18E0/
+      DATA   Y1( 79),  Y1( 80),  Y1( 81),  Y1( 82),  Y1( 83),  Y1( 84)
+     +    /  0.82E0,  1.50E0,  2.92E0,  1.18E0,  1.23E0,  3.16E0/
+      DATA   Y1( 85),  Y1( 86),  Y1( 87),  Y1( 88),  Y1( 89),  Y1( 90)
+     +    /  0.79E0,  0.68E0,  1.14E0,  1.02E0,  1.02E0, -0.71E0/
+      DATA   Y1( 91),  Y1( 92),  Y1( 93),  Y1( 94),  Y1( 95),  Y1( 96)
+     +    / -0.17E0, -1.50E0, -0.26E0, -0.38E0,  0.93E0, -0.33E0/
+      DATA   Y1( 97),  Y1( 98),  Y1( 99),  Y1(100)
+     +    / -1.12E0, -2.95E0, -2.09E0, -1.11E0                    /
+C
+      DATA  Y2A(  1), Y2A(  2), Y2A(  3), Y2A(  4), Y2A(  5), Y2A(  6)
+     +    /-0.88E0, -0.16E0, -1.87E0, -1.12E0,  1.38E0,  2.13E0/
+      DATA  Y2A(  7), Y2A(  8), Y2A(  9), Y2A( 10), Y2A( 11), Y2A( 12)
+     +    / 2.76E0,  0.56E0, -0.69E0, -1.79E0, -3.82E0, -2.38E0/
+      DATA  Y2A( 13), Y2A( 14), Y2A( 15), Y2A( 16), Y2A( 17), Y2A( 18)
+     +    / 1.00E0,  0.70E0, -0.15E0,  0.98E0,  0.11E0, -0.35E0/
+      DATA  Y2A( 19), Y2A( 20), Y2A( 21), Y2A( 22), Y2A( 23), Y2A( 24)
+     +    /-0.73E0,  0.89E0, -1.63E0, -0.44E0, -1.37E0, -1.71E0/
+      DATA  Y2A( 25), Y2A( 26), Y2A( 27), Y2A( 28), Y2A( 29), Y2A( 30)
+     +    /-1.22E0, -2.00E0, -0.22E0,  0.38E0,  1.31E0,  0.71E0/
+      DATA  Y2A( 31), Y2A( 32), Y2A( 33), Y2A( 34), Y2A( 35), Y2A( 36)
+     +    / 0.32E0,  0.48E0, -1.88E0, -0.94E0, -1.54E0, -0.13E0/
+      DATA  Y2A( 37), Y2A( 38), Y2A( 39), Y2A( 40), Y2A( 41), Y2A( 42)
+     +    / 1.02E0,  0.02E0, -0.77E0,  0.11E0, -0.60E0, -0.52E0/
+      DATA  Y2A( 43), Y2A( 44), Y2A( 45), Y2A( 46), Y2A( 47), Y2A( 48)
+     +    /-0.09E0,  1.23E0,  1.46E0,  0.61E0,  0.42E0,  2.16E0/
+      DATA  Y2A( 49), Y2A( 50), Y2A( 51), Y2A( 52), Y2A( 53), Y2A( 54)
+     +    / 3.18E0,  2.10E0,  0.37E0, -0.24E0,  0.57E0, -0.53E0/
+      DATA  Y2A( 55), Y2A( 56), Y2A( 57), Y2A( 58), Y2A( 59), Y2A( 60)
+     +    / 2.44E0,  1.02E0, -0.53E0, -2.49E0, -2.12E0, -1.04E0/
+      DATA  Y2A( 61), Y2A( 62), Y2A( 63), Y2A( 64), Y2A( 65), Y2A( 66)
+     +    /-0.12E0, -1.88E0, -1.50E0,  1.54E0,  3.33E0,  3.08E0/
+      DATA  Y2A( 67), Y2A( 68), Y2A( 69), Y2A( 70), Y2A( 71), Y2A( 72)
+     +    / 1.71E0,  0.79E0,  1.55E0,  0.89E0, -0.89E0, -1.18E0/
+      DATA  Y2A( 73), Y2A( 74), Y2A( 75), Y2A( 76), Y2A( 77), Y2A( 78)
+     +    / 0.89E0,  1.71E0,  3.05E0,  0.15E0, -1.04E0,  0.12E0/
+      DATA  Y2A( 79), Y2A( 80), Y2A( 81), Y2A( 82), Y2A( 83), Y2A( 84)
+     +    / 0.08E0,  0.11E0, -2.62E0, -1.28E0,  1.07E0,  3.20E0/
+      DATA  Y2A( 85), Y2A( 86), Y2A( 87), Y2A( 88), Y2A( 89), Y2A( 90)
+     +    / 1.92E0,  0.53E0, -1.08E0,  0.49E0, -0.58E0,  0.17E0/
+      DATA  Y2A( 91), Y2A( 92), Y2A( 93), Y2A( 94), Y2A( 95), Y2A( 96)
+     +    / 1.15E0, -0.97E0, -1.63E0,  1.14E0, -0.67E0, -0.88E0/
+      DATA  Y2A( 97), Y2A( 98), Y2A( 99), Y2A(100)
+     +    /-0.07E0,  0.24E0,  0.55E0, -2.16E0/
+C
+      DATA  Y2B(  1), Y2B(  2), Y2B(  3), Y2B(  4), Y2B(  5), Y2B(  6)
+     +    / 0.79E0,  1.12E0, -1.10E0, -2.39E0, -1.75E0, -0.82E0/
+      DATA  Y2B(  7), Y2B(  8), Y2B(  9), Y2B( 10), Y2B( 11), Y2B( 12)
+     +    /-0.36E0,  1.27E0,  1.75E0,  2.44E0,  0.36E0, -2.10E0/
+      DATA  Y2B( 13), Y2B( 14), Y2B( 15), Y2B( 16), Y2B( 17), Y2B( 18)
+     +    /-1.93E0, -1.30E0, -1.75E0, -0.34E0,  0.74E0,  0.49E0/
+      DATA  Y2B( 19), Y2B( 20), Y2B( 21), Y2B( 22), Y2B( 23), Y2B( 24)
+     +    / 0.70E0,  0.71E0,  0.09E0,  0.59E0,  1.54E0,  0.14E0/
+      DATA  Y2B( 25), Y2B( 26), Y2B( 27), Y2B( 28), Y2B( 29), Y2B( 30)
+     +    / 0.55E0, -1.40E0, -2.55E0, -1.66E0, -0.43E0,  0.58E0/
+      DATA  Y2B( 31), Y2B( 32), Y2B( 33), Y2B( 34), Y2B( 35), Y2B( 36)
+     +    / 2.18E0, -0.24E0,  0.58E0, -0.18E0, -1.55E0, -0.64E0/
+      DATA  Y2B( 37), Y2B( 38), Y2B( 39), Y2B( 40), Y2B( 41), Y2B( 42)
+     +    /-1.09E0,  0.90E0, -0.66E0, -0.35E0,  0.48E0,  0.50E0/
+      DATA  Y2B( 43), Y2B( 44), Y2B( 45), Y2B( 46), Y2B( 47), Y2B( 48)
+     +    / 0.05E0, -0.68E0,  0.24E0,  0.58E0, -1.26E0, -0.25E0/
+      DATA  Y2B( 49), Y2B( 50), Y2B( 51), Y2B( 52), Y2B( 53), Y2B( 54)
+     +    / 0.25E0,  2.18E0,  2.96E0,  1.56E0, -0.36E0, -0.59E0/
+      DATA  Y2B( 55), Y2B( 56), Y2B( 57), Y2B( 58), Y2B( 59), Y2B( 60)
+     +    /-0.12E0,  3.03E0,  2.11E0,  0.78E0,  0.89E0, -1.45E0/
+      DATA  Y2B( 61), Y2B( 62), Y2B( 63), Y2B( 64), Y2B( 65), Y2B( 66)
+     +    /-0.36E0, -0.37E0, -1.39E0, -4.19E0, -0.73E0, -0.98E0/
+      DATA  Y2B( 67), Y2B( 68), Y2B( 69), Y2B( 70), Y2B( 71), Y2B( 72)
+     +    / 0.36E0,  0.06E0, -1.94E0, -0.08E0,  0.17E0,  1.00E0/
+      DATA  Y2B( 73), Y2B( 74), Y2B( 75), Y2B( 76), Y2B( 77), Y2B( 78)
+     +    /-0.05E0,  0.43E0,  0.15E0,  2.69E0,  0.57E0,  0.29E0/
+      DATA  Y2B( 79), Y2B( 80), Y2B( 81), Y2B( 82), Y2B( 83), Y2B( 84)
+     +    / 1.10E0,  0.48E0, -1.06E0, -2.28E0, -2.03E0, -0.75E0/
+      DATA  Y2B( 85), Y2B( 86), Y2B( 87), Y2B( 88), Y2B( 89), Y2B( 90)
+     +    / 1.00E0,  1.71E0,  0.58E0,  1.97E0,  0.99E0,  1.94E0/
+      DATA  Y2B( 91), Y2B( 92), Y2B( 93), Y2B( 94), Y2B( 95), Y2B( 96)
+     +    / 2.18E0,  3.14E0,  0.60E0,  0.51E0,  1.35E0,  0.56E0/
+      DATA  Y2B( 97), Y2B( 98), Y2B( 99), Y2B(100)
+     +    / 0.11E0,  0.00E0,  2.34E0,  1.88E0/
+C
+      DATA  Y3(  1),Y3(  2),Y3(  3),Y3(  4),Y3(  5),Y3(  6)
+     +    /-0.88E0, -0.12E0, -0.89E0, -1.38E0, -0.07E0,  1.03E0/
+      DATA  Y3(  7),Y3(  8),Y3(  9),Y3( 10),Y3( 11),Y3( 12)
+     +    / 2.14E0,  0.35E0, -1.10E0, -1.78E0, -2.76E0, -1.77E0/
+      DATA  Y3( 13),Y3( 14),Y3( 15),Y3( 16),Y3( 17),Y3( 18)
+     +    / 0.98E0,  1.00E0, -0.70E0, -1.01E0, -1.30E0, -0.85E0/
+      DATA  Y3( 19),Y3( 20),Y3( 21),Y3( 22),Y3( 23),Y3( 24)
+     +    /-0.46E0,  1.63E0,  0.06E0, -0.17E0, -1.01E0, -1.04E0/
+      DATA  Y3( 25),Y3( 26),Y3( 27),Y3( 28),Y3( 29),Y3( 30)
+     +    /-0.66E0, -1.12E0, -0.51E0, -0.71E0, -0.20E0, -0.13E0/
+      DATA  Y3( 31),Y3( 32),Y3( 33),Y3( 34),Y3( 35),Y3( 36)
+     +    / 0.14E0,  1.59E0, -0.76E0, -1.08E0, -1.77E0, -1.20E0/
+      DATA  Y3( 37),Y3( 38),Y3( 39),Y3( 40),Y3( 41),Y3( 42)
+     +    / 0.45E0, -0.07E0, -0.63E0, -0.35E0, -0.87E0, -0.62E0/
+      DATA  Y3( 43),Y3( 44),Y3( 45),Y3( 46),Y3( 47),Y3( 48)
+     +    / 0.28E0,  1.90E0,  2.14E0,  1.05E0,  0.31E0,  1.07E0/
+      DATA  Y3( 49),Y3( 50)
+     +    / 2.67E0,  2.44E0/
+C
+      DATA  Y5(  1), Y5(  2), Y5(  3), Y5(  4), Y5(  5), Y5(  6)
+     +    /     5.0E0, 11.0E0, 16.0E0, 23.0E0, 36.0E0, 58.0E0/
+      DATA  Y5(  7), Y5(  8), Y5(  9), Y5( 10), Y5( 11), Y5( 12)
+     +    /    29.0E0, 20.0E0, 10.0E0,  8.0E0,  3.0E0,  0.0E0/
+      DATA  Y5( 13), Y5( 14), Y5( 15), Y5( 16), Y5( 17), Y5( 18)
+     +    /     0.0E0, 2.0E0, 11.0E0, 27.0E0, 47.0E0, 63.0E0/
+      DATA  Y5( 19), Y5( 20), Y5( 21), Y5( 22), Y5( 23), Y5( 24)
+     +    /    60.0E0, 39.0E0, 28.0E0, 26.0E0, 22.0E0, 11.0E0/
+      DATA  Y5( 25), Y5( 26), Y5( 27), Y5( 28), Y5( 29), Y5( 30)
+     +    /    21.0E0, 40.0E0, 78.0E0,122.0E0,103.0E0, 73.0E0/
+      DATA  Y5( 31), Y5( 32), Y5( 33), Y5( 34), Y5( 35), Y5( 36)
+     +    /    47.0E0, 35.0E0, 11.0E0,  5.0E0, 16.0E0, 34.0E0/
+      DATA  Y5( 37), Y5( 38), Y5( 39), Y5( 40), Y5( 41), Y5( 42)
+     +    /    70.0E0, 81.0E0,111.0E0,101.0E0, 73.0E0, 40.0E0/
+      DATA  Y5( 43), Y5( 44), Y5( 45), Y5( 46), Y5( 47), Y5( 48)
+     +    /    20.0E0, 16.0E0,  5.0E0, 11.0E0, 22.0E0, 40.0E0/
+      DATA  Y5( 49), Y5( 50), Y5( 51), Y5( 52), Y5( 53), Y5( 54)
+     +    /    60.0E0, 80.9E0, 83.4E0, 47.7E0, 47.8E0, 30.7E0/
+      DATA  Y5( 55), Y5( 56), Y5( 57), Y5( 58), Y5( 59), Y5( 60)
+     +    /    12.2E0,  9.6E0, 10.2E0, 32.4E0, 47.6E0, 54.0E0/
+      DATA  Y5( 61), Y5( 62), Y5( 63), Y5( 64), Y5( 65), Y5( 66)
+     +    /    62.9E0, 85.9E0, 61.2E0, 45.1E0, 36.4E0, 20.9E0/
+      DATA  Y5( 67), Y5( 68), Y5( 69), Y5( 70), Y5( 71), Y5( 72)
+     +    /    11.4E0, 37.8E0, 69.8E0,106.1E0,100.8E0, 81.6E0/
+      DATA  Y5( 73), Y5( 74), Y5( 75), Y5( 76), Y5( 77), Y5( 78)
+     +    /    66.5E0, 34.8E0, 30.6E0,  7.0E0, 19.8E0, 92.5E0/
+      DATA  Y5( 79), Y5( 80), Y5( 81), Y5( 82), Y5( 83), Y5( 84)
+     +    /   154.4E0,125.9E0, 84.8E0, 68.1E0, 38.5E0, 22.8E0/
+      DATA  Y5( 85), Y5( 86), Y5( 87), Y5( 88), Y5( 89), Y5( 90)
+     +    /    10.2E0, 24.1E0, 82.9E0,132.0E0,130.9E0,118.1E0/
+      DATA  Y5( 91), Y5( 92), Y5( 93), Y5( 94), Y5( 95), Y5( 96)
+     +    /    89.9E0, 66.6E0, 60.0E0, 46.9E0, 41.0E0, 21.3E0/
+      DATA  Y5( 97), Y5( 98), Y5( 99), Y5(100), Y5(101), Y5(102)
+     +    /    16.0E0,  6.4E0,  4.1E0,  6.8E0, 14.5E0, 34.0E0/
+      DATA  Y5(103), Y5(104), Y5(105), Y5(106), Y5(107), Y5(108)
+     +    /    45.0E0, 43.1E0, 47.5E0, 42.2E0, 28.1E0, 10.1E0/
+      DATA  Y5(109), Y5(110), Y5(111), Y5(112), Y5(113), Y5(114)
+     +    /     8.1E0,  2.5E0,  0.0E0,  1.4E0,  5.0E0, 12.2E0/
+      DATA  Y5(115), Y5(116), Y5(117), Y5(118), Y5(119), Y5(120)
+     +    /    13.9E0, 35.4E0, 45.8E0, 41.1E0, 30.1E0, 23.9E0/
+      DATA  Y5(121), Y5(122), Y5(123), Y5(124), Y5(125), Y5(126)
+     +    /    15.6E0,  6.6E0,  4.0E0,  1.8E0,  8.5E0, 16.6E0/
+      DATA  Y5(127), Y5(128), Y5(129), Y5(130), Y5(131), Y5(132)
+     +    /    36.3E0, 49.6E0, 64.2E0, 67.0E0, 70.9E0, 47.8E0/
+      DATA  Y5(133), Y5(134), Y5(135), Y5(136), Y5(137), Y5(138)
+     +    /    27.5E0,  8.5E0, 13.2E0, 56.9E0,121.5E0,138.3E0/
+      DATA  Y5(139), Y5(140), Y5(141), Y5(142), Y5(143), Y5(144)
+     +    /   103.2E0, 85.7E0, 64.6E0, 36.7E0, 24.2E0, 10.7E0/
+      DATA  Y5(145), Y5(146), Y5(147), Y5(148), Y5(149), Y5(150)
+     +    /    15.0E0, 40.1E0, 61.5E0, 98.5E0,124.7E0, 96.3E0/
+      DATA  Y5(151), Y5(152), Y5(153), Y5(154), Y5(155), Y5(156)
+     +    /    66.6E0, 64.5E0, 54.1E0, 39.0E0, 20.6E0,  6.7E0/
+      DATA  Y5(157), Y5(158), Y5(159), Y5(160), Y5(161), Y5(162)
+     +    /     4.3E0, 22.7E0, 54.8E0, 93.8E0, 95.8E0, 77.2E0/
+      DATA  Y5(163), Y5(164), Y5(165), Y5(166), Y5(167), Y5(168)
+     +    /    59.1E0, 44.0E0, 47.0E0, 30.5E0, 16.3E0,  7.3E0/
+      DATA  Y5(169), Y5(170), Y5(171), Y5(172), Y5(173), Y5(174)
+     +    /    37.6E0, 74.0E0,139.0E0,111.2E0,101.6E0, 66.2E0/
+      DATA  Y5(175), Y5(176), Y5(177), Y5(178), Y5(179), Y5(180)
+     +    /    44.7E0, 17.0E0, 11.3E0, 12.4E0,  3.4E0,  6.0E0/
+      DATA  Y5(181), Y5(182), Y5(183), Y5(184), Y5(185), Y5(186)
+     +    /    32.3E0, 54.3E0, 59.7E0, 63.7E0, 63.5E0, 52.2E0/
+      DATA  Y5(187), Y5(188), Y5(189), Y5(190), Y5(191), Y5(192)
+     +    /    25.4E0, 13.1E0,  6.8E0,  6.3E0,  7.1E0, 35.6E0/
+      DATA  Y5(193), Y5(194), Y5(195), Y5(196), Y5(197), Y5(198)
+     +    /    73.0E0, 85.1E0, 78.0E0, 64.0E0, 41.8E0, 26.2E0/
+      DATA  Y5(199), Y5(200), Y5(201), Y5(202), Y5(203), Y5(204)
+     +    /    26.7E0, 12.1E0,  9.5E0,  2.7E0,  5.0E0, 24.4E0/
+      DATA  Y5(205), Y5(206), Y5(207), Y5(208), Y5(209), Y5(210)
+     +    /    42.0E0, 63.5E0, 53.8E0, 62.0E0, 48.5E0, 43.9E0/
+      DATA  Y5(211), Y5(212), Y5(213), Y5(214), Y5(215), Y5(216)
+     +    /    18.6E0,  5.7E0,  3.6E0,  1.4E0,  9.6E0, 47.4E0/
+      DATA  Y5(217), Y5(218), Y5(219), Y5(220), Y5(221), Y5(222)
+     +    /    57.1E0,103.9E0, 80.6E0, 63.6E0, 37.6E0, 26.1E0/
+      DATA  Y5(223), Y5(224), Y5(225), Y5(226), Y5(227), Y5(228)
+     +    /    14.2E0,  5.8E0, 16.7E0, 44.3E0, 63.9E0, 69.0E0/
+      DATA  Y5(229), Y5(230), Y5(231), Y5(232), Y5(233), Y5(234)
+     +    /    77.8E0, 64.9E0, 35.7E0, 21.2E0, 11.1E0,  5.7E0/
+      DATA  Y5(235), Y5(236), Y5(237), Y5(238), Y5(239), Y5(240)
+     +    /     8.7E0, 36.1E0, 79.7E0,114.4E0,109.6E0, 88.8E0/
+      DATA  Y5(241), Y5(242), Y5(243), Y5(244), Y5(245), Y5(246)
+     +    /    67.8E0, 47.5E0, 30.6E0, 16.3E0,  9.6E0, 33.2E0/
+      DATA  Y5(247), Y5(248), Y5(249), Y5(250), Y5(251), Y5(252)
+     +    /    92.6E0,151.6E0,136.3E0,134.7E0, 83.9E0, 69.4E0/
+      DATA  Y5(253), Y5(254), Y5(255), Y5(256), Y5(257), Y5(258)
+     +    /    31.5E0, 13.9E0,  4.4E0, 38.0E0,141.7E0,190.2E0/
+      DATA  Y5(259), Y5(260), Y5(261)
+     +    /   184.8E0,159.0E0,112.3E0/
+C
+C     DEFINE CONSTANTS
+C
+      CALL IPRINT(IPRT)
+      LPER = 300
+      LFREQ = 300
+      LYFFT = 600
+C
+      NY1 = 100
+      NY2 = 50
+      NY3 = 50
+      NY4 = 50
+      NY5 = 261
+      NY6 = 100
+C
+      NK = 3
+      KMD(1) = 8
+      KMD(2) = 8
+      KMD(3) = 8
+C
+      TAPERP = 0.10
+C
+      NFFT = 514
+      IEXTND = 0
+      NPRT = -1
+C
+      ILOG = 1
+C
+C     WRITE HEADER
+C
+      WRITE(IPRT, 1000)
+C
+C     RUN SIMPLE TEST OF ACF
+C
+      WRITE(IPRT, 1100)
+      CALL ACF (Y1, NY1)
+      WRITE (IPRT,2000) IERR
+C
+C     RUN SIMPLE TEST OF CCF
+C
+      WRITE(IPRT, 1200)
+      CALL CCF (Y2A, Y2B, NY2)
+      WRITE (IPRT,2000) IERR
+C
+C     RUN SIMPLE TEST OF UFS
+C
+      WRITE(IPRT, 1300)
+      CALL UFS (Y3, NY3)
+      WRITE (IPRT,2000) IERR
+C
+C     RUN SIMPLE TEST OF UAS
+C
+      WRITE(IPRT, 1400)
+      CALL UAS (Y4, NY4)
+      WRITE (IPRT,2000) IERR
+C
+C     RUN SIMPLE TEST OF TAPER
+C
+      WRITE(IPRT, 1510)
+      CALL TAPER (Y5, NY5, TAPERP, YFFT)
+      WRITE (IPRT,2000) IERR
+C
+C     RUN SIMPLE TEST OF PGMS
+C
+      WRITE(IPRT, 1520)
+      CALL PGMS(YFFT, NY5, NFFT, LYFFT,
+     +          IEXTND, NF, PER, LPER, FREQ, LFREQ, NPRT)
+      WRITE (IPRT,2000) IERR
+C
+C     RUN SIMPLE TEST OF MDFLT
+C
+      WRITE(IPRT, 1530)
+      CALL MDFLT (PER, NF, NK, KMD, PERF, LDSTAK)
+      WRITE (IPRT,2000) IERR
+C
+C     DISPLAY RESULTS OF MDFLT
+C
+      WRITE(IPRT, 1540)
+      CALL PPL (PERF, FREQ, NF, ILOG)
+      WRITE (IPRT,2000) IERR
+C
+C     RUN SIMPLE TEST OF BFS
+C
+      WRITE(IPRT, 1600)
+      CALL BFS (Y6A, Y6B, NY6)
+      WRITE (IPRT,2000) IERR
+C
+      RETURN
+C
+C     FORMAT STATEMENTS
+C
+ 1000 FORMAT ('1*CH12')
+ 1100 FORMAT (' SIMPLE TEST OF ACF')
+ 1200 FORMAT ('1SIMPLE TEST OF CCF')
+ 1300 FORMAT ('1SIMPLE TEST OF UFS')
+ 1400 FORMAT ('1SIMPLE TEST OF UAS')
+ 1510 FORMAT ('1SIMPLE TEST OF TAPER (NO OUTPUT UNLESS ERROR FOUND)')
+ 1520 FORMAT ('1SIMPLE TEST OF PGMS')
+ 1530 FORMAT ('1SIMPLE TEST OF MDFLT (NO OUTPUT UNLESS ERROR FOUND)')
+ 1540 FORMAT ('1DISPLAY RESULTS OF MDFLT')
+ 1600 FORMAT ('1SIMPLE TEST OF BFS')
+ 2000 FORMAT (/' THE VALUE OF IERR IS ', I4)
+      END
+      SUBROUTINE XXCH13(LDSTAK)
+
+c*********************************************************************72
+c
+cc XXCH13 tests the ARIMA modeling and forecasting family.
+c
+C     DATA IS THE AIRLINE DATA LISTED ON PAGE 531 OF BOX AND JENKINS.
+C
+c  Modified:
+c
+c    24 April 2006
+c
+c  Author:
+c
+c    Janet Donaldson,
+c    Statistical Engineering Division,
+c    National Bureau of Standards,
+c    Boulder, Colorado
+c
+      INTEGER
+     +   LDSTAK
+C
+C  SCALARS IN COMMON
+      INTEGER
+     +   IERR
+C
+C  ARRAYS IN COMMON
+      DOUBLE PRECISION DSTAK(12)
+C
+C  LOCAL SCALARS
+      INTEGER
+     +   I,IPRT,N,NFAC,NPAR
+C
+C  LOCAL ARRAYS
+      REAL
+     +   AIR(200),PAR(10),RES(200),Y(200)
+      INTEGER
+     +   MSPEC(4,10)
+C
+C  EXTERNAL SUBROUTINES
+      EXTERNAL AIME,AIMF,IPRINT
+C
+C  INTRINSIC FUNCTIONS
+      INTRINSIC LOG
+C
+C  COMMON BLOCKS
+      COMMON /CSTAK/DSTAK
+      COMMON /ERRCHK/IERR
+C
+C     VARIABLE DEFINITIONS (ALPHABETICALLY)
+C
+C     REAL AIR(200)
+C        THE AIRLINE DATA.
+C     DOUBLE PRECISION DSTAK(12)
+C        THE DOUBLE PRECISION VERSION OF THE /CSTAK/ WORK AREA.
+C     INTEGER I
+C        AN INDEX VARIABLE.
+C     INTEGER IERR
+C        THE INTEGER VALUE RETURNED BY THIS ROUTINE DESIGNATING
+C        WHETHER ANY ERRORS WERE DETECTED IN THE PARAMETER LIST.
+C        IF IERR .EQ. 0, NO ERRORS WERE DETECTED.
+C        IF IERR .GE. 1, ERRORS WERE DETECTED.
+C     INTEGER IPRT
+C        THE UNIT NUMBER FOR PRINTED OUTPUT.
+C     INTEGER LDSTAK
+C        THE LENGTH OF DSTAK IN COMMON /CSTAK/.
+C     INTEGER MSPEC(4,10)
+C        THE ARRAY CONTAINING THE VALUES OF P, D, Q, AND S FOR EACH
+C        FACTOR.
+C     INTEGER N
+C        THE NUMBER OF OBSERVATIONS.
+C     INTEGER NFAC
+C        THE NUMBER OF FACTORS IN THE MODEL
+C     INTEGER NPAR
+C        THE NUMBER OF UNKNOWN PARAMETERS IN THE MODEL.
+C     REAL PAR(10)
+C        THE ARRAY IN WHICH THE CURRENT ESTIMATES OF THE UNKNOWN
+C        PARAMETERS ARE STORED.
+C     REAL RES(200)
+C        THE RESIDUALS FROM THE FIT.
+C     REAL Y(200)
+C        THE ARRAY OF THE DEPENDENT VARIABLE.
+C
+C     DEFINE CONSTANTS
+C
+      DATA MSPEC(1,1), MSPEC(2,1), MSPEC(3,1), MSPEC(4,1)
+     +   /          0,          1,          1,          1/
+      DATA MSPEC(1,2), MSPEC(2,2), MSPEC(3,2), MSPEC(4,2)
+     +   /          0,          1,          1,         12/
+C
+      DATA  AIR(  1), AIR(  2), AIR(  3), AIR(  4), AIR(  5), AIR(  6)
+     +    / 112.0E0, 118.0E0, 132.0E0, 129.0E0, 121.0E0, 135.0E0/
+      DATA  AIR(  7), AIR(  8), AIR(  9), AIR( 10), AIR( 11), AIR( 12)
+     +    / 148.0E0, 148.0E0, 136.0E0, 119.0E0, 104.0E0, 118.0E0/
+      DATA  AIR( 13), AIR( 14), AIR( 15), AIR( 16), AIR( 17), AIR( 18)
+     +    / 115.0E0, 126.0E0, 141.0E0, 135.0E0, 125.0E0, 149.0E0/
+      DATA  AIR( 19), AIR( 20), AIR( 21), AIR( 22), AIR( 23), AIR( 24)
+     +    / 170.0E0, 170.0E0, 158.0E0, 133.0E0, 114.0E0, 140.0E0/
+      DATA  AIR( 25), AIR( 26), AIR( 27), AIR( 28), AIR( 29), AIR( 30)
+     +    / 145.0E0, 150.0E0, 178.0E0, 163.0E0, 172.0E0, 178.0E0/
+      DATA  AIR( 31), AIR( 32), AIR( 33), AIR( 34), AIR( 35), AIR( 36)
+     +    / 199.0E0, 199.0E0, 184.0E0, 162.0E0, 146.0E0, 166.0E0/
+      DATA  AIR( 37), AIR( 38), AIR( 39), AIR( 40), AIR( 41), AIR( 42)
+     +    / 171.0E0, 180.0E0, 193.0E0, 181.0E0, 183.0E0, 218.0E0/
+      DATA  AIR( 43), AIR( 44), AIR( 45), AIR( 46), AIR( 47), AIR( 48)
+     +    / 230.0E0, 242.0E0, 209.0E0, 191.0E0, 172.0E0, 194.0E0/
+      DATA  AIR( 49), AIR( 50), AIR( 51), AIR( 52), AIR( 53), AIR( 54)
+     +    / 196.0E0, 196.0E0, 236.0E0, 235.0E0, 229.0E0, 243.0E0/
+      DATA  AIR( 55), AIR( 56), AIR( 57), AIR( 58), AIR( 59), AIR( 60)
+     +    / 264.0E0, 272.0E0, 237.0E0, 211.0E0, 180.0E0, 201.0E0/
+      DATA  AIR( 61), AIR( 62), AIR( 63), AIR( 64), AIR( 65), AIR( 66)
+     +    / 204.0E0, 188.0E0, 235.0E0, 227.0E0, 234.0E0, 264.0E0/
+      DATA  AIR( 67), AIR( 68), AIR( 69), AIR( 70), AIR( 71), AIR( 72)
+     +    / 302.0E0, 293.0E0, 259.0E0, 229.0E0, 203.0E0, 229.0E0/
+      DATA  AIR( 73), AIR( 74), AIR( 75), AIR( 76), AIR( 77), AIR( 78)
+     +    / 242.0E0, 233.0E0, 267.0E0, 269.0E0, 270.0E0, 315.0E0/
+      DATA  AIR( 79), AIR( 80), AIR( 81), AIR( 82), AIR( 83), AIR( 84)
+     +    / 364.0E0, 347.0E0, 312.0E0, 274.0E0, 237.0E0, 278.0E0/
+      DATA  AIR( 85), AIR( 86), AIR( 87), AIR( 88), AIR( 89), AIR( 90)
+     +    / 284.0E0, 277.0E0, 317.0E0, 313.0E0, 318.0E0, 374.0E0/
+      DATA  AIR( 91), AIR( 92), AIR( 93), AIR( 94), AIR( 95), AIR( 96)
+     +    / 413.0E0, 405.0E0, 355.0E0, 306.0E0, 271.0E0, 306.0E0/
+      DATA  AIR( 97), AIR( 98), AIR( 99), AIR(100), AIR(101), AIR(102)
+     +    / 315.0E0, 301.0E0, 356.0E0, 348.0E0, 355.0E0, 422.0E0/
+      DATA  AIR(103), AIR(104), AIR(105), AIR(106), AIR(107), AIR(108)
+     +    / 465.0E0, 467.0E0, 404.0E0, 347.0E0, 305.0E0, 336.0E0/
+      DATA  AIR(109), AIR(110), AIR(111), AIR(112), AIR(113), AIR(114)
+     +    / 340.0E0, 318.0E0, 362.0E0, 348.0E0, 363.0E0, 435.0E0/
+      DATA  AIR(115), AIR(116), AIR(117), AIR(118), AIR(119), AIR(120)
+     +    / 491.0E0, 505.0E0, 404.0E0, 359.0E0, 310.0E0, 337.0E0/
+      DATA  AIR(121), AIR(122), AIR(123), AIR(124), AIR(125), AIR(126)
+     +    / 360.0E0, 342.0E0, 406.0E0, 396.0E0, 420.0E0, 472.0E0/
+      DATA  AIR(127), AIR(128), AIR(129), AIR(130), AIR(131), AIR(132)
+     +    / 548.0E0, 559.0E0, 463.0E0, 407.0E0, 362.0E0, 405.0E0/
+      DATA  AIR(133), AIR(134), AIR(135), AIR(136), AIR(137), AIR(138)
+     +    / 417.0E0, 391.0E0, 419.0E0, 461.0E0, 472.0E0, 535.0E0/
+      DATA  AIR(139), AIR(140), AIR(141), AIR(142), AIR(143), AIR(144)
+     +    / 622.0E0, 606.0E0, 508.0E0, 461.0E0, 390.0E0, 432.0E0/
+C
+      CALL IPRINT(IPRT)
+C
+      NFAC = 2
+      N = 144
+C
+      NPAR = 3
+      PAR(1) = 0.000
+      PAR(2) = 0.395
+      PAR(3) = 0.615
+C
+      DO 10 I = 1, N
+        Y(I) = LOG(AIR(I))
+   10 CONTINUE
+C
+C     RUN SIMPLE TEST OF AIME
+C
+      WRITE (IPRT,1000)
+      WRITE (IPRT,1100)
+      CALL AIME (Y, N, MSPEC, NFAC, PAR, NPAR, RES, LDSTAK)
+      WRITE (IPRT,2000) IERR
+C
+C     RUN SIMPLE TEST OF AIMF
+C
+      WRITE (IPRT,1200)
+      CALL AIMF (Y, N, MSPEC, NFAC, PAR, NPAR, LDSTAK)
+      WRITE (IPRT,2000) IERR
+C
+      RETURN
+C
+C     FORMAT STATEMENTS
+C
+ 1000 FORMAT ('1*CH13')
+ 1100 FORMAT (' SIMPLE TEST OF AIME')
+ 1200 FORMAT ('1SIMPLE TEST OF AIMF')
+ 2000 FORMAT (/' THE VALUE OF IERR IS ', I4)
+      END

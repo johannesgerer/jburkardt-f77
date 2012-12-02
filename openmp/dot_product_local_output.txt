@@ -1,0 +1,57 @@
+ 
+DOT_PRODUCT
+  FORTRAN77/OpenMP version
+ 
+  A program to compute a vector dot product.
+  The number of processors =        8
+  The number of threads    =        1
+ 
+  Sequential      1000     1000.00         0.0000040531
+  Parallel        1000     1000.00         0.0000178814
+ 
+  Sequential     10000     10000.0         0.0000460148
+  Parallel       10000     10000.0         0.0000560284
+ 
+  Sequential    100000     100000.         0.0004498959
+  Parallel      100000     100000.         0.0005309582
+ 
+DOT_PRODUCT
+  Normal end of execution.
+ 
+DOT_PRODUCT
+  FORTRAN77/OpenMP version
+ 
+  A program to compute a vector dot product.
+  The number of processors =        8
+  The number of threads    =        2
+ 
+  Sequential      1000     1000.00         0.0000040531
+  Parallel        1000     1000.00         0.0001928806
+ 
+  Sequential     10000     10000.0         0.0000441074
+  Parallel       10000     10000.0         0.0001621246
+ 
+  Sequential    100000     100000.         0.0004699230
+  Parallel      100000     100000.         0.0003058910
+ 
+DOT_PRODUCT
+  Normal end of execution.
+ 
+DOT_PRODUCT
+  FORTRAN77/OpenMP version
+ 
+  A program to compute a vector dot product.
+  The number of processors =        8
+  The number of threads    =        4
+ 
+  Sequential      1000     1000.00         0.0000050068
+  Parallel        1000     1000.00         0.0001280308
+ 
+  Sequential     10000     10000.0         0.0000460148
+  Parallel       10000     10000.0         0.0000538826
+ 
+  Sequential    100000     100000.         0.0004749298
+  Parallel      100000     100000.         0.0001769066
+ 
+DOT_PRODUCT
+  Normal end of execution.
