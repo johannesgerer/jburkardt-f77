@@ -1,11 +1,9 @@
 #!/bin/bash
 declare -A n
 
-if false; then
 n[c]=C
 n[f77]="FORTRAN 77"
 n[java]=Java
-fi
 n[m]=MATLAB
 n[r]=R
 n[cpp]=C++
