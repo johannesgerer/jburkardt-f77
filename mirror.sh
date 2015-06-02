@@ -33,14 +33,13 @@ fi
 (cd $repo && (\
 				# wget "$src" -O /dev/null \
 				# 		&& echo rm \* -rf \
-				# 		&& (echo "Copyright John Burkardt unless indicated differently.\n\nAll rights reserved\n\nEvery subfolder is published under its own License found in the respective folder's *.html files" \
-				# 						 >>  LICENSE) &&
 				# 		wget -m -np --cut-dirs=2 -nH "$src" \
 				# 		&& pandoc  "${s}.html" -t markdown_github -o README.md \
 				# 				&&				 echo OK
-				echo a \
+				(echo -e "Copyright John Burkardt unless indicated differently.\n\nAll rights reserved\n\nEvery subfolder is published under its own License found in the respective folder's *.html files" \
+										 >  LICENSE) \
 				&& git add -A															 \
-				&& git commit -m "automatic update from $src" \
+				&& git commit -m "Corrected LICENSE file" \
 		    && git gc																		 \
 				&& git push origin master
 				)
